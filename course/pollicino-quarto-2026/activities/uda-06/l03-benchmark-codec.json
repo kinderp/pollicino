@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda06-l03-benchmark-codec",
+  "titolo": "Benchmark reale: payload, header, modello e baselines",
+  "tipo": "laboratorio",
+  "difficolta": "E",
+  "argomenti": ["compression-ratio", "codec-overhead", "baseline", "benchmark"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-06-codec-ricerca"},
+  "consegna": "Costruisci una tabella di benchmark reale sullo stesso corpus includendo dimensione, bpb ideale/reale, tempi, round-trip e almeno tre baseline/scenari confrontabili.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 150, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

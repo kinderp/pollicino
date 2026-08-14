@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda05-l04-mlx-port",
+  "titolo": "Portare il byte model in MLX",
+  "tipo": "laboratorio",
+  "difficolta": "E",
+  "argomenti": ["mlx", "apple-silicon", "backend", "equivalenza"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
+  "consegna": "Porta la configurazione tiny in MLX, verifica gli invarianti di architettura e confronta un sanity training con la reference PyTorch.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 180, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

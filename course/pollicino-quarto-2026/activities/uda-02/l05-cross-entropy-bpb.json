@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda02-l05-cross-entropy-bpb",
+  "titolo": "Cross-entropy e bits-per-byte come metrica comune",
+  "tipo": "laboratorio",
+  "difficolta": "C",
+  "argomenti": [
+    "cross-entropy",
+    "bits-per-byte",
+    "nll",
+    "baseline"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-02-compressione-predizione"
+  },
+  "consegna": "Implementa una funzione che riceve le probabilità assegnate ai byte corretti e calcola NLL in bit e bpb. Confronta uniforme, distribuzione zero-order e bigramma sullo stesso split di test. Salva i risultati in una tabella riproducibile. Consegna risultati e una breve interpretazione collegata alla domanda guida.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {
+    "compila": true,
+    "test": true,
+    "sandbox": true,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 120,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": true
+  },
+  "rubrica": [
+    {
+      "criterio": "Correttezza concettuale o tecnica",
+      "punti": 4
+    },
+    {
+      "criterio": "Evidenze e misure",
+      "punti": 2
+    },
+    {
+      "criterio": "Interpretazione dei risultati",
+      "punti": 2
+    },
+    {
+      "criterio": "Riproducibilita e chiarezza",
+      "punti": 2
+    }
+  ]
+}

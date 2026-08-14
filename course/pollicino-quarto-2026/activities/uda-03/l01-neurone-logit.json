@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda03-l01-neurone-logit",
+  "titolo": "Dal punteggio al logit: un neurone come funzione parametrica",
+  "tipo": "studio-guidato",
+  "difficolta": "B",
+  "argomenti": ["neurone", "pesi", "bias", "logit", "modello-parametrico"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
+  "consegna": "Implementa una trasformazione affine molto piccola, varia manualmente pesi e bias e descrivi come cambiano i logits. Estendi poi l'esempio a più output.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 90, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+}

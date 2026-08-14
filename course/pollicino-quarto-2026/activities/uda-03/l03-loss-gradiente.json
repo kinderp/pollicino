@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda03-l03-loss-gradiente",
+  "titolo": "Cross-entropy, gradiente e discesa del gradiente",
+  "tipo": "studio-guidato",
+  "difficolta": "C",
+  "argomenti": ["cross-entropy", "gradiente", "gradient-descent", "backpropagation"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
+  "consegna": "Ottimizza una funzione quadratica con discesa del gradiente, prova più learning rate e descrivi il ruolo distinto di loss, gradiente, backpropagation e optimizer.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+}

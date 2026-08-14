@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda03-l02-softmax-probabilita",
+  "titolo": "Softmax: da 256 logits a una distribuzione",
+  "tipo": "laboratorio",
+  "difficolta": "C",
+  "argomenti": ["softmax", "logits", "probabilita", "stabilita-numerica"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
+  "consegna": "Implementa softmax in forma diretta e stabile, verifica la somma a uno e confronta il comportamento con logits molto grandi.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 100, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

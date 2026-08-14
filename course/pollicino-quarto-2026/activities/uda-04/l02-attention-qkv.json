@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda04-l02-attention-qkv",
+  "titolo": "Self-attention: query, key e value",
+  "tipo": "laboratorio",
+  "difficolta": "C",
+  "argomenti": ["attention", "query-key-value", "self-attention", "dot-product"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-04-transformer"},
+  "consegna": "Implementa una single-head attention su tensori piccoli e documenta Q, K, V, score, softmax e output con relative shape.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 130, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda05-l01-dataset-batch",
+  "titolo": "Dataset byte-level, split e batch",
+  "tipo": "laboratorio",
+  "difficolta": "C",
+  "argomenti": ["dataset", "batch", "train-validation-test", "context-window"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
+  "consegna": "Costruisci un dataset next-byte con input e target shiftati, crea batch e documenta uno split train/validation/test che eviti leakage evidente.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

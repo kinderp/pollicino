@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda06-l04-ablation-riproducibilita",
+  "titolo": "Ablation, controlli e riproducibilità scientifica",
+  "tipo": "studio-guidato",
+  "difficolta": "E",
+  "argomenti": ["ablation", "controlli", "riproducibilita", "esperimenti"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-06-codec-ricerca"},
+  "consegna": "Progetta una matrice di ablation con ipotesi scritte prima dell'esecuzione, variabile controllata, metrica primaria e provenienza sufficiente a riprodurre ogni run.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+}

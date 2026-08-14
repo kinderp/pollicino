@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda02-l03-frequenze-probabilita",
+  "titolo": "Dalle frequenze alle probabilità empiriche",
+  "tipo": "studio-guidato",
+  "difficolta": "B",
+  "argomenti": [
+    "frequenze",
+    "probabilita",
+    "istogrammi",
+    "smoothing"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-02-compressione-predizione"
+  },
+  "consegna": "Conta i 256 byte su almeno quattro categorie di file. Stampa i dieci byte più frequenti, la frequenza relativa e l'entropia zero-order. Confronta i grafici o una tabella e annota quali categorie sembrano più prevedibili senza contesto. Consegna risultati e una breve interpretazione collegata alla domanda guida.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {
+    "compila": false,
+    "test": false,
+    "sandbox": false,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 90,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": false
+  },
+  "rubrica": [
+    {
+      "criterio": "Correttezza concettuale o tecnica",
+      "punti": 4
+    },
+    {
+      "criterio": "Evidenze e misure",
+      "punti": 2
+    },
+    {
+      "criterio": "Interpretazione dei risultati",
+      "punti": 2
+    },
+    {
+      "criterio": "Riproducibilita e chiarezza",
+      "punti": 2
+    }
+  ]
+}

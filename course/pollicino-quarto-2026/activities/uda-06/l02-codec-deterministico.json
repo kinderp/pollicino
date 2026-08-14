@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda06-l02-codec-deterministico",
+  "titolo": "Encoder/decoder deterministico e round-trip byte-perfect",
+  "tipo": "laboratorio",
+  "difficolta": "F",
+  "argomenti": ["codec", "determinismo", "round-trip", "quantizzazione-probabilita"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-06-codec-ricerca"},
+  "consegna": "Implementa e testa un encode/decode lossless, inizialmente con modello semplice. Aggiungi una suite di round-trip e documenta la regola che trasforma probabilità in CDF discrete.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 180, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

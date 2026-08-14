@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda04-l03-causal-mask",
+  "titolo": "Maschera causale e previsione autoregressiva",
+  "tipo": "debug-didattico",
+  "difficolta": "D",
+  "argomenti": ["causal-mask", "autoregressivo", "attention", "data-leakage"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-04-transformer"},
+  "consegna": "Confronta attention mascherata e non mascherata. Scrivi test che provino assenza di pesi sul futuro e invarianza delle posizioni passate a perturbazioni future.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 110, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda06-l01-entropy-coder",
+  "titolo": "Dal modello probabilistico al range coder",
+  "tipo": "studio-guidato",
+  "difficolta": "D",
+  "argomenti": ["range-coding", "arithmetic-coding", "probabilita", "entropy-coding"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-06-codec-ricerca"},
+  "consegna": "Simula arithmetic coding su un alfabeto minuscolo, mostra la successione degli intervalli e collega la loro ampiezza al costo informativo della sequenza.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+}

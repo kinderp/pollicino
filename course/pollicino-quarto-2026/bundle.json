@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "id": "pollicino-quarto-2026",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "POLLICINO - Informazione, compressione e modelli predittivi",
   "school_year": "2026/2027",
   "target_class": "4^ secondaria di II grado - Informatica",
@@ -43,27 +43,132 @@
       {
         "id": "uda-02-compressione-predizione",
         "title": "UDA 2 - Compressione come predizione",
-        "order": 2
+        "order": 2,
+        "activities": [
+          "activities/uda-02/l01-rle-ridondanza.json",
+          "activities/uda-02/l02-huffman-codici-prefisso.json",
+          "activities/uda-02/l03-frequenze-probabilita.json",
+          "activities/uda-02/l04-ngram-markov.json",
+          "activities/uda-02/l05-cross-entropy-bpb.json"
+        ],
+        "materials": [
+          "materials/uda-02/l01-rle-ridondanza-docente.md",
+          "materials/uda-02/l02-huffman-codici-prefisso-docente.md",
+          "materials/uda-02/l03-frequenze-probabilita-docente.md",
+          "materials/uda-02/l04-ngram-markov-docente.md",
+          "materials/uda-02/l05-cross-entropy-bpb-docente.md"
+        ],
+        "handouts": [
+          "handouts/uda-02/l01-rle-ridondanza-studenti.md",
+          "handouts/uda-02/l02-huffman-codici-prefisso-studenti.md",
+          "handouts/uda-02/l03-frequenze-probabilita-studenti.md",
+          "handouts/uda-02/l04-ngram-markov-studenti.md",
+          "handouts/uda-02/l05-cross-entropy-bpb-studenti.md"
+        ]
       },
       {
         "id": "uda-03-reti-neurali",
         "title": "UDA 3 - Dalla statistica alle reti neurali",
-        "order": 3
+        "order": 3,
+        "activities": [
+          "activities/uda-03/l01-neurone-logit.json",
+          "activities/uda-03/l02-softmax-probabilita.json",
+          "activities/uda-03/l03-loss-gradiente.json",
+          "activities/uda-03/l04-embedding-byte.json",
+          "activities/uda-03/l05-mlp-next-byte.json"
+        ],
+        "materials": [
+          "materials/uda-03/l01-neurone-logit-docente.md",
+          "materials/uda-03/l02-softmax-probabilita-docente.md",
+          "materials/uda-03/l03-loss-gradiente-docente.md",
+          "materials/uda-03/l04-embedding-byte-docente.md",
+          "materials/uda-03/l05-mlp-next-byte-docente.md"
+        ],
+        "handouts": [
+          "handouts/uda-03/l01-neurone-logit-studenti.md",
+          "handouts/uda-03/l02-softmax-probabilita-studenti.md",
+          "handouts/uda-03/l03-loss-gradiente-studenti.md",
+          "handouts/uda-03/l04-embedding-byte-studenti.md",
+          "handouts/uda-03/l05-mlp-next-byte-studenti.md"
+        ]
       },
       {
         "id": "uda-04-transformer",
         "title": "UDA 4 - Costruire un Transformer",
-        "order": 4
+        "order": 4,
+        "activities": [
+          "activities/uda-04/l01-sequenze-posizioni.json",
+          "activities/uda-04/l02-attention-qkv.json",
+          "activities/uda-04/l03-causal-mask.json",
+          "activities/uda-04/l04-multihead-blocco.json",
+          "activities/uda-04/l05-tiny-transformer.json"
+        ],
+        "materials": [
+          "materials/uda-04/l01-sequenze-posizioni-docente.md",
+          "materials/uda-04/l02-attention-qkv-docente.md",
+          "materials/uda-04/l03-causal-mask-docente.md",
+          "materials/uda-04/l04-multihead-blocco-docente.md",
+          "materials/uda-04/l05-tiny-transformer-docente.md"
+        ],
+        "handouts": [
+          "handouts/uda-04/l01-sequenze-posizioni-studenti.md",
+          "handouts/uda-04/l02-attention-qkv-studenti.md",
+          "handouts/uda-04/l03-causal-mask-studenti.md",
+          "handouts/uda-04/l04-multihead-blocco-studenti.md",
+          "handouts/uda-04/l05-tiny-transformer-studenti.md"
+        ]
       },
       {
         "id": "uda-05-byte-model",
         "title": "UDA 5 - Byte language model con PyTorch e MLX",
-        "order": 5
+        "order": 5,
+        "activities": [
+          "activities/uda-05/l01-dataset-batch.json",
+          "activities/uda-05/l02-pytorch-training.json",
+          "activities/uda-05/l03-validation-overfitting.json",
+          "activities/uda-05/l04-mlx-port.json",
+          "activities/uda-05/l05-benchmark-riproducibile.json"
+        ],
+        "materials": [
+          "materials/uda-05/l01-dataset-batch-docente.md",
+          "materials/uda-05/l02-pytorch-training-docente.md",
+          "materials/uda-05/l03-validation-overfitting-docente.md",
+          "materials/uda-05/l04-mlx-port-docente.md",
+          "materials/uda-05/l05-benchmark-riproducibile-docente.md"
+        ],
+        "handouts": [
+          "handouts/uda-05/l01-dataset-batch-studenti.md",
+          "handouts/uda-05/l02-pytorch-training-studenti.md",
+          "handouts/uda-05/l03-validation-overfitting-studenti.md",
+          "handouts/uda-05/l04-mlx-port-studenti.md",
+          "handouts/uda-05/l05-benchmark-riproducibile-studenti.md"
+        ]
       },
       {
         "id": "uda-06-codec-ricerca",
         "title": "UDA 6 - Codec POLLICINO e ricerca sperimentale",
-        "order": 6
+        "order": 6,
+        "activities": [
+          "activities/uda-06/l01-entropy-coder.json",
+          "activities/uda-06/l02-codec-deterministico.json",
+          "activities/uda-06/l03-benchmark-codec.json",
+          "activities/uda-06/l04-ablation-riproducibilita.json",
+          "activities/uda-06/l05-pollicino-challenge.json"
+        ],
+        "materials": [
+          "materials/uda-06/l01-entropy-coder-docente.md",
+          "materials/uda-06/l02-codec-deterministico-docente.md",
+          "materials/uda-06/l03-benchmark-codec-docente.md",
+          "materials/uda-06/l04-ablation-riproducibilita-docente.md",
+          "materials/uda-06/l05-pollicino-challenge-docente.md"
+        ],
+        "handouts": [
+          "handouts/uda-06/l01-entropy-coder-studenti.md",
+          "handouts/uda-06/l02-codec-deterministico-studenti.md",
+          "handouts/uda-06/l03-benchmark-codec-studenti.md",
+          "handouts/uda-06/l04-ablation-riproducibilita-studenti.md",
+          "handouts/uda-06/l05-pollicino-challenge-studenti.md"
+        ]
       }
     ]
   }

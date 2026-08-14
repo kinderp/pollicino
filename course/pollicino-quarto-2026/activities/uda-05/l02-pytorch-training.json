@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda05-l02-pytorch-training",
+  "titolo": "Reference implementation e training loop in PyTorch",
+  "tipo": "laboratorio",
+  "difficolta": "E",
+  "argomenti": ["pytorch", "training-loop", "optimizer", "checkpoint"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
+  "consegna": "Implementa il training loop PyTorch del tiny Transformer, registra loss/bpb e verifica save/load di un checkpoint su un caso controllato.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 180, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

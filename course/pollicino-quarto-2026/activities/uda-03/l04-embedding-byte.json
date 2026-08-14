@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda03-l04-embedding-byte",
+  "titolo": "Embedding: imparare una rappresentazione dei byte",
+  "tipo": "laboratorio",
+  "difficolta": "B",
+  "argomenti": ["embedding", "vettori", "byte", "rappresentazioni"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
+  "consegna": "Crea un embedding 256xd, indicizza una sequenza di byte e documenta shape, numero di parametri e differenza rispetto all'uso dell'indice come valore continuo.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 100, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+}

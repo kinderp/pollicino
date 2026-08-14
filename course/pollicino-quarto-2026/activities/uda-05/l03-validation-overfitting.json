@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda05-l03-validation-overfitting",
+  "titolo": "Validation, overfitting e scelta del checkpoint",
+  "tipo": "studio-guidato",
+  "difficolta": "C",
+  "argomenti": ["validation", "overfitting", "early-stopping", "learning-curves"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
+  "consegna": "Analizza o produci curve train/validation, seleziona il best checkpoint su validation e spiega perché il test non deve guidare gli iperparametri.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 110, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+}

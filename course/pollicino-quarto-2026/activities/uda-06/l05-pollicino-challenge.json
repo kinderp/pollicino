@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda06-l05-pollicino-challenge",
+  "titolo": "POLLICINO Challenge: dal prototipo al report di ricerca",
+  "tipo": "verifica-pratica",
+  "difficolta": "F",
+  "argomenti": ["progetto-finale", "ricerca", "compressione", "report"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-06-codec-ricerca"},
+  "consegna": "Esegui il protocollo finale su un corpus congelato e consegna codec/test o esperimento equivalente, configurazione, log essenziali, tabella risultati e report con ipotesi, metodo, risultati, limiti e prossimi passi.",
+  "student_support_mode": "senza-aiuto",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": false},
+  "metriche": {"tempo_stimato_minuti": 240, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true},
+  "rubrica": [
+    {"criterio": "Correttezza lossless e test", "punti": 2.5},
+    {"criterio": "Qualita e baseline", "punti": 2.0},
+    {"criterio": "Metodo sperimentale", "punti": 2.0},
+    {"criterio": "Riproducibilita", "punti": 1.5},
+    {"criterio": "Efficienza e trade-off", "punti": 1.0},
+    {"criterio": "Comunicazione e limiti", "punti": 1.0}
+  ]
+}

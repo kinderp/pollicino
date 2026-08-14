@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda02-l04-ngram-markov",
+  "titolo": "Contesto, n-gram e modelli di Markov",
+  "tipo": "laboratorio",
+  "difficolta": "C",
+  "argomenti": [
+    "ngram",
+    "markov",
+    "contesto",
+    "next-byte-prediction"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-02-compressione-predizione"
+  },
+  "consegna": "Costruisci un contatore bigramma 256x256. Per ogni byte precedente, stima la distribuzione del successivo con smoothing. Calcola la cross-entropy sul file di test. Se vuoi estendere, prova trigrammi con un dizionario sparso e confronta memoria e qualità. Consegna risultati e una breve interpretazione collegata alla domanda guida.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {
+    "compila": true,
+    "test": true,
+    "sandbox": true,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 120,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": true
+  },
+  "rubrica": [
+    {
+      "criterio": "Correttezza concettuale o tecnica",
+      "punti": 4
+    },
+    {
+      "criterio": "Evidenze e misure",
+      "punti": 2
+    },
+    {
+      "criterio": "Interpretazione dei risultati",
+      "punti": 2
+    },
+    {
+      "criterio": "Riproducibilita e chiarezza",
+      "punti": 2
+    }
+  ]
+}
