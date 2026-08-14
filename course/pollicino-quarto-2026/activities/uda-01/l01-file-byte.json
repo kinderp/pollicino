@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda01-l01-file-byte",
+  "titolo": "Dal file ai bit e ai byte",
+  "tipo": "studio-guidato",
+  "difficolta": "A",
+  "argomenti": [
+    "bit",
+    "byte",
+    "binario",
+    "esadecimale",
+    "file"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-01-informazione"
+  },
+  "consegna": "Studia l'handout della lezione, ispeziona in Python i primi byte di almeno tre tipi di file e rispondi alle domande finali spiegando la differenza tra rappresentazione binaria e significato del file.",
+  "correzione": {
+    "compila": false,
+    "test": false,
+    "sandbox": false,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 90,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": false
+  }
+}

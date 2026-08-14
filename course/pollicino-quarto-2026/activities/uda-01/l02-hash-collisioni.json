@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "id": "pollicino-uda01-l02-hash-collisioni",
+  "titolo": "Hash, collisioni e principio dei cassetti",
+  "tipo": "studio-guidato",
+  "difficolta": "B",
+  "argomenti": [
+    "hash",
+    "sha-256",
+    "collisioni",
+    "principio-dei-cassetti",
+    "cardinalita"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-01-informazione"
+  },
+  "consegna": "Usa l'handout per dimostrare con un esempio finito perché un digest corto non può identificare senza ambiguità tutti gli input di un dominio più grande; calcola poi SHA-256 di un piccolo file prima e dopo una modifica.",
+  "correzione": {
+    "compila": false,
+    "test": false,
+    "sandbox": false,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 90,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": false
+  }
+}
