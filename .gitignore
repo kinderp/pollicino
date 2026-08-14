@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.DS_Store
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Research artifacts: commit manifests/configs, not large generated data/checkpoints
+*.pt
+*.pth
+*.safetensors
+*.npz
+*.npy
+checkpoints/
+data/raw/
+data/cache/
+benchmarks/results/raw/
