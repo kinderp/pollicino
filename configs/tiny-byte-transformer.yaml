@@ -1,0 +1,24 @@
+experiment:
+  name: tiny-byte-transformer
+  seed: 1337
+
+model:
+  vocabulary_size: 256
+  context_length: 256
+  layers: 4
+  hidden_size: 256
+  attention_heads: 4
+  mlp_ratio: 4
+  normalization: rmsnorm
+  position_encoding: rope
+  tie_embeddings: true
+
+training:
+  batch_size: 16
+  learning_rate: 0.0003
+  optimizer: adamw
+  max_steps: 1000
+
+evaluation:
+  report_bits_per_byte: true
+  require_lossless_roundtrip: true
