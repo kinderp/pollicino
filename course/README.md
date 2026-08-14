@@ -8,6 +8,24 @@ The course is built around one question that grows with the students:
 
 The story of Pollicino supplies the metaphor: the goal is not to leave no trace, but to leave the **smallest useful trail**.
 
+## Authoritative 2cornot2c bundle
+
+The school-year course is maintained as a self-contained TheBitLab / `2cornot2c` bundle in:
+
+```text
+course/pollicino-quarto-2026/
+```
+
+Its `bundle.json` is the machine-readable course manifest. Each populated UDA keeps three synchronized views:
+
+```text
+activities/  -> TheBitLab activity metadata and metrics
+handouts/    -> student-facing theory, examples and exercises
+materials/   -> teacher/scientific theory, derivations and teaching notes
+```
+
+See [`pollicino-quarto-2026/AUTHORING.md`](pollicino-quarto-2026/AUTHORING.md) for the synchronization rules.
+
 ## Course sequence
 
 1. **Files are bits** — bytes, hexadecimal representation, file size.
@@ -31,4 +49,4 @@ The story of Pollicino supplies the metaphor: the goal is not to leave no trace,
 
 Every mathematical idea must answer a concrete programming question. Every major abstraction is first implemented in a simplified form before using the framework implementation.
 
-The scientific implementation lives in `src/`; classroom notebooks, visualizations and simplified exercises live under this directory.
+The scientific implementation lives in `src/`; the course bundle translates the same concepts into classroom-ready lessons without changing the underlying mathematics.
