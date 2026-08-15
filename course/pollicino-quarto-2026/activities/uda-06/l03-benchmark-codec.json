@@ -1,13 +1,1 @@
-{
-  "schema_version": "1.0",
-  "id": "pollicino-uda06-l03-benchmark-codec",
-  "titolo": "Benchmark reale: payload, header, modello e baselines",
-  "tipo": "laboratorio",
-  "difficolta": "E",
-  "argomenti": ["compression-ratio", "codec-overhead", "baseline", "benchmark"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-06-codec-ricerca"},
-  "consegna": "Costruisci una tabella di benchmark reale sullo stesso corpus includendo dimensione, bpb ideale/reale, tempi, round-trip e almeno tre baseline/scenari confrontabili.",
-  "student_support_mode": "ai-assisted",
-  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 150, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
-}
+{"schema_version":"1.0","id":"pollicino-uda06-l03-benchmark-codec","titolo":"Benchmark reale: payload, header, modello e baselines","tipo":"laboratorio","difficolta":"E","linguaggio":"python","source_name":"main.py","argomenti":["compression-ratio","codec-overhead","baseline","benchmark","bits-per-byte"],"contesto":{"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-06-codec-ricerca"},"consegna":"Costruisci un benchmark sullo stesso input confrontando raw, POL static, gzip, bz2, lzma e zlib. Misura dimensione completa e bpb reale, verifica il round-trip e discuti casi in cui il payload migliora ma header e metadati annullano il vantaggio.","student_support_mode":"ai-assisted","assets":[{"type":"starter","path":"l03/starter/main.py","target_path":"main.py","visibility":"student"},{"type":"visible_test","path":"l03/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student"},{"type":"hidden_test","path":"l03/tests/test_hidden.py","visibility":"teacher"},{"type":"teacher_only","path":"l03/teacher/solution.py","visibility":"teacher"},{"type":"fixture","path":"l03/fixtures/corpus.txt","target_path":"fixtures/corpus.txt","visibility":"student"},{"type":"example","path":"l03/support/pol_format.py","target_path":"support/pol_format.py","visibility":"student"},{"type":"example","path":"l03/support/range_coder.py","target_path":"support/range_coder.py","visibility":"student"},{"type":"example","path":"l03/support/reference_codec.py","target_path":"support/reference_codec.py","visibility":"student"}],"correzione":{"compila":true,"test":true,"sandbox":true,"ai_feedback":true},"metriche":{"tempo_stimato_minuti":150,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},"rubrica":[{"criterio":"Correttezza lossless e test","punti":4},{"criterio":"Misure/esperimento","punti":2},{"criterio":"Interpretazione e limiti","punti":2},{"criterio":"Riproducibilita e chiarezza","punti":2}]}

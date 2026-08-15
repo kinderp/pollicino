@@ -1,0 +1,1 @@
+{"project":"pollicino","lossless":true,"alphabet":256,"backends":["pytorch","mlx"],"challenge":2026}

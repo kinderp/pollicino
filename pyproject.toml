@@ -9,6 +9,9 @@ description = "Research and teaching platform for learned lossless compression a
 requires-python = ">=3.11"
 dependencies = []
 
+[project.scripts]
+pollicino = "pollicino.compression.cli:main"
+
 [project.optional-dependencies]
 research = ["numpy", "pyyaml"]
 pytorch = ["torch"]

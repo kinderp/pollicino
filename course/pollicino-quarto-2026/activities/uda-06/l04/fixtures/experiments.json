@@ -1,0 +1,6 @@
+[
+{"id":"base","dataset_hash":"abc","model":"static","precision_bits":15,"seed":1337,"bpb":4.20},
+{"id":"p12","dataset_hash":"abc","model":"static","precision_bits":12,"seed":1337,"bpb":4.23},
+{"id":"model-order1","dataset_hash":"abc","model":"order1","precision_bits":15,"seed":1337,"bpb":3.10},
+{"id":"bad-two-vars","dataset_hash":"abc","model":"order1","precision_bits":12,"seed":1337,"bpb":3.15}
+]
