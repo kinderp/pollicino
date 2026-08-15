@@ -1,0 +1,2 @@
+POLLICINO
+Un file non e il suo nome: e una sequenza di byte.

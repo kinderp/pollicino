@@ -4,30 +4,27 @@
   "titolo": "Entropia di Shannon e baseline uniforme",
   "tipo": "laboratorio",
   "difficolta": "B",
-  "argomenti": [
-    "entropia",
-    "shannon",
-    "bits-per-byte",
-    "frequenze",
-    "baseline"
+  "linguaggio": "python",
+  "argomenti": ["entropia", "shannon", "bits-per-byte", "frequenze", "baseline"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-01-informazione"},
+  "consegna": "Completa il calcolo delle frequenze e dell'entropia zero-order. Verifica che il modello uniforme costi sempre 8 bit/byte, misura l'entropia sulle quattro fixture e realizza un round-trip byte-perfect controllando SHA-256 prima e dopo. Consegna una tabella con dimensione, entropia e interpretazione.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true},
+  "assets": [
+    {"type":"starter","path":"l04/starter/main.py","target_path":"main.py","visibility":"student"},
+    {"type":"visible_test","path":"l04/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student"},
+    {"type":"hidden_test","path":"l04/tests/test_hidden.py","visibility":"teacher"},
+    {"type":"fixture","path":"l04/fixtures/repetitive.txt","target_path":"fixtures/repetitive.txt","visibility":"student"},
+    {"type":"fixture","path":"l04/fixtures/italian.txt","target_path":"fixtures/italian.txt","visibility":"student"},
+    {"type":"fixture","path":"l04/fixtures/records.csv","target_path":"fixtures/records.csv","visibility":"student"},
+    {"type":"fixture","path":"l04/fixtures/config.json","target_path":"fixtures/config.json","visibility":"student"},
+    {"type":"teacher_only","path":"l04/teacher/solution.py","visibility":"teacher"}
   ],
-  "contesto": {
-    "classe": "4^",
-    "percorso": "pollicino-quarto-2026",
-    "uda": "uda-01-informazione"
-  },
-  "consegna": "Esegui la baseline uniforme di POLLICINO su file appartenenti ad almeno quattro categorie, verifica gli 8 bit/byte e confronta le frequenze empiriche dei byte. Consegna una breve interpretazione dei risultati.",
-  "correzione": {
-    "compila": false,
-    "test": false,
-    "sandbox": false,
-    "ai_feedback": true
-  },
-  "metriche": {
-    "tempo_stimato_minuti": 120,
-    "traccia_tempo_dichiarato": true,
-    "traccia_sessioni_thebitlab": true,
-    "traccia_eventi_didattici": true,
-    "traccia_errori_compilazione": false
-  }
+  "rubrica": [
+    {"criterio":"Correttezza concettuale o tecnica","punti":4},
+    {"criterio":"Test e casi limite","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Chiarezza e riproducibilita","punti":2}
+  ]
 }

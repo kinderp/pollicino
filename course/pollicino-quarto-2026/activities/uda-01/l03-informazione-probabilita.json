@@ -4,29 +4,24 @@
   "titolo": "Probabilita, sorpresa e informazione",
   "tipo": "esercizio-classe",
   "difficolta": "B",
-  "argomenti": [
-    "probabilita",
-    "logaritmi",
-    "self-information",
-    "bit"
+  "linguaggio": "python",
+  "argomenti": ["probabilita", "logaritmi", "self-information", "bit"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-01-informazione"},
+  "consegna": "Implementa `information_bits(p) = -log2(p)`, verifica i casi notevoli con i test e usa il CSV fornito per costruire una tabella probabilita -> informazione. Concludi spiegando perché un evento meno probabile richiede piu bit in un codice ideale.",
+  "student_support_mode": "feedback-tecnico",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 90, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true},
+  "assets": [
+    {"type":"starter","path":"l03/starter/main.py","target_path":"main.py","visibility":"student"},
+    {"type":"visible_test","path":"l03/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student"},
+    {"type":"hidden_test","path":"l03/tests/test_hidden.py","visibility":"teacher"},
+    {"type":"fixture","path":"l03/fixtures/probabilities.csv","target_path":"fixtures/probabilities.csv","visibility":"student"},
+    {"type":"teacher_only","path":"l03/teacher/solution.py","visibility":"teacher"}
   ],
-  "contesto": {
-    "classe": "4^",
-    "percorso": "pollicino-quarto-2026",
-    "uda": "uda-01-informazione"
-  },
-  "consegna": "Calcola la quantità di informazione -log2(p) per le probabilità proposte nell'handout, verifica i risultati con Python e spiega con parole tue il legame tra probabilità alta e costo informativo basso.",
-  "correzione": {
-    "compila": false,
-    "test": false,
-    "sandbox": false,
-    "ai_feedback": true
-  },
-  "metriche": {
-    "tempo_stimato_minuti": 90,
-    "traccia_tempo_dichiarato": true,
-    "traccia_sessioni_thebitlab": true,
-    "traccia_eventi_didattici": true,
-    "traccia_errori_compilazione": false
-  }
+  "rubrica": [
+    {"criterio":"Correttezza concettuale o tecnica","punti":4},
+    {"criterio":"Test e casi limite","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Chiarezza e riproducibilita","punti":2}
+  ]
 }

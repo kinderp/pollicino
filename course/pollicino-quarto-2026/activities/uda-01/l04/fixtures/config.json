@@ -1,0 +1,14 @@
+{
+  "project": "pollicino",
+  "alphabet": 256,
+  "lossless": true,
+  "backends": [
+    "pytorch",
+    "mlx"
+  ],
+  "experiment": {
+    "seed": 42,
+    "context": 128,
+    "model": "uniform"
+  }
+}

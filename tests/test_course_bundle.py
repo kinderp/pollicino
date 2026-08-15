@@ -18,7 +18,7 @@ def test_pollicino_bundle_uses_2cornot2c_manifest_version() -> None:
     assert bundle["schema_version"] == "1.0.0"
     assert bundle["id"] == "pollicino-quarto-2026"
     assert bundle["language"] == "it"
-    assert bundle["version"] == "0.2.0"
+    assert bundle["version"] == "0.3.0"
 
 
 def test_course_has_six_ordered_udas_and_29_lessons() -> None:
@@ -47,11 +47,9 @@ def test_every_populated_uda_keeps_student_teacher_activity_parity() -> None:
         activities = unit.get("activities", [])
         handouts = unit.get("handouts", [])
         materials = unit.get("materials", [])
-
         assert activities, unit["id"]
         assert len(handouts) == len(activities), unit["id"]
         assert len(materials) == len(activities), unit["id"]
-
         for relative in activities:
             activity = json.loads((BUNDLE_ROOT / relative).read_text(encoding="utf-8"))
             assert activity["schema_version"] == "1.0"
@@ -67,3 +65,36 @@ def test_lesson_file_names_are_paired_by_number() -> None:
         handouts = unit["handouts"]
         assert [Path(p).name[:3] for p in activities] == [Path(p).name[:3] for p in materials]
         assert [Path(p).name[:3] for p in activities] == [Path(p).name[:3] for p in handouts]
+
+
+def test_declared_activity_assets_exist_below_activity_folder() -> None:
+    bundle = load_bundle()
+    for unit in bundle["content"]["units"]:
+        for relative in unit.get("activities", []):
+            activity_path = BUNDLE_ROOT / relative
+            activity = json.loads(activity_path.read_text(encoding="utf-8"))
+            for asset in activity.get("assets", []):
+                asset_path = Path(asset["path"])
+                assert not asset_path.is_absolute()
+                assert ".." not in asset_path.parts
+                resolved = (activity_path.parent / asset_path).resolve()
+                resolved.relative_to(activity_path.parent.resolve())
+                assert resolved.is_file(), f"{relative}: {asset['path']}"
+
+
+def test_uda01_operational_packages_have_student_and_teacher_assets() -> None:
+    bundle = load_bundle()
+    uda = next(unit for unit in bundle["content"]["units"] if unit["id"] == "uda-01-informazione")
+    assert uda["media"] == ["notebooks/uda-01/pollicino-uda01-lab.ipynb"]
+    for relative in uda["activities"]:
+        activity = json.loads((BUNDLE_ROOT / relative).read_text(encoding="utf-8"))
+        assets = activity.get("assets", [])
+        types = {asset["type"] for asset in assets}
+        assert "starter" in types
+        assert "visible_test" in types
+        assert "hidden_test" in types
+        assert "teacher_only" in types
+        assert any(asset["type"] == "fixture" for asset in assets)
+        for asset in assets:
+            if asset["type"] in {"hidden_test", "teacher_only", "runner"}:
+                assert asset.get("visibility") == "teacher"
