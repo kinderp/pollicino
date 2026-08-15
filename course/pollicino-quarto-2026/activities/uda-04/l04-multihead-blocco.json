@@ -1,13 +1,6 @@
 {
-  "schema_version": "1.0",
-  "id": "pollicino-uda04-l04-multihead-blocco",
-  "titolo": "Multi-head attention, residual, normalization e feed-forward",
-  "tipo": "studio-guidato",
-  "difficolta": "C",
-  "argomenti": ["multi-head-attention", "residual", "layernorm", "feed-forward"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-04-transformer"},
-  "consegna": "Costruisci o analizza un blocco Transformer pre-norm, verifica shape input/output e conta i parametri delle componenti principali.",
-  "student_support_mode": "studio-guidato",
-  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+ "schema_version":"1.0","id":"pollicino-uda04-l04-multihead-blocco","titolo":"Multi-head attention, residual, normalization e feed-forward","tipo":"laboratorio","difficolta":"D","linguaggio":"python","source_name":"main.py",
+ "argomenti":["multi-head-attention","rmsnorm","residual","feed-forward","transformer-block"],"contesto":{"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-04-transformer"},"consegna":"Costruisci un Transformer block pre-norm con due head, RMSNorm, residual connection e feed-forward. Verifica shape e causalità del blocco completo.","student_support_mode":"ai-assisted",
+ "assets":[{"type":"starter","path":"l04/starter/main.py","target_path":"main.py","visibility":"student"},{"type":"visible_test","path":"l04/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student"},{"type":"hidden_test","path":"l04/tests/test_hidden.py","target_path":"tests/test_hidden.py","visibility":"teacher"},{"type":"teacher_only","path":"l04/teacher/solution.py","target_path":"solution.py","visibility":"teacher"},{"type":"fixture","path":"l04/fixtures/block_input.json","target_path":"fixtures/block_input.json","visibility":"student"}],
+ "correzione":{"compila":true,"test":true,"sandbox":true,"ai_feedback":true},"metriche":{"tempo_stimato_minuti":150,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},"rubrica":[{"criterio":"Correttezza matematica e implementativa","punti":4},{"criterio":"Test di shape/causalità","punti":2},{"criterio":"Interpretazione delle matrici e dei risultati","punti":2},{"criterio":"Chiarezza e riproducibilità","punti":2}]
 }

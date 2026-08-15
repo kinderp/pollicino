@@ -4,7 +4,7 @@ POLLICINO usa la costruzione di un compressore lossless byte-level come filo con
 
 **Domanda annuale:** *come possiamo inviare meno bit e ricostruire esattamente lo stesso file?*
 
-Il percorso ufficiale importabile in 2cornot2c è `course/pollicino-quarto-2026/bundle.json`. Ogni lezione mantiene tre livelli sincronizzati: activity machine-readable, handout studenti e materiale docente/scientifico.
+Il percorso ufficiale importabile in 2cornot2c è `course/pollicino-quarto-2026/bundle.json`. Ogni lezione mantiene activity machine-readable, handout studenti e materiale docente/scientifico.
 
 ## Mappa del corso
 
@@ -13,32 +13,38 @@ Il percorso ufficiale importabile in 2cornot2c è `course/pollicino-quarto-2026/
 | 1 | Informazione, bit, probabilità ed entropia | 4 | laboratorio completo |
 | 2 | Compressione come predizione | 5 | laboratorio completo |
 | 3 | Dalla statistica alle reti neurali | 5 | laboratorio completo |
-| 4 | Costruire un Transformer | 5 | teoria/bozza |
+| 4 | Costruire un Transformer | 5 | laboratorio completo |
 | 5 | Byte language model con PyTorch e MLX | 5 | teoria/bozza |
 | 6 | Codec POLLICINO e ricerca sperimentale | 5 | teoria/bozza |
 
-## UDA 3 — dal modello statistico al modello neurale
+## UDA 4 — il Transformer non è magia
 
-La UDA 3 resta volutamente **senza framework ML**. Gli studenti costruiscono a mano:
+La UDA 4 resta volutamente **senza framework ML** e costruisce il forward pass a mano:
 
 ```text
-funzione affine -> logits -> softmax -> cross-entropy
--> gradiente -> embedding -> MLP next-byte
+byte + posizione
+-> Q/K/V
+-> scaled dot-product attention
+-> causal mask
+-> multi-head attention
+-> RMSNorm + residual
+-> feed-forward
+-> Tiny Byte Transformer
+-> 256 logits
 ```
 
-Ogni activity operativa usa starter Python, fixture, test pubblici, test nascosti e soluzione docente. Il notebook comune è `notebooks/uda-03/pollicino-uda03-lab.ipynb`.
+Il test più importante è il **future-leakage test**: cambiare il futuro non deve modificare gli output del prefisso. Il Tiny Transformer didattico finale ha 4.696 parametri nella configurazione di riferimento e, prima dell'addestramento, resta vicino alla baseline uniforme di 8 bit/byte.
 
-Il quinto laboratorio contiene un piccolo MLP byte-level con embedding, hidden `tanh`, 256 logits e SGD/backprop manuale. L'obiettivo non è la velocità, ma rendere visibile ciò che PyTorch automatizzerà nella UDA 5.
+L'addestramento del Transformer non viene duplicato qui: passa alla UDA 5, dove la stessa architettura sarà implementata in PyTorch e MLX.
 
 ## Principi didattici
 
-- Ogni idea matematica deve rispondere a una domanda concreta di programmazione o compressione.
-- Prima si costruisce o si osserva un caso piccolo, poi si introduce l'astrazione del framework.
-- La metrica comune è la probabilità assegnata al byte corretto, trasformata in negative log-likelihood e bits-per-byte.
-- Un risultato di compressione è valido solo se il decoder ricostruisce esattamente l'input.
-- Train, validation e test hanno ruoli distinti.
-- PyTorch e MLX sono backend di una stessa specifica concettuale, non due corsi separati.
+- Ogni astrazione viene costruita prima in piccolo.
+- Shape, causalità e probabilità sono invarianti verificati dai test.
+- `1/sqrt(d_k)` e softmax stabile sono parte dell'algoritmo, non dettagli cosmetici.
+- La causal mask è un requisito di correttezza: un modello che vede il futuro falsa loss e bpb.
+- PyTorch e MLX arriveranno solo dopo che gli oggetti matematici sono riconoscibili.
 
 ## Stato editoriale
 
-La versione `0.5.0` mantiene la bozza completa del percorso annuale e rende operative end-to-end le UDA 1–3. Esempi, durata, esercizi e rubriche restano volutamente rifinibili durante il corso, mantenendo stabili gli ID.
+La versione `0.6.0` rende operative end-to-end le UDA 1–4. Esempi, tempi e rubriche restano rifinibili mantenendo stabili gli ID.
