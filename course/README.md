@@ -4,52 +4,41 @@ POLLICINO usa la costruzione di un compressore lossless byte-level come filo con
 
 **Domanda annuale:** *come possiamo inviare meno bit e ricostruire esattamente lo stesso file?*
 
-Il percorso ufficiale importabile in 2cornot2c è `course/pollicino-quarto-2026/bundle.json`. Ogni lezione viene mantenuta su due livelli sincronizzati: `handouts/` per gli studenti e `materials/` per il docente/approfondimento scientifico. Le attività tracciabili sono in `activities/`.
+Il percorso ufficiale importabile in 2cornot2c è `course/pollicino-quarto-2026/bundle.json`. Ogni lezione mantiene tre livelli sincronizzati: activity machine-readable, handout studenti e materiale docente/scientifico.
 
 ## Mappa del corso
 
-| UDA | Tema | Lezioni |
-|---|---|---:|
-| 1 | Informazione, bit, probabilità ed entropia | 4 |
-| 2 | Compressione come predizione | 5 |
-| 3 | Dalla statistica alle reti neurali | 5 |
-| 4 | Costruire un Transformer | 5 |
-| 5 | Byte language model con PyTorch e MLX | 5 |
-| 6 | Codec POLLICINO e ricerca sperimentale | 5 |
+| UDA | Tema | Lezioni | Stato operativo |
+|---|---|---:|---|
+| 1 | Informazione, bit, probabilità ed entropia | 4 | laboratorio completo |
+| 2 | Compressione come predizione | 5 | laboratorio completo |
+| 3 | Dalla statistica alle reti neurali | 5 | laboratorio completo |
+| 4 | Costruire un Transformer | 5 | teoria/bozza |
+| 5 | Byte language model con PyTorch e MLX | 5 | teoria/bozza |
+| 6 | Codec POLLICINO e ricerca sperimentale | 5 | teoria/bozza |
 
-## UDA operative
+## UDA 3 — dal modello statistico al modello neurale
 
-### UDA 1 — fondamenta dell'informazione
-Dalla versione `0.3.0`, le quattro activity della UDA 1 includono starter Python, fixture, test pubblici, test nascosti, soluzioni docente e notebook comune.
+La UDA 3 resta volutamente **senza framework ML**. Gli studenti costruiscono a mano:
 
-### UDA 2 — compressione come predizione
-Dalla versione `0.4.0`, anche le cinque activity della UDA 2 sono eseguibili end-to-end:
-
-- RLE con codec reale e round-trip;
-- Huffman canonico con payload bit-packed e stima del costo del codebook;
-- modello zero-order con entropia, cross-entropy e smoothing;
-- n-gram/Markov con train/test separati e contesti mai visti;
-- benchmark uniforme/0-gram/1-gram/2-gram/3-gram in bits-per-byte.
-
-Il notebook comune è `notebooks/uda-02/pollicino-uda02-lab.ipynb`.
-
-Tutti i laboratori delle UDA 1 e 2 usano esclusivamente la libreria standard Python:
-
-```bash
-python -m unittest discover -s tests -v
+```text
+funzione affine -> logits -> softmax -> cross-entropy
+-> gradiente -> embedding -> MLP next-byte
 ```
+
+Ogni activity operativa usa starter Python, fixture, test pubblici, test nascosti e soluzione docente. Il notebook comune è `notebooks/uda-03/pollicino-uda03-lab.ipynb`.
+
+Il quinto laboratorio contiene un piccolo MLP byte-level con embedding, hidden `tanh`, 256 logits e SGD/backprop manuale. L'obiettivo non è la velocità, ma rendere visibile ciò che PyTorch automatizzerà nella UDA 5.
 
 ## Principi didattici
 
 - Ogni idea matematica deve rispondere a una domanda concreta di programmazione o compressione.
-- Prima si costruisce un caso piccolo, poi si introduce l'astrazione del framework.
-- La metrica comune è la probabilità del byte corretto trasformata in negative log-likelihood e bits-per-byte.
-- Un risultato lossless è valido solo se il decoder ricostruisce esattamente l'input quando esiste un encoder.
+- Prima si costruisce o si osserva un caso piccolo, poi si introduce l'astrazione del framework.
+- La metrica comune è la probabilità assegnata al byte corretto, trasformata in negative log-likelihood e bits-per-byte.
+- Un risultato di compressione è valido solo se il decoder ricostruisce esattamente l'input.
 - Train, validation e test hanno ruoli distinti.
-- PyTorch e MLX sono backend della stessa specifica concettuale.
+- PyTorch e MLX sono backend di una stessa specifica concettuale, non due corsi separati.
 
 ## Stato editoriale
 
-La versione `0.4.0` mantiene la bozza completa delle 29 lezioni annuali e rende operative end-to-end le UDA 1 e 2. Contenuti ed esempi possono essere raffinati durante il corso mantenendo stabili gli ID.
-
-Vedi `pollicino-quarto-2026/AUTHORING.md` per il contratto di sincronizzazione.
+La versione `0.5.0` mantiene la bozza completa del percorso annuale e rende operative end-to-end le UDA 1–3. Esempi, durata, esercizi e rubriche restano volutamente rifinibili durante il corso, mantenendo stabili gli ID.

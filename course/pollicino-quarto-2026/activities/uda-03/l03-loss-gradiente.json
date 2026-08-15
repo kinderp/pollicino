@@ -2,12 +2,26 @@
   "schema_version": "1.0",
   "id": "pollicino-uda03-l03-loss-gradiente",
   "titolo": "Cross-entropy, gradiente e discesa del gradiente",
-  "tipo": "studio-guidato",
+  "tipo": "laboratorio",
   "difficolta": "C",
-  "argomenti": ["cross-entropy", "gradiente", "gradient-descent", "backpropagation"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
-  "consegna": "Ottimizza una funzione quadratica con discesa del gradiente, prova più learning rate e descrivi il ruolo distinto di loss, gradiente, backpropagation e optimizer.",
-  "student_support_mode": "studio-guidato",
-  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+  "linguaggio": "python",
+  "argomenti": ["cross-entropy","gradiente","gradient-descent","backpropagation"],
+  "contesto": {"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-03-reti-neurali"},
+  "consegna": "Implementa cross-entropy, gradiente rispetto ai logits, gradiente numerico e una discesa del gradiente scalare. Confronta gradiente analitico e numerico e prova più learning rate.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {"compila":true,"test":true,"sandbox":true,"ai_feedback":true},
+  "metriche": {"tempo_stimato_minuti":110,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},
+  "assets": [
+    {"type":"starter","path":"l03/starter/main.py","target_path":"main.py","visibility":"student","description":"Starter Python"},
+    {"type":"visible_test","path":"l03/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student","description":"Test pubblici"},
+    {"type":"hidden_test","path":"l03/tests/test_hidden.py","visibility":"teacher","description":"Test nascosti docente"},
+    {"type":"fixture","path":"l03/fixtures/learning_rates.csv","target_path":"fixtures/learning_rates.csv","visibility":"student"},
+    {"type":"teacher_only","path":"l03/teacher/solution.py","visibility":"teacher","description":"Soluzione di riferimento"}
+  ],
+  "rubrica": [
+    {"criterio":"Correttezza concettuale o tecnica","punti":4},
+    {"criterio":"Test e casi limite","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Chiarezza e riproducibilita","punti":2}
+  ]
 }
