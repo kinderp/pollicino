@@ -1,0 +1,31 @@
+{
+  "dataset_id": "pollicino-self-v2-clean-git",
+  "generated_in_clean_checkout": "6cafec9ee902cf9cf99e1616d367964d61a9b66e",
+  "recipe": "experiments/pilot-001/prepare_data.py",
+  "selection": {
+    "prefixes": [
+      "course/pollicino-quarto-2026/activities/uda-05/",
+      "course/pollicino-quarto-2026/activities/uda-06/",
+      "src/pollicino/",
+      "docs/research/"
+    ],
+    "exact": [
+      "course/README.md",
+      "course/pollicino-quarto-2026/bundle.json",
+      "pyproject.toml"
+    ],
+    "split": "sha256(path) mod 100: 0-79 train, 80-89 validation, 90-99 test"
+  },
+  "splits": {
+    "train": {"files":72,"bytes":104189,"sha256":"6965b8665eaa4cfcf20703438adce522d6480401f0f608974a9f29ee9409a57c"},
+    "validation": {"files":8,"bytes":11742,"sha256":"575a1cbfd3544229a633408a23a86f5a72b006461cc443a8a7d82b7b11cfc5ec"},
+    "test": {"files":11,"bytes":15424,"sha256":"07c5a0a5c13a35a413a9eb0e94ee9926c8506754aafc5598e7e7e424a00d5d99"}
+  },
+  "pilot001_002_recorded_splits": {
+    "train": {"bytes":120539,"sha256":"eeeb4d5b4ed4b61bae10dfb07ba9425a9e984bb2055dee7d0fdab4e9952c52e8"},
+    "validation": {"bytes":14256,"sha256":"0b4304b27ce5c90055785b6ef6cb97c27a6cf7de030a63f5b6412e5f987f69b8"},
+    "test": {"bytes":12711,"sha256":"3ac9c682bacb359197c5070388509281ac49e775723805304dba341338b88a33"}
+  },
+  "drift_from_pilot001_002": true,
+  "full_file_level_manifest_artifact_digest": "sha256:72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5"
+}

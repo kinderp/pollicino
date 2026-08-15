@@ -1,0 +1,69 @@
+{
+  "experiment_id": "pilot-003-crossing-line",
+  "dataset": {
+    "id": "pollicino-self-v2-clean-git",
+    "splits": {
+      "train": {"bytes": 104189, "sha256": "6965b8665eaa4cfcf20703438adce522d6480401f0f608974a9f29ee9409a57c"},
+      "validation": {"bytes": 11742, "sha256": "575a1cbfd3544229a633408a23a86f5a72b006461cc443a8a7d82b7b11cfc5ec"},
+      "test": {"bytes": 15424, "sha256": "07c5a0a5c13a35a413a9eb0e94ee9926c8506754aafc5598e7e7e424a00d5d99"}
+    },
+    "pilot001_002_drift_detected": true
+  },
+  "quick": [
+    {"name":"m64-l3","parameter_count":135616,"best_validation_bpb":3.809681978001494},
+    {"name":"m80-l2","parameter_count":148096,"best_validation_bpb":3.8166204003850117},
+    {"name":"m72-l2","parameter_count":124096,"best_validation_bpb":3.8368559986672164},
+    {"name":"m64-l2","parameter_count":102144,"best_validation_bpb":3.9632900199131083},
+    {"name":"m56-l2","parameter_count":82240,"best_validation_bpb":4.028170143078331},
+    {"name":"m48-l2-control","parameter_count":64384,"best_validation_bpb":4.044748516853794}
+  ],
+  "confirmation": [
+    {"name":"m80-l2","parameter_count":148096,"seeds":[1337,2026,4242],"mean_validation_bpb":2.9767469120977763,"stdev_validation_bpb":0.024400267277231547,"mean_train_seconds":6.595011229333333},
+    {"name":"m64-l3","parameter_count":135616,"seeds":[1337,2026,4242],"mean_validation_bpb":3.1300082149275803,"stdev_validation_bpb":0.04528032605112392,"mean_train_seconds":7.502347380333333}
+  ],
+  "winner": {
+    "name": "m80-l2",
+    "spec": {"vocab_size":256,"context_length":32,"d_model":80,"n_heads":4,"n_layers":2,"d_ff":160,"layer_norm_eps":1e-05},
+    "parameter_count": 148096,
+    "seed": 1337,
+    "steps": 500,
+    "best_validation_bpb": 2.4254464564940563,
+    "best_step": 500,
+    "test_bpb_256_windows": 2.0030853233627517,
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+    "checkpoint_bytes": 600933
+  },
+  "precision_sweep_2048": [
+    {"precision_bits":12,"float_model_bpb":1.7056331002101908,"quantized_ideal_bpb":1.7919512773929303},
+    {"precision_bits":13,"float_model_bpb":1.7056331002101908,"quantized_ideal_bpb":1.747793351784369},
+    {"precision_bits":14,"float_model_bpb":1.7056331002101908,"quantized_ideal_bpb":1.726663032180707},
+    {"precision_bits":15,"float_model_bpb":1.7056331002101908,"quantized_ideal_bpb":1.7160549281689594},
+    {"precision_bits":16,"float_model_bpb":1.7056331002101908,"quantized_ideal_bpb":1.7108770456175342},
+    {"precision_bits":17,"float_model_bpb":1.7056331002101908,"quantized_ideal_bpb":1.7082466933576206},
+    {"precision_bits":18,"float_model_bpb":1.7056331002101908,"quantized_ideal_bpb":1.7069406898493873}
+  ],
+  "selected_precision_bits": 18,
+  "size_sweep": [
+    {"bytes":512,"payload_bpb":1.982421875,"pol1_bpb":3.421875,"compact_safe_bpb":2.9375,"compact128_bpb":2.6875,"zlib_bpb":4.515625,"gzip_bpb":4.703125,"zstd19_bpb":4.671875},
+    {"bytes":1024,"payload_bpb":2.0712890625,"pol1_bpb":2.796875,"compact_safe_bpb":2.5546875,"compact128_bpb":2.4296875,"zlib_bpb":3.9609375,"gzip_bpb":4.0546875,"zstd19_bpb":4.09375},
+    {"bytes":2048,"payload_bpb":1.70751953125,"pol1_bpb":2.0703125,"compact_safe_bpb":1.94921875,"compact128_bpb":1.88671875,"zlib_bpb":2.93359375,"gzip_bpb":2.98046875,"zstd19_bpb":3.0},
+    {"bytes":4096,"payload_bpb":1.788818359375,"pol1_bpb":1.96875,"compact_safe_bpb":1.908203125,"compact128_bpb":1.876953125,"zlib_bpb":2.93359375,"gzip_bpb":2.95703125,"zstd19_bpb":2.939453125},
+    {"bytes":8192,"payload_bpb":1.8568115234375,"pol1_bpb":1.947265625,"compact_safe_bpb":1.9169921875,"compact128_bpb":1.9013671875,"zlib_bpb":2.6015625,"gzip_bpb":2.61328125,"zstd19_bpb":2.568359375}
+  ],
+  "crossing": {
+    "first_tested_payload_below_zlib_bytes": 512,
+    "first_tested_compact_safe_below_zlib_bytes": 512,
+    "first_tested_pol1_below_zlib_bytes": 512
+  },
+  "header_variants": {
+    "POL1_bytes": 92,
+    "P2S1_compact_safe_bytes": 61,
+    "P2T1_compact128_bytes": 45
+  },
+  "run": {
+    "github_actions_run_id": 31870566707,
+    "head_sha": "6cafec9ee902cf9cf99e1616d367964d61a9b66e",
+    "artifact_id": 9243314314,
+    "artifact_digest": "sha256:72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5"
+  }
+}
