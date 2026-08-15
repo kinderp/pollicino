@@ -2,12 +2,92 @@
   "schema_version": "1.0",
   "id": "pollicino-uda05-l03-validation-overfitting",
   "titolo": "Validation, overfitting e scelta del checkpoint",
-  "tipo": "studio-guidato",
+  "tipo": "laboratorio",
   "difficolta": "C",
-  "argomenti": ["validation", "overfitting", "early-stopping", "learning-curves"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
-  "consegna": "Analizza o produci curve train/validation, seleziona il best checkpoint su validation e spiega perché il test non deve guidare gli iperparametri.",
-  "student_support_mode": "studio-guidato",
-  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 110, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+  "linguaggio": "python",
+  "argomenti": [
+    "validation",
+    "checkpoint",
+    "overfitting",
+    "state-dict"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-05-byte-model"
+  },
+  "consegna": "Implementa evaluation senza gradiente, checkpoint completo e selezione del miglior epoch usando solo validation bpb.",
+  "student_support_mode": "ai-assisted",
+  "correzione": {
+    "compila": true,
+    "test": true,
+    "sandbox": true,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 120,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": true
+  },
+  "assets": [
+    {
+      "type": "starter",
+      "path": "l03/starter/main.py",
+      "target_path": "main.py",
+      "visibility": "student",
+      "description": "Starter della lezione"
+    },
+    {
+      "type": "example",
+      "path": "l03/reference_model.py",
+      "target_path": "reference_model.py",
+      "visibility": "student",
+      "description": "ByteTransformer di riferimento dalla lezione precedente"
+    },
+    {
+      "type": "visible_test",
+      "path": "l03/tests/test_public.py",
+      "target_path": "tests/test_public.py",
+      "visibility": "student",
+      "description": "Test pubblici"
+    },
+    {
+      "type": "hidden_test",
+      "path": "l03/tests/test_hidden.py",
+      "visibility": "teacher",
+      "description": "Test nascosti docente"
+    },
+    {
+      "type": "fixture",
+      "path": "l03/fixtures/corpus.txt",
+      "target_path": "fixtures/corpus.txt",
+      "visibility": "student"
+    },
+    {
+      "type": "teacher_only",
+      "path": "l03/teacher/solution.py",
+      "visibility": "teacher",
+      "description": "Soluzione di riferimento"
+    }
+  ],
+  "rubrica": [
+    {
+      "criterio": "Correttezza concettuale o tecnica",
+      "punti": 4
+    },
+    {
+      "criterio": "Test e riproducibilita",
+      "punti": 2
+    },
+    {
+      "criterio": "Interpretazione di loss e bpb",
+      "punti": 2
+    },
+    {
+      "criterio": "Chiarezza del confronto tra backend",
+      "punti": 2
+    }
+  ]
 }

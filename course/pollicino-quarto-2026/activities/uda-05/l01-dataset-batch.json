@@ -2,12 +2,85 @@
   "schema_version": "1.0",
   "id": "pollicino-uda05-l01-dataset-batch",
   "titolo": "Dataset byte-level, split e batch",
-  "tipo": "laboratorio",
-  "difficolta": "C",
-  "argomenti": ["dataset", "batch", "train-validation-test", "context-window"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
-  "consegna": "Costruisci un dataset next-byte con input e target shiftati, crea batch e documenta uno split train/validation/test che eviti leakage evidente.",
-  "student_support_mode": "ai-assisted",
-  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+  "tipo": "studio-guidato",
+  "difficolta": "B",
+  "linguaggio": "python",
+  "argomenti": [
+    "dataset",
+    "split",
+    "batch",
+    "autoregressione"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-05-byte-model"
+  },
+  "consegna": "Costruisci uno split contiguo train/validation/test e finestre autoregressive x/y. Verifica che la stessa funzione di preparazione dati possa alimentare entrambi i backend.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {
+    "compila": true,
+    "test": true,
+    "sandbox": true,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 120,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": true
+  },
+  "assets": [
+    {
+      "type": "starter",
+      "path": "l01/starter/main.py",
+      "target_path": "main.py",
+      "visibility": "student",
+      "description": "Starter della lezione"
+    },
+    {
+      "type": "visible_test",
+      "path": "l01/tests/test_public.py",
+      "target_path": "tests/test_public.py",
+      "visibility": "student",
+      "description": "Test pubblici"
+    },
+    {
+      "type": "hidden_test",
+      "path": "l01/tests/test_hidden.py",
+      "visibility": "teacher",
+      "description": "Test nascosti docente"
+    },
+    {
+      "type": "fixture",
+      "path": "l01/fixtures/corpus.txt",
+      "target_path": "fixtures/corpus.txt",
+      "visibility": "student"
+    },
+    {
+      "type": "teacher_only",
+      "path": "l01/teacher/solution.py",
+      "visibility": "teacher",
+      "description": "Soluzione di riferimento"
+    }
+  ],
+  "rubrica": [
+    {
+      "criterio": "Correttezza concettuale o tecnica",
+      "punti": 4
+    },
+    {
+      "criterio": "Test e riproducibilita",
+      "punti": 2
+    },
+    {
+      "criterio": "Interpretazione di loss e bpb",
+      "punti": 2
+    },
+    {
+      "criterio": "Chiarezza del confronto tra backend",
+      "punti": 2
+    }
+  ]
 }

@@ -3,11 +3,85 @@
   "id": "pollicino-uda05-l02-pytorch-training",
   "titolo": "Reference implementation e training loop in PyTorch",
   "tipo": "laboratorio",
-  "difficolta": "E",
-  "argomenti": ["pytorch", "training-loop", "optimizer", "checkpoint"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
-  "consegna": "Implementa il training loop PyTorch del tiny Transformer, registra loss/bpb e verifica save/load di un checkpoint su un caso controllato.",
+  "difficolta": "C",
+  "linguaggio": "python",
+  "argomenti": [
+    "pytorch",
+    "nn-module",
+    "adamw",
+    "mps",
+    "bpb"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-05-byte-model"
+  },
+  "consegna": "Implementa il ByteTransformer in PyTorch, addestralo con AdamW e misura loss e bpb. Verifica shape e causalità prima del training.",
   "student_support_mode": "ai-assisted",
-  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 180, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+  "correzione": {
+    "compila": true,
+    "test": true,
+    "sandbox": true,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 180,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": true
+  },
+  "assets": [
+    {
+      "type": "starter",
+      "path": "l02/starter/main.py",
+      "target_path": "main.py",
+      "visibility": "student",
+      "description": "Starter della lezione"
+    },
+    {
+      "type": "visible_test",
+      "path": "l02/tests/test_public.py",
+      "target_path": "tests/test_public.py",
+      "visibility": "student",
+      "description": "Test pubblici"
+    },
+    {
+      "type": "hidden_test",
+      "path": "l02/tests/test_hidden.py",
+      "visibility": "teacher",
+      "description": "Test nascosti docente"
+    },
+    {
+      "type": "fixture",
+      "path": "l02/fixtures/corpus.txt",
+      "target_path": "fixtures/corpus.txt",
+      "visibility": "student"
+    },
+    {
+      "type": "teacher_only",
+      "path": "l02/teacher/solution.py",
+      "visibility": "teacher",
+      "description": "Soluzione di riferimento"
+    }
+  ],
+  "rubrica": [
+    {
+      "criterio": "Correttezza concettuale o tecnica",
+      "punti": 4
+    },
+    {
+      "criterio": "Test e riproducibilita",
+      "punti": 2
+    },
+    {
+      "criterio": "Interpretazione di loss e bpb",
+      "punti": 2
+    },
+    {
+      "criterio": "Chiarezza del confronto tra backend",
+      "punti": 2
+    }
+  ]
 }
