@@ -1,13 +1,7 @@
 {
-  "schema_version": "1.0",
-  "id": "pollicino-uda04-l05-tiny-transformer",
-  "titolo": "Tiny Transformer byte-level completo",
-  "tipo": "laboratorio",
-  "difficolta": "E",
-  "argomenti": ["transformer", "byte-language-model", "next-byte-prediction", "bpb"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-04-transformer"},
-  "consegna": "Assembla un tiny Transformer causale byte-level, aggiungi test di shape e causalità ed esegui un overfit diagnostico su un corpus minuscolo.",
-  "student_support_mode": "ai-assisted",
-  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 180, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+  "schema_version":"1.0","id":"pollicino-uda04-l05-tiny-transformer","titolo":"Tiny Transformer byte-level completo","tipo":"laboratorio","difficolta":"D","linguaggio":"python","source_name":"main.py",
+  "argomenti":["transformer","byte-model","causal-lm","logits","bits-per-byte"],"contesto":{"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-04-transformer"},
+  "consegna":"Assembla embedding byte/posizione, blocchi Transformer, normalization finale e lm_head a 256 logits. Calcola i bpb di un modello non addestrato e verifica la causalità; il training verrà introdotto nella UDA 5.","student_support_mode":"ai-assisted",
+  "assets":[{"type":"starter","path":"l05/starter/main.py","target_path":"main.py","visibility":"student"},{"type":"visible_test","path":"l05/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student"},{"type":"hidden_test","path":"l05/tests/test_hidden.py","target_path":"tests/test_hidden.py","visibility":"teacher"},{"type":"teacher_only","path":"l05/teacher/solution.py","target_path":"solution.py","visibility":"teacher"},{"type":"fixture","path":"l05/fixtures/corpus.txt","target_path":"fixtures/corpus.txt","visibility":"student"}],
+  "correzione":{"compila":true,"test":true,"sandbox":true,"ai_feedback":true},"metriche":{"tempo_stimato_minuti":160,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},"rubrica":[{"criterio":"Correttezza matematica e implementativa","punti":4},{"criterio":"Test di shape/causalità","punti":2},{"criterio":"Interpretazione delle matrici e dei risultati","punti":2},{"criterio":"Chiarezza e riproducibilità","punti":2}]
 }
