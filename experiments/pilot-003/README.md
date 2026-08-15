@@ -1,32 +1,16 @@
 # PILOT-003 — Crossing the line
 
-Goal: move from the near-tie observed in PILOT-002 to a result that separates three effects:
+Goal: measure model capacity, integer-CDF precision, and container overhead at fixed context_length=32.
 
-1. **model capacity** at fixed `context_length=32`;
-2. **integer-CDF precision** (`12..18` bits);
-3. **container overhead** as file size grows.
+The first one-shot run found that the split hashes recorded by PILOT-001/002 are not reconstructible from a clean checkout of the merged Git tree. PILOT-003 therefore creates `pollicino-self-v2-clean-git` from the clean checkout, records its hashes, and treats the PILOT-002 winner architecture (`d_model=48`, 2 layers, context 32) as an internal control. This is an explicit methodological correction, not a silent dataset substitution.
 
-The experiment keeps `pollicino-self-v1` frozen and verifies its train/validation/test SHA-256 values before training.
-
-## Protocol
-
-- quick sweep: five models immediately above the PILOT-002 winner, selected by validation bpb;
+Protocol:
+- quick sweep: control plus five larger models, selected by validation bpb;
 - confirmation: top two models, three seeds, 300 steps;
 - final winner: seed 1337, 500 steps;
-- precision sweep: 12–18 bits on the frozen 2048-byte coding slice;
+- precision sweep: 12–18 bits on 2048 bytes;
 - size sweep: 512, 1024, 2048, 4096 and 8192 bytes.
 
-`POL1` remains the production experiment format. Two **research-only shared-model header variants** are measured:
+POL1 remains the production experiment format. Two research-only shared-model header variants are measured: P2S1 (61 bytes, full data SHA-256 + 128-bit model fingerprint) and P2T1 (45 bytes, truncated 128-bit data/model fingerprints).
 
-- `P2S1` (61 bytes): full SHA-256 for decoded data, 128-bit model fingerprint;
-- `P2T1` (45 bytes): 128-bit truncated data and model fingerprints.
-
-The variants exist to measure overhead; they are not silently substituted for `POL1`.
-
-## Selection rule
-
-Model selection uses **validation only**. Test data is reserved for reporting and codec evaluation.
-
-## One-shot Actions run
-
-The temporary workflow `.github/workflows/pilot-003.yml` is intentionally configured to execute only when the pushed commit message contains `Run PILOT-003 experiment`. It is removed after the result artifact is collected.
+Model selection uses validation only. Test data is reserved for reporting and codec evaluation.

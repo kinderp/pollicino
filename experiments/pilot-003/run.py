@@ -37,7 +37,7 @@ from pollicino.compression.neural import PyTorchCDFProvider, torch_model_fingerp
 from pollicino.compression.quantization import probabilities_to_frequencies
 from pollicino.compression.range_coder import decode_symbols
 
-EXPECTED_SPLITS = {
+PILOT12_REFERENCE_SPLITS = {
     "train": {"bytes": 120539, "sha256": "eeeb4d5b4ed4b61bae10dfb07ba9425a9e984bb2055dee7d0fdab4e9952c52e8"},
     "validation": {"bytes": 14256, "sha256": "0b4304b27ce5c90055785b6ef6cb97c27a6cf7de030a63f5b6412e5f987f69b8"},
     "test": {"bytes": 12711, "sha256": "3ac9c682bacb359197c5070388509281ac49e775723805304dba341338b88a33"},
@@ -52,6 +52,7 @@ FINAL_STEPS = 500
 PRECISIONS = [12, 13, 14, 15, 16, 17, 18]
 SIZE_SWEEP = [512, 1024, 2048, 4096, 8192]
 CANDIDATES = {
+    "m48-l2-control": dict(d_model=48, n_heads=4, n_layers=2, d_ff=96),
     "m56-l2": dict(d_model=56, n_heads=4, n_layers=2, d_ff=112),
     "m64-l2": dict(d_model=64, n_heads=4, n_layers=2, d_ff=128),
     "m72-l2": dict(d_model=72, n_heads=4, n_layers=2, d_ff=144),
@@ -74,11 +75,14 @@ def prepare_dataset() -> dict:
     spec.loader.exec_module(module)
     data_dir = HERE / "data"
     manifest = module.write_dataset(ROOT, data_dir)
-    for split, expected in EXPECTED_SPLITS.items():
+    actual_splits = {}
+    for split in ("train", "validation", "test"):
         blob = (data_dir / f"{split}.bin").read_bytes()
-        actual = {"bytes": len(blob), "sha256": sha256(blob)}
-        if actual != expected:
-            raise RuntimeError(f"dataset drift for {split}: expected {expected}, got {actual}")
+        actual_splits[split] = {"bytes": len(blob), "sha256": sha256(blob)}
+    manifest["dataset_id"] = "pollicino-self-v2-clean-git"
+    manifest["clean_checkout_splits"] = actual_splits
+    manifest["pilot001_002_recorded_splits"] = PILOT12_REFERENCE_SPLITS
+    manifest["drift_from_pilot001_002"] = actual_splits != PILOT12_REFERENCE_SPLITS
     return manifest
 
 
@@ -109,8 +113,7 @@ def eval_bpb(model, data: bytes, spec: ModelSpec, max_windows: int = 128) -> flo
     return mean(losses) / math.log(2.0)
 
 
-def train_once(name: str, cfg: dict, seed: int, steps: int, train: bytes, val: bytes,
-               *, keep_state: bool = False) -> dict:
+def train_once(name: str, cfg: dict, seed: int, steps: int, train: bytes, val: bytes, *, keep_state: bool = False) -> dict:
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
     random.seed(seed)
@@ -143,13 +146,7 @@ def train_once(name: str, cfg: dict, seed: int, steps: int, train: bytes, val: b
                 if keep_state:
                     best_state = copy.deepcopy(model.state_dict())
     elapsed = time.perf_counter() - t0
-    row = {
-        "name": name, "seed": seed, "steps": steps, "spec": spec.__dict__,
-        "parameter_count": params, "best_validation_bpb": best_val, "best_step": best_step,
-        "train_seconds": elapsed, "steps_per_second": steps/elapsed,
-        "peak_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0,
-        "history": history,
-    }
+    row = {"name": name, "seed": seed, "steps": steps, "spec": spec.__dict__, "parameter_count": params, "best_validation_bpb": best_val, "best_step": best_step, "train_seconds": elapsed, "steps_per_second": steps/elapsed, "peak_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024.0, "history": history}
     if keep_state:
         row["_state"] = best_state
     return row
@@ -179,14 +176,7 @@ def float_and_precision_bpds(model, spec: ModelSpec, data: bytes, precisions: li
 
 def baseline_sizes(data: bytes) -> dict[str, int]:
     cctx = zstd.ZstdCompressor(level=19)
-    return {
-        "raw": len(data),
-        "zlib": len(zlib.compress(data, 9)),
-        "gzip": len(gzip.compress(data, 9)),
-        "bz2": len(bz2.compress(data, 9)),
-        "xz_lzma": len(lzma.compress(data, preset=9)),
-        "zstd19": len(cctx.compress(data)),
-    }
+    return {"raw": len(data), "zlib": len(zlib.compress(data, 9)), "gzip": len(gzip.compress(data, 9)), "bz2": len(bz2.compress(data, 9)), "xz_lzma": len(lzma.compress(data, preset=9)), "zstd19": len(cctx.compress(data))}
 
 
 def compact_safe_blob(data: bytes, payload: bytes, precision: int, fingerprint: bytes) -> bytes:
@@ -235,16 +225,7 @@ def main():
     for name in finalists:
         cfg = CANDIDATES[name]
         runs = [train_once(name, cfg, seed, CONFIRM_STEPS, train, val) for seed in SEEDS]
-        row = {
-            "name": name,
-            "spec": model_spec(cfg).__dict__,
-            "parameter_count": runs[0]["parameter_count"],
-            "seeds": SEEDS,
-            "mean_validation_bpb": mean(r["best_validation_bpb"] for r in runs),
-            "stdev_validation_bpb": stdev(r["best_validation_bpb"] for r in runs),
-            "mean_train_seconds": mean(r["train_seconds"] for r in runs),
-            "runs": runs,
-        }
+        row = {"name": name, "spec": model_spec(cfg).__dict__, "parameter_count": runs[0]["parameter_count"], "seeds": SEEDS, "mean_validation_bpb": mean(r["best_validation_bpb"] for r in runs), "stdev_validation_bpb": stdev(r["best_validation_bpb"] for r in runs), "mean_train_seconds": mean(r["train_seconds"] for r in runs), "runs": runs}
         confirmation.append(row)
         print("CONFIRM", name, row["mean_validation_bpb"], row["stdev_validation_bpb"], flush=True)
     confirmation.sort(key=lambda r: r["mean_validation_bpb"])
@@ -263,15 +244,12 @@ def main():
     final_test_bpb = eval_bpb(model, test, winner_spec, 256)
     sample2048 = test[:2048]
     float_bpb, precision_bpds = float_and_precision_bpds(model, winner_spec, sample2048, PRECISIONS)
-    precision_rows = [
-        {"precision_bits": p, "float_model_bpb": float_bpb, "quantized_ideal_bpb": precision_bpds[p]}
-        for p in PRECISIONS
-    ]
+    precision_rows = [{"precision_bits": p, "float_model_bpb": float_bpb, "quantized_ideal_bpb": precision_bpds[p]} for p in PRECISIONS]
     best_precision = min(PRECISIONS, key=lambda p: precision_bpds[p])
 
     fingerprint = torch_model_fingerprint(model, winner_spec)
     size_rows = []
-    for n in SIZE_SWEEP:
+    for n in [size for size in SIZE_SWEEP if size <= len(test)]:
         sample = test[:n]
         provider = PyTorchCDFProvider(model, winner_spec, precision_bits=best_precision, device="cpu")
         t0 = time.perf_counter()
@@ -282,91 +260,41 @@ def main():
         p2s = compact_safe_blob(sample, payload, best_precision, fingerprint)
         p2t = compact_128_blob(sample, payload, best_precision, fingerprint)
         if n == 2048:
-            restored = decode_pol(
-                pol1,
-                shared_provider=PyTorchCDFProvider(model, winner_spec, precision_bits=best_precision, device="cpu"),
-                expected_model_fingerprint=fingerprint,
-            )
+            restored = decode_pol(pol1, shared_provider=PyTorchCDFProvider(model, winner_spec, precision_bits=best_precision, device="cpu"), expected_model_fingerprint=fingerprint)
             assert restored == sample
             assert decode_compact_safe(p2s, model, winner_spec, fingerprint) == sample
         bases = baseline_sizes(sample)
-        row = {
-            "bytes": n,
-            "payload_bits": info["payload_bits"],
-            "payload_bpb": info["payload_bpb"],
-            "pol1_bytes": len(pol1),
-            "pol1_bpb": len(pol1)*8/n,
-            "compact_safe_header_bytes": COMPACT_SAFE.size,
-            "compact_safe_bytes": len(p2s),
-            "compact_safe_bpb": len(p2s)*8/n,
-            "compact128_header_bytes": COMPACT_128.size,
-            "compact128_bytes": len(p2t),
-            "compact128_bpb": len(p2t)*8/n,
-            "encode_seconds": encode_seconds,
-        }
+        row = {"bytes": n, "payload_bits": info["payload_bits"], "payload_bpb": info["payload_bpb"], "pol1_bytes": len(pol1), "pol1_bpb": len(pol1)*8/n, "compact_safe_header_bytes": COMPACT_SAFE.size, "compact_safe_bytes": len(p2s), "compact_safe_bpb": len(p2s)*8/n, "compact128_header_bytes": COMPACT_128.size, "compact128_bytes": len(p2t), "compact128_bpb": len(p2t)*8/n, "encode_seconds": encode_seconds}
         for key, value in bases.items():
             row[f"{key}_bytes"] = value
             row[f"{key}_bpb"] = value*8/n
         size_rows.append(row)
         print("SIZE", n, row["payload_bpb"], row["compact_safe_bpb"], row["zlib_bpb"], flush=True)
 
-    first_payload_below_zlib = next((r["bytes"] for r in size_rows if r["payload_bpb"] < r["zlib_bpb"]), None)
-    first_compact_safe_below_zlib = next((r["bytes"] for r in size_rows if r["compact_safe_bpb"] < r["zlib_bpb"]), None)
-    first_pol1_below_zlib = next((r["bytes"] for r in size_rows if r["pol1_bpb"] < r["zlib_bpb"]), None)
-
     results = {
         "experiment_id": "pilot-003-crossing-line",
         "base_commit": os.environ.get("GITHUB_SHA", "local"),
-        "dataset": {k: {"bytes": EXPECTED_SPLITS[k]["bytes"], "sha256": EXPECTED_SPLITS[k]["sha256"]} for k in EXPECTED_SPLITS},
+        "dataset": {"id": "pollicino-self-v2-clean-git", "splits": manifest["clean_checkout_splits"], "pilot001_002_recorded_splits": PILOT12_REFERENCE_SPLITS, "drift_detected": manifest["drift_from_pilot001_002"]},
         "quick": [{k:v for k,v in r.items() if k != "history"} for r in quick],
         "finalists": finalists,
         "confirmation": confirmation,
-        "winner": {
-            "name": winner_name,
-            "spec": winner_spec.__dict__,
-            "parameter_count": parameter_count(model),
-            "seed": 1337,
-            "steps": FINAL_STEPS,
-            "best_validation_bpb": final["best_validation_bpb"],
-            "best_step": final["best_step"],
-            "test_bpb_256_windows": final_test_bpb,
-            "checkpoint_sha256": sha256(checkpoint.read_bytes()),
-            "checkpoint_bytes": checkpoint.stat().st_size,
-        },
+        "winner": {"name": winner_name, "spec": winner_spec.__dict__, "parameter_count": parameter_count(model), "seed": 1337, "steps": FINAL_STEPS, "best_validation_bpb": final["best_validation_bpb"], "best_step": final["best_step"], "test_bpb_256_windows": final_test_bpb, "checkpoint_sha256": sha256(checkpoint.read_bytes()), "checkpoint_bytes": checkpoint.stat().st_size},
         "precision_sweep_2048": precision_rows,
         "selected_precision_bits": best_precision,
         "size_sweep": size_rows,
         "crossing": {
-            "first_tested_payload_below_zlib_bytes": first_payload_below_zlib,
-            "first_tested_compact_safe_below_zlib_bytes": first_compact_safe_below_zlib,
-            "first_tested_pol1_below_zlib_bytes": first_pol1_below_zlib,
+            "first_tested_payload_below_zlib_bytes": next((r["bytes"] for r in size_rows if r["payload_bpb"] < r["zlib_bpb"]), None),
+            "first_tested_compact_safe_below_zlib_bytes": next((r["bytes"] for r in size_rows if r["compact_safe_bpb"] < r["zlib_bpb"]), None),
+            "first_tested_pol1_below_zlib_bytes": next((r["bytes"] for r in size_rows if r["pol1_bpb"] < r["zlib_bpb"]), None),
         },
-        "header_variants": {
-            "POL1_bytes": header_size(),
-            "P2S1_compact_safe_bytes": COMPACT_SAFE.size,
-            "P2T1_compact128_bytes": COMPACT_128.size,
-            "P2S1_integrity": "full SHA-256 data + 128-bit model fingerprint",
-            "P2T1_integrity": "128-bit truncated data and model fingerprints; research only",
-        },
-        "notes": [
-            "selection uses validation, not test",
-            "all results are domain-specific to pollicino-self-v1",
-            "compact headers are experimental shared-model-only formats, not production POL1 replacements",
-        ],
+        "header_variants": {"POL1_bytes": header_size(), "P2S1_compact_safe_bytes": COMPACT_SAFE.size, "P2T1_compact128_bytes": COMPACT_128.size, "P2S1_integrity": "full SHA-256 data + 128-bit model fingerprint", "P2T1_integrity": "128-bit truncated data and model fingerprints; research only"},
+        "notes": ["selection uses validation, not test", "PILOT-001/002 dataset hashes drift from clean merged Git checkout", "all results are domain-specific", "compact headers are research-only shared-model formats"],
     }
     (OUT/"results.json").write_text(json.dumps(results, indent=2) + "\n")
-
-    write_csv(OUT/"quick.csv", quick,
-              ["name","parameter_count","best_validation_bpb","best_step","train_seconds","steps_per_second","peak_rss_mib"])
-    conf_rows = [{
-        "name": r["name"], "parameter_count": r["parameter_count"],
-        "mean_validation_bpb": r["mean_validation_bpb"], "stdev_validation_bpb": r["stdev_validation_bpb"],
-        "mean_train_seconds": r["mean_train_seconds"]
-    } for r in confirmation]
-    write_csv(OUT/"confirmation.csv", conf_rows,
-              ["name","parameter_count","mean_validation_bpb","stdev_validation_bpb","mean_train_seconds"])
-    write_csv(OUT/"precision.csv", precision_rows,
-              ["precision_bits","float_model_bpb","quantized_ideal_bpb"])
+    write_csv(OUT/"quick.csv", quick, ["name","parameter_count","best_validation_bpb","best_step","train_seconds","steps_per_second","peak_rss_mib"])
+    conf_rows = [{"name": r["name"], "parameter_count": r["parameter_count"], "mean_validation_bpb": r["mean_validation_bpb"], "stdev_validation_bpb": r["stdev_validation_bpb"], "mean_train_seconds": r["mean_train_seconds"]} for r in confirmation]
+    write_csv(OUT/"confirmation.csv", conf_rows, ["name","parameter_count","mean_validation_bpb","stdev_validation_bpb","mean_train_seconds"])
+    write_csv(OUT/"precision.csv", precision_rows, ["precision_bits","float_model_bpb","quantized_ideal_bpb"])
     write_csv(OUT/"size-sweep.csv", size_rows, list(size_rows[0].keys()))
     (OUT/"dataset-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(json.dumps(results["winner"], indent=2), flush=True)
