@@ -1,7 +1,15 @@
 # Compression layer
 
-This package will contain deterministic entropy-coding components.
+POLLICINO converts integer next-byte distributions into a real lossless bitstream.
 
-The first real codec target is a range/arithmetic coder driven by quantized next-byte probability distributions. Encoder and decoder must derive **exactly the same integer coding distribution at every step**.
+Current v1 scope: 32-bit integer arithmetic/range coder; deterministic quantization to positive integer frequencies; `POL1` container with SHA-256 and model fingerprint; self-contained uniform/static-histogram modes; shared-model mode; PyTorch same-runtime CDF adapter.
 
-Later experiments may add candidate enumeration and short-fingerprint identification. Any fingerprint bits required by the decoder are counted as payload, and final output is independently verified with a full-file cryptographic hash.
+A result is valid only after independent byte-perfect decode and SHA-256 verification.
+
+`shared-model` does not transmit weights. The current PyTorch fingerprint is canonical only inside PyTorch; PyTorch↔MLX cross-backend identity and exact CDF parity remain research milestones.
+
+```bash
+python -m pollicino.compression compress input.bin output.pol --mode static
+python -m pollicino.compression inspect output.pol
+python -m pollicino.compression restore output.pol restored.bin
+```

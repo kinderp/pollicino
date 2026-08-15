@@ -1,13 +1,1 @@
-{
-  "schema_version": "1.0",
-  "id": "pollicino-uda06-l04-ablation-riproducibilita",
-  "titolo": "Ablation, controlli e riproducibilità scientifica",
-  "tipo": "studio-guidato",
-  "difficolta": "E",
-  "argomenti": ["ablation", "controlli", "riproducibilita", "esperimenti"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-06-codec-ricerca"},
-  "consegna": "Progetta una matrice di ablation con ipotesi scritte prima dell'esecuzione, variabile controllata, metrica primaria e provenienza sufficiente a riprodurre ogni run.",
-  "student_support_mode": "studio-guidato",
-  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 120, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
-}
+{"schema_version":"1.0","id":"pollicino-uda06-l04-ablation-riproducibilita","titolo":"Ablation, controlli e riproducibilita scientifica","tipo":"studio-guidato","difficolta":"E","linguaggio":"python","source_name":"main.py","argomenti":["ablation","controlli","riproducibilita","esperimenti"],"contesto":{"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-06-codec-ricerca"},"consegna":"Valida schede esperimento e individua confronti di ablation corretti: due run sono un confronto one-factor solo se cambia una sola variabile controllata. Calcola delta bpb e spiega perche cambiare contemporaneamente modello e precisione impedisce una conclusione causale chiara.","student_support_mode":"studio-guidato","assets":[{"type":"starter","path":"l04/starter/main.py","target_path":"main.py","visibility":"student"},{"type":"visible_test","path":"l04/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student"},{"type":"hidden_test","path":"l04/tests/test_hidden.py","visibility":"teacher"},{"type":"teacher_only","path":"l04/teacher/solution.py","visibility":"teacher"},{"type":"fixture","path":"l04/fixtures/experiments.json","target_path":"fixtures/experiments.json","visibility":"student"}],"correzione":{"compila":true,"test":true,"sandbox":true,"ai_feedback":true},"metriche":{"tempo_stimato_minuti":120,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},"rubrica":[{"criterio":"Correttezza lossless e test","punti":4},{"criterio":"Misure/esperimento","punti":2},{"criterio":"Interpretazione e limiti","punti":2},{"criterio":"Riproducibilita e chiarezza","punti":2}]}
