@@ -1,0 +1,20 @@
+{
+  "seed": 1337,
+  "deterministic_algorithms": true,
+  "torch_num_threads": 1,
+  "steps": 300,
+  "batch_size": 32,
+  "learning_rate": 0.003,
+  "initial_validation_bpb_128_windows": 8.245154927429535,
+  "best_step": 300,
+  "best_validation_bpb_128_windows": 3.906754670981243,
+  "history": [
+    {"step": 1, "train_bpb": 8.217679151110342, "validation_bpb_128_windows": 8.0983862606743},
+    {"step": 50, "train_bpb": 4.754819826842648, "validation_bpb_128_windows": 4.9616979026758825},
+    {"step": 100, "train_bpb": 4.291125363065869, "validation_bpb_128_windows": 4.568784452080008},
+    {"step": 150, "train_bpb": 4.185755376500546, "validation_bpb_128_windows": 4.294906945808944},
+    {"step": 200, "train_bpb": 3.9715179641819516, "validation_bpb_128_windows": 4.117893719104302},
+    {"step": 250, "train_bpb": 3.8491818891090115, "validation_bpb_128_windows": 4.002187791544052},
+    {"step": 300, "train_bpb": 3.957952316647195, "validation_bpb_128_windows": 3.906754670981243}
+  ]
+}

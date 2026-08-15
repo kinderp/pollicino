@@ -1,0 +1,25 @@
+{
+  "experiment_id": "pilot-001-pollicino-self-v1",
+  "seed": 1337,
+  "model_spec": {
+    "vocab_size": 256,
+    "context_length": 32,
+    "d_model": 32,
+    "n_heads": 4,
+    "n_layers": 2,
+    "d_ff": 64,
+    "layer_norm_eps": 1e-05
+  },
+  "training": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "steps": 300,
+    "eval_every": 50,
+    "device": "cpu"
+  },
+  "coding": {
+    "precision_bits": 15,
+    "test_slice_bytes": 2048
+  }
+}
