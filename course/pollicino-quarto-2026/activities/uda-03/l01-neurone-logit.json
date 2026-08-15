@@ -4,10 +4,24 @@
   "titolo": "Dal punteggio al logit: un neurone come funzione parametrica",
   "tipo": "studio-guidato",
   "difficolta": "B",
-  "argomenti": ["neurone", "pesi", "bias", "logit", "modello-parametrico"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
-  "consegna": "Implementa una trasformazione affine molto piccola, varia manualmente pesi e bias e descrivi come cambiano i logits. Estendi poi l'esempio a più output.",
+  "linguaggio": "python",
+  "argomenti": ["neurone","pesi","bias","logit","modello-parametrico"],
+  "contesto": {"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-03-reti-neurali"},
+  "consegna": "Completa le funzioni affini e costruisci più logits a partire dallo stesso vettore di feature. Varia pesi e bias, conta i parametri e interpreta perché i logits sono punteggi e non probabilità.",
   "student_support_mode": "studio-guidato",
-  "correzione": {"compila": false, "test": false, "sandbox": false, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 90, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": false}
+  "correzione": {"compila":true,"test":true,"sandbox":true,"ai_feedback":true},
+  "metriche": {"tempo_stimato_minuti":90,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},
+  "assets": [
+    {"type":"starter","path":"l01/starter/main.py","target_path":"main.py","visibility":"student","description":"Starter Python"},
+    {"type":"visible_test","path":"l01/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student","description":"Test pubblici"},
+    {"type":"hidden_test","path":"l01/tests/test_hidden.py","visibility":"teacher","description":"Test nascosti docente"},
+    {"type":"fixture","path":"l01/fixtures/scenarios.csv","target_path":"fixtures/scenarios.csv","visibility":"student"},
+    {"type":"teacher_only","path":"l01/teacher/solution.py","visibility":"teacher","description":"Soluzione di riferimento"}
+  ],
+  "rubrica": [
+    {"criterio":"Correttezza concettuale o tecnica","punti":4},
+    {"criterio":"Test e casi limite","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Chiarezza e riproducibilita","punti":2}
+  ]
 }

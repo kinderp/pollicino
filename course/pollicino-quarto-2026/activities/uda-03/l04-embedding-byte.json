@@ -4,10 +4,24 @@
   "titolo": "Embedding: imparare una rappresentazione dei byte",
   "tipo": "laboratorio",
   "difficolta": "B",
-  "argomenti": ["embedding", "vettori", "byte", "rappresentazioni"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
-  "consegna": "Crea un embedding 256xd, indicizza una sequenza di byte e documenta shape, numero di parametri e differenza rispetto all'uso dell'indice come valore continuo.",
+  "linguaggio": "python",
+  "argomenti": ["embedding","vettori","byte","rappresentazioni"],
+  "contesto": {"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-03-reti-neurali"},
+  "consegna": "Costruisci una tabella embedding 256xd riproducibile, indicizza sequenze di byte, conta i parametri e applica un piccolo aggiornamento SGD a una singola riga. Spiega perché l indice byte non va trattato come una grandezza continua.",
   "student_support_mode": "ai-assisted",
-  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 100, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+  "correzione": {"compila":true,"test":true,"sandbox":true,"ai_feedback":true},
+  "metriche": {"tempo_stimato_minuti":110,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},
+  "assets": [
+    {"type":"starter","path":"l04/starter/main.py","target_path":"main.py","visibility":"student","description":"Starter Python"},
+    {"type":"visible_test","path":"l04/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student","description":"Test pubblici"},
+    {"type":"hidden_test","path":"l04/tests/test_hidden.py","visibility":"teacher","description":"Test nascosti docente"},
+    {"type":"fixture","path":"l04/fixtures/bytes.txt","target_path":"fixtures/bytes.txt","visibility":"student"},
+    {"type":"teacher_only","path":"l04/teacher/solution.py","visibility":"teacher","description":"Soluzione di riferimento"}
+  ],
+  "rubrica": [
+    {"criterio":"Correttezza concettuale o tecnica","punti":4},
+    {"criterio":"Test e casi limite","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Chiarezza e riproducibilita","punti":2}
+  ]
 }

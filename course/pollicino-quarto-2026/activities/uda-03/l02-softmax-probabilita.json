@@ -4,10 +4,24 @@
   "titolo": "Softmax: da 256 logits a una distribuzione",
   "tipo": "laboratorio",
   "difficolta": "C",
-  "argomenti": ["softmax", "logits", "probabilita", "stabilita-numerica"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-03-reti-neurali"},
-  "consegna": "Implementa softmax in forma diretta e stabile, verifica la somma a uno e confronta il comportamento con logits molto grandi.",
+  "linguaggio": "python",
+  "argomenti": ["softmax","logits","probabilita","stabilita-numerica"],
+  "contesto": {"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-03-reti-neurali"},
+  "consegna": "Implementa softmax numericamente stabile, verifica somma a uno, invarianza a una traslazione comune dei logits e comportamento con valori molto grandi. Collega infine la distribuzione all entropia.",
   "student_support_mode": "ai-assisted",
-  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 100, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+  "correzione": {"compila":true,"test":true,"sandbox":true,"ai_feedback":true},
+  "metriche": {"tempo_stimato_minuti":110,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},
+  "assets": [
+    {"type":"starter","path":"l02/starter/main.py","target_path":"main.py","visibility":"student","description":"Starter Python"},
+    {"type":"visible_test","path":"l02/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student","description":"Test pubblici"},
+    {"type":"hidden_test","path":"l02/tests/test_hidden.py","visibility":"teacher","description":"Test nascosti docente"},
+    {"type":"fixture","path":"l02/fixtures/logits.json","target_path":"fixtures/logits.json","visibility":"student"},
+    {"type":"teacher_only","path":"l02/teacher/solution.py","visibility":"teacher","description":"Soluzione di riferimento"}
+  ],
+  "rubrica": [
+    {"criterio":"Correttezza concettuale o tecnica","punti":4},
+    {"criterio":"Test e casi limite","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Chiarezza e riproducibilita","punti":2}
+  ]
 }
