@@ -1,0 +1,7 @@
+{
+  "project": "pollicino",
+  "version": "0.4.0",
+  "vocab_size": 256,
+  "features": ["entropy", "ngram", "huffman"],
+  "enabled": true
+}

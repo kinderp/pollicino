@@ -4,48 +4,27 @@
   "titolo": "Ridondanza e Run-Length Encoding",
   "tipo": "laboratorio",
   "difficolta": "B",
-  "argomenti": [
-    "ridondanza",
-    "rle",
-    "compressione-lossless",
-    "rapporti-compressione"
-  ],
-  "contesto": {
-    "classe": "4^",
-    "percorso": "pollicino-quarto-2026",
-    "uda": "uda-02-compressione-predizione"
-  },
-  "consegna": "Scrivi una funzione che riceve una sequenza di byte o una stringa e restituisce le coppie `(conteggio, simbolo)`. Aggiungi poi il decoder e verifica automaticamente `decode(encode(x)) == x` su casi normali, file vuoti e run molto lunghi. Misura dimensione originale e dimensione codificata. Consegna risultati e una breve interpretazione collegata alla domanda guida.",
+  "argomenti": ["ridondanza","rle","compressione-lossless","rapporti-compressione"],
+  "contesto": {"classe":"4^","percorso":"pollicino-quarto-2026","uda":"uda-02-compressione-predizione"},
+  "linguaggio": "python",
+  "source_name": "main.py",
+  "consegna": "Completa un codec RLE byte-level, verifica automaticamente il round-trip e misura quando il formato comprime e quando invece espande i dati. Spiega perché una tecnica lossless non può essere efficace allo stesso modo su ogni file.",
   "student_support_mode": "ai-assisted",
-  "correzione": {
-    "compila": true,
-    "test": true,
-    "sandbox": true,
-    "ai_feedback": true
-  },
-  "metriche": {
-    "tempo_stimato_minuti": 90,
-    "traccia_tempo_dichiarato": true,
-    "traccia_sessioni_thebitlab": true,
-    "traccia_eventi_didattici": true,
-    "traccia_errori_compilazione": true
-  },
+  "assets": [
+    {"type":"starter","path":"l01/starter/main.py","target_path":"main.py","visibility":"student","description":"Scheletro Python da completare"},
+    {"type":"visible_test","path":"l01/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student","description":"Test pubblici eseguibili con unittest"},
+    {"type":"hidden_test","path":"l01/tests/test_hidden.py","target_path":"tests/test_hidden.py","visibility":"teacher","description":"Test riservati al docente/grader"},
+    {"type":"teacher_only","path":"l01/teacher/solution.py","target_path":"solution.py","visibility":"teacher","description":"Soluzione di riferimento docente"},
+    {"type":"fixture","path":"l01/fixtures/repetitive.txt","target_path":"fixtures/repetitive.txt","visibility":"student"},
+    {"type":"fixture","path":"l01/fixtures/mixed.txt","target_path":"fixtures/mixed.txt","visibility":"student"},
+    {"type":"fixture","path":"l01/fixtures/nonrepetitive.txt","target_path":"fixtures/nonrepetitive.txt","visibility":"student"}
+  ],
+  "correzione": {"compila":true,"test":true,"sandbox":true,"ai_feedback":true},
+  "metriche": {"tempo_stimato_minuti":90,"traccia_tempo_dichiarato":true,"traccia_sessioni_thebitlab":true,"traccia_eventi_didattici":true,"traccia_errori_compilazione":true},
   "rubrica": [
-    {
-      "criterio": "Correttezza concettuale o tecnica",
-      "punti": 4
-    },
-    {
-      "criterio": "Evidenze e misure",
-      "punti": 2
-    },
-    {
-      "criterio": "Interpretazione dei risultati",
-      "punti": 2
-    },
-    {
-      "criterio": "Riproducibilita e chiarezza",
-      "punti": 2
-    }
+    {"criterio":"Correttezza del modello/codec e test","punti":4},
+    {"criterio":"Misure in bit, bpb o rapporto","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Riproducibilità e chiarezza","punti":2}
   ]
 }
