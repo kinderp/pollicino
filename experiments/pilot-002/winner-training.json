@@ -1,0 +1,22 @@
+{
+  "spec": {"vocab_size": 256, "context_length": 32, "d_model": 48, "n_heads": 4, "n_layers": 2, "d_ff": 96, "layer_norm_eps": 1e-05},
+  "parameter_count": 64384,
+  "seed": 1337,
+  "steps": 300,
+  "batch_size": 32,
+  "lr": 0.003,
+  "best_step": 300,
+  "best_validation_bpb": 3.603047538434653,
+  "train_seconds": 7.592923244999838,
+  "checkpoint_sha256": "566e96535c3274c760fa113219a397ded4a89f000df4ba08f7d8f0d25a624e39",
+  "checkpoint_bytes": 268681,
+  "history": [
+    {"step": 1, "train_bpb": 8.23766147134879, "validation_bpb": 8.065245773545568},
+    {"step": 50, "train_bpb": 4.5076762860038695, "validation_bpb": 4.770333336444932},
+    {"step": 100, "train_bpb": 4.021067885722036, "validation_bpb": 4.34621325091988},
+    {"step": 150, "train_bpb": 3.862832152107993, "validation_bpb": 4.052064439812341},
+    {"step": 200, "train_bpb": 3.8172581254905555, "validation_bpb": 3.890931409875839},
+    {"step": 250, "train_bpb": 3.466605106403487, "validation_bpb": 3.740198803679422},
+    {"step": 300, "train_bpb": 3.715658686562748, "validation_bpb": 3.603047538434653}
+  ]
+}

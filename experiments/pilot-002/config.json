@@ -1,0 +1,31 @@
+{
+  "experiment_id": "pilot-002-scaling-context",
+  "dataset_id": "pollicino-self-v1",
+  "phase_a": {
+    "sizes": {
+      "tiny": {"d_model": 16, "n_heads": 2, "n_layers": 1, "d_ff": 32},
+      "base": {"d_model": 32, "n_heads": 4, "n_layers": 2, "d_ff": 64},
+      "medium": {"d_model": 48, "n_heads": 4, "n_layers": 2, "d_ff": 96}
+    },
+    "contexts": [32, 64, 128],
+    "seed": 1337,
+    "steps": 80,
+    "tokens_per_step": 1024,
+    "learning_rate": 0.003
+  },
+  "context_256_probe": {"steps": 20, "tokens_per_step": 1024},
+  "confirmation": {
+    "candidates": ["base-c64", "medium-c32", "medium-c64"],
+    "seeds": [1337, 2026, 4242],
+    "steps": 200,
+    "tokens_per_step": 1024,
+    "learning_rate": 0.003
+  },
+  "winner": {
+    "name": "medium-c32",
+    "seed": 1337,
+    "steps": 300,
+    "coding_slice_bytes": 2048,
+    "precision_bits": 15
+  }
+}
