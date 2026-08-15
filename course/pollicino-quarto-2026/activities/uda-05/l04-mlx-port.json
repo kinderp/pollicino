@@ -3,11 +3,84 @@
   "id": "pollicino-uda05-l04-mlx-port",
   "titolo": "Portare il byte model in MLX",
   "tipo": "laboratorio",
-  "difficolta": "E",
-  "argomenti": ["mlx", "apple-silicon", "backend", "equivalenza"],
-  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-05-byte-model"},
-  "consegna": "Porta la configurazione tiny in MLX, verifica gli invarianti di architettura e confronta un sanity training con la reference PyTorch.",
+  "difficolta": "C",
+  "linguaggio": "python",
+  "argomenti": [
+    "mlx",
+    "apple-silicon",
+    "value-and-grad",
+    "adamw"
+  ],
+  "contesto": {
+    "classe": "4^",
+    "percorso": "pollicino-quarto-2026",
+    "uda": "uda-05-byte-model"
+  },
+  "consegna": "Porta la stessa ModelSpec in MLX usando nn.Module, nn.value_and_grad, AdamW e mx.eval. Confronta forme, parametri e protocollo con PyTorch.",
   "student_support_mode": "ai-assisted",
-  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
-  "metriche": {"tempo_stimato_minuti": 180, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true}
+  "correzione": {
+    "compila": true,
+    "test": true,
+    "sandbox": true,
+    "ai_feedback": true
+  },
+  "metriche": {
+    "tempo_stimato_minuti": 120,
+    "traccia_tempo_dichiarato": true,
+    "traccia_sessioni_thebitlab": true,
+    "traccia_eventi_didattici": true,
+    "traccia_errori_compilazione": true
+  },
+  "assets": [
+    {
+      "type": "starter",
+      "path": "l04/starter/main.py",
+      "target_path": "main.py",
+      "visibility": "student",
+      "description": "Starter della lezione"
+    },
+    {
+      "type": "visible_test",
+      "path": "l04/tests/test_public.py",
+      "target_path": "tests/test_public.py",
+      "visibility": "student",
+      "description": "Test pubblici"
+    },
+    {
+      "type": "hidden_test",
+      "path": "l04/tests/test_hidden.py",
+      "visibility": "teacher",
+      "description": "Test nascosti docente"
+    },
+    {
+      "type": "fixture",
+      "path": "l04/fixtures/corpus.txt",
+      "target_path": "fixtures/corpus.txt",
+      "visibility": "student"
+    },
+    {
+      "type": "teacher_only",
+      "path": "l04/teacher/solution.py",
+      "visibility": "teacher",
+      "description": "Soluzione di riferimento"
+    }
+  ],
+  "rubrica": [
+    {
+      "criterio": "Correttezza concettuale o tecnica",
+      "punti": 4
+    },
+    {
+      "criterio": "Test e riproducibilita",
+      "punti": 2
+    },
+    {
+      "criterio": "Interpretazione di loss e bpb",
+      "punti": 2
+    },
+    {
+      "criterio": "Chiarezza del confronto tra backend",
+      "punti": 2
+    }
+  ]
 }

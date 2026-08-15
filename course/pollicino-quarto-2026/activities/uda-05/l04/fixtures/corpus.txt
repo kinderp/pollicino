@@ -1,0 +1,20 @@
+POLLICINO studia i byte e impara a prevedere il simbolo successivo.
+La compressione lossless richiede predizione, codifica e ricostruzione esatta.
+Transformer e modelli probabilistici assegnano probabilita ai prossimi byte.
+Un buon esperimento separa train, validation e test e registra seed e metriche.
+POLLICINO studia i byte e impara a prevedere il simbolo successivo.
+La compressione lossless richiede predizione, codifica e ricostruzione esatta.
+Transformer e modelli probabilistici assegnano probabilita ai prossimi byte.
+Un buon esperimento separa train, validation e test e registra seed e metriche.
+POLLICINO studia i byte e impara a prevedere il simbolo successivo.
+La compressione lossless richiede predizione, codifica e ricostruzione esatta.
+Transformer e modelli probabilistici assegnano probabilita ai prossimi byte.
+Un buon esperimento separa train, validation e test e registra seed e metriche.
+POLLICINO studia i byte e impara a prevedere il simbolo successivo.
+La compressione lossless richiede predizione, codifica e ricostruzione esatta.
+Transformer e modelli probabilistici assegnano probabilita ai prossimi byte.
+Un buon esperimento separa train, validation e test e registra seed e metriche.
+POLLICINO studia i byte e impara a prevedere il simbolo successivo.
+La compressione lossless richiede predizione, codifica e ricostruzione esatta.
+Transformer e modelli probabilistici assegnano probabilita ai prossimi byte.
+Un buon esperimento separa train, validation e test e registra seed e metriche.
