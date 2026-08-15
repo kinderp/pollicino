@@ -1,0 +1,42 @@
+{
+  "experiment_id": "pilot-001-pollicino-self-v1",
+  "seed": 1337,
+  "device": "cpu",
+  "torch_version": "2.10.0+cpu",
+  "python": "3.13.5",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+  "dataset": {
+    "train": {"files": 66, "bytes": 120539, "sha256": "eeeb4d5b4ed4b61bae10dfb07ba9425a9e984bb2055dee7d0fdab4e9952c52e8"},
+    "validation": {"files": 7, "bytes": 14256, "sha256": "0b4304b27ce5c90055785b6ef6cb97c27a6cf7de030a63f5b6412e5f987f69b8"},
+    "test": {"files": 9, "bytes": 12711, "sha256": "3ac9c682bacb359197c5070388509281ac49e775723805304dba341338b88a33"}
+  },
+  "model_spec": {"vocab_size": 256, "context_length": 32, "d_model": 32, "n_heads": 4, "n_layers": 2, "d_ff": 64, "layer_norm_eps": 1e-05},
+  "parameter_count": 34816,
+  "training": {
+    "seed": 1337,
+    "deterministic_algorithms": true,
+    "torch_num_threads": 1,
+    "steps": 300,
+    "batch_size": 32,
+    "learning_rate": 0.003,
+    "initial_validation_bpb_128_windows": 8.245154927429535,
+    "best_step": 300,
+    "best_validation_bpb_128_windows": 3.906754670981243,
+    "validation_bpb_256_windows": 3.9861801059178865,
+    "test_bpb_256_windows": 3.4196958669474014
+  },
+  "checkpoint": {"path": "pilot-001-best.pt", "sha256": "de294504dfb85b63c0263a71f246429f76e54b41a696c4763bc87dcd9203d3bc", "bytes": 150021, "tracked_in_git": false},
+  "coding_slice": {
+    "bytes": 2048,
+    "sha256": "19945fdce1b639090611a7f0f0dc1915e2a0248c93619cc57e42002c345f3061",
+    "float_model_bpb": 3.1953891881390732,
+    "quantized_cdf_ideal_bpb": 3.2051124978004797,
+    "range_payload_bpb": 3.20556640625,
+    "pol_file_bpb": 3.56640625,
+    "encode_seconds": 2.730524491000324,
+    "decode_seconds": 2.945680495000488,
+    "model_fingerprint": "46af5d27e6a3856f4c90c3e48e648687bfdfeef18647940728557e8eef747129"
+  },
+  "baselines_bytes": {"raw": 2048, "gzip": 763, "bz2": 839, "xz_lzma": 852, "zlib": 751, "pol_uniform": 2141, "pol_static": 1778, "pol_shared": 913, "zstd": 774, "xz_cli": 860},
+  "baselines_bpb": {"raw": 8.0, "gzip": 2.98046875, "bz2": 3.27734375, "xz_lzma": 3.328125, "zlib": 2.93359375, "pol_uniform": 8.36328125, "pol_static": 6.9453125, "pol_shared": 3.56640625, "zstd": 3.0234375, "xz_cli": 3.359375}
+}
