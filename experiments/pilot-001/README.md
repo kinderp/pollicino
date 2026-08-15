@@ -1,5 +1,7 @@
 # PILOT-001 — POLLICINO self-corpus
 
+> **Provenance errata (PILOT-003):** the split sizes/SHA-256 values recorded below could not be regenerated from a clean checkout of the committed Git tree. The run remains a historical experimental record, but its dataset is not reproducible from Git alone. See `../DATASET-PROVENANCE-ERRATA.md`. Do not compare its absolute bpb values directly with `pollicino-self-v2-clean-git` as if the dataset were unchanged.
+
 Primo esperimento scientifico riproducibile di POLLICINO.
 
 ## Domanda
@@ -97,6 +99,7 @@ Il checkpoint del run originale non viene versionato in Git; `results.json` ne r
 
 - un solo seed;
 - corpus interno al progetto;
+- **provenance del dataset originale non riproducibile dal solo tree Git; vedere l'errata**;
 - modello molto piccolo;
 - CPU-only;
 - nessuna parità PyTorch↔MLX;

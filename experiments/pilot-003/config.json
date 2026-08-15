@@ -1,0 +1,25 @@
+{
+  "experiment_id": "pilot-003-crossing-line",
+  "dataset_id": "pollicino-self-v2-clean-git",
+  "context_length": 32,
+  "quick": {
+    "steps": 150,
+    "seed": 1337,
+    "batch_size": 32,
+    "learning_rate": 0.003,
+    "candidates": {
+      "m48-l2-control": {"d_model": 48, "n_heads": 4, "n_layers": 2, "d_ff": 96},
+      "m56-l2": {"d_model": 56, "n_heads": 4, "n_layers": 2, "d_ff": 112},
+      "m64-l2": {"d_model": 64, "n_heads": 4, "n_layers": 2, "d_ff": 128},
+      "m72-l2": {"d_model": 72, "n_heads": 4, "n_layers": 2, "d_ff": 144},
+      "m80-l2": {"d_model": 80, "n_heads": 4, "n_layers": 2, "d_ff": 160},
+      "m64-l3": {"d_model": 64, "n_heads": 4, "n_layers": 3, "d_ff": 128}
+    }
+  },
+  "confirmation": {"top_k": 2, "seeds": [1337, 2026, 4242], "steps": 300},
+  "winner": {"seed": 1337, "steps": 500},
+  "precision_bits": [12, 13, 14, 15, 16, 17, 18],
+  "size_sweep_bytes": [512, 1024, 2048, 4096, 8192],
+  "header_variants": {"POL1": 92, "P2S1": 61, "P2T1": 45},
+  "methodological_note": "PILOT-001/002 recorded split hashes are not reproducible from the clean merged Git tree; PILOT-003 creates v2 from a clean checkout and includes the PILOT-002 winner architecture as a control."
+}

@@ -1,0 +1,15 @@
+{
+  "github_actions_run_id": 31870566707,
+  "job_id": 94978443769,
+  "head_sha": "6cafec9ee902cf9cf99e1616d367964d61a9b66e",
+  "conclusion": "success",
+  "runner": "ubuntu-24.04",
+  "python": "3.11.15",
+  "torch": "2.13.0+cpu",
+  "zstandard": "0.25.0",
+  "artifact_id": 9243314314,
+  "artifact_name": "pilot-003-results",
+  "artifact_digest": "sha256:72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5",
+  "artifact_checkpoint_tracked_in_git": false,
+  "note": "The one-shot workflow was removed from the branch after the successful run. The original artifact contained the full file-level dataset manifest and winner.pt; Git stores aggregate results and the checkpoint SHA/size, not the weights."
+}

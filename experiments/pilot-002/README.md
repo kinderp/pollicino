@@ -1,5 +1,7 @@
 # PILOT-002 — Scaling & Context Sweep
 
+> **Provenance errata (PILOT-003):** the `pollicino-self-v1` split sizes/SHA-256 values inherited from PILOT-001 could not be regenerated from a clean checkout of the merged Git tree. This run remains a historical scaling/context experiment on its original local dataset, but absolute bpb values are not reproducible from Git alone. See `../DATASET-PROVENANCE-ERRATA.md`. PILOT-003 recreates the `medium-c32` architecture as an internal control on the clean `pollicino-self-v2-clean-git` dataset.
+
 PILOT-002 asks a narrower question than PILOT-001:
 
 > On the frozen `pollicino-self-v1` dataset, is it more useful to spend compute on a larger byte Transformer or on a longer context window?
@@ -58,4 +60,8 @@ The range coder itself is not the bottleneck. The next experiments should focus 
 4. adding cached incremental decoding before scaling context further;
 5. testing the winner on external corpora before making general claims.
 
-All results remain domain-specific and exploratory. PILOT-002 is not evidence that the selected architecture is universally better than classical compression.
+## Limits
+
+- the original self-v1 dataset provenance is not reproducible from the committed Git tree; see the errata;
+- all results remain domain-specific and exploratory;
+- PILOT-002 is not evidence that the selected architecture is universally better than classical compression.
