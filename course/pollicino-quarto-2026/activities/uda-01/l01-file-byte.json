@@ -4,6 +4,7 @@
   "titolo": "Dal file ai bit e ai byte",
   "tipo": "studio-guidato",
   "difficolta": "A",
+  "linguaggio": "python",
   "argomenti": [
     "bit",
     "byte",
@@ -16,11 +17,12 @@
     "percorso": "pollicino-quarto-2026",
     "uda": "uda-01-informazione"
   },
-  "consegna": "Studia l'handout della lezione, ispeziona in Python i primi byte di almeno tre tipi di file e rispondi alle domande finali spiegando la differenza tra rappresentazione binaria e significato del file.",
+  "consegna": "Completa `main.py` per leggere un file in modalita binaria e descrivere ogni byte in decimale, binario ed esadecimale. Esegui i test pubblici, poi usa almeno tre fixture di tipo diverso e annota che cosa i byte permettono di osservare e che cosa invece dipende dal formato del file.",
+  "student_support_mode": "studio-guidato",
   "correzione": {
-    "compila": false,
-    "test": false,
-    "sandbox": false,
+    "compila": true,
+    "test": true,
+    "sandbox": true,
     "ai_feedback": true
   },
   "metriche": {
@@ -28,6 +30,23 @@
     "traccia_tempo_dichiarato": true,
     "traccia_sessioni_thebitlab": true,
     "traccia_eventi_didattici": true,
-    "traccia_errori_compilazione": false
-  }
+    "traccia_errori_compilazione": true
+  },
+  "assets": [
+    {"type": "starter", "path": "l01/starter/main.py", "target_path": "main.py", "visibility": "student", "description": "Scheletro Python da completare"},
+    {"type": "visible_test", "path": "l01/tests/test_public.py", "target_path": "tests/test_public.py", "visibility": "student", "description": "Test pubblici eseguibili con unittest"},
+    {"type": "hidden_test", "path": "l01/tests/test_hidden.py", "visibility": "teacher", "description": "Test docente sui casi limite"},
+    {"type": "fixture", "path": "l01/fixtures/sample.txt", "target_path": "fixtures/sample.txt", "visibility": "student"},
+    {"type": "fixture", "path": "l01/fixtures/sample.csv", "target_path": "fixtures/sample.csv", "visibility": "student"},
+    {"type": "fixture", "path": "l01/fixtures/sample.json", "target_path": "fixtures/sample.json", "visibility": "student"},
+    {"type": "fixture", "path": "l01/fixtures/sample.pgm", "target_path": "fixtures/sample.pgm", "visibility": "student"},
+    {"type": "fixture", "path": "l01/fixtures/sample-utf8.txt", "target_path": "fixtures/sample-utf8.txt", "visibility": "student"},
+    {"type": "teacher_only", "path": "l01/teacher/solution.py", "visibility": "teacher", "description": "Soluzione di riferimento"}
+  ],
+  "rubrica": [
+    {"criterio": "Correttezza concettuale o tecnica", "punti": 4},
+    {"criterio": "Test e casi limite", "punti": 2},
+    {"criterio": "Interpretazione dei risultati", "punti": 2},
+    {"criterio": "Chiarezza e riproducibilita", "punti": 2}
+  ]
 }

@@ -4,30 +4,24 @@
   "titolo": "Hash, collisioni e principio dei cassetti",
   "tipo": "studio-guidato",
   "difficolta": "B",
-  "argomenti": [
-    "hash",
-    "sha-256",
-    "collisioni",
-    "principio-dei-cassetti",
-    "cardinalita"
+  "linguaggio": "python",
+  "argomenti": ["hash", "sha-256", "collisioni", "principio-dei-cassetti", "cardinalita"],
+  "contesto": {"classe": "4^", "percorso": "pollicino-quarto-2026", "uda": "uda-01-informazione"},
+  "consegna": "Completa le funzioni SHA-256 e hash troncato. Cerca poi una collisione su un digest didattico di 8 bit usando 257 input distinti e spiega perché, indipendentemente dalla qualita dell'hash, una collisione deve esistere. Confronta infine SHA-256 del file fixture prima e dopo una modifica di un solo carattere.",
+  "student_support_mode": "studio-guidato",
+  "correzione": {"compila": true, "test": true, "sandbox": true, "ai_feedback": true},
+  "metriche": {"tempo_stimato_minuti": 100, "traccia_tempo_dichiarato": true, "traccia_sessioni_thebitlab": true, "traccia_eventi_didattici": true, "traccia_errori_compilazione": true},
+  "assets": [
+    {"type":"starter","path":"l02/starter/main.py","target_path":"main.py","visibility":"student"},
+    {"type":"visible_test","path":"l02/tests/test_public.py","target_path":"tests/test_public.py","visibility":"student"},
+    {"type":"hidden_test","path":"l02/tests/test_hidden.py","visibility":"teacher"},
+    {"type":"fixture","path":"l02/fixtures/message.txt","target_path":"fixtures/message.txt","visibility":"student"},
+    {"type":"teacher_only","path":"l02/teacher/solution.py","visibility":"teacher"}
   ],
-  "contesto": {
-    "classe": "4^",
-    "percorso": "pollicino-quarto-2026",
-    "uda": "uda-01-informazione"
-  },
-  "consegna": "Usa l'handout per dimostrare con un esempio finito perché un digest corto non può identificare senza ambiguità tutti gli input di un dominio più grande; calcola poi SHA-256 di un piccolo file prima e dopo una modifica.",
-  "correzione": {
-    "compila": false,
-    "test": false,
-    "sandbox": false,
-    "ai_feedback": true
-  },
-  "metriche": {
-    "tempo_stimato_minuti": 90,
-    "traccia_tempo_dichiarato": true,
-    "traccia_sessioni_thebitlab": true,
-    "traccia_eventi_didattici": true,
-    "traccia_errori_compilazione": false
-  }
+  "rubrica": [
+    {"criterio":"Correttezza concettuale o tecnica","punti":4},
+    {"criterio":"Test e casi limite","punti":2},
+    {"criterio":"Interpretazione dei risultati","punti":2},
+    {"criterio":"Chiarezza e riproducibilita","punti":2}
+  ]
 }

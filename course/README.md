@@ -60,6 +60,25 @@ Il percorso ufficiale importabile in 2cornot2c è `course/pollicino-quarto-2026/
 4. Ablation, controlli e riproducibilità scientifica
 5. POLLICINO Challenge: dal prototipo al report di ricerca
 
+## UDA 1 pronta per il laboratorio
+
+Dalla versione `0.3.0`, le quattro activity della UDA 1 includono package operativi compatibili con lo scaffold di 2cornot2c:
+
+- `starter/main.py` da completare;
+- fixture piccole e versionabili;
+- `tests/test_public.py` visibili allo studente;
+- `tests/test_hidden.py` riservati al docente;
+- `teacher/solution.py` come soluzione di riferimento;
+- notebook comune `notebooks/uda-01/pollicino-uda01-lab.ipynb`.
+
+Tutta la UDA 1 usa esclusivamente la libreria standard Python. Il comando di controllo per lo scaffold studente è:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+La convenzione e le note operative sono documentate in `pollicino-quarto-2026/activities/uda-01/README.md`.
+
 ## Principi didattici
 
 - Ogni idea matematica deve rispondere a una domanda concreta di programmazione o compressione.
@@ -71,6 +90,6 @@ Il percorso ufficiale importabile in 2cornot2c è `course/pollicino-quarto-2026/
 
 ## Stato editoriale
 
-La versione `0.2.0` è una **bozza completa del percorso annuale**. È intenzionalmente progettata per essere rifinita durante il corso: esempi, durata, esercizi, figure, riferimenti e rubriche possono cambiare mantenendo stabili gli ID di UDA e lezioni.
+La versione `0.3.0` mantiene la **bozza completa del percorso annuale** e rende la UDA 1 eseguibile end-to-end. È intenzionalmente progettata per essere rifinita durante il corso: esempi, durata, esercizi, figure, riferimenti e rubriche possono cambiare mantenendo stabili gli ID di UDA e lezioni.
 
 Vedi `pollicino-quarto-2026/AUTHORING.md` per il contratto di sincronizzazione tra versione studenti e versione docente.

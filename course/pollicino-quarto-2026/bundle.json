@@ -1,17 +1,14 @@
 {
   "schema_version": "1.0.0",
   "id": "pollicino-quarto-2026",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "POLLICINO - Informazione, compressione e modelli predittivi",
   "school_year": "2026/2027",
   "target_class": "4^ secondaria di II grado - Informatica",
   "language": "it",
   "platform_min_version": "2026.8.0",
   "authors": [
-    {
-      "name": "Antonio Caristia",
-      "role": "author"
-    }
+    {"name": "Antonio Caristia", "role": "author"}
   ],
   "license": "TBD",
   "price": null,
@@ -33,6 +30,7 @@
           "materials/uda-01/l03-informazione-probabilita-docente.md",
           "materials/uda-01/l04-entropia-baseline-docente.md"
         ],
+        "media": ["notebooks/uda-01/pollicino-uda01-lab.ipynb"],
         "handouts": [
           "handouts/uda-01/l01-file-byte-studenti.md",
           "handouts/uda-01/l02-hash-collisioni-studenti.md",

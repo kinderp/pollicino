@@ -1,0 +1,8 @@
+P2
+# piccola immagine 4x4 in formato PGM ASCII
+4 4
+15
+0 0 0 0
+0 15 15 0
+0 15 15 0
+0 0 0 0
