@@ -1,0 +1,13 @@
+{
+  "sample_bytes": 2048,
+  "sample_sha256": "19945fdce1b639090611a7f0f0dc1915e2a0248c93619cc57e42002c345f3061",
+  "float_model_bpb": 2.927078109752774,
+  "quantized_cdf_ideal_bpb": 2.936798775473096,
+  "range_payload_bpb": 2.9375,
+  "pol_file_bpb": 3.296875,
+  "encode_seconds": 2.7673614730001646,
+  "decode_seconds": 3.2438874269992084,
+  "model_fingerprint": "2c540cfdd0a701a73d610273c22558fbdc9bc1616f0a89cbd2d4176719f2c498",
+  "baselines_bytes": {"raw": 2048, "zlib": 751, "gzip": 763, "bz2": 839, "xz_lzma": 852, "zstd": 774, "xz_cli": 860},
+  "baselines_bpb": {"raw": 8.0, "zlib": 2.93359375, "gzip": 2.98046875, "bz2": 3.27734375, "xz_lzma": 3.328125, "zstd": 3.0234375, "xz_cli": 3.359375}
+}

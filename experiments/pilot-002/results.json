@@ -1,0 +1,81 @@
+{
+  "experiment_id": "pilot-002-scaling-context",
+  "phase_a_best": {
+    "name": "medium-c32",
+    "parameter_count": 64384,
+    "final_validation_bpb": 4.267878838986334,
+    "test_bpb": 3.794838859459502,
+    "train_seconds": 2.102504264000345,
+    "peak_rss_mib": 381.53125
+  },
+  "confirmation": [
+    {
+      "name": "medium-c32",
+      "parameter_count": 64384,
+      "context_length": 32,
+      "seeds": [1337, 2026, 4242],
+      "mean_validation_bpb": 3.924868514373167,
+      "stdev_validation_bpb": 0.034044542115260965,
+      "mean_test_bpb": 3.379160649393336,
+      "stdev_test_bpb": 0.023983775263893576,
+      "mean_train_seconds": 5.244684706999881,
+      "mean_peak_rss_mib": 381.6067708333333
+    },
+    {
+      "name": "medium-c64",
+      "parameter_count": 65920,
+      "context_length": 64,
+      "seeds": [1337, 2026, 4242],
+      "mean_validation_bpb": 4.041040191554043,
+      "stdev_validation_bpb": 0.023073598227758195,
+      "mean_test_bpb": 3.476908922920293,
+      "stdev_test_bpb": 0.020160011195022167,
+      "mean_train_seconds": 5.375696473666419,
+      "mean_peak_rss_mib": 383.9505208333333
+    },
+    {
+      "name": "base-c64",
+      "parameter_count": 35840,
+      "context_length": 64,
+      "seeds": [1337, 2026, 4242],
+      "mean_validation_bpb": 4.205937465336886,
+      "stdev_validation_bpb": 0.031164827467832033,
+      "mean_test_bpb": 3.658275346715542,
+      "stdev_test_bpb": 0.017726692800499225,
+      "mean_train_seconds": 4.669152402333566,
+      "mean_peak_rss_mib": 381.3098958333333
+    }
+  ],
+  "winner_training": {
+    "spec": {"vocab_size": 256, "context_length": 32, "d_model": 48, "n_heads": 4, "n_layers": 2, "d_ff": 96, "layer_norm_eps": 1e-05},
+    "parameter_count": 64384,
+    "seed": 1337,
+    "steps": 300,
+    "batch_size": 32,
+    "lr": 0.003,
+    "best_step": 300,
+    "best_validation_bpb": 3.603047538434653,
+    "train_seconds": 7.592923244999838,
+    "checkpoint_sha256": "566e96535c3274c760fa113219a397ded4a89f000df4ba08f7d8f0d25a624e39",
+    "checkpoint_bytes": 268681
+  },
+  "winner_coding": {
+    "sample_bytes": 2048,
+    "sample_sha256": "19945fdce1b639090611a7f0f0dc1915e2a0248c93619cc57e42002c345f3061",
+    "float_model_bpb": 2.927078109752774,
+    "quantized_cdf_ideal_bpb": 2.936798775473096,
+    "range_payload_bpb": 2.9375,
+    "pol_file_bpb": 3.296875,
+    "encode_seconds": 2.7673614730001646,
+    "decode_seconds": 3.2438874269992084,
+    "model_fingerprint": "2c540cfdd0a701a73d610273c22558fbdc9bc1616f0a89cbd2d4176719f2c498",
+    "baselines_bpb": {"raw": 8.0, "zlib": 2.93359375, "gzip": 2.98046875, "bz2": 3.27734375, "xz_lzma": 3.328125, "zstd": 3.0234375, "xz_cli": 3.359375}
+  },
+  "conclusions": [
+    "medium-c32 is the best tested compute/quality point on pollicino-self-v1",
+    "context 64 and 128 do not improve this corpus at matched tokens-per-step; context 256 is a costly frontier probe",
+    "model capacity helped more than longer context in this pilot",
+    "winner float-model bpb slightly beats zlib on the frozen 2048-byte slice, but quantization and POL1 overhead erase the advantage",
+    "range coding overhead remains negligible relative to model and container overhead"
+  ]
+}
