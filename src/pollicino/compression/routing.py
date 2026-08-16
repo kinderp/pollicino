@@ -17,6 +17,9 @@ class CostAwareSpecialistRouterCDFProvider:
     of the stream. If the cheap path wins, the specialist is never evaluated
     again, so routing can reduce real compute rather than merely selecting a CDF.
 
+    Streams that fit entirely inside the probe stay on the cheap path: there are
+    no post-probe symbols on which specialist activation could recover probe cost.
+
     Encoder and decoder reach the same decision from the same already-known
     prefix. No selector side stream is required.
     """
@@ -56,7 +59,9 @@ class CostAwareSpecialistRouterCDFProvider:
         self.specialist_name = str(specialist_name)
 
         self.specialist_eligible = (
-            specialist_provider is not None and self.stream_bytes >= self.min_stream_bytes
+            specialist_provider is not None
+            and self.stream_bytes > self.probe_bytes
+            and self.stream_bytes >= self.min_stream_bytes
         )
         self.route = "probe" if self.specialist_eligible else "cheap"
         self._seen: list[int] = []
@@ -127,7 +132,7 @@ class CostAwareSpecialistRouterCDFProvider:
             self._last_cheap_cdf = None
             self._last_specialist_cdf = None
 
-            if self.route == "probe" and len(self._seen) >= min(self.probe_bytes, self.stream_bytes):
+            if self.route == "probe" and len(self._seen) >= self.probe_bytes:
                 self._decide()
 
     def __call__(self, index: int, prefix: Sequence[int]) -> Sequence[int]:
