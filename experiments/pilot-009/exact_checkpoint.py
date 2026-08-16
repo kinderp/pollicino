@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import io
 import os
+import urllib.error
 import urllib.request
 import zipfile
 
@@ -17,15 +18,16 @@ EXPECTED_MODEL_FINGERPRINT = "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb81
 REPOSITORY = "kinderp/pollicino"
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
 def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def load_exact_checkpoint():
-    token = os.environ.get("GITHUB_TOKEN")
-    if not token:
-        raise RuntimeError("GITHUB_TOKEN is required to retrieve the frozen PILOT-003 artifact")
-
+def _download_artifact(token: str) -> bytes:
     url = f"https://api.github.com/repos/{REPOSITORY}/actions/artifacts/{ARTIFACT_ID}/zip"
     request = urllib.request.Request(
         url,
@@ -36,9 +38,32 @@ def load_exact_checkpoint():
             "User-Agent": "POLLICINO-PILOT-009/1.0",
         },
     )
-    with urllib.request.urlopen(request, timeout=120) as response:
-        archive_bytes = response.read()
+    opener = urllib.request.build_opener(_NoRedirect)
+    try:
+        opener.open(request, timeout=120)
+    except urllib.error.HTTPError as exc:
+        if exc.code not in (301, 302, 303, 307, 308):
+            raise
+        location = exc.headers.get("Location")
+        if not location:
+            raise RuntimeError("GitHub artifact redirect had no Location header") from exc
+    else:
+        raise RuntimeError("GitHub artifact download unexpectedly returned without redirect")
 
+    storage_request = urllib.request.Request(
+        location,
+        headers={"User-Agent": "POLLICINO-PILOT-009/1.0"},
+    )
+    with urllib.request.urlopen(storage_request, timeout=120) as response:
+        return response.read()
+
+
+def load_exact_checkpoint():
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        raise RuntimeError("GITHUB_TOKEN is required to retrieve the frozen PILOT-003 artifact")
+
+    archive_bytes = _download_artifact(token)
     archive_sha = sha256(archive_bytes)
     if archive_sha != ARTIFACT_DIGEST:
         raise RuntimeError(f"PILOT-003 artifact digest mismatch: {archive_sha}")
