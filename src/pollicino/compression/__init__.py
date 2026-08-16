@@ -1,6 +1,7 @@
 """Deterministic lossless coding primitives for POLLICINO."""
 
 from .adaptive import AdaptiveNGramCDFProvider, NeuralPriorAdaptiveCDFProvider, adaptive_fingerprint
+from .bit_credit_routing import BitCreditSpecialistRouterCDFProvider, bit_credit_router_fingerprint
 from .classical_experts import RunLengthCDFProvider, run_length_fingerprint
 from .codec import decode_pol, encode_shared, encode_static_histogram, encode_uniform, inspect_pol
 from .gating import DeterministicExpertGateCDFProvider, RollingLikelihoodGate, expert_gate_fingerprint
@@ -17,6 +18,8 @@ __all__ = [
     "AdaptiveNGramCDFProvider",
     "NeuralPriorAdaptiveCDFProvider",
     "adaptive_fingerprint",
+    "BitCreditSpecialistRouterCDFProvider",
+    "bit_credit_router_fingerprint",
     "RunLengthCDFProvider",
     "run_length_fingerprint",
     "DeterministicExpertGateCDFProvider",
