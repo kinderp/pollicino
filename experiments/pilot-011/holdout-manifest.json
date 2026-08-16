@@ -1,0 +1,74 @@
+[
+  {
+    "file": "cere",
+    "category": "yeast-dna",
+    "archive_name": "cere.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/real/cere.7z",
+    "archive_bytes": 5241219,
+    "archive_sha256": "b17d3ac9e8de888b426931f9b67a0d246c5d3634c333a3d09c90f27b0185f840",
+    "full_bytes": 461286644,
+    "full_sha256": "435c33db4c1aceff3a909192d6c18e6161988f2097fa1ae7cca7523a5b53fd84",
+    "sample_bytes": 4096,
+    "sample_sha256": "7824a27eb07f3e73a7d9948951e1f97c3deffa1958e7b1d370740b98fd5e7e0b"
+  },
+  {
+    "file": "para",
+    "category": "yeast-dna",
+    "archive_name": "para.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/real/para.7z",
+    "archive_bytes": 6253280,
+    "archive_sha256": "3b69ac8eeea2af731f672011e2279ef7285253b6a2d2f793291131d51f5acc19",
+    "full_bytes": 429265758,
+    "full_sha256": "901c6576b5703a93f4673a0ccf021144dae8d4f9a3d22dfe62f815d48b511870",
+    "sample_bytes": 4096,
+    "sample_sha256": "88a7bf7629803528268521d12cb689791d468fdfe4f12904e5c7c13849df766f"
+  },
+  {
+    "file": "influenza",
+    "category": "dna-sequences",
+    "archive_name": "influenza.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/real/influenza.7z",
+    "archive_bytes": 2067023,
+    "archive_sha256": "3b24370bead5cd6ee9c3ccd0ef7a1b0a7c12e6756e6301ad40a532626a837ab3",
+    "full_bytes": 154808555,
+    "full_sha256": "e6f8a2e6f3071a51c29694fcab69ba4cc44f3f6079dd1d3e6b55f79077a96626",
+    "sample_bytes": 4096,
+    "sample_sha256": "8ff8464aab16bd020e4451c55129bb581f687806f64fa8479b4abe0e84218370"
+  },
+  {
+    "file": "coreutils",
+    "category": "source-code-versions",
+    "archive_name": "coreutils.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/real/coreutils.7z",
+    "archive_bytes": 3905449,
+    "archive_sha256": "8f8956e02ded27886d7bca063160fb203e146e7e42290c5ea7415361bbdeed10",
+    "full_bytes": 205281778,
+    "full_sha256": "aceb23e30aa956c099468e331437692b07c8c88e06250920cb1cefbab51fa191",
+    "sample_bytes": 4096,
+    "sample_sha256": "0e4dbc150cc876b4de55c3cb3a34e6c361033aafa6cfaa51335b7bafb1654003"
+  },
+  {
+    "file": "kernel",
+    "category": "linux-kernel-source-versions",
+    "archive_name": "kernel.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/real/kernel.7z",
+    "archive_bytes": 2085983,
+    "archive_sha256": "fab9d60b27d2e6056c1d9e6c3af833e601a40fb9aef3bffd7fd08cdcbd133e3b",
+    "full_bytes": 257961616,
+    "full_sha256": "74fe3cb474b4c307950ac4b92280be4c2863b77f9e59256e2fc4ae67420e30fa",
+    "sample_bytes": 4096,
+    "sample_sha256": "86eaf7f15fd326a5a9a407ddbd3d2a336f78809d86e8210767af9406da8384e3"
+  },
+  {
+    "file": "world_leaders",
+    "category": "documents-text",
+    "archive_name": "world_leaders.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/real/world_leaders.7z",
+    "archive_bytes": 606355,
+    "archive_sha256": "feee454f2458b15b9287d9914be82294556cb04a9f0d8273bd2dab00bfc6a5c0",
+    "full_bytes": 46968181,
+    "full_sha256": "ba646c174ebd92e3f13cb603d47a8d8f18008d38b840fc44f24c7ab0ebcdb3c6",
+    "sample_bytes": 4096,
+    "sample_sha256": "01db5bdb464b25ddaa20a7c734d57bad8566fceadcb3f288704f63a3fe5c0453"
+  }
+]

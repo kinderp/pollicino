@@ -1,0 +1,34 @@
+{
+  "experiment_id": "pilot-011-regret-aware-bit-credit-routing",
+  "successful_run_id": 31964824563,
+  "run_head_sha": "9504a76f2348760a7a79cb3c567378a9fa03fc80",
+  "artifact_id": 9268295583,
+  "artifact_digest": "sha256:fa5d8f14a500200a85eabdefb0d5348d12b6b1edc8656831d93be75f148966a6",
+  "tests": "60 passed in 4.28s",
+  "python": "3.11",
+  "torch": "2.13.0+cpu",
+  "runner": "GitHub Actions ubuntu-latest / Ubuntu 24.04",
+  "checkpoint_source_artifact_id": 9243314314,
+  "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+  "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+  "failed_attempts": [
+    {
+      "run_id": 31963985281,
+      "stage": "development input retrieval",
+      "reason": "historical mirror read timeout",
+      "fresh_holdout_opened": false
+    },
+    {
+      "run_id": 31964293974,
+      "stage": "development policy selection",
+      "reason": "predeclared fast <= 0.20 compute budget had no eligible policy in frozen grid",
+      "fresh_holdout_opened": false
+    },
+    {
+      "run_id": 31964536990,
+      "stage": "development input retrieval",
+      "reason": "historical Large Corpus mirror connection timeout",
+      "fresh_holdout_opened": false
+    }
+  ]
+}
