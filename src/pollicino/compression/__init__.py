@@ -6,6 +6,7 @@ from .codec import decode_pol, encode_shared, encode_static_histogram, encode_un
 from .gating import DeterministicExpertGateCDFProvider, RollingLikelihoodGate, expert_gate_fingerprint
 from .models import Order1CountModel, uniform_cdf
 from .quantization import frequencies_to_cdf, probabilities_to_frequencies
+from .routing import CostAwareSpecialistRouterCDFProvider, cost_aware_router_fingerprint
 
 __all__ = [
     "AdaptiveNGramCDFProvider",
@@ -16,6 +17,8 @@ __all__ = [
     "DeterministicExpertGateCDFProvider",
     "RollingLikelihoodGate",
     "expert_gate_fingerprint",
+    "CostAwareSpecialistRouterCDFProvider",
+    "cost_aware_router_fingerprint",
     "decode_pol",
     "encode_shared",
     "encode_static_histogram",
