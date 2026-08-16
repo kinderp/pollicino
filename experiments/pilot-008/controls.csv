@@ -1,0 +1,4 @@
+category,file,no_model_payload_bpb,no_model_route,shared_router_encode_seconds,shared_router_payload_bpb,shared_router_route
+training-domain-test,self-v2-test,3.7001953125,cheap-gate,3.2841639260000193,2.173828125,neural-gate
+repetition,aaa.txt,0.02392578125,cheap-gate,0.8960244009999769,0.02392578125,cheap-gate
+random-64-symbol-alphabet,random.txt,6.4267578125,cheap-gate,3.342821908000019,6.42578125,neural-gate
