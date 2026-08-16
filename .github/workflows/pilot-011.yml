@@ -31,7 +31,7 @@ jobs:
       - name: Run PILOT-011
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: PYTHONPATH=src python experiments/pilot-011/run_long_io.py
+        run: PYTHONPATH=src python experiments/pilot-011/run_feasible.py
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
