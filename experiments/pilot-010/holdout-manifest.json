@@ -1,0 +1,74 @@
+[
+  {
+    "file": "mozilla",
+    "category": "mixed-executables-tar",
+    "source_url": "https://sun.aei.polsl.pl/~sdeor/corpus/mozilla.bz2",
+    "bytes": 51220480,
+    "md5": "c7789a2097f1ff944b0c737430a339b3",
+    "sha256": "657fc3764b0c75ac9de9623125705831ebbfbe08fed248df73bc2dc66e2a963b",
+    "compressed_bytes": 17914392,
+    "compressed_sha256": "3f1375c1f9ec1a3d9cef9e9fe8dbdc3e8872c176590d8e06e14d507a6935b430",
+    "sample_bytes": 4096,
+    "sample_sha256": "e2492e694b093f2faf8e1a7e3596e4c585db3e1141a26a85ca73f8d72b88c640"
+  },
+  {
+    "file": "mr",
+    "category": "medical-mri-dicom",
+    "source_url": "https://sun.aei.polsl.pl/~sdeor/corpus/mr.bz2",
+    "bytes": 9970564,
+    "md5": "38e623e3093b7bf2003ca4b1bbc19927",
+    "sha256": "68637ed52e3e4860174ed2dc0840ac77d5f1a60abbcb13770d5754e3774d53e6",
+    "compressed_bytes": 2441280,
+    "compressed_sha256": "b5c65c53720a4b7d933e0d96d87fbc7fab29ebe0ba1247a5ed056875a72da4ee",
+    "sample_bytes": 4096,
+    "sample_sha256": "ee4d10385f9eb17cdfe50c411ace6478e51410c886c9fc16e4e5c02455ecdcd5"
+  },
+  {
+    "file": "nci",
+    "category": "chemical-database-sdf",
+    "source_url": "https://sun.aei.polsl.pl/~sdeor/corpus/nci.bz2",
+    "bytes": 33553445,
+    "md5": "31f85bc8706f3c921104e7c169e2e2e1",
+    "sha256": "fc63a31770947b8c2062d3b19ca94c00485a232bb91b502021948fee983e1635",
+    "compressed_bytes": 1812734,
+    "compressed_sha256": "5510d13d670be5bbcaf8e1c628a21a4913b3380a0de325cb1cf9010c562d2edb",
+    "sample_bytes": 4096,
+    "sample_sha256": "ba4b093b246232b6fca2836587cee3afb07f8b243a01e549a5afca66559bd8b1"
+  },
+  {
+    "file": "samba",
+    "category": "source-project-tar",
+    "source_url": "https://sun.aei.polsl.pl/~sdeor/corpus/samba.bz2",
+    "bytes": 21606400,
+    "md5": "154eaea7ea70e89f6339ff0abf4112ca",
+    "sha256": "93ba07bc44d8267789c1d911992f40b089ffa2140b4a160fac11ccae9a40e7b2",
+    "compressed_bytes": 4549790,
+    "compressed_sha256": "aeb137a6cae5174963dc218498d4fa1adeb8b6081f5eee470dac72cad433edae",
+    "sample_bytes": 4096,
+    "sample_sha256": "12ba8dcff0666f96815a671f3940d6cda6407e8227d336e9009c12f630fb5ec6"
+  },
+  {
+    "file": "sao",
+    "category": "astronomical-binary-database",
+    "source_url": "https://sun.aei.polsl.pl/~sdeor/corpus/sao.bz2",
+    "bytes": 7251944,
+    "md5": "79e95a22e18cd82b7e42bf91b380d30b",
+    "sha256": "c2d0ea2cc59d4c21b7fe43a71499342a00cbe530a1d5548770e91ecd6214adcc",
+    "compressed_bytes": 4940524,
+    "compressed_sha256": "99eb682a310de9a0f1426e988bcc16b3ed024fa732100e3b6c727d45f6949075",
+    "sample_bytes": 4096,
+    "sample_sha256": "92e08af9eee68c2457011bc93bee210576ba580a9692b659d552919be74b75cb"
+  },
+  {
+    "file": "webster",
+    "category": "english-dictionary-html",
+    "source_url": "https://sun.aei.polsl.pl/~sdeor/corpus/webster.bz2",
+    "bytes": 41458703,
+    "md5": "474931ad907ac27bf962c75ded46c069",
+    "sha256": "6a68f69b26daf09f9dd84f7470368553194a0b294fcfa80f1604efb11143a383",
+    "compressed_bytes": 8644714,
+    "compressed_sha256": "4001d84df5964f584daf0551a5f6a8bb8150608ceca49ff4ccbfb4dceb8ee9d6",
+    "sample_bytes": 4096,
+    "sample_sha256": "0f1c23dda964a6e7ef0ce5ab7440d320ab99b2925c7d3a910c30803462718e6b"
+  }
+]
