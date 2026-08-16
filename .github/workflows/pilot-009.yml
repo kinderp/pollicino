@@ -31,7 +31,7 @@ jobs:
       - name: Run PILOT-009
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python experiments/pilot-009/run_exact.py
+        run: PYTHONPATH=src python experiments/pilot-009/run_exact.py
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
