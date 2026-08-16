@@ -7,6 +7,7 @@ from .gating import DeterministicExpertGateCDFProvider, RollingLikelihoodGate, e
 from .models import Order1CountModel, uniform_cdf
 from .quantization import frequencies_to_cdf, probabilities_to_frequencies
 from .routing import CostAwareSpecialistRouterCDFProvider, cost_aware_router_fingerprint
+from .sequential_routing import SequentialSpecialistRouterCDFProvider, sequential_router_fingerprint
 
 __all__ = [
     "AdaptiveNGramCDFProvider",
@@ -19,6 +20,8 @@ __all__ = [
     "expert_gate_fingerprint",
     "CostAwareSpecialistRouterCDFProvider",
     "cost_aware_router_fingerprint",
+    "SequentialSpecialistRouterCDFProvider",
+    "sequential_router_fingerprint",
     "decode_pol",
     "encode_shared",
     "encode_static_histogram",

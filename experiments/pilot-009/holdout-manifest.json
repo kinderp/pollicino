@@ -1,0 +1,62 @@
+[
+  {
+    "file": "xml-mut",
+    "category": "xml-repetitive",
+    "archive_name": "dblp.xml.0001.1.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/pseudo-real/dblp.xml.0001.1.7z",
+    "archive_bytes": 192386,
+    "archive_sha256": "cf00bd822586fee6af429daf23d4db82288be55a9061cba526f4c0d1f045dc6c",
+    "full_bytes": 104857600,
+    "full_sha256": "83c960af149b2f1069669debca48c51056ec3997badb7806ed2cd3fc2e1308c0",
+    "sample_bytes": 4096,
+    "sample_sha256": "f020bb7601131236d665199473291089e6b6e593d86ace6065d09d384caa9c0e"
+  },
+  {
+    "file": "dna-mut",
+    "category": "dna-repetitive",
+    "archive_name": "dna.001.1.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/pseudo-real/dna.001.1.7z",
+    "archive_bytes": 536424,
+    "archive_sha256": "ed86d69e611ceb6633266994090d0ec97e68cf15175508c6203a6a755339b457",
+    "full_bytes": 104857600,
+    "full_sha256": "d178bfe707aef1b61d78379d9406e64ddac657c95ab2544eeee054e32a5f43c5",
+    "sample_bytes": 4096,
+    "sample_sha256": "e8b263585b8e1057ed4e012f9aacdd023cc04a589f5a1a516a3d2884e7a716fc"
+  },
+  {
+    "file": "english-mut",
+    "category": "english-repetitive",
+    "archive_name": "english.001.2.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/pseudo-real/english.001.2.7z",
+    "archive_bytes": 572128,
+    "archive_sha256": "a3faeaea6bd434493fe75e73336b7475f4dc4fa6af889687a280533d20428855",
+    "full_bytes": 104857600,
+    "full_sha256": "774b8b54982bede81cd18838bd065e80c9d306d62f6016799f896493ae856750",
+    "sample_bytes": 4096,
+    "sample_sha256": "4bf5c96d50b170198b23d588ce47c0cbc00c9cd451f8f9718e8a5ed4d622e3fb"
+  },
+  {
+    "file": "proteins-mut",
+    "category": "proteins-repetitive",
+    "archive_name": "proteins.001.1.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/pseudo-real/proteins.001.1.7z",
+    "archive_bytes": 622641,
+    "archive_sha256": "d9312467b33fe8eee1827798f242e18b1daf322d63b8a849d234e20e3d32e95b",
+    "full_bytes": 104857600,
+    "full_sha256": "da25438ab154f066d6d964d7739abf7fb3925ab44b36cf291f78114e1ae3a5ea",
+    "sample_bytes": 4096,
+    "sample_sha256": "360183c54edfe4c622f06d9640c01e63fc2f094bad09b15ab1b2635b974e42da"
+  },
+  {
+    "file": "sources-mut",
+    "category": "source-code-repetitive",
+    "archive_name": "sources.001.2.7z",
+    "source_url": "https://pizzachili.dcc.uchile.cl/repcorpus/pseudo-real/sources.001.2.7z",
+    "archive_bytes": 464261,
+    "archive_sha256": "df84036a5079c86ecbd8ede6dbd43e1db9d3c6bb7142253b63470f02cb776e1a",
+    "full_bytes": 104857600,
+    "full_sha256": "82dc44999f9690d112b8b032314ef07373de7c0239975d32e35d91ace4177e6e",
+    "sample_bytes": 4096,
+    "sample_sha256": "a9cffd451c42dd6c12321e6be7bc6c95eafc341664456441e26eb6dc21f0fa03"
+  }
+]
