@@ -1,0 +1,4 @@
+category,cheap_encode_seconds,cheap_payload_bpb,decision_byte,file,neural_encode_seconds,neural_payload_bpb,sequential_encode_seconds,sequential_payload_bpb,sequential_route,specialist_calls
+training-domain-test,1.9499286010000105,3.898681640625,8,self-v2-test,6.494249616999923,1.789794921875,6.892675269999927,1.79833984375,neural-gate,4096
+repetition,1.8486116829999446,0.0126953125,64,aaa.txt,2.5847988230000283,0.013916015625,2.3954196499998943,0.0126953125,cheap-gate,64
+random-64-symbol-alphabet,1.9712033250000331,6.262451171875,64,random.txt,6.476009045999945,6.26171875,2.5066004020000037,6.262451171875,cheap-gate,64
