@@ -28,7 +28,7 @@ jobs:
       - name: Verify cheap and gated codecs
         run: PYTHONPATH=src pytest -q tests/test_classical_experts.py tests/test_cheap_gate.py tests/test_gating.py tests/test_adaptive.py tests/test_range.py tests/test_codec.py
       - name: Run PILOT-007
-        run: python experiments/pilot-007/run.py
+        run: python experiments/pilot-007/compat_run.py
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
