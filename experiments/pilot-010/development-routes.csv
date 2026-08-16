@@ -1,0 +1,15 @@
+category,cheap_bpb,correct,decision_byte,decision_reason,file,neural_bpb,neural_gain_bpb,route,source,target
+english-text,4.35791015625,True,16,stable-value-activate,dickens,4.0498046875,0.30810546875,neural-gate,pilot-007-silesia,neural-gate
+windows-dll,1.384765625,True,14,cumulative-reject,ooffice,1.40771484375,-0.02294921875,cheap-gate,pilot-007-silesia,cheap-gate
+mysql-database,6.27978515625,True,64,probe-cap,osdb,6.26611328125,0.013671875,cheap-gate,pilot-007-silesia,cheap-gate
+polish-pdf,3.7275390625,True,64,probe-cap,reymont,3.69482421875,0.03271484375,cheap-gate,pilot-007-silesia,cheap-gate
+xml,3.54248046875,False,17,cumulative-reject,xml,3.4423828125,0.10009765625,cheap-gate,pilot-007-silesia,neural-gate
+medical-xray,5.97802734375,True,64,probe-cap,x-ray,5.97802734375,0.0,cheap-gate,pilot-007-silesia,cheap-gate
+dna,2.092041015625,True,8,cumulative-reject,E.coli,2.091064453125,0.0009765625,cheap-gate,pilot-008-large,cheap-gate
+english-bible,3.04248046875,True,15,stable-value-activate,bible.txt,2.98193359375,0.060546875,neural-gate,pilot-008-large,neural-gate
+world-factbook,4.44482421875,True,20,stable-value-activate,world192.txt,4.2509765625,0.19384765625,neural-gate,pilot-008-large,neural-gate
+xml-repetitive,3.82763671875,True,16,stable-value-activate,xml-mut,3.771728515625,0.055908203125,neural-gate,pilot-009-pseudo-real,neural-gate
+dna-repetitive,1.979248046875,True,64,probe-cap,dna-mut,1.974609375,0.004638671875,cheap-gate,pilot-009-pseudo-real,cheap-gate
+english-repetitive,3.963623046875,True,19,stable-value-activate,english-mut,3.7060546875,0.257568359375,neural-gate,pilot-009-pseudo-real,neural-gate
+proteins-repetitive,4.328857421875,True,64,probe-cap,proteins-mut,4.327880859375,0.0009765625,cheap-gate,pilot-009-pseudo-real,cheap-gate
+source-code-repetitive,3.9580078125,False,64,probe-cap,sources-mut,3.826171875,0.1318359375,cheap-gate,pilot-009-pseudo-real,neural-gate

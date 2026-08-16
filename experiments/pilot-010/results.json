@@ -1,0 +1,163 @@
+{
+  "experiment_id": "pilot-010-stability-aware-value-routing",
+  "question": "Can persistence, recent evidence and a deterministic future-value floor reduce false neural activation without losing useful specialists?",
+  "development": {
+    "corpora": [
+      "PILOT-007 six-file Silesia subset",
+      "PILOT-008 Large Corpus subset",
+      "PILOT-009 Pizza&Chili pseudo-real subset"
+    ],
+    "meaningful_gain_bpb": 0.05,
+    "files": 14,
+    "trace_bytes": 128,
+    "candidate_grid": {
+      "min_observations": 8,
+      "activate_ratio": 256,
+      "reject_ratio_den": 256,
+      "max_probe_bytes": [64, 96, 128],
+      "recent_window": [4, 8, 16, 32],
+      "persistence_observations": [2, 4, 8],
+      "recent_gain_bits": [1, 2, 3, 4],
+      "min_projected_gain_bits": [0, 32, 64, 128, 256]
+    },
+    "ranking": "maximize correct routes, then minimize false positives, false negatives, oracle regret and decision latency",
+    "selected_policy": {
+      "min_observations": 8,
+      "activate_ratio": 256,
+      "reject_ratio_den": 256,
+      "max_probe_bytes": 64,
+      "recent_window": 4,
+      "persistence_observations": 8,
+      "recent_gain_bits": 4,
+      "min_projected_gain_bits": 0
+    },
+    "selected_policy_development": {
+      "files": 14,
+      "correct": 12,
+      "false_positive": 0,
+      "false_negative": 2,
+      "mean_decision_byte": 36.357142857142854
+    }
+  },
+  "new_holdout": {
+    "name": "Silesia unused six-file subset",
+    "files": ["mozilla", "mr", "nci", "samba", "sao", "webster"],
+    "sample_bytes_per_file": 4096,
+    "aggregate": {
+      "files": 6,
+      "mean_cheap_bpb": 3.81201171875,
+      "mean_neural_bpb": 3.7115885416666665,
+      "mean_sequential_bpb": 3.7139078776041665,
+      "mean_stability_bpb": 3.777587890625,
+      "mean_oracle_bpb": 3.7113037109375,
+      "mean_sequential_oracle_regret_bpb": 0.0026041666666666665,
+      "mean_stability_oracle_regret_bpb": 0.0662841796875,
+      "mean_zlib_bpb": 3.3893229166666665,
+      "mean_zstd19_bpb": 3.306640625,
+      "sequential_correct_routes": 3,
+      "stability_correct_routes": 4,
+      "sequential_neural_routes": 6,
+      "stability_neural_routes": 1,
+      "mean_sequential_decision_byte": 18.333333333333332,
+      "mean_stability_decision_byte": 47.833333333333336,
+      "mean_sequential_specialist_calls": 4096,
+      "mean_stability_specialist_calls": 727.8333333333334,
+      "mean_sequential_encode_seconds": 7.086506904499994,
+      "mean_stability_encode_seconds": 3.4716732953333413,
+      "mean_neural_encode_seconds": 6.55741730383334,
+      "mean_cheap_encode_seconds": 2.063021036166667
+    },
+    "per_file_table": "holdout.csv",
+    "manifest": "holdout-manifest.json"
+  },
+  "controls": [
+    {
+      "file": "self-v2-test",
+      "category": "training-domain-test",
+      "sample_bytes": 4096,
+      "cheap_payload_bpb": 3.898681640625,
+      "neural_payload_bpb": 1.789794921875,
+      "sequential_payload_bpb": 1.79833984375,
+      "sequential_route": "neural-gate",
+      "sequential_decision_byte": 8,
+      "stability_payload_bpb": 1.810791015625,
+      "stability_route": "neural-gate",
+      "stability_decision_byte": 15,
+      "stability_decision_reason": "stable-value-activate",
+      "stability_specialist_calls": 4096
+    },
+    {
+      "file": "aaa.txt",
+      "category": "repetition",
+      "sample_bytes": 4096,
+      "cheap_payload_bpb": 0.0126953125,
+      "neural_payload_bpb": 0.013916015625,
+      "sequential_payload_bpb": 0.0126953125,
+      "sequential_route": "cheap-gate",
+      "sequential_decision_byte": 64,
+      "stability_payload_bpb": 0.0126953125,
+      "stability_route": "cheap-gate",
+      "stability_decision_byte": 64,
+      "stability_decision_reason": "probe-cap",
+      "stability_specialist_calls": 64
+    },
+    {
+      "file": "random.txt",
+      "category": "random-64-symbol-alphabet",
+      "sample_bytes": 4096,
+      "cheap_payload_bpb": 6.262451171875,
+      "neural_payload_bpb": 6.26171875,
+      "sequential_payload_bpb": 6.262451171875,
+      "sequential_route": "cheap-gate",
+      "sequential_decision_byte": 64,
+      "stability_payload_bpb": 6.262451171875,
+      "stability_route": "cheap-gate",
+      "stability_decision_byte": 64,
+      "stability_decision_reason": "probe-cap",
+      "stability_specialist_calls": 64
+    }
+  ],
+  "model": {
+    "canonical_neural_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "cheap_gate_fingerprint": "bc59acb5e6f64f93e62775e8f65ea5f9b041f0a5c0498216b8004510d2983e0a",
+    "neural_gate_fingerprint": "34c41b3af254f0165cef52d31b8514dd13fb619f275c6f2686b9982d02d0e5d3"
+  },
+  "frozen_checkpoint": {
+    "source_experiment": "PILOT-003",
+    "artifact_id": 9243314314,
+    "artifact_sha256": "72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5",
+    "checkpoint_bytes": 600933,
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+    "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117"
+  },
+  "protocol": {
+    "precision_bits": 18,
+    "selector_side_bits": 0,
+    "routing_arithmetic": "integer CDF masses only",
+    "future_value_floor": "floor(remaining_bytes/recent_window)*recent_gain_bits",
+    "holdout_not_used_for_tuning": true,
+    "wall_clock_not_used_in_routing": true
+  },
+  "run": {
+    "github_actions_run_id": "31961700260",
+    "head_sha": "69582d8f6dbc22baf326be446459fd857a06e0b6",
+    "artifact_id": 9267494975,
+    "artifact_digest": "sha256:03e21b1f9f5374d7f3c051de93d81e577e0c240a4fd200626a40ac1ac51fc51d",
+    "tests": "55 passed in 4.24s"
+  },
+  "limits": [
+    "The six-file Silesia holdout comes from the same overall corpus family as PILOT-007, but these six individual files were not evaluated in earlier POLLICINO pilots.",
+    "Only the first 4096 bytes of each holdout file are entropy-coded; full-file identity is recorded in the manifest.",
+    "The 0.05 bpb meaningful-gain label and the projected-gain floor are policy choices, not information-theoretic constants.",
+    "The neural checkpoint is assumed shared whenever the neural route is available."
+  ],
+  "conclusions": [
+    "The selected stability policy is max_probe=64, recent_window=4, persistence=8, recent_gain_bits=4 and min_projected_gain_bits=0; the value-floor axis did not affect the winning candidate on this development set.",
+    "On development it removes all false-positive neural routes but introduces two false negatives (xml and sources-mut), reaching 12/14 route classifications.",
+    "On the six-file untouched Silesia subset, stability routing improves categorical route accuracy from 3/6 to 4/6 but worsens mean payload from 3.7139 bpb (PILOT-009 sequential) to 3.7776 bpb.",
+    "The reason is asymmetric regret: stability correctly rejects several nearly-neutral neural routes, but misses materially useful neural routes on mozilla (~0.053 bpb gain) and samba (~0.321 bpb gain).",
+    "Mean oracle regret rises from 0.0026 bpb for PILOT-009 to 0.0663 bpb for PILOT-010, showing that categorical route accuracy under a fixed 0.05 bpb label is not a sufficient routing objective.",
+    "Stability routing sharply reduces neural compute: mean specialist calls fall from 4096 to 727.8 and encode time from 7.09 s to 3.47 s on the holdout runner, while preserving the self-v2 neural route at byte 15.",
+    "PILOT-010 is therefore a negative result for hard stability gating as the default compression policy, but a positive result for compute control. The next router objective should be expected regret/value, not classification accuracy."
+  ]
+}
