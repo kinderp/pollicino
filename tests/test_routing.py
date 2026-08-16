@@ -103,6 +103,29 @@ def test_router_skips_specialist_when_stream_is_below_cost_threshold():
     assert cheap.calls == len(data)
 
 
+def test_router_skips_specialist_when_stream_fits_entirely_inside_probe():
+    data = b"A" * 64
+    cheap = _BiasedProvider(ord("B"))
+    specialist = _BiasedProvider(ord("A"))
+    router = CostAwareSpecialistRouterCDFProvider(
+        cheap,
+        specialist,
+        stream_bytes=len(data),
+        probe_bytes=len(data),
+        min_stream_bytes=0,
+    )
+
+    prefix: list[int] = []
+    for i, symbol in enumerate(data):
+        router(i, prefix)
+        prefix.append(symbol)
+
+    assert router.selected_route == "cheap"
+    assert router.probe_count == 0
+    assert specialist.calls == 0
+    assert cheap.calls == len(data)
+
+
 def test_router_required_ratio_can_reject_a_small_specialist_advantage():
     data = bytes([65, 66]) * 100
     cheap = _BiasedProvider(65, weight=300)
