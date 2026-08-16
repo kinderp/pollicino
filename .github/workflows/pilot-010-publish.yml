@@ -1,0 +1,35 @@
+name: PILOT-010 publish one-shot
+
+on:
+  push:
+    branches:
+      - agent/pilot-010-stability-value-routing
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    if: contains(github.event.head_commit.message, 'Publish PILOT-010 candidate grid')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download successful experiment artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pilot-010-results
+          path: /tmp/pilot010
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 31961700260
+      - name: Publish candidate grid only
+        run: |
+          cp /tmp/pilot010/candidate-policies.csv experiments/pilot-010/candidate-policies.csv
+          git config user.name "Antonio"
+          git config user.email "a.caristia@gmail.com"
+          git add experiments/pilot-010/candidate-policies.csv
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish PILOT-010 candidate grid"
+          git push origin HEAD:agent/pilot-010-stability-value-routing
