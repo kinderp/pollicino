@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   experiment:
@@ -28,7 +29,9 @@ jobs:
       - name: Verify sequential routing and codec invariants
         run: PYTHONPATH=src pytest -q tests/test_sequential_routing.py tests/test_routing.py tests/test_classical_experts.py tests/test_cheap_gate.py tests/test_gating.py tests/test_adaptive.py tests/test_range.py tests/test_codec.py
       - name: Run PILOT-009
-        run: python experiments/pilot-009/run.py
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python experiments/pilot-009/run_exact.py
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
