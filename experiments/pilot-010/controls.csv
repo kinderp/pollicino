@@ -1,0 +1,4 @@
+category,cheap_payload_bpb,file,neural_payload_bpb,sample_bytes,sequential_decision_byte,sequential_payload_bpb,sequential_route,stability_decision_byte,stability_decision_reason,stability_payload_bpb,stability_route,stability_specialist_calls
+training-domain-test,3.898681640625,self-v2-test,1.789794921875,4096,8,1.79833984375,neural-gate,15,stable-value-activate,1.810791015625,neural-gate,4096
+repetition,0.0126953125,aaa.txt,0.013916015625,4096,64,0.0126953125,cheap-gate,64,probe-cap,0.0126953125,cheap-gate,64
+random-64-symbol-alphabet,6.262451171875,random.txt,6.26171875,4096,64,6.262451171875,cheap-gate,64,probe-cap,6.262451171875,cheap-gate,64
