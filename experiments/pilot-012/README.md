@@ -4,23 +4,23 @@ PILOT-011 showed that direct regret minimization under a deterministic neural-co
 
 ## Scientific question
 
-Can a lossless codec make a fresh deterministic cheap/neural decision at fixed block boundaries and thereby exploit **within-stream domain changes** better than one file-level decision, without selector side bits?
+Can a lossless codec make a fresh deterministic cheap/neural decision at fixed block boundaries and thereby exploit **within-stream domain changes** better than one file-level decision, without selector side bits and without throwing away context already learned from the file?
 
 ## Codec change
 
-`BlockLocalBitCreditRouterCDFProvider` creates a fresh PILOT-011 bit-credit router at every fixed block boundary.
+`BlockLocalBitCreditRouterCDFProvider` creates a fresh PILOT-011 bit-credit **routing decision** at every fixed block boundary.
 
-The block reset is part of the codec definition:
+The important experimental control is that expert state is file-global:
 
-- each block starts with fresh cheap and neural expert state;
-- only the bytes already decoded inside that block are visible to its experts;
-- routing evidence is therefore block-local;
+- cheap and neural provider instances are created once per stream;
+- both experts continue to see the complete decoded prefix of the file;
+- only routing evidence and the route decision are reset at a block boundary;
 - after a cheap rejection, neural compute stops for the rest of that block;
-- the next block starts from deterministic fresh state and may choose a different route;
+- when the next block begins, the neural expert can deterministically catch up from the complete prefix;
 - encoder and decoder know block boundaries and reconstruct every route independently;
 - selector side bits remain zero.
 
-This design deliberately trades some cross-block context for real compute savings and route flexibility. Because model state resets, the correct oracle is a **block-reset oracle**, not the file-level min(cheap, neural).
+This isolates the value of **local re-routing** from the unrelated cost of resetting adaptive/neural context. `BlockResetCDFProvider` remains available only as an explicit ablation to measure what a full state reset would cost.
 
 ## Frozen inner policies
 
@@ -72,26 +72,26 @@ For every holdout stream:
 - global cheap gate;
 - global neural gate;
 - PILOT-011 file-level `max` / `balanced`;
-- PILOT-012 block-local `max` / `balanced`;
-- block-reset cheap and neural baselines;
-- block-reset per-block oracle `min(cheap, neural)`;
+- PILOT-012 state-preserving block-local `max` / `balanced`;
+- full-reset cheap and neural baselines as an ablation;
+- a diagnostic full-reset per-block oracle, clearly separated from the primary state-preserving comparison;
 - zlib;
 - zstd level 19.
 
-All selected P12 routes are verified with real encode/decode round-trips.
+All selected PILOT-012 routes are verified with real encode/decode round-trips.
 
 ## Primary metrics
 
-- payload bpb;
-- block-oracle regret;
+- real range-coded payload bpb;
 - block-local versus file-level payload delta;
 - specialist-call fraction;
 - number of route switches;
-- block-level chosen route versus block oracle;
 - encode/decode time as a reported metric only.
+
+The reset oracle is diagnostic only because it belongs to a different context model. It must not be used as the primary regret target for the state-preserving router.
 
 ## Success criterion
 
-PILOT-012 is successful if block-local routing produces a meaningful mixed-stream advantage over the corresponding PILOT-011 file-level mode on the fresh holdout, while preserving deterministic lossless decoding and an interpretable quality/compute frontier.
+PILOT-012 is successful if state-preserving block-local routing produces a meaningful mixed-stream advantage over the corresponding PILOT-011 file-level mode on the fresh holdout, while preserving deterministic lossless decoding and an interpretable quality/compute frontier.
 
-A negative result is equally useful: it would show that block reset/context tax exceeds the value of local specialization and would argue for state-preserving chunk routing in POL2 instead.
+A negative result is equally useful: it would show that the additional probes caused by local re-routing cost more than the value of switching experts, and would motivate learned/dynamic block boundaries or a richer causal scheduler rather than silently changing model state.
