@@ -1,0 +1,40 @@
+name: PILOT-012 publish one-shot
+
+on:
+  push:
+    branches:
+      - agent/pilot-012-block-local-regret
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    if: contains(github.event.head_commit.message, 'Publish PILOT-012 results')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download successful experiment artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pilot-012-results
+          path: /tmp/pilot012
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: kinderp/pollicino
+          run-id: 31987271468
+      - name: Publish frozen result tables
+        run: |
+          set -euo pipefail
+          cp /tmp/pilot012/results.json experiments/pilot-012/results.json
+          cp /tmp/pilot012/development.csv experiments/pilot-012/development.csv
+          cp /tmp/pilot012/holdout.csv experiments/pilot-012/holdout.csv
+          cp /tmp/pilot012/blocks.csv experiments/pilot-012/blocks.csv
+          cp /tmp/pilot012/holdout-manifest.json experiments/pilot-012/holdout-manifest.json
+          git config user.name 'Antonio'
+          git config user.email 'a.caristia@gmail.com'
+          git add experiments/pilot-012/results.json experiments/pilot-012/development.csv experiments/pilot-012/holdout.csv experiments/pilot-012/blocks.csv experiments/pilot-012/holdout-manifest.json
+          git commit -m 'Record PILOT-012 results'
+          git push
