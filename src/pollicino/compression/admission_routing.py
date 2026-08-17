@@ -8,18 +8,24 @@ from collections.abc import Callable, Sequence
 class CheapCodelengthAdmissionBlockCDFProvider:
     """Gate expensive block-local specialization using cheap-only evidence.
 
-    Every block starts with a fresh cheap provider.  The first ``probe_bytes`` are
+    Every block starts with a fresh cheap provider. The first ``probe_bytes`` are
     coded by that provider while their exact quantized likelihood is accumulated.
     Once the probe is complete, the block is admitted to the specialist only when
-    the cheap codelength lies inside the configured integer-bit band.
+    the cheap codelength lies inside the configured integer-bit band *and* the
+    stream-level admitted-byte budget can still pay for the whole block.
 
     If a block is rejected, ``specialist_factory`` is never called for that block.
     If it is admitted, the specialist is created lazily and receives the complete
-    local prefix.  Stateful specialists may therefore replay/catch up the probe;
-    experiments must count that work explicitly.  This class intentionally does
+    local prefix. Stateful specialists may therefore replay/catch up the probe;
+    experiments must count that work explicitly. This class intentionally does
     not expose a misleading generic ``compute_fraction`` property.
 
-    The codelength comparisons are exact.  For likelihood P = num / den,
+    ``max_admitted_bytes`` is a causal coverage cap, not a generic claim about the
+    cost of an arbitrary specialist. For PILOT-013 the neural provider performs at
+    most one uncached model evaluation per admitted source byte, so a 50% coverage
+    cap is also a hard upper bound on normalized neural forward evaluations.
+
+    The codelength comparisons are exact. For likelihood P = num / den,
     ``-log2(P) >= L`` iff ``num * 2**L <= den`` and
     ``-log2(P) <= U`` iff ``num * 2**U >= den``.
     """
@@ -34,6 +40,7 @@ class CheapCodelengthAdmissionBlockCDFProvider:
         probe_bytes: int,
         min_probe_code_bits: int,
         max_probe_code_bits: int,
+        max_admitted_bytes: int | None = None,
         cheap_name: str = "cheap",
         specialist_name: str = "specialist",
     ) -> None:
@@ -45,6 +52,8 @@ class CheapCodelengthAdmissionBlockCDFProvider:
             raise ValueError("probe_bytes must be in [1, block_bytes)")
         if min_probe_code_bits < 0 or max_probe_code_bits < min_probe_code_bits:
             raise ValueError("invalid probe codelength band")
+        if max_admitted_bytes is not None and not 0 <= max_admitted_bytes <= stream_bytes:
+            raise ValueError("max_admitted_bytes must be within the stream")
         if not cheap_name or not specialist_name or cheap_name == specialist_name:
             raise ValueError("route names must be distinct non-empty strings")
 
@@ -55,6 +64,9 @@ class CheapCodelengthAdmissionBlockCDFProvider:
         self.probe_bytes = int(probe_bytes)
         self.min_probe_code_bits = int(min_probe_code_bits)
         self.max_probe_code_bits = int(max_probe_code_bits)
+        self.max_admitted_bytes = (
+            self.stream_bytes if max_admitted_bytes is None else int(max_admitted_bytes)
+        )
         self.cheap_name = str(cheap_name)
         self.specialist_name = str(specialist_name)
 
@@ -66,7 +78,9 @@ class CheapCodelengthAdmissionBlockCDFProvider:
         self._last_probe_cdf: Sequence[int] | None = None
         self._probe_num = 1
         self._probe_den = 1
+        self._band_match: bool | None = None
         self._admitted: bool | None = None
+        self._admitted_bytes = 0
         self._completed: list[dict[str, int | str | bool]] = []
         self._last_prefix: list[int] = []
         self.specialist_output_calls = 0
@@ -89,6 +103,7 @@ class CheapCodelengthAdmissionBlockCDFProvider:
         assert self._block_index is not None
         length = self._block_length(self._block_index)
         admitted = bool(self._admitted)
+        band_match = bool(self._band_match)
         decision = min(self.probe_bytes, length)
         return {
             "block_index": self._block_index,
@@ -97,6 +112,8 @@ class CheapCodelengthAdmissionBlockCDFProvider:
             "probe_bytes_observed": min(len(self._probe_seen), self.probe_bytes),
             "decision_byte": decision,
             "decision_global_byte": self._block_start + decision,
+            "band_match": band_match,
+            "budget_limited": band_match and not admitted,
             "admitted": admitted,
             "route": self.specialist_name if admitted else self.cheap_name,
         }
@@ -112,6 +129,7 @@ class CheapCodelengthAdmissionBlockCDFProvider:
         self._last_probe_cdf = None
         self._probe_num = 1
         self._probe_den = 1
+        self._band_match = None
         self._admitted = None
 
     def _sync_probe(self, local_prefix: Sequence[int]) -> None:
@@ -143,12 +161,18 @@ class CheapCodelengthAdmissionBlockCDFProvider:
         block_length = self._block_length(self._block_index)
         if local_index < min(self.probe_bytes, block_length):
             return
+
         # No byte remains after the probe, so specialization cannot affect coding.
         if block_length <= self.probe_bytes or self.specialist_factory is None:
+            self._band_match = False
             self._admitted = False
             return
-        self._admitted = self._in_admission_band()
+
+        self._band_match = self._in_admission_band()
+        budget_allows = self._admitted_bytes + block_length <= self.max_admitted_bytes
+        self._admitted = self._band_match and budget_allows
         if self._admitted:
+            self._admitted_bytes += block_length
             self._specialist = self.specialist_factory()
 
     def __call__(self, index: int, prefix: Sequence[int]):
@@ -195,11 +219,21 @@ class CheapCodelengthAdmissionBlockCDFProvider:
         return sum(bool(row["admitted"]) for row in self.block_summary())
 
     @property
+    def admitted_bytes(self) -> int:
+        return self._admitted_bytes
+
+    @property
     def admission_fraction(self) -> float:
         rows = self.block_summary()
         if not rows:
             return 0.0
         return self.admitted_blocks / len(rows)
+
+    @property
+    def admitted_byte_fraction(self) -> float:
+        if self.stream_bytes <= 0:
+            return 0.0
+        return self.admitted_bytes / self.stream_bytes
 
 
 def cheap_codelength_admission_fingerprint(
@@ -211,6 +245,7 @@ def cheap_codelength_admission_fingerprint(
     probe_bytes: int,
     min_probe_code_bits: int,
     max_probe_code_bits: int,
+    max_admitted_bytes: int | None = None,
 ) -> bytes:
     if len(cheap_fingerprint) != 32:
         raise ValueError("cheap fingerprint must be 32 bytes")
@@ -222,6 +257,8 @@ def cheap_codelength_admission_fingerprint(
         raise ValueError("invalid probe size")
     if min_probe_code_bits < 0 or max_probe_code_bits < min_probe_code_bits:
         raise ValueError("invalid probe codelength band")
+    if max_admitted_bytes is not None and not 0 <= max_admitted_bytes <= stream_bytes:
+        raise ValueError("max_admitted_bytes must be within the stream")
     payload = {
         "kind": "pollicino-cheap-codelength-admission-v1",
         "cheap_fingerprint": cheap_fingerprint.hex(),
@@ -231,6 +268,7 @@ def cheap_codelength_admission_fingerprint(
         "probe_bytes": int(probe_bytes),
         "min_probe_code_bits": int(min_probe_code_bits),
         "max_probe_code_bits": int(max_probe_code_bits),
+        "max_admitted_bytes": stream_bytes if max_admitted_bytes is None else int(max_admitted_bytes),
         "state_scope": "block-reset",
         "specialist_creation": "lazy-after-cheap-probe",
     }
