@@ -65,7 +65,7 @@ def test_block_router_reject_stops_specialist_only_for_current_block():
     assert rows[1]["decision_global_byte"] == 64 + rows[1]["decision_byte"]
 
 
-def test_block_router_keeps_expert_instances_and_global_prefix_across_blocks():
+def test_block_router_recreates_experts_and_restarts_local_prefix_each_block():
     creations = {"cheap": 0, "specialist": 0}
     seen_indexes = {"cheap": [], "specialist": []}
 
@@ -95,12 +95,11 @@ def test_block_router_keeps_expert_instances_and_global_prefix_across_blocks():
         router(i, prefix)
         prefix.append(symbol)
 
-    assert creations == {"cheap": 1, "specialist": 1}
-    # The specialist is allowed to stop after a local rejection/default, then catches
-    # up from the complete file prefix when the next routing block begins.
-    assert 8 in seen_indexes["specialist"]
-    assert 16 in seen_indexes["specialist"]
-    assert max(seen_indexes["cheap"]) >= 19
+    assert creations == {"cheap": 3, "specialist": 3}
+    assert seen_indexes["cheap"].count(0) == 3
+    assert seen_indexes["specialist"].count(0) == 3
+    assert max(seen_indexes["cheap"]) <= 7
+    assert max(seen_indexes["specialist"]) <= 3
 
 
 def test_block_router_handles_short_last_block():
