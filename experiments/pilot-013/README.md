@@ -51,12 +51,24 @@ Frozen candidates:
 
 For efficiency, each development block precomputes cheap-only, neural-only and probe-then-neural outcomes for each probe length. All codelength bands are screened from those reusable outcomes. The best few policies are then validated with real whole-stream range coding, and the real lowest-payload policy is frozen before the new holdout is downloaded.
 
+### Policy frozen before holdout
+
+GitHub Actions run `31988642119` completed all development selection and emitted the frozen policy **before** attempting fresh-source verification:
+
+- probe: 16 bytes;
+- cheap probe codelength band: 88–128 bits, i.e. 5.5–8.0 bpb;
+- maximum admitted bytes: 2048 (50%).
+
+That run then aborted on the first fresh-source Git-blob check because the preregistered source identifiers were incorrect. No fresh holdout stream was composed or coded and no holdout metric was produced. `frozen-policy.json` records the freeze event. The provenance-correction rerun uses `run_frozen.py`, which reruns the original development procedure, asserts that it reproduces this exact policy, and refuses to download the fresh sources if the policy drifts. The policy is **not retuned** after the failed provenance check.
+
 ## Fresh holdout
 
-Only after the policy is frozen, download and verify two sources never used by earlier POLLICINO pilots:
+Only after the frozen policy has been re-verified, download and verify two sources never used by earlier POLLICINO pilots:
 
-- Go `src/net/http/server.go`, tag `go1.22.12`, Git blob `23a603c91bc0aadc51203b50642c558920525bc1`;
-- Node.js `lib/internal/modules/cjs/loader.js`, tag `v20.19.1`, Git blob `ebccdb81da2ed30b92edb1eaebfa7b84107cf53b`.
+- Go `src/net/http/server.go`, tag `go1.22.12`, Git blob `23a603a83dd7135077fa1363ceb8255ff345ac06`;
+- Node.js `lib/internal/modules/cjs/loader.js`, tag `v20.19.1`, Git blob `ebccdb28256314e7cd8ac8d7e3dec670286022d2`.
+
+These identifiers were independently re-read from GitHub's tagged file metadata after the first run's provenance guard rejected the original annotations.
 
 Six deterministic 4096-byte mixed streams combine those bytes with JSON, DNA, random, repetition, compressed and English-like controls. Segment boundaries are deliberately not aligned to 512 bytes.
 
@@ -90,4 +102,4 @@ PILOT-013 succeeds if the frozen policy:
 3. improves the mean fresh-holdout payload over the block-reset cheap baseline;
 4. retains at least **50% of the mean cheap-reset -> neural-reset compression gain** on the fresh holdout.
 
-The 50% retained-gain threshold is frozen before the Go/Node holdout is opened. A negative result is useful: if cheap codelength cannot identify valuable neural blocks, the next experiment should add richer cheap-only causal features or a tiny learned admission model rather than silently increasing neural compute.
+The 50% retained-gain threshold was frozen before the Go/Node holdout was accepted. A negative result is useful: if cheap codelength cannot identify valuable neural blocks, the next experiment should add richer cheap-only causal features or a tiny learned admission model rather than silently increasing neural compute.
