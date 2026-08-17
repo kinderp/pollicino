@@ -86,8 +86,8 @@ All primary POLLICINO rows use real range-coded payloads. The diagnostic block o
 PILOT-013 succeeds if the frozen policy:
 
 1. preserves deterministic lossless round-trip coding with zero selector side bits;
-2. stays at or below 0.50 actual neural evaluations per source byte;
-3. materially improves on the block-reset cheap baseline;
-4. retains a substantial fraction of the compression gain available from block-reset neural coding.
+2. stays at or below 0.50 actual neural evaluations per source byte on every fresh stream;
+3. improves the mean fresh-holdout payload over the block-reset cheap baseline;
+4. retains at least **50% of the mean cheap-reset -> neural-reset compression gain** on the fresh holdout.
 
-A negative result is useful. If cheap codelength cannot identify valuable neural blocks, the next experiment should add richer cheap-only causal features or a tiny learned admission model rather than silently increasing neural compute.
+The 50% retained-gain threshold is frozen before the Go/Node holdout is opened. A negative result is useful: if cheap codelength cannot identify valuable neural blocks, the next experiment should add richer cheap-only causal features or a tiny learned admission model rather than silently increasing neural compute.
