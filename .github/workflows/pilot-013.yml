@@ -28,10 +28,10 @@ jobs:
           python -m pip install numpy zstandard pytest
       - name: Verify admission routing and codec invariants
         run: PYTHONPATH=src pytest -q tests/test_admission_routing.py tests/test_neural.py tests/test_block_routing.py tests/test_bit_credit_routing.py tests/test_stability_routing.py tests/test_sequential_routing.py tests/test_routing.py tests/test_classical_experts.py tests/test_cheap_gate.py tests/test_gating.py tests/test_adaptive.py tests/test_range.py tests/test_codec.py
-      - name: Run PILOT-013
+      - name: Run PILOT-013 frozen-policy provenance rerun
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: PYTHONPATH=src python experiments/pilot-013/run.py
+        run: PYTHONPATH=src python experiments/pilot-013/run_frozen.py
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
