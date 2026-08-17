@@ -7,32 +7,19 @@ from collections.abc import Callable, Sequence
 from .bit_credit_routing import BitCreditSpecialistRouterCDFProvider
 
 
-class _GlobalPrefixAdapter:
-    """Expose a global-state provider through a block-local prefix interface."""
-
-    def __init__(self, provider, base_prefix: Sequence[int]) -> None:
-        self.provider = provider
-        self.base_prefix = tuple(int(value) for value in base_prefix)
-
-    def __call__(self, index: int, prefix: Sequence[int]):
-        if index != len(prefix):
-            raise ValueError("index must equal prefix length")
-        global_prefix = self.base_prefix + tuple(int(value) for value in prefix)
-        return self.provider(len(global_prefix), global_prefix)
-
-
 class BlockLocalBitCreditRouterCDFProvider:
-    """Re-evaluate a cheap/specialist route independently in fixed-size blocks.
+    """Reset and re-route cheap/specialist experts independently in fixed blocks.
 
-    The routing evidence and decision are reset at deterministic block boundaries,
-    but the cheap and specialist provider instances are *not* reset.  Both experts
-    continue to see the complete decoded prefix of the file.  This isolates the
-    effect of local routing from a second, confounding change in model context.
+    Each block owns a fresh :class:`BitCreditSpecialistRouterCDFProvider`. Only the
+    bytes already decoded inside the current block are shown to that router and to
+    its experts. This makes neural compute accounting honest: after a cheap reject,
+    the specialist is not evaluated again until the next block, where a fresh
+    specialist starts from deterministic empty block state rather than replaying
+    skipped bytes from the preceding block.
 
-    A specialist that was not evaluated for part of a block is allowed to catch up
-    from the global prefix when the next block starts.  POLLICINO providers are
-    causal prefix-replay providers, so encoder and decoder reconstruct the same
-    expert state without a selector side stream.
+    The reset is part of the codec definition and creates an explicit context-reset
+    tax. Encoder and decoder know the same block boundaries and reconstruct the same
+    route decisions without selector side bits.
     """
 
     def __init__(
@@ -73,13 +60,6 @@ class BlockLocalBitCreditRouterCDFProvider:
         self.cheap_name = str(cheap_name)
         self.specialist_name = str(specialist_name)
 
-        # Expert state is file-global. Only these router wrappers are replaced at
-        # block boundaries.
-        self._cheap_provider = self.cheap_factory()
-        self._specialist_provider = (
-            self.specialist_factory() if self.specialist_factory is not None else None
-        )
-
         self._block_index: int | None = None
         self._block_start = 0
         self._router: BitCreditSpecialistRouterCDFProvider | None = None
@@ -90,20 +70,11 @@ class BlockLocalBitCreditRouterCDFProvider:
         start = block_index * self.block_bytes
         return max(0, min(self.block_bytes, self.stream_bytes - start))
 
-    def _new_router(
-        self,
-        block_index: int,
-        base_prefix: Sequence[int],
-    ) -> BitCreditSpecialistRouterCDFProvider:
+    def _new_router(self, block_index: int) -> BitCreditSpecialistRouterCDFProvider:
         length = self._block_length(block_index)
-        cheap = _GlobalPrefixAdapter(self._cheap_provider, base_prefix)
-        specialist = (
-            _GlobalPrefixAdapter(self._specialist_provider, base_prefix)
-            if self._specialist_provider is not None
-            else None
-        )
+        specialist = self.specialist_factory() if self.specialist_factory is not None else None
         return BitCreditSpecialistRouterCDFProvider(
-            cheap,
+            self.cheap_factory(),
             specialist,
             stream_bytes=length,
             min_stream_bytes=0,
@@ -132,13 +103,12 @@ class BlockLocalBitCreditRouterCDFProvider:
             "compute_fraction": float(router.compute_fraction),
         }
 
-    def _switch_block(self, block_index: int, prefix: Sequence[int]) -> None:
+    def _switch_block(self, block_index: int) -> None:
         if self._router is not None and self._block_index is not None:
             self._completed.append(self._snapshot(self._block_index, self._router))
         self._block_index = block_index
         self._block_start = block_index * self.block_bytes
-        base_prefix = prefix[: self._block_start]
-        self._router = self._new_router(block_index, base_prefix)
+        self._router = self._new_router(block_index)
 
     def __call__(self, index: int, prefix: Sequence[int]):
         if index != len(prefix):
@@ -155,7 +125,7 @@ class BlockLocalBitCreditRouterCDFProvider:
 
         block_index = index // self.block_bytes
         if self._block_index != block_index:
-            self._switch_block(block_index, prefix_list)
+            self._switch_block(block_index)
         assert self._router is not None
         local_prefix = prefix_list[self._block_start :]
         return self._router(len(local_prefix), local_prefix)
@@ -183,7 +153,7 @@ class BlockLocalBitCreditRouterCDFProvider:
 
 
 class BlockResetCDFProvider:
-    """Ablation provider that deliberately resets model state in every block."""
+    """Run a fresh provider instance in every deterministic fixed-size block."""
 
     def __init__(self, provider_factory: Callable[[], object], *, stream_bytes: int, block_bytes: int) -> None:
         if stream_bytes < 0 or block_bytes <= 0:
@@ -237,6 +207,7 @@ def block_local_router_fingerprint(
         "specialist_fingerprint": specialist_fingerprint.hex() if specialist_fingerprint else None,
         "stream_bytes": int(stream_bytes),
         "block_bytes": int(block_bytes),
+        "state_scope": "block-reset",
         "min_observations": int(min_observations),
         "max_probe_bytes": int(max_probe_bytes),
         "activation_credit_bits": int(activation_credit_bits),
