@@ -51,6 +51,7 @@ def test_exact_uniform_probe_band_admits_and_roundtrips():
     assert enc.block_summary() == dec.block_summary()
     assert enc.admitted_blocks == 2
     assert enc.admission_fraction == 1.0
+    assert enc.admitted_byte_fraction == 1.0
     assert {row["route"] for row in enc.block_summary()} == {"neural"}
     assert {row["decision_byte"] for row in enc.block_summary()} == {4}
 
@@ -115,6 +116,39 @@ def test_probe_likelihood_is_reset_and_can_change_admission_per_block():
     assert created == 1
 
 
+def test_admitted_byte_budget_is_a_causal_hard_cap():
+    data = b"A" * 24
+    created = 0
+
+    def specialist_factory():
+        nonlocal created
+        created += 1
+        return _BiasedProvider(ord("A"))
+
+    router = CheapCodelengthAdmissionBlockCDFProvider(
+        _UniformProvider,
+        specialist_factory,
+        stream_bytes=len(data),
+        block_bytes=8,
+        probe_bytes=4,
+        min_probe_code_bits=32,
+        max_probe_code_bits=32,
+        max_admitted_bytes=8,
+    )
+    prefix: list[int] = []
+    for index, symbol in enumerate(data):
+        router(index, prefix)
+        prefix.append(symbol)
+
+    rows = router.block_summary()
+    assert [row["band_match"] for row in rows] == [True, True, True]
+    assert [row["admitted"] for row in rows] == [True, False, False]
+    assert [row["budget_limited"] for row in rows] == [False, True, True]
+    assert router.admitted_bytes == 8
+    assert router.admitted_byte_fraction == 1 / 3
+    assert created == 1
+
+
 def test_short_last_block_cannot_pay_specialist_probe():
     data = b"A" * 11
     created = 0
@@ -144,7 +178,7 @@ def test_short_last_block_cannot_pay_specialist_probe():
     assert created == 1
 
 
-def test_admission_fingerprint_commits_to_probe_band():
+def test_admission_fingerprint_commits_to_probe_band_and_budget():
     base = dict(
         cheap_fingerprint=b"c" * 32,
         specialist_fingerprint=b"n" * 32,
@@ -153,8 +187,10 @@ def test_admission_fingerprint_commits_to_probe_band():
         probe_bytes=32,
         min_probe_code_bits=96,
         max_probe_code_bits=224,
+        max_admitted_bytes=2048,
     )
     fp = cheap_codelength_admission_fingerprint(**base)
     assert len(fp) == 32
     assert fp != cheap_codelength_admission_fingerprint(**{**base, "probe_bytes": 64})
     assert fp != cheap_codelength_admission_fingerprint(**{**base, "max_probe_code_bits": 240})
+    assert fp != cheap_codelength_admission_fingerprint(**{**base, "max_admitted_bytes": 1024})
