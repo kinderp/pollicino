@@ -1,0 +1,17 @@
+{
+  "github_actions_run_id": 31987271468,
+  "scientific_head_sha": "111e3ea7204bccad8bf41846d7e026cbbe3609af",
+  "tests": "67 passed",
+  "artifact_id": 9274272450,
+  "artifact_digest": "sha256:62434b6164f88c021c15fce707293b06c423ba2ff5b90f61a8f960140b8ef11c",
+  "artifact_name": "pilot-012-results",
+  "checkpoint_source_experiment": "PILOT-003",
+  "checkpoint_artifact_id": 9243314314,
+  "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+  "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+  "notes": [
+    "The successful scientific run used true expert resets at every block boundary.",
+    "An earlier attempt failed in the test suite before development/holdout execution because an obsolete state-preserving test remained after the semantic reset decision.",
+    "The fresh holdout was not used to select block size or modify PILOT-011 inner thresholds."
+  ]
+}
