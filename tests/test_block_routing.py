@@ -62,6 +62,45 @@ def test_block_router_reject_stops_specialist_only_for_current_block():
     assert rows[0]["specialist_calls"] <= 16
     assert rows[1]["route"] == "neural"
     assert rows[1]["specialist_calls"] == 64
+    assert rows[1]["decision_global_byte"] == 64 + rows[1]["decision_byte"]
+
+
+def test_block_router_keeps_expert_instances_and_global_prefix_across_blocks():
+    creations = {"cheap": 0, "specialist": 0}
+    seen_indexes = {"cheap": [], "specialist": []}
+
+    class Recorder:
+        def __init__(self, name: str):
+            self.name = name
+            creations[name] += 1
+
+        def __call__(self, index, prefix):
+            assert index == len(prefix)
+            seen_indexes[self.name].append(index)
+            return frequencies_to_cdf([1] * 256)
+
+    data = bytes(range(20))
+    router = BlockLocalBitCreditRouterCDFProvider(
+        lambda: Recorder("cheap"),
+        lambda: Recorder("specialist"),
+        stream_bytes=len(data),
+        block_bytes=8,
+        min_observations=2,
+        max_probe_bytes=4,
+        activation_credit_bits=20,
+        rejection_credit_bits=20,
+    )
+    prefix: list[int] = []
+    for i, symbol in enumerate(data):
+        router(i, prefix)
+        prefix.append(symbol)
+
+    assert creations == {"cheap": 1, "specialist": 1}
+    # The specialist is allowed to stop after a local rejection/default, then catches
+    # up from the complete file prefix when the next routing block begins.
+    assert 8 in seen_indexes["specialist"]
+    assert 16 in seen_indexes["specialist"]
+    assert max(seen_indexes["cheap"]) >= 19
 
 
 def test_block_router_handles_short_last_block():
