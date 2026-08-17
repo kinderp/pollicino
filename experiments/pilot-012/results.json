@@ -1,0 +1,116 @@
+{
+  "experiment_id": "pilot-012-block-local-regret-routing",
+  "question": "Can deterministic block-local re-routing exploit domain changes inside a stream better than one irreversible file-level regret-aware decision?",
+  "development": {
+    "streams": [
+      "dev-a",
+      "dev-b",
+      "dev-c",
+      "dev-d"
+    ],
+    "stream_bytes": 4096,
+    "block_candidates": [
+      256,
+      512,
+      1024
+    ],
+    "mode_compute_budgets": {
+      "max": 1.0,
+      "balanced": 0.5
+    },
+    "selection_rule": "for each frozen PILOT-011 mode, minimize real payload bpb among block sizes satisfying the same deterministic mean specialist-call budget",
+    "selected_blocks": {
+      "max": {
+        "mode": "max",
+        "block_bytes": 512,
+        "mean_payload_bpb": 3.841064453125,
+        "mean_compute_fraction": 0.643310546875,
+        "mean_switch_count": 2.75
+      },
+      "balanced": null
+    },
+    "fresh_external_sources_used": false
+  },
+  "new_holdout": {
+    "name": "PILOT-012 deterministic mixed-source holdout",
+    "streams": [
+      "mix-a",
+      "mix-b",
+      "mix-c",
+      "mix-d",
+      "mix-e",
+      "mix-f"
+    ],
+    "stream_bytes": 4096,
+    "external_sources": [
+      {
+        "name": "cpython-json-decoder",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.11.15/Lib/json/decoder.py",
+        "git_blob_sha1": "c5d9ae2d0d5d040708f097fbf6450b86eef334dd",
+        "bytes": 12473,
+        "sha256": "9f02654649816145bc76f8c210a5fe3ba1de142d4d97a1c93105732e747c285b"
+      },
+      {
+        "name": "linux-sched-core",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/v6.6/kernel/sched/core.c",
+        "git_blob_sha1": "802551e0009bf1ef66191441a802633bb57543bc",
+        "bytes": 315588,
+        "sha256": "3e50073f3f629ba54fc642115b3eb14d88fb1376e020d0a80731a2cf4832e8f6"
+      }
+    ],
+    "aggregate": {
+      "max": {
+        "block_bytes": 512,
+        "development_mean_payload_bpb": 3.841064453125,
+        "development_mean_compute_fraction": 0.643310546875,
+        "mean_file_bpb": 4.554606119791667,
+        "mean_block_bpb": 4.256876627604167,
+        "mean_block_oracle_bpb": 4.2313232421875,
+        "mean_block_oracle_regret_bpb": 0.025553385416666668,
+        "mean_block_compute_fraction": 0.8428141276041666,
+        "mean_block_switch_count": 2,
+        "block_beats_file_streams": 6
+      },
+      "balanced": {
+        "status": "development-budget-infeasible"
+      }
+    },
+    "mean_zlib_bpb": 3.9964192708333335,
+    "mean_zstd19_bpb": 3.8782552083333335,
+    "per_stream_table": "holdout.csv",
+    "per_block_table": "blocks.csv",
+    "composition_manifest": "holdout-manifest.json"
+  },
+  "model": {
+    "canonical_neural_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "cheap_gate_fingerprint": "bc59acb5e6f64f93e62775e8f65ea5f9b041f0a5c0498216b8004510d2983e0a",
+    "neural_gate_fingerprint": "34c41b3af254f0165cef52d31b8514dd13fb619f275c6f2686b9982d02d0e5d3"
+  },
+  "frozen_checkpoint": {
+    "source_experiment": "PILOT-003",
+    "artifact_id": 9243314314,
+    "artifact_sha256": "72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5",
+    "checkpoint_bytes": 600933,
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+    "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117"
+  },
+  "protocol": {
+    "precision_bits": 18,
+    "selector_side_bits": 0,
+    "block_state": "cheap and neural expert state reset at every fixed block boundary",
+    "inner_policies": "frozen PILOT-011 max and balanced policies; thresholds are not retuned",
+    "holdout_not_used_for_block_size_selection": true,
+    "wall_clock_not_used_in_routing_or_selection": true
+  },
+  "run": {
+    "github_actions_run_id": "31987271468",
+    "head_sha": "111e3ea7204bccad8bf41846d7e026cbbe3609af"
+  },
+  "limits": [
+    "The fresh holdout is deliberately constructed to contain within-stream domain changes; it is a mechanism benchmark, not a universal corpus.",
+    "Only 4096 bytes per mixed stream are coded.",
+    "Generated DNA/random/repetition/JSON segments are deterministic controls rather than naturally occurring files.",
+    "Block resets change model state and therefore block-local results must be compared with the block-reset oracle/baselines as well as file-level routing.",
+    "The neural checkpoint is assumed shared whenever neural routing is available."
+  ]
+}

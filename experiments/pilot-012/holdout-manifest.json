@@ -1,0 +1,224 @@
+{
+  "sources": [
+    {
+      "name": "cpython-json-decoder",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.11.15/Lib/json/decoder.py",
+      "git_blob_sha1": "c5d9ae2d0d5d040708f097fbf6450b86eef334dd",
+      "bytes": 12473,
+      "sha256": "9f02654649816145bc76f8c210a5fe3ba1de142d4d97a1c93105732e747c285b"
+    },
+    {
+      "name": "linux-sched-core",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/v6.6/kernel/sched/core.c",
+      "git_blob_sha1": "802551e0009bf1ef66191441a802633bb57543bc",
+      "bytes": 315588,
+      "sha256": "3e50073f3f629ba54fc642115b3eb14d88fb1376e020d0a80731a2cf4832e8f6"
+    }
+  ],
+  "streams": [
+    {
+      "stream": "mix-a",
+      "bytes": 4096,
+      "sha256": "9bbdca971ebcb5ea4fe183db8ebfe33e2b0af0edde1d6d96316369e01ed18ab1",
+      "segments": [
+        {
+          "component": "cpython",
+          "start": 0,
+          "end": 851,
+          "bytes": 851
+        },
+        {
+          "component": "random256",
+          "start": 851,
+          "end": 1308,
+          "bytes": 457
+        },
+        {
+          "component": "linux",
+          "start": 1308,
+          "end": 2407,
+          "bytes": 1099
+        },
+        {
+          "component": "repeat",
+          "start": 2407,
+          "end": 2796,
+          "bytes": 389
+        },
+        {
+          "component": "json",
+          "start": 2796,
+          "end": 4096,
+          "bytes": 1300
+        }
+      ]
+    },
+    {
+      "stream": "mix-b",
+      "bytes": 4096,
+      "sha256": "0bf0498fb37e199e108f47bb58bd89e70ddc0d204053bbd464a41256dba0c8d8",
+      "segments": [
+        {
+          "component": "linux",
+          "start": 0,
+          "end": 727,
+          "bytes": 727
+        },
+        {
+          "component": "dna",
+          "start": 727,
+          "end": 1628,
+          "bytes": 901
+        },
+        {
+          "component": "cpython",
+          "start": 1628,
+          "end": 2655,
+          "bytes": 1027
+        },
+        {
+          "component": "compressed",
+          "start": 2655,
+          "end": 4096,
+          "bytes": 1441
+        }
+      ]
+    },
+    {
+      "stream": "mix-c",
+      "bytes": 4096,
+      "sha256": "52d37f8df2bf3a2208b37433d8e725cb67ab925f6d69299c5cdc1a943e4d343b",
+      "segments": [
+        {
+          "component": "english",
+          "start": 0,
+          "end": 667,
+          "bytes": 667
+        },
+        {
+          "component": "cpython",
+          "start": 667,
+          "end": 1614,
+          "bytes": 947
+        },
+        {
+          "component": "random64",
+          "start": 1614,
+          "end": 2171,
+          "bytes": 557
+        },
+        {
+          "component": "linux",
+          "start": 2171,
+          "end": 4096,
+          "bytes": 1925
+        }
+      ]
+    },
+    {
+      "stream": "mix-d",
+      "bytes": 4096,
+      "sha256": "78576828653616cd457c08f5ea6d0d1dcd5e84d93415ca82efb9a95ddba68c81",
+      "segments": [
+        {
+          "component": "json",
+          "start": 0,
+          "end": 877,
+          "bytes": 877
+        },
+        {
+          "component": "linux",
+          "start": 877,
+          "end": 1700,
+          "bytes": 823
+        },
+        {
+          "component": "repeat",
+          "start": 1700,
+          "end": 2053,
+          "bytes": 353
+        },
+        {
+          "component": "compressed",
+          "start": 2053,
+          "end": 2754,
+          "bytes": 701
+        },
+        {
+          "component": "cpython",
+          "start": 2754,
+          "end": 4096,
+          "bytes": 1342
+        }
+      ]
+    },
+    {
+      "stream": "mix-e",
+      "bytes": 4096,
+      "sha256": "81a56697b15346f182e829a6325d83c0df64acdb992560131f6647bc870c9200",
+      "segments": [
+        {
+          "component": "random256",
+          "start": 0,
+          "end": 499,
+          "bytes": 499
+        },
+        {
+          "component": "cpython",
+          "start": 499,
+          "end": 1656,
+          "bytes": 1157
+        },
+        {
+          "component": "dna",
+          "start": 1656,
+          "end": 2407,
+          "bytes": 751
+        },
+        {
+          "component": "linux",
+          "start": 2407,
+          "end": 4096,
+          "bytes": 1689
+        }
+      ]
+    },
+    {
+      "stream": "mix-f",
+      "bytes": 4096,
+      "sha256": "d2413e24e24aa04193e9136da44fc68a71bf4601b09bb6fd264c7ddd7c776d2d",
+      "segments": [
+        {
+          "component": "cpython",
+          "start": 0,
+          "end": 461,
+          "bytes": 461
+        },
+        {
+          "component": "repeat",
+          "start": 461,
+          "end": 1068,
+          "bytes": 607
+        },
+        {
+          "component": "linux",
+          "start": 1068,
+          "end": 1511,
+          "bytes": 443
+        },
+        {
+          "component": "random256",
+          "start": 1511,
+          "end": 2230,
+          "bytes": 719
+        },
+        {
+          "component": "json",
+          "start": 2230,
+          "end": 4096,
+          "bytes": 1866
+        }
+      ]
+    }
+  ]
+}
