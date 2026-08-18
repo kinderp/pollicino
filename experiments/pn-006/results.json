@@ -1,0 +1,87 @@
+{
+  "core_runtime_dependency_on_dna": false,
+  "criteria": {
+    "all_descriptor_wire_cheaper_than_direct_json_wire": true,
+    "all_descriptors_smaller_than_canonical_json": true,
+    "all_exact": true,
+    "all_modes_match_frozen_expectation": true,
+    "compact_is_inline": true,
+    "coordinates_are_not_content_digest_prefixes": true,
+    "inline_has_no_rich_content": true,
+    "reference_cases_full_hash_verified": true
+  },
+  "dna_contract": {
+    "commit": "01ba2b4d381168566cc3e47c9bda8045897adc0f",
+    "repository": "kinderp/dna",
+    "schema_blob_sha": "bbb2dcdce06935d2de51504bd9a7ad38ca76efba",
+    "schema_path": "schemas/v0.1/dna-trace.schema.json"
+  },
+  "experiment": "PN-006",
+  "integration": "DNA DNATrace v0.1",
+  "profile": {
+    "ack_bytes": 8,
+    "ack_loss_ppm": 0,
+    "bitrate_bps": 5000,
+    "data_loss_ppm": 0,
+    "max_frame_bytes": 64,
+    "max_retries": 3,
+    "seed": 1
+  },
+  "rows": [
+    {
+      "canonical_json_bytes": 302,
+      "canonical_sha256": "c4029742719f81093afa731f397d7b84f5109b2bc5941f6229545f0982a93a06",
+      "coordinate_equals_digest_prefix": false,
+      "coordinate_hex": "102030405060708090a0b0c0",
+      "descriptor_bytes": 91,
+      "descriptor_scarce_vs_direct_json_fraction": 0.29545454545454547,
+      "descriptor_scarce_wire_bytes": 143,
+      "direct_json_scarce_wire_bytes": 484,
+      "exact": true,
+      "expected_mode": "inline",
+      "fixture": "compact-travel",
+      "full_hash_verified_on_reference": false,
+      "mode": "inline",
+      "rich_content_bytes": 0,
+      "rich_manifest_bytes": 0,
+      "zlib9_json_bytes": 222
+    },
+    {
+      "canonical_json_bytes": 580,
+      "canonical_sha256": "e11186f67433ed9af9ee3b968c42bb8aafcccb9c7b498b63542ce117196326db",
+      "coordinate_equals_digest_prefix": false,
+      "coordinate_hex": "d0c0b0a09080706050403020",
+      "descriptor_bytes": 51,
+      "descriptor_scarce_vs_direct_json_fraction": 0.11220043572984749,
+      "descriptor_scarce_wire_bytes": 103,
+      "direct_json_scarce_wire_bytes": 918,
+      "exact": true,
+      "expected_mode": "reference",
+      "fixture": "large-multidomain",
+      "full_hash_verified_on_reference": true,
+      "mode": "reference",
+      "rich_content_bytes": 580,
+      "rich_manifest_bytes": 83,
+      "zlib9_json_bytes": 313
+    },
+    {
+      "canonical_json_bytes": 271,
+      "canonical_sha256": "ad0d0d13168af131e3b4bf7b56fd5516542f876113b0870f7d9809634bb7564d",
+      "coordinate_equals_digest_prefix": false,
+      "coordinate_hex": "00112233445566778899aabb",
+      "descriptor_bytes": 50,
+      "descriptor_scarce_vs_direct_json_fraction": 0.2388758782201405,
+      "descriptor_scarce_wire_bytes": 102,
+      "direct_json_scarce_wire_bytes": 427,
+      "exact": true,
+      "expected_mode": "reference",
+      "fixture": "offset-time",
+      "full_hash_verified_on_reference": true,
+      "mode": "reference",
+      "rich_content_bytes": 271,
+      "rich_manifest_bytes": 77,
+      "zlib9_json_bytes": 198
+    }
+  ],
+  "success": true
+}
