@@ -184,9 +184,8 @@ def test_lossy_scarce_fallback_remains_exact() -> None:
     )
 
 
-def test_corrupt_rich_provider_can_fall_back_to_exact_source() -> None:
-    descriptor, resolver, provider, content, _manifest = setup_object()
-    # Replace the rich source with a provider that returns wrong bytes.
+def test_corrupt_rich_provider_can_fall_back_without_hiding_rich_bytes() -> None:
+    descriptor, resolver, provider, content, manifest = setup_object()
     corrupt = CountingProvider()
     corrupt.put(b"object/exact", b"wrong")
 
@@ -203,6 +202,8 @@ def test_corrupt_rich_provider_can_fall_back_to_exact_source() -> None:
     assert reconstructed == content
     assert report.path == "scarce-exact"
     assert report.exact
+    assert report.rich_manifest_bytes == len(manifest.encode())
+    assert report.rich_content_bytes == len(b"wrong")
     assert corrupt.fetch_calls == 1
     assert provider.fetch_calls == 0
 
