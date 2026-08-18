@@ -1,3 +1,3 @@
-# PN-001 placeholder
+# PN-001 standalone scientific run trigger
 
-This file exists only to make the first scientific run explicit. It is removed when the result is persisted.
+Run the full test suite and standalone discovery-wire benchmark.
