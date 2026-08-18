@@ -109,6 +109,18 @@ def _unique_known_tuple(name: str, value: Any, codes: Mapping[str, int], *, mini
     return items
 
 
+def _is_code_ordered(items: tuple[str, ...], codes: Mapping[str, int]) -> bool:
+    """Return whether a sequence already matches the deterministic code order.
+
+    PND1 inline mode stores DNA domains/capabilities as bit masks. A bit mask
+    preserves membership but not the JSON array order. Therefore inline mode is
+    safe only when decoding the mask recreates exactly the original ordering;
+    otherwise the authoritative trace is carried by reference instead.
+    """
+
+    return items == tuple(sorted(items, key=codes.__getitem__))
+
+
 @dataclass(frozen=True, slots=True)
 class DNATraceV01:
     trace_id: str
@@ -289,6 +301,13 @@ def _encode_inline_metadata(trace: DNATraceV01) -> tuple[bytes, int]:
     if trace.issued_at != _canonical_timestamp(issued_epoch) or trace.expires_at != _canonical_timestamp(expires_epoch):
         raise InlineDNATraceUnavailable(
             "inline DNA profile requires canonical UTC timestamps ending in Z"
+        )
+    if not _is_code_ordered(trace.domains, DOMAIN_CODES) or not _is_code_ordered(
+        trace.rendezvous_capabilities,
+        RENDEZVOUS_CAPABILITY_CODES,
+    ):
+        raise InlineDNATraceUnavailable(
+            "inline DNA profile requires canonical domain/capability ordering"
         )
     ttl = expires_epoch - issued_epoch
     if ttl < 0 or ttl > 0xFFFFFFFF:
