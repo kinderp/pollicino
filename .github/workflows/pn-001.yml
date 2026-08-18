@@ -1,0 +1,27 @@
+name: PN-001 standalone discovery wire
+
+on:
+  push:
+    branches:
+      - agent/pn-001-standalone-wire
+  workflow_dispatch:
+
+jobs:
+  pn001:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install -e '.[test]'
+      - name: Test
+        run: pytest -q
+      - name: Run PN-001
+        run: python experiments/pn-001/run.py
+      - name: Upload PN-001 results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pn-001-results
+          path: experiments/pn-001/results.json
