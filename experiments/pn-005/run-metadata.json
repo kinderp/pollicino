@@ -1,0 +1,24 @@
+{
+  "experiment": "PN-005",
+  "scientific_run_id": 32186393469,
+  "scientific_head_sha": "8fa6640af20a16b50f74e19d954975d752437791",
+  "pull_request": 27,
+  "test_scope": "tests/",
+  "test_result": "121 passed in 6.26s",
+  "python": "3.11.15",
+  "artifact": {
+    "id": 9342615953,
+    "name": "pn-005-results",
+    "size_in_bytes": 1350,
+    "digest": "sha256:ac9d7e17f83e21aae60a7f9e71f4f1c14713cc4b02e6acdfff1932b84e5ecdce"
+  },
+  "standalone_contract": {
+    "application_dependencies": [],
+    "external_runtime_dependencies": [],
+    "dna_dependency": false,
+    "radio_sdk_dependency": false,
+    "hosted_resolver_dependency": false
+  },
+  "result_policy": "Frozen object, fixed chunking, cache levels, profile, manifest modes and success criteria were unchanged after the scientific run.",
+  "accounting_note": "Manifest-on-scarce and manifest-pre-resolved are reported separately; the latter shifts PCM1 cost to the rich-path side rather than treating it as nonexistent."
+}
