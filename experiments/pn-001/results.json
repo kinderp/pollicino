@@ -1,0 +1,39 @@
+{
+  "application_dependencies": [],
+  "cases": [
+    {
+      "canonical_json_bytes": 188,
+      "case": "file-coordinate",
+      "pnd1_bytes": 41,
+      "pnd1_vs_json_reduction_fraction": 0.7819148936170213,
+      "pnd1_vs_zlib9_reduction_fraction": 0.7284768211920529,
+      "round_trip": true,
+      "zlib9_json_bytes": 151
+    },
+    {
+      "canonical_json_bytes": 205,
+      "case": "message-coordinate",
+      "pnd1_bytes": 50,
+      "pnd1_vs_json_reduction_fraction": 0.7560975609756098,
+      "pnd1_vs_zlib9_reduction_fraction": 0.696969696969697,
+      "round_trip": true,
+      "zlib9_json_bytes": 165
+    },
+    {
+      "canonical_json_bytes": 252,
+      "case": "service-coordinate",
+      "pnd1_bytes": 73,
+      "pnd1_vs_json_reduction_fraction": 0.7103174603174602,
+      "pnd1_vs_zlib9_reduction_fraction": 0.5804597701149425,
+      "round_trip": true,
+      "zlib9_json_bytes": 174
+    }
+  ],
+  "experiment": "PN-001",
+  "external_runtime_dependencies": [],
+  "mean_json_bytes": 215.0,
+  "mean_pnd1_bytes": 54.666666666666664,
+  "mean_zlib9_bytes": 163.33333333333334,
+  "protocol": "PND1",
+  "standalone_core": true
+}

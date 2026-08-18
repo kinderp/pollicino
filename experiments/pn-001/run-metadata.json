@@ -1,0 +1,28 @@
+{
+  "experiment": "PN-001",
+  "protocol": "PND1",
+  "scientific_run_id": 32183486241,
+  "scientific_head_sha": "22bca9b1619d838886ea5877afbbc2a21a0df121",
+  "pull_request": 21,
+  "test_scope": "tests/",
+  "test_result": "96 passed in 5.79s",
+  "python": "3.11.15",
+  "artifact": {
+    "id": 9341613027,
+    "name": "pn-001-results",
+    "size_in_bytes": 492,
+    "digest": "sha256:94a41d6acea5a642c21634f8b97ab2669894249e5a9597d20f746a2dc9272005"
+  },
+  "standalone_contract": {
+    "application_dependencies": [],
+    "external_runtime_dependencies": [],
+    "dna_dependency": false,
+    "radio_sdk_dependency": false
+  },
+  "prior_failed_run": {
+    "run_id": 32183347938,
+    "scientific_payload_executed": false,
+    "artifact_produced": false,
+    "reason": "The workflow invoked repository-wide pytest discovery, which incorrectly collected course activity tests that require their per-lab harness and optional dependencies. The corrected run scopes the scientific/root suite to tests/."
+  }
+}
