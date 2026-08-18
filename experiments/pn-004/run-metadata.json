@@ -1,0 +1,24 @@
+{
+  "experiment": "PN-004",
+  "scientific_run_id": 32185787384,
+  "scientific_head_sha": "1c8f0a05fd11337a0c207a0a9c63f852980f19ed",
+  "pull_request": 26,
+  "test_scope": "tests/",
+  "test_result": "115 passed in 6.04s",
+  "python": "3.11.15",
+  "artifact": {
+    "id": 9342397186,
+    "name": "pn-004-results",
+    "size_in_bytes": 804,
+    "digest": "sha256:47a0a532a7a11a69b690da24d43d68c12be96d8b661fa1c4f40e878d0daab339"
+  },
+  "standalone_contract": {
+    "application_dependencies": [],
+    "external_runtime_dependencies": [],
+    "dna_dependency": false,
+    "radio_sdk_dependency": false,
+    "application_policy_dependency": false
+  },
+  "result_policy": "Frozen object, coordinates, profiles, cases and success criteria were unchanged after the scientific run.",
+  "accounting_note": "Failed verified-rich retrieval bytes are retained in the final fallback report rather than discarded."
+}

@@ -1,0 +1,101 @@
+{
+  "application_dependencies": [],
+  "criteria": {
+    "all_allowed_cases_exact": true,
+    "clean_fallback_sends_manifest_and_content": true,
+    "corrupt_rich_bytes_are_accounted": true,
+    "corrupt_rich_falls_back_exactly": true,
+    "denial_precedes_resolution_and_fetch": true,
+    "lossy_fallback_exercises_retransmission": true,
+    "lossy_fallback_sends_manifest_and_content": true,
+    "rich_uses_only_discovery_on_scarce_link": true
+  },
+  "experiment": "PN-004",
+  "external_runtime_dependencies": [],
+  "profiles": {
+    "clean": {
+      "ack_bytes": 8,
+      "ack_loss_ppm": 0,
+      "bitrate_bps": 5000,
+      "data_loss_ppm": 0,
+      "max_frame_bytes": 64,
+      "max_retries": 3,
+      "seed": 1
+    },
+    "lossy": {
+      "ack_bytes": 8,
+      "ack_loss_ppm": 100000,
+      "bitrate_bps": 5000,
+      "data_loss_ppm": 200000,
+      "max_frame_bytes": 64,
+      "max_retries": 12,
+      "seed": 11
+    }
+  },
+  "rows": [
+    {
+      "case": "rich-valid",
+      "exact": true,
+      "fallback_content_retransmissions": 0,
+      "fallback_manifest_retransmissions": 0,
+      "path": "rich",
+      "rich_content_bytes": 4096,
+      "rich_manifest_bytes": 80,
+      "scarce_content_wire_bytes": 0,
+      "scarce_discovery_bytes": 45,
+      "scarce_manifest_wire_bytes": 0,
+      "sha256": "e8b6a09adc2832e166577376b59f276e58f30f6f38a334719c0be15e27542dc3",
+      "total_scarce_wire_bytes": 45
+    },
+    {
+      "case": "fallback-clean",
+      "exact": true,
+      "fallback_content_retransmissions": 0,
+      "fallback_manifest_retransmissions": 0,
+      "path": "scarce-exact",
+      "rich_content_bytes": 0,
+      "rich_manifest_bytes": 0,
+      "scarce_content_wire_bytes": 6436,
+      "scarce_discovery_bytes": 45,
+      "scarce_manifest_wire_bytes": 132,
+      "sha256": "e8b6a09adc2832e166577376b59f276e58f30f6f38a334719c0be15e27542dc3",
+      "total_scarce_wire_bytes": 6613
+    },
+    {
+      "case": "fallback-lossy",
+      "exact": true,
+      "fallback_content_retransmissions": 41,
+      "fallback_manifest_retransmissions": 7,
+      "path": "scarce-exact",
+      "rich_content_bytes": 0,
+      "rich_manifest_bytes": 0,
+      "scarce_content_wire_bytes": 9164,
+      "scarce_discovery_bytes": 45,
+      "scarce_manifest_wire_bytes": 564,
+      "sha256": "e8b6a09adc2832e166577376b59f276e58f30f6f38a334719c0be15e27542dc3",
+      "total_scarce_wire_bytes": 9773
+    },
+    {
+      "case": "corrupt-rich-then-fallback",
+      "exact": true,
+      "fallback_content_retransmissions": 0,
+      "fallback_manifest_retransmissions": 0,
+      "path": "scarce-exact",
+      "rich_content_bytes": 22,
+      "rich_manifest_bytes": 80,
+      "scarce_content_wire_bytes": 6436,
+      "scarce_discovery_bytes": 45,
+      "scarce_manifest_wire_bytes": 132,
+      "sha256": "e8b6a09adc2832e166577376b59f276e58f30f6f38a334719c0be15e27542dc3",
+      "total_scarce_wire_bytes": 6613
+    }
+  ],
+  "source": {
+    "bytes": 4096,
+    "descriptor_bytes": 45,
+    "manifest_bytes": 80,
+    "sha256": "e8b6a09adc2832e166577376b59f276e58f30f6f38a334719c0be15e27542dc3"
+  },
+  "standalone_core": true,
+  "success": true
+}
