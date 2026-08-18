@@ -12,6 +12,14 @@ from .content import (
     manifest_for_content,
     retrieve_exact,
 )
+from .delivery import (
+    AdaptiveDeliveryError,
+    AdaptiveDeliveryReport,
+    AuthorizationError,
+    AuthorizationGate,
+    DeliveryPolicy,
+    deliver_exact_adaptive,
+)
 from .link import (
     DeliveryError,
     FRAME_HEADER_BYTES,
@@ -32,9 +40,14 @@ from .wire import (
 )
 
 __all__ = [
+    "AdaptiveDeliveryError",
+    "AdaptiveDeliveryReport",
+    "AuthorizationError",
+    "AuthorizationGate",
     "ContentManifest",
     "ContentProvider",
     "DeliveryError",
+    "DeliveryPolicy",
     "DiscoveryDescriptor",
     "FRAME_HEADER_BYTES",
     "FRAME_MAGIC",
@@ -53,6 +66,7 @@ __all__ = [
     "RetrievalSource",
     "ScarceLinkProfile",
     "TransferReport",
+    "deliver_exact_adaptive",
     "fragment_payload",
     "manifest_for_content",
     "reassemble_frames",
