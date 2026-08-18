@@ -1,0 +1,9 @@
+{
+  "repository": "kinderp/dna",
+  "ref": "main",
+  "commit": "01ba2b4d381168566cc3e47c9bda8045897adc0f",
+  "schema_path": "schemas/v0.1/dna-trace.schema.json",
+  "schema_blob_sha": "bbb2dcdce06935d2de51504bd9a7ad38ca76efba",
+  "schema_version": "0.1",
+  "note": "PN-006 adapts this application contract outside pollicino.net; DNA is not a Pollicino runtime dependency."
+}
