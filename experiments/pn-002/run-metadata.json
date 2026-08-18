@@ -1,0 +1,24 @@
+{
+  "experiment": "PN-002",
+  "protocol": "PNF1",
+  "scientific_run_id": 32184325879,
+  "scientific_head_sha": "8b07ebfe7226ab39e92e14c867ff7fc7546cdde8",
+  "pull_request": 24,
+  "test_scope": "tests/",
+  "test_result": "103 passed in 6.20s",
+  "python": "3.11.15",
+  "artifact": {
+    "id": 9341899126,
+    "name": "pn-002-results",
+    "size_in_bytes": 1161,
+    "digest": "sha256:68060ac82c2473651b267aeb2094297949d401ef84f3dad8cec2fc4bb7cd80be"
+  },
+  "standalone_contract": {
+    "application_dependencies": [],
+    "external_runtime_dependencies": [],
+    "dna_dependency": false,
+    "radio_sdk_dependency": false
+  },
+  "result_policy": "Frozen profiles, seeds, payloads and success criteria were unchanged after the scientific run.",
+  "measurement_scope": "Configured bitrate is a generic serialization proxy, not a physical-layer airtime calculation."
+}
