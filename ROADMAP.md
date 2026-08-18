@@ -139,3 +139,90 @@ Scale only when earlier experiments demonstrate a stable trend.
 - [ ] Write educational release.
 - [ ] Write technical report.
 - [ ] Prepare a research manuscript only if the evidence supports a novel claim.
+
+---
+
+# Parallel research track — PollicinoNet
+
+PollicinoNet applies the POLLICINO information-minimization idea to scarce and intermittent networks. The first target is LoRa, but the contracts remain transport-independent.
+
+Core modes:
+
+```text
+DISCOVERY -> transmit enough to locate/rendezvous
+EXACT     -> reconstruct the exact original bytes
+SEMANTIC  -> reconstruct a perceptually equivalent realtime signal
+```
+
+Detailed architecture: [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md).
+
+## PN-001 — Compact DNA Trace
+
+- [ ] Use `kinderp/dna` `DNATrace v0.1` as the first real application payload.
+- [ ] Compare JSON, CBOR/MessagePack, schema-aware binary encoding and generic compression.
+- [ ] Include authentication/integrity overhead in on-air byte counts.
+- [ ] Preserve rotating identifiers, TTL and anti-replay semantics.
+
+**Exit criterion:** deterministic round-trip plus measured radio-byte reduction without weakening the DNA privacy contract.
+
+## PN-002 — Scarce-link simulator
+
+- [ ] Add payload/bitrate/airtime budgets.
+- [ ] Simulate loss, duplication, reorder and intermittent gateways.
+- [ ] Add deduplication, TTL, hop limits and resumable exchange.
+- [ ] Measure radio bytes, retransmissions and time-to-reconstruction.
+
+## PN-003 — Discovery coordinate -> rich-network retrieval
+
+- [ ] Define compact PollicinoNet short coordinates as rendezvous keys, not proof of identity.
+- [ ] Resolve full manifests over Internet/local P2P.
+- [ ] Support content identities for Pollicino P2P, IPFS-like CIDs, BitTorrent-like hashes and HTTP resources.
+- [ ] Verify the final object with its full cryptographic identity.
+
+**Exit criterion:** arbitrary external content can be discovered using a very small scarce-link advertisement and retrieved exactly through a richer path.
+
+## PN-004 — DNAFragment exact transport
+
+- [ ] Integrate after DNA consent/rendezvous, never as a replacement for DNA policy.
+- [ ] Treat authoritative DNA fragments as EXACT data.
+- [ ] Prefer Internet/Wi-Fi/P2P, using LoRa only when a richer path is unavailable.
+- [ ] Test expiry, revocation-aware cache policy and exact reconstruction.
+
+## PN-005 — P2P chunk store and reconstruction
+
+- [ ] Content-defined or deterministic chunking.
+- [ ] Content-addressed local `PollicinoStore`.
+- [ ] Exchange compact availability summaries.
+- [ ] Reference known chunks instead of retransmitting them.
+- [ ] Delta/patch against previous versions.
+- [ ] Store-and-forward between intermittent peers.
+
+**Primary metric:** Transmission Reconstruction Cost (TRC): all discovery, rendezvous, manifest, payload, FEC, acknowledgement and retransmission bits required to obtain a verified object.
+
+## PN-006 — Travel DNA integration
+
+- [ ] `DNATrace` discovery over a simulated LoRa adapter.
+- [ ] GeoRoom/group rendezvous through a compact coordinate.
+- [ ] Advertise route, POI, guide and Cartolina content by reference when possible.
+- [ ] Hand over rich payloads to Internet/Wi-Fi/local P2P.
+- [ ] Test offline/store-and-forward behavior.
+- [ ] Keep radio/link details outside Travel DNA domain entities.
+
+## PN-007 — Real LoRa hardware pilot
+
+Only after the simulator produces stable protocol results:
+
+- [ ] select a radio/module;
+- [ ] implement a LoRa transport adapter;
+- [ ] repeat PN-001..006 with measured airtime and energy;
+- [ ] compare discovery-only, exact fallback and opportunistic handover modes.
+
+## PN-008 — Semantic realtime branch
+
+Separate from authoritative/exact DNA data:
+
+- [ ] ultra-low-bitrate speech baseline;
+- [ ] semantic/latent speech residual experiment;
+- [ ] facial landmarks / avatar state;
+- [ ] explicit perceptual quality and latency metrics;
+- [ ] never represent SEMANTIC output as exact DNA state or signed content.
