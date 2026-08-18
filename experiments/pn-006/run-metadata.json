@@ -1,0 +1,33 @@
+{
+  "experiment": "PN-006",
+  "scientific_run_id": 32187579277,
+  "scientific_head_sha": "ed29dd394407204fb06fda2a4cb39af576f1f11f",
+  "pull_request": 28,
+  "test_scope": "tests/",
+  "test_result": "129 passed in 6.56s",
+  "python": "3.11.16",
+  "artifact": {
+    "id": 9343035464,
+    "name": "pn-006-results",
+    "size_in_bytes": 1109,
+    "digest": "sha256:3ecbd6f98ed2d7355daa95750b467d9d8dd3ee9e67d9ae6095b4a72c4b8b059c"
+  },
+  "dna_contract": {
+    "repository": "kinderp/dna",
+    "commit": "01ba2b4d381168566cc3e47c9bda8045897adc0f",
+    "schema_path": "schemas/v0.1/dna-trace.schema.json",
+    "schema_blob_sha": "bbb2dcdce06935d2de51504bd9a7ad38ca76efba"
+  },
+  "standalone_contract": {
+    "core_runtime_dependency_on_dna": false,
+    "radio_sdk_dependency": false,
+    "hosted_service_dependency": false
+  },
+  "prior_run": {
+    "run_id": 32187201915,
+    "test_result": "127 passed in 5.30s",
+    "status": "superseded by correctness rerun",
+    "reason": "Inline DNA bitmasks preserve membership but not arbitrary JSON array ordering. The adapter was tightened to force reference mode for noncanonical domain/capability order, then the unchanged frozen benchmark was rerun."
+  },
+  "result_policy": "Frozen fixtures, coordinates, link profile, mode expectations and success criteria were unchanged across the correctness rerun."
+}
