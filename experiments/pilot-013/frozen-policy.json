@@ -1,0 +1,15 @@
+{
+  "frozen_in_github_actions_run_id": 31988642119,
+  "scientific_head_sha": "d51be88528612a67ffa17db7e4a65c421816c123",
+  "policy": {
+    "probe_bytes": 16,
+    "min_probe_code_bits": 88,
+    "max_probe_code_bits": 128,
+    "min_probe_bpb": 5.5,
+    "max_probe_bpb": 8.0,
+    "max_admitted_bytes": 2048
+  },
+  "freeze_event": "POLICY_FROZEN was emitted before the first fresh-holdout source verification attempt",
+  "first_run_outcome": "aborted before holdout composition/coding because the preregistered Go Git-blob identifier was incorrect",
+  "policy_may_not_be_retuned_after_this_record": true
+}

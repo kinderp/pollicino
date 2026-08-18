@@ -1,0 +1,26 @@
+{
+  "sources": [
+    {
+      "name": "go-http-server",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.22.12/src/net/http/server.go",
+      "git_blob_sha1": "23a603a83dd7135077fa1363ceb8255ff345ac06",
+      "bytes": 123776,
+      "sha256": "76d8e0af65d217dca82ab20ac928a816977b3989ad9239915045dbbb14c37fe2"
+    },
+    {
+      "name": "node-cjs-loader",
+      "url": "https://raw.githubusercontent.com/nodejs/node/v20.19.1/lib/internal/modules/cjs/loader.js",
+      "git_blob_sha1": "ebccdb28256314e7cd8ac8d7e3dec670286022d2",
+      "bytes": 59194,
+      "sha256": "78b6ef5eded5a401b2879cea866582e6ef59895e760decf618d6eaa5459c5c02"
+    }
+  ],
+  "streams": [
+    {"stream":"fresh-a","bytes":4096,"sha256":"30058d8cef939b0a168c6484de0fa8b47f6e41714c5947400e0653228ad3d1db","segments":[{"component":"go","start":0,"end":811,"bytes":811},{"component":"random256","start":811,"end":1314,"bytes":503},{"component":"node","start":1314,"end":2423,"bytes":1109},{"component":"repeat","start":2423,"end":2844,"bytes":421},{"component":"json","start":2844,"end":4096,"bytes":1252}]},
+    {"stream":"fresh-b","bytes":4096,"sha256":"44e1635c0552a6d8a59c26931672681a526502b5a1efc176f31728c5d1718a05","segments":[{"component":"node","start":0,"end":727,"bytes":727},{"component":"dna","start":727,"end":1660,"bytes":933},{"component":"go","start":1660,"end":2661,"bytes":1001},{"component":"compressed","start":2661,"end":4096,"bytes":1435}]},
+    {"stream":"fresh-c","bytes":4096,"sha256":"e1a3f28afc2770e5a5994855967d772c39ddf155ef545ed470d50a18b67a23a1","segments":[{"component":"english","start":0,"end":689,"bytes":689},{"component":"go","start":689,"end":1660,"bytes":971},{"component":"random64","start":1660,"end":2201,"bytes":541},{"component":"node","start":2201,"end":4096,"bytes":1895}]},
+    {"stream":"fresh-d","bytes":4096,"sha256":"b8cc3a16da105f1319719995b743d7daaa98cc048d85a95fdc57eacd4fa7deef","segments":[{"component":"json","start":0,"end":893,"bytes":893},{"component":"node","start":893,"end":1702,"bytes":809},{"component":"repeat","start":1702,"end":2073,"bytes":371},{"component":"compressed","start":2073,"end":2756,"bytes":683},{"component":"go","start":2756,"end":4096,"bytes":1340}]},
+    {"stream":"fresh-e","bytes":4096,"sha256":"54e6000ff23d2ce913ccc2d498cd39580ae0888028b6ee835d7b43019ef651b2","segments":[{"component":"random256","start":0,"end":487,"bytes":487},{"component":"node","start":487,"end":1656,"bytes":1169},{"component":"dna","start":1656,"end":2425,"bytes":769},{"component":"go","start":2425,"end":4096,"bytes":1671}]},
+    {"stream":"fresh-f","bytes":4096,"sha256":"72158d7a0a93fc7cab1eca5b85c9314c69d02afe5cf9c989d423894c168c1dff","segments":[{"component":"go","start":0,"end":479,"bytes":479},{"component":"repeat","start":479,"end":1072,"bytes":593},{"component":"node","start":1072,"end":1529,"bytes":457},{"component":"random256","start":1529,"end":2262,"bytes":733},{"component":"json","start":2262,"end":4096,"bytes":1834}]}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "experiment_id": "pilot-013-cheap-admission",
+  "final_successful_run_id": 31989172942,
+  "scientific_head_sha": "ba6eb338d47ceaac170358c1f26ba6c5d5f4b4ff",
+  "tests": "76 passed",
+  "artifact": {
+    "id": 9274906515,
+    "name": "pilot-013-results",
+    "digest": "sha256:c5d66b042ff04c5285c252b4088def77b45595f1aab80979883811ccc8d128a0"
+  },
+  "frozen_policy_provenance": {
+    "first_run_id": 31988642119,
+    "first_run_scientific_head_sha": "d51be88528612a67ffa17db7e4a65c421816c123",
+    "policy_frozen_before_holdout": true,
+    "holdout_metrics_produced_on_first_run": false,
+    "policy_retuned_after_provenance_failure": false,
+    "corrected_source_git_blobs": {
+      "go-http-server": "23a603a83dd7135077fa1363ceb8255ff345ac06",
+      "node-cjs-loader": "ebccdb28256314e7cd8ac8d7e3dec670286022d2"
+    }
+  },
+  "frozen_checkpoint": {
+    "source_experiment": "PILOT-003",
+    "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117"
+  },
+  "notes": [
+    "The successful rerun reproduced the frozen policy before accessing the fresh holdout.",
+    "Only preregistered Go/Node Git-blob provenance identifiers were corrected; the policy was not retuned.",
+    "The GitHub Actions artifact digest is the canonical checksum for the complete raw result bundle; selected human-readable result files are persisted in the repository."
+  ]
+}
