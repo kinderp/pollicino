@@ -15,6 +15,8 @@ POLLICINO deliberately has two synchronized tracks:
 - **`course/` — school track.** A fourth-year secondary-school course that starts from bits and files and ends with a tiny Transformer and a bit-perfect neural codec.
 - **`research/` — scientific track.** Reproducible byte-level experiments with equivalent PyTorch and MLX backends, entropy coding, exact reconstruction and model-assisted identification.
 
+A parallel network research branch, **PollicinoNet**, studies the same information-minimization principle over ultra-low-bandwidth and intermittent links: discovery by compact coordinates, exact P2P reconstruction, opportunistic rich-link handover and a separate semantic realtime mode. LoRa is the first scarce-link target; DNA/Travel DNA is the first concrete application integration. See [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md).
+
 ## The central idea
 
 A predictive model does not need to memorize every possible file. It learns a probability distribution over the next byte:
@@ -70,6 +72,12 @@ The scientific object is therefore not only compression ratio. We also study the
 transmitted bits  <---->  reconstruction compute
 ```
 
+PollicinoNet broadens that trade-off to network delivery:
+
+```text
+scarce-link bits <----> shared state / cache / resolver / reconstruction compute
+```
+
 ## Scientific invariants
 
 POLLICINO experiments must obey these rules:
@@ -81,6 +89,8 @@ POLLICINO experiments must obey these rules:
 5. **PyTorch and MLX follow the same model specification** wherever practical.
 6. **Every experiment is reproducible.** Seed, dataset hash, commit, hardware, framework, precision and configuration are recorded.
 7. **Classical compressors remain first-class baselines.** A neural system does not “win” merely because its model size is ignored.
+8. **Discovery is not proof.** A compact PollicinoNet coordinate may locate a manifest, but exact content identity is verified with a full cryptographic identifier.
+9. **Semantic is not lossless.** Perceptual/realtime reconstruction is an explicit separate contract and cannot represent authoritative exact state.
 
 ## Repository layout
 
@@ -89,7 +99,7 @@ pollicino/
 ├── course/                  # fourth-year teaching path and student labs
 ├── docs/
 │   ├── theory/              # Shannon, coding, MDL, Kolmogorov, Transformers
-│   └── research/            # questions, protocol and scientific notes
+│   └── research/            # protocol, PollicinoNet and scientific notes
 ├── configs/                 # backend-independent model specifications
 ├── src/pollicino/
 │   ├── common/              # metrics, data and shared contracts
@@ -197,10 +207,9 @@ No result counts as lossless unless exact reconstruction is independently verifi
 - Theory: [`docs/theory/map.md`](docs/theory/map.md)
 - Research questions: [`docs/research/questions.md`](docs/research/questions.md)
 - Experimental protocol: [`docs/research/protocol.md`](docs/research/protocol.md)
+- PollicinoNet: [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md)
 - Full roadmap: [`ROADMAP.md`](ROADMAP.md)
 
 ## Status
 
-**Phase 0 — foundations and baselines.**
-
-The first executable invariant is in place: the uniform-byte baseline must measure exactly **8 bits/byte** and round-trip without changing the file.
+The executable research line now includes deterministic lossless routing experiments through PILOT-013. PollicinoNet is a newly specified parallel research track; its PN experiments are proposals until implemented and measured.
