@@ -1,0 +1,126 @@
+{
+  "development": {
+    "block_bytes": 512,
+    "consumed_source_manifest": [
+      {
+        "bytes": 12473,
+        "git_blob_sha1": "c5d9ae2d0d5d040708f097fbf6450b86eef334dd",
+        "name": "cpython-json-decoder",
+        "sha256": "9f02654649816145bc76f8c210a5fe3ba1de142d4d97a1c93105732e747c285b",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.11.15/Lib/json/decoder.py"
+      },
+      {
+        "bytes": 315588,
+        "git_blob_sha1": "802551e0009bf1ef66191441a802633bb57543bc",
+        "name": "linux-sched-core",
+        "sha256": "3e50073f3f629ba54fc642115b3eb14d88fb1376e020d0a80731a2cf4832e8f6",
+        "url": "https://raw.githubusercontent.com/torvalds/linux/v6.6/kernel/sched/core.c"
+      }
+    ],
+    "hard_max_admitted_bytes": 2048,
+    "lower_bpb_x2": [0,3,4,5,6,7,8,9,10,11,12],
+    "mean_retrospective_50pct_neural_reset_gain_retained": 0.8091788695597075,
+    "new_holdout_sources_opened_during_selection": false,
+    "probe_candidates": [16,32,64],
+    "selected_policy": {
+      "max_admitted_bytes": 2048,
+      "max_probe_bpb": 8.0,
+      "max_probe_code_bits": 128,
+      "min_probe_bpb": 5.5,
+      "min_probe_code_bits": 88,
+      "probe_bytes": 16
+    },
+    "selected_validated_mean_model_eval_fraction": 0.448486328125,
+    "selected_validated_mean_payload_bpb": 4.44873046875,
+    "source": "reconstructed, already-consumed PILOT-012 holdout",
+    "stream_bytes": 4096,
+    "streams": ["p12-mix-a","p12-mix-b","p12-mix-c","p12-mix-d","p12-mix-e","p12-mix-f"],
+    "upper_bpb_x2": [8,9,10,11,12,13,14,15,16,17,18],
+    "validation_candidates": 8
+  },
+  "experiment_id": "pilot-013-cheap-admission",
+  "frozen_checkpoint": {
+    "artifact_id": 9243314314,
+    "artifact_sha256": "72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5",
+    "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "checkpoint_bytes": 600933,
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+    "source_experiment": "PILOT-003"
+  },
+  "limits": [
+    "The holdout is a deterministic mixed-domain mechanism benchmark, not a universal compression corpus.",
+    "The admission feature is intentionally one-dimensional: cheap-gate probe codelength only.",
+    "The 50% diagnostic oracle is non-causal and uses summed independently coded block payloads.",
+    "The frozen neural checkpoint is assumed shared whenever the neural path is admitted."
+  ],
+  "model": {
+    "canonical_neural_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "cheap_gate_fingerprint": "bc59acb5e6f64f93e62775e8f65ea5f9b041f0a5c0498216b8004510d2983e0a",
+    "neural_gate_fingerprint": "34c41b3af254f0165cef52d31b8514dd13fb619f275c6f2686b9982d02d0e5d3"
+  },
+  "new_holdout": {
+    "aggregate": {
+      "max_p13_model_eval_fraction": 0.4990234375,
+      "mean_cheap_reset_bpb": 4.889973958333333,
+      "mean_neural_reset_bpb": 4.5050048828125,
+      "mean_oracle50_blocksum_bpb": 4.636149088541667,
+      "mean_p12_max_bpb": 4.531412760416667,
+      "mean_p12_max_model_eval_fraction": 0.808349609375,
+      "mean_p12_max_specialist_call_fraction": 0.86328125,
+      "mean_p13_admitted_byte_fraction": 0.5,
+      "mean_p13_bpb": 4.744140625,
+      "mean_p13_model_eval_fraction": 0.4560953776041667,
+      "mean_p13_retained_gain_fraction": 0.36862975957342187,
+      "mean_zlib_bpb": 4.180338541666667,
+      "mean_zstd19_bpb": 4.054361979166667,
+      "p13_beats_cheap_streams": 6,
+      "p13_beats_p12_max_streams": 0,
+      "success": false
+    },
+    "composition_manifest": "holdout-manifest.json",
+    "external_sources": [
+      {
+        "bytes": 123776,
+        "git_blob_sha1": "23a603a83dd7135077fa1363ceb8255ff345ac06",
+        "name": "go-http-server",
+        "sha256": "76d8e0af65d217dca82ab20ac928a816977b3989ad9239915045dbbb14c37fe2",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.22.12/src/net/http/server.go"
+      },
+      {
+        "bytes": 59194,
+        "git_blob_sha1": "ebccdb28256314e7cd8ac8d7e3dec670286022d2",
+        "name": "node-cjs-loader",
+        "sha256": "78b6ef5eded5a401b2879cea866582e6ef59895e760decf618d6eaa5459c5c02",
+        "url": "https://raw.githubusercontent.com/nodejs/node/v20.19.1/lib/internal/modules/cjs/loader.js"
+      }
+    ],
+    "name": "PILOT-013 Go/Node mixed-source holdout",
+    "per_block_table": "holdout-blocks.csv",
+    "per_stream_table": "holdout.csv",
+    "streams": ["fresh-a","fresh-b","fresh-c","fresh-d","fresh-e","fresh-f"]
+  },
+  "protocol": {
+    "block_bytes": 512,
+    "fresh_holdout_downloaded_only_after_policy_freeze": true,
+    "hard_max_admitted_bytes": 2048,
+    "hard_max_admitted_fraction": 0.5,
+    "policy_selection": "coarse cheap-codelength screen followed by real whole-stream range-coder validation",
+    "precision_bits": 18,
+    "primary_compute_metric": "uncached PyTorch model forward evaluations / source bytes",
+    "retained_gain_success_threshold": 0.5,
+    "selector_side_bits": 0
+  },
+  "provenance_correction": {
+    "corrected_source_git_blobs": {
+      "go-http-server": "23a603a83dd7135077fa1363ceb8255ff345ac06",
+      "node-cjs-loader": "ebccdb28256314e7cd8ac8d7e3dec670286022d2"
+    },
+    "first_run_holdout_metrics_produced": false,
+    "first_run_id": 31988642119,
+    "first_run_policy_frozen_before_holdout": true,
+    "first_run_scientific_head_sha": "d51be88528612a67ffa17db7e4a65c421816c123",
+    "policy_retuned": false,
+    "reason_for_rerun": "correct preregistered Git-blob identifiers for Go and Node sources"
+  },
+  "question": "Can cheap-only causal admission preserve useful block-reset neural compression under a hard 50% neural-forward budget?"
+}

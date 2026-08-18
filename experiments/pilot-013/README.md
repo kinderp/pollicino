@@ -1,105 +1,70 @@
 # PILOT-013 — Cheap Admission Before Neural Compute
 
-PILOT-012 established that 512-byte block resets are valuable on mixed-domain streams, but its regret router still starts a neural probe in every block. That made the frozen `balanced` target (`<= 0.50` specialist coverage) infeasible even before a fresh holdout was opened.
+PILOT-012 established that 512-byte block resets are valuable on mixed-domain streams, but its regret router still starts a neural probe in every block. PILOT-013 asks whether cheap-only causal evidence can decide which blocks are worth waking the neural path for while enforcing a hard 50% neural budget.
 
-PILOT-013 asks a narrower question:
+## Mechanism
 
-> Can cheap-only causal evidence decide which blocks are worth waking the neural path for, while enforcing a hard 50% neural-coverage budget and retaining most of the block-reset compression gain?
+`CheapCodelengthAdmissionBlockCDFProvider` resets the cheap path at deterministic 512-byte boundaries, codes a short cheap-only probe, accumulates exact quantized likelihood, and instantiates the neural specialist only when the frozen integer codelength band admits the block and the remaining stream budget can pay for it. No floating-point route decision and no selector side stream are required.
 
-## Why this pilot exists
+The primary compute metric is actual uncached PyTorch model forward evaluations per source byte, not wrapper calls.
 
-PILOT-012 selected 512-byte blocks and improved its fresh mixed holdout from 4.5546 bpb (file-level max router) to 4.2569 bpb, but the always-reset neural gate reached 4.2303 bpb. The useful interpretation is therefore a quality/compute problem: block reset repairs domain-contaminated context, while routing must decide where neural compute is worth paying for.
+## Frozen policy and provenance
 
-A retrospective 50%-block oracle on the already-consumed PILOT-012 blocks retains roughly 80% of the cheap-reset -> neural-reset payload gain. The budget is therefore worth attempting rather than structurally impossible.
+Run `31988642119` completed development selection and froze the policy before fresh-holdout access:
 
-## Codec mechanism
-
-`CheapCodelengthAdmissionBlockCDFProvider` uses no neural model during admission:
-
-1. reset the cheap gate at a deterministic 512-byte block boundary;
-2. encode the first `K` bytes with the cheap gate only;
-3. accumulate the exact quantized likelihood of those observed bytes;
-4. compare the resulting cheap codelength with a frozen integer-bit band;
-5. lazily construct the neural gate only when the block lies inside that band and the remaining stream-level admission budget can pay for the whole block;
-6. otherwise keep the block cheap-only.
-
-The likelihood-band comparisons use integer products and powers of two; no floating-point decision and no selector side stream are required.
-
-## Hard compute budget
-
-For every 4096-byte stream:
-
-- block size: 512 bytes (frozen from PILOT-012);
-- admitted-byte cap: 2048 bytes;
-- therefore at most four full blocks can instantiate the neural path.
-
-The frozen PyTorch prior now reports actual cache-miss model forwards as `model_evaluations`. Multiple neural-gate experts share one prior, so repeated requests for the same context are cache hits rather than extra model forwards. The primary compute metric is:
-
-`actual neural model evaluations / source bytes`
-
-The admitted-byte cap also gives a structural upper bound of 0.50 for this model family, even when a newly admitted stateful specialist has to replay the cheap probe prefix.
-
-## Development data and policy search
-
-No PILOT-013 holdout source is opened during selection. Development reconstructs the six now-consumed PILOT-012 mixed streams (CPython + Linux + deterministic controls).
-
-Frozen candidates:
-
-- probe lengths: 16, 32, 64 bytes;
-- lower/upper cheap-codelength bands on a coarse 0.5 bpb grid;
-- hard admitted-byte cap: 2048 bytes.
-
-For efficiency, each development block precomputes cheap-only, neural-only and probe-then-neural outcomes for each probe length. All codelength bands are screened from those reusable outcomes. The best few policies are then validated with real whole-stream range coding, and the real lowest-payload policy is frozen before the new holdout is downloaded.
-
-### Policy frozen before holdout
-
-GitHub Actions run `31988642119` completed all development selection and emitted the frozen policy **before** attempting fresh-source verification:
-
+- block: 512 bytes;
 - probe: 16 bytes;
-- cheap probe codelength band: 88–128 bits, i.e. 5.5–8.0 bpb;
+- cheap probe codelength band: 88–128 bits (5.5–8.0 bpb);
 - maximum admitted bytes: 2048 (50%).
 
-That run then aborted on the first fresh-source Git-blob check because the preregistered source identifiers were incorrect. No fresh holdout stream was composed or coded and no holdout metric was produced. `frozen-policy.json` records the freeze event. The provenance-correction rerun uses `run_frozen.py`, which reruns the original development procedure, asserts that it reproduces this exact policy, and refuses to download the fresh sources if the policy drifts. The policy is **not retuned** after the failed provenance check.
+That first run then stopped on incorrect preregistered Git-blob annotations before any holdout metric was produced. `run_frozen.py` fixes only the Go/Node provenance identifiers, reruns development, and refuses fresh-source access unless it reproduces the exact frozen policy. The policy was not retuned.
+
+Final successful run: `31989172942`, scientific head `ba6eb338d47ceaac170358c1f26ba6c5d5f4b4ff`, **76 tests passed**. Artifact `9274906515`, digest `sha256:c5d66b042ff04c5285c252b4088def77b45595f1aab80979883811ccc8d128a0`.
 
 ## Fresh holdout
 
-Only after the frozen policy has been re-verified, download and verify two sources never used by earlier POLLICINO pilots:
+Fresh external sources, opened only after freeze verification:
 
 - Go `src/net/http/server.go`, tag `go1.22.12`, Git blob `23a603a83dd7135077fa1363ceb8255ff345ac06`;
 - Node.js `lib/internal/modules/cjs/loader.js`, tag `v20.19.1`, Git blob `ebccdb28256314e7cd8ac8d7e3dec670286022d2`.
 
-These identifiers were independently re-read from GitHub's tagged file metadata after the first run's provenance guard rejected the original annotations.
+Six deterministic 4096-byte mixed streams combine those bytes with JSON, DNA, random, repetition, compressed and English-like controls.
 
-Six deterministic 4096-byte mixed streams combine those bytes with JSON, DNA, random, repetition, compressed and English-like controls. Segment boundaries are deliberately not aligned to 512 bytes.
+## Final result
 
-## Fresh-holdout comparisons
+PILOT-013 is a **technical success but a negative result for the preregistered scientific hypothesis**.
 
-- block-reset cheap gate;
-- block-reset neural gate;
-- PILOT-012 512-byte `max` regret router, now with actual neural-forward accounting;
-- PILOT-013 frozen cheap-admission router;
-- a diagnostic 50%-budget block oracle using the same probe-then-neural mechanism;
-- zlib;
-- zstd level 19.
+| Method | Mean payload (bpb) | Mean actual neural eval fraction |
+|---|---:|---:|
+| cheap reset | 4.88997 | 0 |
+| neural reset | 4.50500 | ~0.945 |
+| PILOT-012 max | 4.53141 | 0.80835 |
+| PILOT-013 admission | 4.74414 | 0.45610 |
+| diagnostic 50% oracle | 4.63615 | ~0.50 budget |
+| zlib | 4.18034 | n/a |
+| zstd-19 | 4.05436 | n/a |
 
-All primary POLLICINO rows use real range-coded payloads. The diagnostic block oracle is explicitly identified as a block-sum/non-causal reference and is not treated as a deployable codec.
+PILOT-013 stays below the hard budget on every stream (`max = 0.49902`), admits 50% of bytes on average, and beats cheap reset on 6/6 streams. But it retains only **36.86%** of the mean cheap-reset → neural-reset gain, below the frozen 50% success threshold, and beats PILOT-012 max on 0/6 streams.
 
-## Primary metrics
+## Interpretation
 
-- real payload bpb;
-- actual neural model evaluations per source byte;
-- admitted byte fraction;
-- retained fraction of the cheap-reset -> neural-reset compression gain;
-- regret to the 50%-budget diagnostic oracle;
-- round-trip correctness and deterministic encoder/decoder block summaries.
+The mechanism works; the one-dimensional signal does not work well enough. Cheap probe codelength alone is a poor predictor of which blocks deserve neural compute. The diagnostic 50%-budget oracle reaches 4.63615 bpb, leaving a meaningful selection gap at the same nominal budget.
 
-## Success criterion
+The next pilot should improve the *selection signal*, not silently increase neural compute: richer causal/integer cheap-only features, followed by a tiny deterministic decision tree or quantized linear scorer trained only on already-consumed streams.
 
-PILOT-013 succeeds if the frozen policy:
+## Persisted evidence
 
-1. preserves deterministic lossless round-trip coding with zero selector side bits;
-2. stays at or below 0.50 actual neural evaluations per source byte on every fresh stream;
-3. improves the mean fresh-holdout payload over the block-reset cheap baseline;
-4. retains at least **50% of the mean cheap-reset -> neural-reset compression gain** on the fresh holdout.
+- `results.json` — aggregate protocol/result record;
+- `holdout.csv` — per-stream fresh-holdout outcomes;
+- `holdout-manifest.json` — exact source and stream provenance;
+- `run-metadata.json` — successful run, artifact digest, frozen-policy provenance and checkpoint identity.
 
-The 50% retained-gain threshold was frozen before the Go/Node holdout was accepted. A negative result is useful: if cheap codelength cannot identify valuable neural blocks, the next experiment should add richer cheap-only causal features or a tiny learned admission model rather than silently increasing neural compute.
+The complete raw development/block tables remain in the GitHub Actions artifact identified above; its SHA-256 digest is the canonical checksum for that bundle.
+
+## Limits
+
+- The holdout is a deterministic mixed-domain mechanism benchmark, not a universal compression corpus.
+- The admission feature is intentionally one-dimensional.
+- The 50% diagnostic oracle is non-causal and uses independently coded block sums.
+- The frozen neural checkpoint is assumed shared whenever the neural path is admitted.
+- Future pilots should share the exact deployed integer decision helper between search/screening and codec evaluation so boundary behavior cannot diverge.
