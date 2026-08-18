@@ -86,6 +86,9 @@ def deliver_exact_adaptive(
     The fallback path sends the complete PNM1 manifest first and then the exact
     content using PN-002 PNF1 framing. The receiver verifies the reconstructed
     bytes against the manifest's full SHA-256 and declared length.
+
+    Rich-path bytes consumed by a failed verified-retrieval attempt are retained
+    in the final report rather than disappearing when the path falls back.
     """
 
     if not isinstance(authorization_context, bytes):
@@ -97,6 +100,8 @@ def deliver_exact_adaptive(
         raise AuthorizationError("application authorization denied data exchange")
 
     descriptor_wire = descriptor.encode()
+    rich_manifest_bytes = 0
+    rich_content_bytes = 0
 
     if policy.prefer_rich_path and rich_providers:
         try:
@@ -105,7 +110,10 @@ def deliver_exact_adaptive(
                 resolver=resolver,
                 providers=rich_providers,
             )
-        except (LookupError, RetrievalError):
+        except RetrievalError as exc:
+            rich_manifest_bytes = exc.manifest_bytes
+            rich_content_bytes = exc.content_bytes
+        except LookupError:
             pass
         else:
             return content, AdaptiveDeliveryReport(
@@ -159,8 +167,8 @@ def deliver_exact_adaptive(
         scarce_manifest_wire_bytes=scarce_manifest_bytes,
         scarce_content_wire_bytes=scarce_content_bytes,
         total_scarce_wire_bytes=total_scarce_bytes,
-        rich_manifest_bytes=0,
-        rich_content_bytes=0,
+        rich_manifest_bytes=rich_manifest_bytes,
+        rich_content_bytes=rich_content_bytes,
         fallback_manifest_retransmissions=manifest_report.retransmissions,
         fallback_content_retransmissions=content_report.retransmissions,
         exact=True,
