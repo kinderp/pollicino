@@ -74,7 +74,7 @@ def test_clean_exact_transfer_has_predictable_accounting() -> None:
     assert report.success
 
 
-def test_impairment_sequence_is_deterministic() -> None:
+def test_impairment_sequence_is_deterministic_and_exercises_retries() -> None:
     payload = bytes((index * 37 + 11) % 256 for index in range(160))
     profile = ScarceLinkProfile(
         max_frame_bytes=64,
@@ -83,7 +83,7 @@ def test_impairment_sequence_is_deterministic() -> None:
         ack_loss_ppm=100_000,
         max_retries=12,
         ack_bytes=8,
-        seed=1337,
+        seed=11,
     )
 
     first_data, first_report = transmit_exact(payload, transfer_id=44, profile=profile)
@@ -91,6 +91,8 @@ def test_impairment_sequence_is_deterministic() -> None:
 
     assert first_data == second_data == payload
     assert first_report == second_report
+    assert first_report.retransmissions > 0
+    assert first_report.duplicate_deliveries > 0
 
 
 def test_retry_exhaustion_fails_closed() -> None:
