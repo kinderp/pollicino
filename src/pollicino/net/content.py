@@ -220,7 +220,20 @@ class RetrievalReport:
 
 
 class RetrievalError(RuntimeError):
-    pass
+    def __init__(
+        self,
+        message: str,
+        *,
+        manifest_bytes: int = 0,
+        content_bytes: int = 0,
+        provider_attempts: int = 0,
+        failed_verification_attempts: int = 0,
+    ) -> None:
+        super().__init__(message)
+        self.manifest_bytes = manifest_bytes
+        self.content_bytes = content_bytes
+        self.provider_attempts = provider_attempts
+        self.failed_verification_attempts = failed_verification_attempts
 
 
 def manifest_for_content(
@@ -250,7 +263,9 @@ def retrieve_exact(
 
     The discovery coordinate is never treated as content identity. Exactness is
     established only after the resolved manifest's complete SHA-256 digest and
-    declared size both match the retrieved bytes.
+    declared size both match the retrieved bytes. ``content_bytes`` accounts
+    for every provider payload successfully fetched, including hash-invalid
+    attempts before a later verified source succeeds.
     """
 
     descriptor_wire = descriptor.encode()
@@ -259,6 +274,7 @@ def retrieve_exact(
 
     provider_attempts = 0
     failed_verification_attempts = 0
+    retrieved_content_bytes = 0
 
     for source in manifest.sources:
         provider = providers.get(source.provider_id)
@@ -270,6 +286,7 @@ def retrieve_exact(
         except LookupError:
             continue
 
+        retrieved_content_bytes += len(content)
         digest = hashlib.sha256(content).digest()
         if len(content) != manifest.size_bytes or digest != manifest.sha256_digest:
             failed_verification_attempts += 1
@@ -278,7 +295,7 @@ def retrieve_exact(
         report = RetrievalReport(
             scarce_link_bytes=len(descriptor_wire),
             manifest_bytes=len(manifest_wire),
-            content_bytes=len(content),
+            content_bytes=retrieved_content_bytes,
             provider_attempts=provider_attempts,
             failed_verification_attempts=failed_verification_attempts,
             selected_provider_id=source.provider_id,
@@ -289,5 +306,9 @@ def retrieve_exact(
         return content, report
 
     raise RetrievalError(
-        "no retrieval source produced content matching the resolved manifest"
+        "no retrieval source produced content matching the resolved manifest",
+        manifest_bytes=len(manifest_wire),
+        content_bytes=retrieved_content_bytes,
+        provider_attempts=provider_attempts,
+        failed_verification_attempts=failed_verification_attempts,
     )
