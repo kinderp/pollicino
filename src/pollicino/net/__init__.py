@@ -31,6 +31,19 @@ from .link import (
     reassemble_frames,
     transmit_exact,
 )
+from .store import (
+    AVAILABILITY_MAGIC,
+    CHUNK_MANIFEST_MAGIC,
+    AvailabilitySummary,
+    ChunkManifest,
+    ChunkRef,
+    PollicinoStore,
+    StoreSyncReport,
+    availability_for,
+    build_chunk_manifest,
+    reconstruct_from_store,
+    sync_missing_chunks,
+)
 from .wire import (
     DiscoveryDescriptor,
     MAGIC,
@@ -40,10 +53,15 @@ from .wire import (
 )
 
 __all__ = [
+    "AVAILABILITY_MAGIC",
     "AdaptiveDeliveryError",
     "AdaptiveDeliveryReport",
     "AuthorizationError",
     "AuthorizationGate",
+    "AvailabilitySummary",
+    "CHUNK_MANIFEST_MAGIC",
+    "ChunkManifest",
+    "ChunkRef",
     "ContentManifest",
     "ContentProvider",
     "DeliveryError",
@@ -61,15 +79,21 @@ __all__ = [
     "MAX_KEY_BYTES",
     "MAX_METADATA_BYTES",
     "ManifestResolver",
+    "PollicinoStore",
     "RetrievalError",
     "RetrievalReport",
     "RetrievalSource",
     "ScarceLinkProfile",
+    "StoreSyncReport",
     "TransferReport",
+    "availability_for",
+    "build_chunk_manifest",
     "deliver_exact_adaptive",
     "fragment_payload",
     "manifest_for_content",
     "reassemble_frames",
+    "reconstruct_from_store",
     "retrieve_exact",
+    "sync_missing_chunks",
     "transmit_exact",
 ]
