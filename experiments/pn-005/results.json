@@ -1,0 +1,62 @@
+{
+  "application_dependencies": [],
+  "criteria": {
+    "all_exact": true,
+    "cached_counts_match_frozen_levels": true,
+    "chunk_wire_strictly_decreases": true,
+    "fully_cached_has_zero_chunk_wire": true,
+    "missing_chunk_count_monotone": true,
+    "missing_source_bytes_monotone": true,
+    "pre_resolved_has_zero_manifest_wire": true,
+    "pre_resolved_never_costs_more_scarce_bytes": true,
+    "twentyfive_percent_cache_beats_direct_with_manifest": true
+  },
+  "direct_full_object": {
+    "ack_transmissions": 179,
+    "ack_wire_bytes": 1432,
+    "data_transmissions": 179,
+    "data_wire_bytes": 11414,
+    "duplicate_deliveries": 0,
+    "frame_count": 179,
+    "nominal_serialization_seconds": 20.5536,
+    "payload_capacity_bytes": 46,
+    "reconstructed_bytes": 8192,
+    "retransmissions": 0,
+    "source_bytes": 8192,
+    "success": true,
+    "total_wire_bytes": 12846
+  },
+  "experiment": "PN-005",
+  "external_runtime_dependencies": [],
+  "profile": {
+    "ack_bytes": 8,
+    "ack_loss_ppm": 0,
+    "bitrate_bps": 5000,
+    "data_loss_ppm": 0,
+    "max_frame_bytes": 64,
+    "max_retries": 3,
+    "seed": 1
+  },
+  "rows": [
+    {"availability_wire_bytes":67,"cached_chunk_count":0,"cached_chunk_count_requested":0,"cached_fraction":0.0,"cached_source_bytes":0,"chunk_count":16,"chunk_wire_bytes":13216,"exact":true,"manifest_wire_bytes":991,"missing_chunk_count":16,"missing_source_bytes":8192,"mode":"manifest-on-scarce","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":1.0340183714775026,"retransmissions":0,"scarce_vs_direct_fraction":1.1111630079402148,"total_scarce_if_manifest_pre_resolved":13283,"total_scarce_wire_bytes":14274},
+    {"availability_wire_bytes":67,"cached_chunk_count":4,"cached_chunk_count_requested":4,"cached_fraction":0.25,"cached_source_bytes":2048,"chunk_count":16,"chunk_wire_bytes":9912,"exact":true,"manifest_wire_bytes":991,"missing_chunk_count":12,"missing_source_bytes":6144,"mode":"manifest-on-scarce","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.7768176864393586,"retransmissions":0,"scarce_vs_direct_fraction":0.8539623229020706,"total_scarce_if_manifest_pre_resolved":9979,"total_scarce_wire_bytes":10970},
+    {"availability_wire_bytes":67,"cached_chunk_count":8,"cached_chunk_count_requested":8,"cached_fraction":0.5,"cached_source_bytes":4096,"chunk_count":16,"chunk_wire_bytes":6608,"exact":true,"manifest_wire_bytes":991,"missing_chunk_count":8,"missing_source_bytes":4096,"mode":"manifest-on-scarce","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.5196170014012144,"retransmissions":0,"scarce_vs_direct_fraction":0.5967616378639266,"total_scarce_if_manifest_pre_resolved":6675,"total_scarce_wire_bytes":7666},
+    {"availability_wire_bytes":67,"cached_chunk_count":12,"cached_chunk_count_requested":12,"cached_fraction":0.75,"cached_source_bytes":6144,"chunk_count":16,"chunk_wire_bytes":3304,"exact":true,"manifest_wire_bytes":991,"missing_chunk_count":4,"missing_source_bytes":2048,"mode":"manifest-on-scarce","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.2624163163630702,"retransmissions":0,"scarce_vs_direct_fraction":0.33956095282578236,"total_scarce_if_manifest_pre_resolved":3371,"total_scarce_wire_bytes":4362},
+    {"availability_wire_bytes":67,"cached_chunk_count":16,"cached_chunk_count_requested":16,"cached_fraction":1.0,"cached_source_bytes":8192,"chunk_count":16,"chunk_wire_bytes":0,"exact":true,"manifest_wire_bytes":991,"missing_chunk_count":0,"missing_source_bytes":0,"mode":"manifest-on-scarce","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.005215631324926047,"retransmissions":0,"scarce_vs_direct_fraction":0.08236026778763818,"total_scarce_if_manifest_pre_resolved":67,"total_scarce_wire_bytes":1058},
+    {"availability_wire_bytes":67,"cached_chunk_count":0,"cached_chunk_count_requested":0,"cached_fraction":0.0,"cached_source_bytes":0,"chunk_count":16,"chunk_wire_bytes":13216,"exact":true,"manifest_wire_bytes":0,"missing_chunk_count":16,"missing_source_bytes":8192,"mode":"manifest-pre-resolved","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":1.0340183714775026,"retransmissions":0,"scarce_vs_direct_fraction":1.0340183714775026,"total_scarce_if_manifest_pre_resolved":13283,"total_scarce_wire_bytes":13283},
+    {"availability_wire_bytes":67,"cached_chunk_count":4,"cached_chunk_count_requested":4,"cached_fraction":0.25,"cached_source_bytes":2048,"chunk_count":16,"chunk_wire_bytes":9912,"exact":true,"manifest_wire_bytes":0,"missing_chunk_count":12,"missing_source_bytes":6144,"mode":"manifest-pre-resolved","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.7768176864393586,"retransmissions":0,"scarce_vs_direct_fraction":0.7768176864393586,"total_scarce_if_manifest_pre_resolved":9979,"total_scarce_wire_bytes":9979},
+    {"availability_wire_bytes":67,"cached_chunk_count":8,"cached_chunk_count_requested":8,"cached_fraction":0.5,"cached_source_bytes":4096,"chunk_count":16,"chunk_wire_bytes":6608,"exact":true,"manifest_wire_bytes":0,"missing_chunk_count":8,"missing_source_bytes":4096,"mode":"manifest-pre-resolved","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.5196170014012144,"retransmissions":0,"scarce_vs_direct_fraction":0.5196170014012144,"total_scarce_if_manifest_pre_resolved":6675,"total_scarce_wire_bytes":6675},
+    {"availability_wire_bytes":67,"cached_chunk_count":12,"cached_chunk_count_requested":12,"cached_fraction":0.75,"cached_source_bytes":6144,"chunk_count":16,"chunk_wire_bytes":3304,"exact":true,"manifest_wire_bytes":0,"missing_chunk_count":4,"missing_source_bytes":2048,"mode":"manifest-pre-resolved","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.2624163163630702,"retransmissions":0,"scarce_vs_direct_fraction":0.2624163163630702,"total_scarce_if_manifest_pre_resolved":3371,"total_scarce_wire_bytes":3371},
+    {"availability_wire_bytes":67,"cached_chunk_count":16,"cached_chunk_count_requested":16,"cached_fraction":1.0,"cached_source_bytes":8192,"chunk_count":16,"chunk_wire_bytes":0,"exact":true,"manifest_wire_bytes":0,"missing_chunk_count":0,"missing_source_bytes":0,"mode":"manifest-pre-resolved","object_bytes":8192,"pre_resolved_scarce_vs_direct_fraction":0.005215631324926047,"retransmissions":0,"scarce_vs_direct_fraction":0.005215631324926047,"total_scarce_if_manifest_pre_resolved":67,"total_scarce_wire_bytes":67}
+  ],
+  "source": {
+    "bytes": 8192,
+    "chunk_count": 16,
+    "chunk_size": 512,
+    "manifest_bytes": 627,
+    "manifest_fingerprint": "d997f4e66119bd7739c08689560ba51e6c5b3f30c04e7326af0138bc62ca8d87",
+    "sha256": "4518db781dcd29303c5d0ff540bb57c504595158fa885f0f93a5f4667ef57ff0"
+  },
+  "standalone_core": true,
+  "success": true
+}
