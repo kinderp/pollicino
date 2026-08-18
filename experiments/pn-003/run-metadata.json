@@ -1,0 +1,24 @@
+{
+  "experiment": "PN-003",
+  "scientific_run_id": 32184992611,
+  "scientific_head_sha": "56b0faa5b13d5ddf7bb7f3d9adbb6a005c805f94",
+  "pull_request": 25,
+  "test_scope": "tests/",
+  "test_result": "109 passed in 5.86s",
+  "python": "3.11.15",
+  "artifact": {
+    "id": 9342131189,
+    "name": "pn-003-results",
+    "size_in_bytes": 1186,
+    "digest": "sha256:2a0b5046dff4bd2b9d5baa7e4b8c8670303409f58d8437ed7fcbd937232a03a5"
+  },
+  "standalone_contract": {
+    "application_dependencies": [],
+    "external_runtime_dependencies": [],
+    "dna_dependency": false,
+    "radio_sdk_dependency": false,
+    "hosted_resolver_dependency": false
+  },
+  "result_policy": "Frozen objects, coordinates, fallback profiles and success criteria were unchanged after the scientific run.",
+  "interpretation_boundary": "The 45-byte measurement is scarce-link discovery traffic only. Object and manifest bytes are retrieved on the separately accounted rich path."
+}

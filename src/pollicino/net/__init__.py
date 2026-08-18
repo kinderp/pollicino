@@ -1,3 +1,17 @@
+from .content import (
+    ContentManifest,
+    ContentProvider,
+    InMemoryContentProvider,
+    InMemoryResolver,
+    MANIFEST_MAGIC,
+    MANIFEST_VERSION,
+    ManifestResolver,
+    RetrievalError,
+    RetrievalReport,
+    RetrievalSource,
+    manifest_for_content,
+    retrieve_exact,
+)
 from .link import (
     DeliveryError,
     FRAME_HEADER_BYTES,
@@ -18,18 +32,30 @@ from .wire import (
 )
 
 __all__ = [
+    "ContentManifest",
+    "ContentProvider",
     "DeliveryError",
     "DiscoveryDescriptor",
     "FRAME_HEADER_BYTES",
     "FRAME_MAGIC",
     "FragmentFrame",
+    "InMemoryContentProvider",
+    "InMemoryResolver",
     "MAGIC",
+    "MANIFEST_MAGIC",
+    "MANIFEST_VERSION",
     "MAX_AUTH_BYTES",
     "MAX_KEY_BYTES",
     "MAX_METADATA_BYTES",
+    "ManifestResolver",
+    "RetrievalError",
+    "RetrievalReport",
+    "RetrievalSource",
     "ScarceLinkProfile",
     "TransferReport",
     "fragment_payload",
+    "manifest_for_content",
     "reassemble_frames",
+    "retrieve_exact",
     "transmit_exact",
 ]
