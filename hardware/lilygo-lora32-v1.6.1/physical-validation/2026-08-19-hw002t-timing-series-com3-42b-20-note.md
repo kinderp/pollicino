@@ -1,6 +1,6 @@
 # HW-002T same-bench timing localization
 
-## First direction — COM3 initiator, COM4 responder
+## COM3 initiator, COM4 responder
 
 20×42-byte paced transactions, fixed PHY, same bench:
 
@@ -12,9 +12,7 @@
 - R² ≈ 0.999182;
 - mean diagnostic residual = -0.55 us.
 
-The other measured responder/initiator phases vary by only tens of microseconds, so the observed sub-millisecond RTT structure is overwhelmingly localized to the responder's RX-done IRQ -> `handleReceivedPacket()` scheduling interval.
-
-## Mirror direction — COM4 initiator, COM3 responder
+## COM4 initiator, COM3 responder
 
 The exact mirrored 20×42-byte run reproduces the same mechanism on the other physical board:
 
@@ -37,6 +35,10 @@ Across all 40 successful timed transactions:
 - R² ≈ 0.995780.
 
 This strongly localizes the structured ~1 ms RTT modulation to responder scheduling between the SX1276 RX-done interrupt and `handleReceivedPacket()` on both boards. The firmware's `loop()` includes `delay(1)`, so that cadence is now a specific causal hypothesis, but this evidence alone does not prove it is the sole cause.
+
+## Next causal experiment
+
+Keep PHY, H2 wire format, 42-byte payload, timing instrumentation, board placement and pacing fixed, and change only the responder-loop 1 ms sleep policy. Compare the existing `delay(1)` baseline against a no-1-ms-sleep/yield-only variant.
 
 ## Scientific boundary
 
