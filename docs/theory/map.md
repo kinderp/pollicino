@@ -1,6 +1,6 @@
 # POLLICINO Theory Map
 
-POLLICINO connects five layers. The course and the research track revisit the same map at different depths.
+POLLICINO connects six layers. The course and the research track revisit the same map at different depths.
 
 ## 1. Representation and information
 
@@ -51,3 +51,22 @@ POLLICINO connects five layers. The course and the research track revisit the sa
 - residual information
 - bandwidth/compute trade-offs
 - Pareto frontiers for exact reconstruction
+
+## 6. Wireless links and PollicinoNet
+
+- electromagnetic waves, frequency and wavelength
+- dBm, RSSI, SNR and receiver sensitivity
+- modulation, coding, CRC, FEC and retransmission
+- bandwidth, airtime, goodput, latency and duty cycle
+- LoRa PHY and Chirp Spread Spectrum
+- spreading factor, coding rate and LoRa bandwidth
+- difference between LoRa and LoRaWAN
+- Wi-Fi / IEEE 802.11
+- Bluetooth Classic and Bluetooth Low Energy
+- LPWAN vs WLAN vs WPAN vs cellular networks
+- bare-LoRa networking, multi-hop and store-and-forward
+- discovery over scarce links and rich-link handover
+- physical TRC: radio bytes, airtime, retries and energy proxies
+- HW-001/HW-002 experimental methodology
+
+See `docs/theory/wireless-lora-wifi-bluetooth-it.md` for the first dedicated module.
