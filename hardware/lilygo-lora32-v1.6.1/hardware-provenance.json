@@ -6,7 +6,27 @@
     "expected_market_band": "868 MHz",
     "amazon_asin": "B09FXHSS6P",
     "physical_identity_confirmed": false,
-    "note": "The ASIN mapping is treated as an expectation only. The physical board and radio markings must be checked before flashing or transmitting."
+    "physical_board_identity_confirmed": true,
+    "physical_radio_silicon_confirmed": false,
+    "note": "The first physical unit has been visually identified as the expected T3 V1.6.1 / LILYGO LORA32 868/915 MHz family. The RF shield does not expose the silicon part number, so SX1276 remains a vendor-mapping inference until firmware initialization confirms the radio."
+  },
+  "physical_observation": {
+    "observed_at": "2026-08-19T10:31:00+02:00",
+    "unit": "board-1",
+    "evidence_type": "user-provided front-side photograph",
+    "photo_stored_in_repository": false,
+    "observed_board_marking": "T3 V1.6.1",
+    "observed_board_date_marking": "20210114",
+    "observed_rf_shield_marking": "LILYGO 868/915MHz Model:LORA32",
+    "observed_usb_connector": "Micro-USB",
+    "antenna_present_in_package": true,
+    "antenna_attached_in_observation": false,
+    "battery_lead_present": true,
+    "header_pins_present": true,
+    "ready_for_firmware_flash": true,
+    "ready_for_rf_transmit": false,
+    "rf_transmit_blocker": "Attach the supplied antenna before any transmission.",
+    "second_board_physically_verified": false
   },
   "vendor_hardware_reference": {
     "repository": "Xinyuan-LilyGO/LilyGo-LoRa-Series",
@@ -56,6 +76,15 @@
     "output_power_dbm": 10,
     "preamble_symbols": 8,
     "host_max_payload_bytes": 240
+  },
+  "validation_state": {
+    "software_build_validated": true,
+    "first_board_visual_identity_validated": true,
+    "second_board_visual_identity_validated": false,
+    "radio_initialization_on_physical_board_validated": false,
+    "physical_pnd1_transport_validated": false,
+    "physical_pnf1_transport_validated": false,
+    "physical_radio_validation": false
   },
   "regulatory_boundary": {
     "compliance_claim": false,
