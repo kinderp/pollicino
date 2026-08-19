@@ -1,0 +1,64 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-single-v1",
+  "observed_at_local": "2026-08-19T12:21:00+02:00",
+  "evidence_source": "user-reported hw002.py measure output",
+  "host": {
+    "os": "Windows",
+    "working_directory": "F:\\dev\\pollicino",
+    "initiator_port_at_run": "COM3",
+    "responder_port_known_from_session": "COM4",
+    "note": "COM port numbers are transient host assignments, not device identities. The responder acted autonomously in firmware; no host process on COM4 was required for the measurement transaction."
+  },
+  "command": "py hardware/lilygo-lora32-v1.6.1/host/hw002.py measure --port COM3 --seq 1 --bytes 42 --timeout-ms 3000",
+  "radio_profile_reported_by_initiator": {
+    "board": "lilygo-lora32-v1.6.1",
+    "driver": "sx1276",
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10,
+    "max_tx_bytes": 240,
+    "measurement_ping": true
+  },
+  "measurement": {
+    "success": true,
+    "sequence": 1,
+    "frame_bytes_each_direction": 42,
+    "radio_bytes_round_trip": 84,
+    "forward_a_to_b": {
+      "rssi_dbm": -37.0,
+      "snr_db": 9.75
+    },
+    "reverse_b_to_a": {
+      "rssi_dbm": -39.0,
+      "snr_db": 9.75
+    },
+    "rtt_us": 182139,
+    "rtt_ms": 182.139,
+    "toa_us_per_frame": 88000,
+    "minimum_round_trip_radio_toa_us": 176000,
+    "rtt_excess_over_two_frame_toa_us": 6139,
+    "initiator_tx_block_us": 89953,
+    "initiator_tx_block_excess_over_toa_us": 1953
+  },
+  "claims_supported": {
+    "physical_measurement_ping_success": true,
+    "autonomous_radio_responder_success": true,
+    "bidirectional_rssi_observed_in_one_transaction": true,
+    "bidirectional_snr_observed_in_one_transaction": true,
+    "firmware_level_rtt_observed": true,
+    "radiolib_time_on_air_observed": true
+  },
+  "claims_not_yet_supported": {
+    "batch_packet_loss_curve": true,
+    "rtt_distribution": true,
+    "range_characterization": true,
+    "distance_known": true,
+    "environment_recorded": true,
+    "reverse_initiator_role_validated": true,
+    "regulatory_compliance_for_general_deployment": true
+  },
+  "interpretation": "First successful HW-002 physical measurement transaction. The RTT exceeds the two-frame nominal LoRa time-on-air by 6.139 ms; that excess includes firmware/radio turnaround and blocking transmit overhead and must not be interpreted as propagation delay. The next narrow validation is the same 42-byte measurement with COM4 as initiator before any batch experiment."
+}
