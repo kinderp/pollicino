@@ -170,6 +170,38 @@ def numeric_stats(values: Iterable[float]) -> dict[str, float | None]:
     }
 
 
+def estimate_minimum_wall_seconds(
+    transaction_toa_us: list[int],
+    tx_occupancy_cap_percent: float | None,
+) -> float | None:
+    """Nominal all-success lower-bound wall time for the sequential runner.
+
+    The pacing interval constrains the next transaction *start*. The runner is
+    also blocking, so a next start cannot occur before the current nominal
+    PING+PONG radio transaction has completed. There is no post-final pacing
+    interval; the final transaction contributes only its nominal round-trip
+    time-on-air. Firmware turnaround is intentionally excluded from this lower
+    bound.
+    """
+    if tx_occupancy_cap_percent is None:
+        return None
+    if not 0.0 < tx_occupancy_cap_percent <= 100.0:
+        raise ValueError("tx occupancy cap must be in (0, 100]")
+    if not transaction_toa_us:
+        return 0.0
+
+    fraction = tx_occupancy_cap_percent / 100.0
+    total_seconds = 0.0
+    for toa_us in transaction_toa_us[:-1]:
+        toa_s = toa_us / 1_000_000.0
+        pacing_interval_s = toa_s / fraction
+        nominal_round_trip_s = toa_s * 2.0
+        total_seconds += max(pacing_interval_s, nominal_round_trip_s)
+
+    total_seconds += (transaction_toa_us[-1] * 2.0) / 1_000_000.0
+    return total_seconds
+
+
 def build_plan(
     port,
     sizes: tuple[int, ...],
@@ -180,9 +212,9 @@ def build_plan(
         raise ValueError("count must be positive")
     info = query_info(port)
     by_size: list[dict[str, Any]] = []
+    transaction_toa_us: list[int] = []
     total_airtime_us = 0
     total_radio_bytes = 0
-    estimated_wall_seconds = 0.0
     fraction = None
     if tx_occupancy_cap_percent is not None:
         if not 0.0 < tx_occupancy_cap_percent <= 100.0:
@@ -191,13 +223,13 @@ def build_plan(
 
     for frame_bytes in sizes:
         toa_us = query_toa(port, frame_bytes)
+        transaction_toa_us.extend([toa_us] * count)
         per_node_airtime_us = toa_us * count
         total_airtime_us += per_node_airtime_us
         total_radio_bytes += frame_bytes * 2 * count
         start_interval_s = None
         if fraction is not None:
             start_interval_s = (toa_us / 1_000_000.0) / fraction
-            estimated_wall_seconds += start_interval_s * count
         by_size.append(
             {
                 "frame_bytes": frame_bytes,
@@ -209,6 +241,10 @@ def build_plan(
             }
         )
 
+    estimated_wall_seconds = estimate_minimum_wall_seconds(
+        transaction_toa_us, tx_occupancy_cap_percent
+    )
+
     return {
         "schema": "pollicino-hw002-plan-v1",
         "info": info,
@@ -218,8 +254,11 @@ def build_plan(
         "planned_per_node_tx_airtime_us": total_airtime_us,
         "planned_two_node_radio_bytes_if_all_successful": total_radio_bytes,
         "tx_occupancy_cap_percent": tx_occupancy_cap_percent,
-        "estimated_minimum_wall_seconds_for_requested_cap": (
-            estimated_wall_seconds if fraction is not None else None
+        "estimated_minimum_wall_seconds_for_requested_cap": estimated_wall_seconds,
+        "wall_time_estimate_note": (
+            "Nominal all-success lower bound for this sequential runner: pacing between "
+            "transaction starts, no post-final pacing interval, and nominal two-frame "
+            "time-on-air for the final transaction. Firmware turnaround is excluded."
         ),
         "regulatory_note": (
             "The occupancy cap is an experiment pacing input, not a claim of legal "
@@ -390,12 +429,25 @@ def selftest() -> dict[str, Any]:
     if summary["attempts"] != 2 or summary["successes"] != 1:
         raise AssertionError("summary failed")
 
+    paced_estimate = estimate_minimum_wall_seconds([88000] * 10, 1.0)
+    if paced_estimate is None or not math.isclose(
+        paced_estimate, 79.376, rel_tol=0.0, abs_tol=1e-9
+    ):
+        raise AssertionError(f"wall-time pacing estimate failed: {paced_estimate}")
+
+    blocking_estimate = estimate_minimum_wall_seconds([88000, 88000], 100.0)
+    if blocking_estimate is None or not math.isclose(
+        blocking_estimate, 0.352, rel_tol=0.0, abs_tol=1e-9
+    ):
+        raise AssertionError(f"wall-time blocking estimate failed: {blocking_estimate}")
+
     return {
         "success": True,
         "toa_parser": True,
         "measurement_parser": True,
         "failure_parser": True,
         "summary": True,
+        "wall_time_estimator": True,
     }
 
 

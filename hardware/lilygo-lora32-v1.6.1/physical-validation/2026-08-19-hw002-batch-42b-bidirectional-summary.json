@@ -1,0 +1,103 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-bidirectional-batch-summary-v1",
+  "date_local": "2026-08-19",
+  "environment": "same-bench-indoor",
+  "distance_m": null,
+  "radio_profile": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10,
+    "frame_bytes_each_direction": 42,
+    "toa_us_per_frame": 88000,
+    "tx_occupancy_pacing_percent": 1.0
+  },
+  "runs": {
+    "com3_initiator": {
+      "attempts": 10,
+      "successes": 10,
+      "observed_failures": 0,
+      "elapsed_s": 79.375,
+      "rtt_us": {"min": 181077, "mean": 181562.7, "p50": 181600.0, "max": 182037},
+      "initiator_tx_block_us_mean": 89714.1,
+      "remote_ping_rssi_dbm_mean": -38.1,
+      "remote_ping_snr_db_mean": 9.625,
+      "local_pong_rssi_dbm_mean": -39.7,
+      "local_pong_snr_db_mean": 9.95
+    },
+    "com4_initiator": {
+      "attempts": 10,
+      "successes": 10,
+      "observed_failures": 0,
+      "elapsed_s": 79.407,
+      "rtt_us": {"min": 181059, "mean": 181682.0, "p50": 181905.0, "max": 182028},
+      "initiator_tx_block_us_mean": 89714.9,
+      "remote_ping_rssi_dbm_mean": -39.5,
+      "remote_ping_snr_db_mean": 9.775,
+      "local_pong_rssi_dbm_mean": -38.1,
+      "local_pong_snr_db_mean": 9.75
+    }
+  },
+  "combined": {
+    "attempts": 20,
+    "successes": 20,
+    "observed_failures": 0,
+    "observed_success_rate": 1.0,
+    "rtt_us": {
+      "min": 181059,
+      "mean": 181622.35,
+      "median": 181888.5,
+      "max": 182037,
+      "range": 978,
+      "population_stddev": 406.918
+    },
+    "mean_rtt_difference_between_initiator_runs_us": 119.3,
+    "mean_tx_block_us": 89714.5,
+    "nominal_two_frame_toa_us": 176000,
+    "nominal_toa_fraction_of_mean_rtt": 0.969053,
+    "confirmed_total_radio_bytes": 1680,
+    "confirmed_total_two_node_tx_airtime_us": 3520000,
+    "per_physical_direction": {
+      "com3_to_com4": {
+        "confirmed_frames": 20,
+        "confirmed_radio_bytes": 840,
+        "confirmed_airtime_us": 1760000,
+        "rssi_dbm_mean": -38.1,
+        "rssi_dbm_observed_range": [-39.0, -37.0],
+        "snr_db_mean": 9.6875
+      },
+      "com4_to_com3": {
+        "confirmed_frames": 20,
+        "confirmed_radio_bytes": 840,
+        "confirmed_airtime_us": 1760000,
+        "rssi_dbm_mean": -39.6,
+        "rssi_dbm_observed_range": [-41.0, -39.0],
+        "snr_db_mean": 9.8625
+      }
+    }
+  },
+  "timing_structure_observation": {
+    "status": "candidate-bimodality-not-explained",
+    "low_band": {"samples": 8, "min_us": 181059, "max_us": 181318, "mean_us": 181130.25},
+    "high_band": {"samples": 12, "min_us": 181866, "max_us": 182037, "mean_us": 181950.417},
+    "gap_between_observed_bands_us": 548,
+    "difference_between_band_means_us": 820.167,
+    "interpretation": "The 20 RTT observations form two separated bands in this bench dataset. No causal attribution is made. A later timing-decomposition experiment should isolate initiator TX, responder turnaround, responder TX and receive-completion timing before interpreting the effect."
+  },
+  "scientific_boundary": {
+    "supported": [
+      "both physical boards complete 10 paced initiator transactions with autonomous peer responses",
+      "20 of 20 attempted transactions succeeded in this same-bench checkpoint",
+      "bidirectional RSSI/SNR and firmware-level RTT are repeatably observable",
+      "both initiator runs have very similar mean RTT and TX blocking duration"
+    ],
+    "not_supported": [
+      "true packet loss probability is zero",
+      "range or NLOS characterization",
+      "general deployment reliability",
+      "causal explanation of the candidate RTT bimodality"
+    ]
+  }
+}
