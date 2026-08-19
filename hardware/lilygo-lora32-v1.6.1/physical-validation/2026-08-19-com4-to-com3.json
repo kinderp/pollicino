@@ -1,0 +1,58 @@
+{
+  "lab": "HW-001",
+  "observed_at_local": "2026-08-19T11:21:00+02:00",
+  "evidence_source": "user-reported host loopback output",
+  "host": {
+    "os": "Windows",
+    "working_directory": "F:\\dev\\pollicino",
+    "tx_port_at_run": "COM4",
+    "rx_port_at_run": "COM3",
+    "note": "COM port numbers are transient host assignments, not device identities."
+  },
+  "command": "py hardware/lilygo-lora32-v1.6.1/host/bridge.py loopback --tx-port COM4 --rx-port COM3",
+  "radio_profile_reported_by_both_endpoints": {
+    "board": "lilygo-lora32-v1.6.1",
+    "driver": "sx1276",
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10,
+    "max_tx_bytes": 240
+  },
+  "results": {
+    "success": true,
+    "pnd1": {
+      "bytes": 42,
+      "exact": true,
+      "rssi_dbm": -37.0,
+      "snr_db": 9.5
+    },
+    "pnf1": {
+      "bytes": 60,
+      "exact": true,
+      "rssi_dbm": -36.0,
+      "snr_db": 9.8
+    }
+  },
+  "claims_supported": {
+    "physical_lora_packet_transport_b_to_a": true,
+    "pnd1_byte_exact_over_physical_lora": true,
+    "pnf1_byte_exact_over_physical_lora": true,
+    "receiver_rssi_snr_observed": true,
+    "both_endpoints_initialized_with_hw001_radio_driver": true
+  },
+  "claims_not_yet_supported": {
+    "range_characterization": true,
+    "packet_loss_curve": true,
+    "airtime_calibration": true,
+    "distance_known": true,
+    "regulatory_compliance_for_general_deployment": true
+  },
+  "experimental_notes": {
+    "distance_m": null,
+    "environment": "same bench arrangement as the immediately preceding COM3-to-COM4 run; exact geometry not recorded",
+    "antenna_state": "not encoded in host output; test was run after explicit instruction to attach antennas before transmission",
+    "interpretation": "Reverse-direction PollicinoNet LoRa proof. Together with the preceding COM3-to-COM4 result, this supports bidirectional HW-001 PASS."
+  }
+}

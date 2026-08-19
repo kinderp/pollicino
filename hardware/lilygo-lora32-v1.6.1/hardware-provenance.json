@@ -8,7 +8,8 @@
     "physical_identity_confirmed": false,
     "physical_board_identity_confirmed": true,
     "physical_radio_silicon_confirmed": false,
-    "note": "The first physical unit has been visually identified as the expected T3 V1.6.1 / LILYGO LORA32 868/915 MHz family. The RF shield does not expose the silicon part number, so SX1276 remains a vendor-mapping inference until firmware initialization confirms the radio."
+    "radio_driver_initialization_validated_on_both_physical_units": true,
+    "note": "Board 1 was visually identified as T3 V1.6.1 / LILYGO LORA32 868/915 MHz. Both physical units successfully initialized and exchanged packets using the HW-001 SX1276 driver/profile. The RF shields do not expose the silicon part number, so exact silicon identity is not promoted beyond driver-compatible physical validation."
   },
   "physical_observation": {
     "observed_at": "2026-08-19T10:31:00+02:00",
@@ -24,9 +25,8 @@
     "battery_lead_present": true,
     "header_pins_present": true,
     "ready_for_firmware_flash": true,
-    "ready_for_rf_transmit": false,
-    "rf_transmit_blocker": "Attach the supplied antenna before any transmission.",
-    "second_board_physically_verified": false
+    "rf_transmission_subsequently_completed": true,
+    "second_board_physically_verified_by_photo": false
   },
   "vendor_hardware_reference": {
     "repository": "Xinyuan-LilyGO/LilyGo-LoRa-Series",
@@ -77,17 +77,44 @@
     "preamble_symbols": 8,
     "host_max_payload_bytes": 240
   },
+  "physical_validation": {
+    "completed_at_local": "2026-08-19T11:21:00+02:00",
+    "status": "PASS",
+    "direction_a_to_b_record": "physical-validation/2026-08-19-com3-to-com4.json",
+    "direction_b_to_a_record": "physical-validation/2026-08-19-com4-to-com3.json",
+    "summary_record": "physical-validation/2026-08-19-bidirectional-summary.json",
+    "a_to_b": {
+      "pnd1_exact": true,
+      "pnd1_rssi_dbm": -40.0,
+      "pnd1_snr_db": 9.8,
+      "pnf1_exact": true,
+      "pnf1_rssi_dbm": -40.0,
+      "pnf1_snr_db": 9.5
+    },
+    "b_to_a": {
+      "pnd1_exact": true,
+      "pnd1_rssi_dbm": -37.0,
+      "pnd1_snr_db": 9.5,
+      "pnf1_exact": true,
+      "pnf1_rssi_dbm": -36.0,
+      "pnf1_snr_db": 9.8
+    }
+  },
   "validation_state": {
     "software_build_validated": true,
     "first_board_visual_identity_validated": true,
     "second_board_visual_identity_validated": false,
-    "radio_initialization_on_physical_board_validated": false,
-    "physical_pnd1_transport_validated": false,
-    "physical_pnf1_transport_validated": false,
-    "physical_radio_validation": false
+    "radio_initialization_on_both_physical_boards_validated": true,
+    "physical_pnd1_transport_validated": true,
+    "physical_pnf1_transport_validated": true,
+    "bidirectional_transport_validated": true,
+    "physical_radio_validation": true,
+    "range_characterized": false,
+    "packet_loss_curve_characterized": false,
+    "airtime_model_calibrated": false
   },
   "regulatory_boundary": {
     "compliance_claim": false,
-    "note": "Bench RF settings are adapter test settings. Outdoor, unattended, high-duty-cycle, or production use must be checked against current Italian and European SRD requirements before operation."
+    "note": "HW-001 is a short bench proof at the frozen adapter settings. Outdoor, unattended, high-duty-cycle, or production use must be checked against current Italian and European SRD requirements before operation."
   }
 }
