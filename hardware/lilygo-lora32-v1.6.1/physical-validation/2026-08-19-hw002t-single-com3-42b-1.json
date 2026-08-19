@@ -1,0 +1,55 @@
+{
+  "initiator_info": "INFO board=lilygo-lora32-v1.6.1 chip=sx1276 freq_mhz=868.100 bw_khz=125.0 sf=7 cr=4/5 power_dbm=10 max_tx=240 lab=hw-002t measurement_ping=1 timing_trace=1 timing_trace_version=1",
+  "initiator_port": "COM3",
+  "responder_info": "INFO board=lilygo-lora32-v1.6.1 chip=sx1276 freq_mhz=868.100 bw_khz=125.0 sf=7 cr=4/5 power_dbm=10 max_tx=240 lab=hw-002t measurement_ping=1 timing_trace=1 timing_trace_version=1",
+  "responder_port": "COM4",
+  "sample": {
+    "derived_timing": {
+      "initiator_post_tx_to_rx_complete_us": 92744,
+      "known_local_intervals_us": 182713,
+      "rtt_residual_note": "Residual after subtracting initiator TX blocking, responder RX-IRQ-to-TX-start, and responder TX blocking. It combines uninstrumented radio/driver boundaries, clock tolerance and propagation; it is not a one-way propagation-delay estimate.",
+      "rtt_residual_us": -4
+    },
+    "measurement": {
+      "bytes": 42,
+      "local_rssi_dbm": -41.0,
+      "local_snr_db": 9.5,
+      "remote_rssi_dbm": -41.0,
+      "remote_snr_db": 10.0,
+      "rtt_us": 182709,
+      "sequence": 1,
+      "success": true,
+      "toa_us": 88000,
+      "tx_block_us": 89965
+    },
+    "responder_serial_tail": [
+      "H2RESP seq=1 bytes=42 rssi_dbm=-41.0 snr_db=10.00 toa_us=88000 state=0 timing_v=1 irq_to_handle_us=734 handle_to_read_done_us=864 read_done_to_tx_start_us=689 irq_to_tx_start_us=2287 tx_block_us=90461 irq_to_tx_done_us=92748"
+    ],
+    "responder_trace": {
+      "bytes": 42,
+      "handle_to_read_done_us": 864,
+      "irq_to_handle_us": 734,
+      "irq_to_tx_done_us": 92748,
+      "irq_to_tx_start_us": 2287,
+      "read_done_to_tx_start_us": 689,
+      "rssi_dbm": -41.0,
+      "sequence": 1,
+      "snr_db": 10.0,
+      "state": 0,
+      "timing_version": 1,
+      "toa_us": 88000,
+      "tx_block_us": 90461
+    },
+    "responder_trace_matched": true
+  },
+  "schema": "pollicino-hw002t-single-v1",
+  "timing_semantics": {
+    "clock_note": "Initiator and responder use independent ESP32 clocks. Only durations measured within one board are directly timestamped; no absolute cross-board clock synchronization is assumed.",
+    "handle_to_read_done_us": "Responder-local time from handler entry through packet-length handling and RadioLib readData() completion.",
+    "irq_to_handle_us": "Responder-local time from SX1276 RX-done DIO0 callback timestamp to entry of handleReceivedPacket(). This includes firmware loop/scheduling latency.",
+    "read_done_to_tx_start_us": "Responder-local time from readData() completion through RSSI/SNR reads, H2 validation, PONG construction and getTimeOnAir(), up to the responder TX call.",
+    "rtt_residual_us": "Cross-node residual after subtracting measured local intervals. It is diagnostic only and must not be interpreted as propagation delay.",
+    "tx_block_us": "Responder-local blocking duration of transmitWithoutRxIsr(), including standby/driver work and the physical PONG transmission.",
+    "wire_note": "HW-002T does not change the H2 radio frame layout or HW2_VERSION=1. Timing data travels only over the responder USB serial log."
+  }
+}
