@@ -38,7 +38,7 @@ This strongly localizes the structured ~1 ms RTT modulation to responder schedul
 
 ## Next causal experiment
 
-Keep PHY, H2 wire format, 42-byte payload, timing instrumentation, board placement and pacing fixed, and change only the responder-loop 1 ms sleep policy. Compare the existing `delay(1)` baseline against a no-1-ms-sleep/yield-only variant.
+Keep PHY, H2 wire format, 42-byte payload, timing instrumentation, board placement and pacing fixed, and change only the responder-loop 1 ms sleep policy. Compare the existing `delay(1)` baseline against a no-1-ms-sleep/yield-only variant. A material collapse of `irq_to_handle_us` range and RTT range would support the causal hypothesis; persistence of the pattern would refute or weaken it.
 
 ## Scientific boundary
 
