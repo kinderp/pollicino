@@ -31,7 +31,8 @@
   "follow_up": {
     "com3_initiator_com4_responder_series_completed": true,
     "com4_initiator_com3_responder_series_completed": true,
-    "bidirectional_summary": "2026-08-19-hw002t-bidirectional-timing-summary.json"
+    "bidirectional_summary": "2026-08-19-hw002t-bidirectional-timing-summary.json",
+    "next_experiment": "controlled loop-delay A/B"
   },
   "scientific_boundary": "The residual is cross-clock diagnostic only, not propagation delay. The first trace is a checkpoint; causal claims rely on the later bidirectional timing series and still require a controlled loop-delay A/B."
 }
