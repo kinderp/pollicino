@@ -12,8 +12,9 @@ static constexpr int RADIO_RST_PIN = 23;
 static constexpr int RADIO_DIO1_PIN = 33;
 static constexpr int BOARD_LED = 25;
 
-// HW-001 conservative bench profile. These are adapter settings, not
-// PollicinoNet protocol constants.
+// Frozen bench profile. These are adapter settings, not PollicinoNet protocol
+// constants. HW-002 keeps the HW-001 PHY unchanged so measurements are
+// directly comparable with the first physical validation.
 static constexpr float RADIO_FREQUENCY_MHZ = 868.1f;
 static constexpr float RADIO_BANDWIDTH_KHZ = 125.0f;
 static constexpr uint8_t RADIO_SPREADING_FACTOR = 7;
@@ -22,11 +23,32 @@ static constexpr uint8_t RADIO_SYNC_WORD = 0x12; // private LoRa sync word
 static constexpr int8_t RADIO_POWER_DBM = 10;
 static constexpr uint16_t RADIO_PREAMBLE_SYMBOLS = 8;
 
-// SX1276 can carry larger packets, but HW-001 intentionally keeps a margin.
-// PN-001 descriptors and PN-002's frozen 64-byte PNF1 frames fit comfortably.
 static constexpr size_t MAX_TX_PAYLOAD = 240;
 static constexpr size_t MAX_RX_PAYLOAD = 255;
 static constexpr size_t SERIAL_LINE_BYTES = 512;
+
+// HW-002 measurement frames are adapter-local instrumentation, not a
+// PollicinoNet core wire format. PING and PONG have exactly the same radio
+// length so both directions consume the same nominal time-on-air.
+static constexpr uint8_t HW2_MAGIC_0 = 'H';
+static constexpr uint8_t HW2_MAGIC_1 = '2';
+static constexpr uint8_t HW2_VERSION = 1;
+static constexpr uint8_t HW2_TYPE_PING = 1;
+static constexpr uint8_t HW2_TYPE_PONG = 2;
+static constexpr size_t HW2_HEADER_BYTES = 10;
+static constexpr size_t HW2_MIN_FRAME_BYTES = 16;
+static constexpr uint32_t HW2_MIN_TIMEOUT_MS = 100;
+static constexpr uint32_t HW2_MAX_TIMEOUT_MS = 15000;
+
+// Measurement frame layout (little endian where multi-byte):
+//   0..1  magic "H2"
+//   2     version
+//   3     type: 1=PING, 2=PONG
+//   4..5  sequence
+//   6..7  CRC16-CCITT of bytes 10..N-1
+//   8     PONG: receiver RSSI encoded as round(dBm)+200; PING: 0
+//   9     PONG: receiver SNR in quarter-dB signed units; PING: 0
+//   10..N deterministic probe bytes echoed unchanged by the PONG
 
 SX1276 radio = new Module(
     RADIO_CS_PIN,
@@ -99,7 +121,8 @@ void printInfo() {
     Serial.print(F(" power_dbm="));
     Serial.print(RADIO_POWER_DBM);
     Serial.print(F(" max_tx="));
-    Serial.println(MAX_TX_PAYLOAD);
+    Serial.print(MAX_TX_PAYLOAD);
+    Serial.println(F(" lab=hw-002 measurement_ping=1"));
 }
 
 bool resumeReceive() {
@@ -112,6 +135,272 @@ bool resumeReceive() {
     return true;
 }
 
+int16_t transmitWithoutRxIsr(const uint8_t *payload, size_t length) {
+    packetReceived = false;
+    radio.clearPacketReceivedAction();
+    radio.standby();
+    const int16_t state = radio.transmit(payload, length);
+    radio.setPacketReceivedAction(onPacketReceived);
+    return state;
+}
+
+uint16_t readU16(const uint8_t *data) {
+    return static_cast<uint16_t>(data[0]) |
+           (static_cast<uint16_t>(data[1]) << 8);
+}
+
+void writeU16(uint8_t *data, uint16_t value) {
+    data[0] = static_cast<uint8_t>(value & 0xFF);
+    data[1] = static_cast<uint8_t>((value >> 8) & 0xFF);
+}
+
+uint16_t crc16Ccitt(const uint8_t *data, size_t length) {
+    uint16_t crc = 0xFFFF;
+    for (size_t index = 0; index < length; ++index) {
+        crc ^= static_cast<uint16_t>(data[index]) << 8;
+        for (uint8_t bit = 0; bit < 8; ++bit) {
+            crc = (crc & 0x8000)
+                ? static_cast<uint16_t>((crc << 1) ^ 0x1021)
+                : static_cast<uint16_t>(crc << 1);
+        }
+    }
+    return crc;
+}
+
+uint8_t measurementPatternByte(uint16_t sequence, size_t index) {
+    const uint32_t mixed = static_cast<uint32_t>(sequence) * 131u +
+                           static_cast<uint32_t>(index) * 17u + 0x5Au;
+    return static_cast<uint8_t>(mixed & 0xFFu);
+}
+
+void buildMeasurementPing(uint8_t *frame, size_t length, uint16_t sequence) {
+    memset(frame, 0, length);
+    frame[0] = HW2_MAGIC_0;
+    frame[1] = HW2_MAGIC_1;
+    frame[2] = HW2_VERSION;
+    frame[3] = HW2_TYPE_PING;
+    writeU16(frame + 4, sequence);
+    frame[8] = 0;
+    frame[9] = 0;
+
+    for (size_t index = HW2_HEADER_BYTES; index < length; ++index) {
+        frame[index] = measurementPatternByte(sequence, index);
+    }
+    writeU16(frame + 6, crc16Ccitt(frame + HW2_HEADER_BYTES, length - HW2_HEADER_BYTES));
+}
+
+bool isMeasurementFrame(const uint8_t *frame, size_t length, uint8_t expectedType) {
+    if (length < HW2_MIN_FRAME_BYTES || length > MAX_TX_PAYLOAD) {
+        return false;
+    }
+    if (frame[0] != HW2_MAGIC_0 || frame[1] != HW2_MAGIC_1 ||
+        frame[2] != HW2_VERSION || frame[3] != expectedType) {
+        return false;
+    }
+    const uint16_t expected = readU16(frame + 6);
+    const uint16_t actual = crc16Ccitt(frame + HW2_HEADER_BYTES, length - HW2_HEADER_BYTES);
+    return expected == actual;
+}
+
+uint8_t encodeRssi(float rssiDbm) {
+    int encoded = static_cast<int>(roundf(rssiDbm)) + 200;
+    if (encoded < 0) {
+        encoded = 0;
+    } else if (encoded > 255) {
+        encoded = 255;
+    }
+    return static_cast<uint8_t>(encoded);
+}
+
+float decodeRssi(uint8_t encoded) {
+    return static_cast<float>(static_cast<int>(encoded) - 200);
+}
+
+uint8_t encodeSnr(float snrDb) {
+    int encoded = static_cast<int>(roundf(snrDb * 4.0f));
+    if (encoded < -128) {
+        encoded = -128;
+    } else if (encoded > 127) {
+        encoded = 127;
+    }
+    return static_cast<uint8_t>(static_cast<int8_t>(encoded));
+}
+
+float decodeSnr(uint8_t encoded) {
+    const int8_t signedValue = static_cast<int8_t>(encoded);
+    return static_cast<float>(signedValue) / 4.0f;
+}
+
+void printMeasurementFailure(
+    uint16_t sequence,
+    size_t frameBytes,
+    const char *error,
+    uint32_t rttUs,
+    uint32_t txBlockUs,
+    uint32_t toaUs,
+    int16_t state
+) {
+    Serial.print(F("MRESULT seq="));
+    Serial.print(sequence);
+    Serial.print(F(" bytes="));
+    Serial.print(frameBytes);
+    Serial.print(F(" success=0 error="));
+    Serial.print(error);
+    Serial.print(F(" rtt_us="));
+    Serial.print(rttUs);
+    Serial.print(F(" tx_block_us="));
+    Serial.print(txBlockUs);
+    Serial.print(F(" toa_us="));
+    Serial.print(toaUs);
+    Serial.print(F(" state="));
+    Serial.println(state);
+}
+
+void printMeasurementSuccess(
+    uint16_t sequence,
+    size_t frameBytes,
+    uint32_t rttUs,
+    uint32_t txBlockUs,
+    uint32_t toaUs,
+    float remoteRssi,
+    float remoteSnr,
+    float localRssi,
+    float localSnr
+) {
+    Serial.print(F("MRESULT seq="));
+    Serial.print(sequence);
+    Serial.print(F(" bytes="));
+    Serial.print(frameBytes);
+    Serial.print(F(" success=1 rtt_us="));
+    Serial.print(rttUs);
+    Serial.print(F(" tx_block_us="));
+    Serial.print(txBlockUs);
+    Serial.print(F(" toa_us="));
+    Serial.print(toaUs);
+    Serial.print(F(" remote_rssi_dbm="));
+    Serial.print(remoteRssi, 1);
+    Serial.print(F(" remote_snr_db="));
+    Serial.print(remoteSnr, 2);
+    Serial.print(F(" local_rssi_dbm="));
+    Serial.print(localRssi, 1);
+    Serial.print(F(" local_snr_db="));
+    Serial.println(localSnr, 2);
+}
+
+void performMeasurement(uint16_t sequence, size_t frameBytes, uint32_t timeoutMs) {
+    uint8_t ping[MAX_TX_PAYLOAD];
+    uint8_t pong[MAX_RX_PAYLOAD];
+    memset(pong, 0, sizeof(pong));
+    buildMeasurementPing(ping, frameBytes, sequence);
+
+    const uint32_t expectedToaUs = static_cast<uint32_t>(radio.getTimeOnAir(frameBytes));
+
+    packetReceived = false;
+    radio.clearPacketReceivedAction();
+    radio.standby();
+
+    const uint32_t startedUs = micros();
+    const int16_t txState = radio.transmit(ping, frameBytes);
+    const uint32_t txDoneUs = micros();
+    const uint32_t txBlockUs = txDoneUs - startedUs;
+
+    if (txState != RADIOLIB_ERR_NONE) {
+        radio.setPacketReceivedAction(onPacketReceived);
+        resumeReceive();
+        printMeasurementFailure(
+            sequence, frameBytes, "tx", txBlockUs, txBlockUs,
+            expectedToaUs, txState
+        );
+        return;
+    }
+
+    // Keep DIO0 detached from our asynchronous ISR while RadioLib performs a
+    // blocking receive. This RTT therefore measures the radio transaction and
+    // responder processing, not a host USB/Python round trip.
+    const int16_t rxState = radio.receive(pong, 0, timeoutMs);
+    const uint32_t completedUs = micros();
+    const uint32_t rttUs = completedUs - startedUs;
+
+    size_t receivedLength = 0;
+    float localRssi = 0.0f;
+    float localSnr = 0.0f;
+    if (rxState == RADIOLIB_ERR_NONE) {
+        receivedLength = radio.getPacketLength();
+        localRssi = radio.getRSSI();
+        localSnr = radio.getSNR();
+    }
+
+    radio.setPacketReceivedAction(onPacketReceived);
+    resumeReceive();
+
+    if (rxState == RADIOLIB_ERR_RX_TIMEOUT) {
+        printMeasurementFailure(
+            sequence, frameBytes, "timeout", rttUs, txBlockUs,
+            expectedToaUs, rxState
+        );
+        return;
+    }
+    if (rxState != RADIOLIB_ERR_NONE) {
+        printMeasurementFailure(
+            sequence, frameBytes, "rx", rttUs, txBlockUs,
+            expectedToaUs, rxState
+        );
+        return;
+    }
+    if (receivedLength != frameBytes ||
+        !isMeasurementFrame(pong, receivedLength, HW2_TYPE_PONG) ||
+        readU16(pong + 4) != sequence) {
+        printMeasurementFailure(
+            sequence, frameBytes, "bad-pong", rttUs, txBlockUs,
+            expectedToaUs, 0
+        );
+        return;
+    }
+
+    const float remoteRssi = decodeRssi(pong[8]);
+    const float remoteSnr = decodeSnr(pong[9]);
+    digitalWrite(BOARD_LED, !digitalRead(BOARD_LED));
+    printMeasurementSuccess(
+        sequence, frameBytes, rttUs, txBlockUs, expectedToaUs,
+        remoteRssi, remoteSnr, localRssi, localSnr
+    );
+}
+
+bool replyToMeasurementPing(
+    const uint8_t *received,
+    size_t length,
+    float observedRssi,
+    float observedSnr
+) {
+    if (!isMeasurementFrame(received, length, HW2_TYPE_PING)) {
+        return false;
+    }
+
+    uint8_t pong[MAX_TX_PAYLOAD];
+    memcpy(pong, received, length);
+    pong[3] = HW2_TYPE_PONG;
+    pong[8] = encodeRssi(observedRssi);
+    pong[9] = encodeSnr(observedSnr);
+
+    const uint16_t sequence = readU16(received + 4);
+    const uint32_t expectedToaUs = static_cast<uint32_t>(radio.getTimeOnAir(length));
+    const int16_t state = transmitWithoutRxIsr(pong, length);
+
+    Serial.print(F("H2RESP seq="));
+    Serial.print(sequence);
+    Serial.print(F(" bytes="));
+    Serial.print(length);
+    Serial.print(F(" rssi_dbm="));
+    Serial.print(observedRssi, 1);
+    Serial.print(F(" snr_db="));
+    Serial.print(observedSnr, 2);
+    Serial.print(F(" toa_us="));
+    Serial.print(expectedToaUs);
+    Serial.print(F(" state="));
+    Serial.println(state);
+    return true;
+}
+
 void processCommand(char *line) {
     if (strcmp(line, "PING") == 0) {
         Serial.println(F("PONG"));
@@ -121,6 +410,52 @@ void processCommand(char *line) {
         printInfo();
         return;
     }
+
+    if (strncmp(line, "TOA ", 4) == 0) {
+        unsigned long bytesValue = 0;
+        char extra = '\0';
+        if (sscanf(line + 4, "%lu %c", &bytesValue, &extra) != 1 ||
+            bytesValue < 1 || bytesValue > MAX_TX_PAYLOAD) {
+            Serial.println(F("ERR invalid-toa-length"));
+            return;
+        }
+        const uint32_t toaUs = static_cast<uint32_t>(
+            radio.getTimeOnAir(static_cast<size_t>(bytesValue))
+        );
+        Serial.print(F("TOA bytes="));
+        Serial.print(bytesValue);
+        Serial.print(F(" us="));
+        Serial.println(toaUs);
+        return;
+    }
+
+    if (strncmp(line, "MPING ", 6) == 0) {
+        unsigned long sequenceValue = 0;
+        unsigned long bytesValue = 0;
+        unsigned long timeoutValue = 0;
+        char extra = '\0';
+        if (sscanf(
+                line + 6,
+                "%lu %lu %lu %c",
+                &sequenceValue,
+                &bytesValue,
+                &timeoutValue,
+                &extra
+            ) != 3 ||
+            sequenceValue > 65535UL ||
+            bytesValue < HW2_MIN_FRAME_BYTES || bytesValue > MAX_TX_PAYLOAD ||
+            timeoutValue < HW2_MIN_TIMEOUT_MS || timeoutValue > HW2_MAX_TIMEOUT_MS) {
+            Serial.println(F("ERR invalid-mping"));
+            return;
+        }
+        performMeasurement(
+            static_cast<uint16_t>(sequenceValue),
+            static_cast<size_t>(bytesValue),
+            static_cast<uint32_t>(timeoutValue)
+        );
+        return;
+    }
+
     if (strncmp(line, "TX ", 3) != 0) {
         Serial.println(F("ERR unknown-command"));
         return;
@@ -133,15 +468,7 @@ void processCommand(char *line) {
         return;
     }
 
-    // DIO0 is RxDone while listening and TxDone while transmitting. Detach the
-    // receive ISR around blocking transmit so TxDone can never be mistaken for
-    // an incoming packet. RadioLib exposes this action explicitly on SX127x.
-    packetReceived = false;
-    radio.clearPacketReceivedAction();
-    radio.standby();
-    const int16_t state = radio.transmit(payload, payloadLength);
-    radio.setPacketReceivedAction(onPacketReceived);
-
+    const int16_t state = transmitWithoutRxIsr(payload, payloadLength);
     if (state == RADIOLIB_ERR_NONE) {
         digitalWrite(BOARD_LED, !digitalRead(BOARD_LED));
         Serial.print(F("TXOK "));
@@ -174,8 +501,6 @@ void handleSerial() {
             continue;
         }
 
-        // Once an overlong line is detected, discard the entire remainder up
-        // to newline. Never allow a tail fragment to become a fresh command.
         if (serialDiscarding) {
             continue;
         }
@@ -206,13 +531,24 @@ void handleReceivedPacket() {
 
     const int16_t state = radio.readData(payload, length);
     if (state == RADIOLIB_ERR_NONE) {
+        const float observedRssi = radio.getRSSI();
+        const float observedSnr = radio.getSNR();
+
+        // HW-002 PING is answered autonomously on the radio node. This keeps
+        // RTT independent from USB, Python scheduling and the host OS.
+        if (replyToMeasurementPing(payload, length, observedRssi, observedSnr)) {
+            digitalWrite(BOARD_LED, !digitalRead(BOARD_LED));
+            resumeReceive();
+            return;
+        }
+
         digitalWrite(BOARD_LED, !digitalRead(BOARD_LED));
         Serial.print(F("RX "));
         Serial.print(length);
         Serial.print(' ');
-        Serial.print(radio.getRSSI(), 1);
+        Serial.print(observedRssi, 1);
         Serial.print(' ');
-        Serial.print(radio.getSNR(), 1);
+        Serial.print(observedSnr, 1);
         Serial.print(' ');
         printHex(payload, length);
         Serial.println();
@@ -260,7 +596,7 @@ void setup() {
         }
     }
 
-    Serial.println(F("READY hw-001"));
+    Serial.println(F("READY hw-002"));
     printInfo();
 }
 
