@@ -1,0 +1,67 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-reliability-summary-v1",
+  "evidence_source": "user-reported hw002.py benchmark output",
+  "run": {
+    "initiator_port": "COM4",
+    "environment": "same-bench-indoor-reliability",
+    "distance_m": null,
+    "frame_bytes": 42,
+    "attempts": 20,
+    "successes": 20,
+    "failures": 0,
+    "elapsed_s": 167.40599999998813,
+    "planner_estimated_minimum_wall_s": 167.376,
+    "tx_occupancy_cap_percent": 1.0,
+    "toa_us_per_frame": 88000,
+    "planned_per_node_tx_airtime_us": 1760000,
+    "confirmed_two_node_tx_airtime_us": 3520000,
+    "confirmed_two_node_radio_bytes": 1680
+  },
+  "measurement": {
+    "rtt_us": {
+      "min": 181067,
+      "mean": 181741.7,
+      "p50": 181783.5,
+      "p95": 182021,
+      "max": 182049
+    },
+    "tx_block_us": {
+      "min": 89707,
+      "mean": 89718.05,
+      "p50": 89713.0,
+      "p95": 89720,
+      "max": 89812
+    },
+    "responder_observed_ping": {
+      "direction": "COM4 -> COM3",
+      "rssi_mean_dbm": -39.25,
+      "snr_mean_db": 9.8
+    },
+    "initiator_observed_pong": {
+      "direction": "COM3 -> COM4",
+      "rssi_mean_dbm": -38.35,
+      "snr_mean_db": 9.85
+    }
+  },
+  "targeted_crc_followup": {
+    "previous_matrix_observation": "One 42-byte COM4-initiator transaction had state=-7, identified from pinned RadioLib 7.6.0 as RADIOLIB_ERR_CRC_MISMATCH.",
+    "repeat_result": "No failure occurred in this 20-attempt repeat.",
+    "sequence_8_repeat": "Sequence 8 succeeded in this run; the earlier failure is therefore not reproduced as a deterministic sequence-8 failure.",
+    "interpretation": "The prior CRC mismatch remains a real observed event but is not reproduced by this small same-bench targeted repeat. Do not infer a true zero error probability from 20/20 successes."
+  },
+  "timing_observation": {
+    "description": "RTT values show a structured drift through much of the run: after the first sample, successful RTT generally rises from about 181.598 ms toward 182.049 ms through sequence 18, then sequences 19-20 return to about 181.067-181.104 ms.",
+    "status": "candidate instrumentation/radio timing phenomenon; no causal attribution",
+    "next_instrumentation": "After mirrored reliability collection, consider additional firmware timestamps around responder RX completion, turnaround, PONG TX start/end and initiator RX completion to localize the sub-millisecond phase behavior."
+  },
+  "claims_not_supported": {
+    "true_packet_loss_probability_zero": true,
+    "crc_failure_eliminated": true,
+    "range_characterization": true,
+    "distance_dependence": true,
+    "nlos_characterization": true,
+    "cause_of_rtt_structure_identified": true,
+    "general_regulatory_compliance": true
+  }
+}
