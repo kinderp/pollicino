@@ -1,6 +1,7 @@
 {
   "lab": "HW-002T",
   "schema": "pollicino-hw002t-bidirectional-timing-summary-v1",
+  "evidence_source": "user-reported hw002_timing.py benchmark outputs in both directions",
   "scope": "same-bench 42-byte timing series with fixed PHY and 1% experimental pacing",
   "runs": {
     "com3_initiator_com4_responder": {
