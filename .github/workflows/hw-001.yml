@@ -1,0 +1,58 @@
+name: HW-001 LILYGO LoRa32 bridge
+
+on:
+  push:
+    branches:
+      - agent/hw-001-lilygo-lora32-bridge
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  hw001:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Pollicino scientific dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch==2.13.0+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e '.[test,research]' zstandard
+
+      - name: Run root/scientific suite
+        run: pytest -q tests
+
+      - name: Run host protocol self-test
+        run: |
+          mkdir -p hardware/lilygo-lora32-v1.6.1/output
+          python hardware/lilygo-lora32-v1.6.1/host/bridge.py selftest | tee hardware/lilygo-lora32-v1.6.1/output/host-selftest.json
+
+      - name: Install frozen PlatformIO
+        run: python -m pip install platformio==6.1.19
+
+      - name: Compile LILYGO LoRa32 V1.6.1 firmware
+        run: pio run -d hardware/lilygo-lora32-v1.6.1
+
+      - name: Collect firmware artifacts
+        run: |
+          cp hardware/lilygo-lora32-v1.6.1/.pio/build/lilygo_lora32_v161_sx1276/firmware.bin hardware/lilygo-lora32-v1.6.1/output/firmware.bin
+          cp hardware/lilygo-lora32-v1.6.1/.pio/build/lilygo_lora32_v161_sx1276/firmware.elf hardware/lilygo-lora32-v1.6.1/output/firmware.elf
+          sha256sum hardware/lilygo-lora32-v1.6.1/output/firmware.bin hardware/lilygo-lora32-v1.6.1/output/firmware.elf > hardware/lilygo-lora32-v1.6.1/output/SHA256SUMS
+
+      - name: Upload HW-001 build
+        uses: actions/upload-artifact@v4
+        with:
+          name: hw-001-lilygo-build
+          path: hardware/lilygo-lora32-v1.6.1/output/
+          if-no-files-found: error
