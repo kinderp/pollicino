@@ -39,6 +39,7 @@ static constexpr size_t HW2_HEADER_BYTES = 10;
 static constexpr size_t HW2_MIN_FRAME_BYTES = 16;
 static constexpr uint32_t HW2_MIN_TIMEOUT_MS = 100;
 static constexpr uint32_t HW2_MAX_TIMEOUT_MS = 15000;
+static constexpr uint8_t HW2_TIMING_TRACE_VERSION = 1;
 
 // Measurement frame layout (little endian where multi-byte):
 //   0..1  magic "H2"
@@ -49,6 +50,9 @@ static constexpr uint32_t HW2_MAX_TIMEOUT_MS = 15000;
 //   8     PONG: receiver RSSI encoded as round(dBm)+200; PING: 0
 //   9     PONG: receiver SNR in quarter-dB signed units; PING: 0
 //   10..N deterministic probe bytes echoed unchanged by the PONG
+//
+// HW-002T deliberately leaves this radio layout unchanged. Timing detail is
+// emitted only on the responder USB serial H2RESP line.
 
 SX1276 radio = new Module(
     RADIO_CS_PIN,
@@ -58,11 +62,16 @@ SX1276 radio = new Module(
 );
 
 volatile bool packetReceived = false;
+volatile uint32_t packetReceivedIrqUs = 0;
 char serialLine[SERIAL_LINE_BYTES];
 size_t serialLineLength = 0;
 bool serialDiscarding = false;
 
 void onPacketReceived() {
+    // Capture RX-done as close to the DIO0 interrupt as possible. Unsigned
+    // subtraction of micros() values remains valid across the 32-bit wrap for
+    // the short intervals measured by HW-002T.
+    packetReceivedIrqUs = micros();
     packetReceived = true;
 }
 
@@ -122,7 +131,8 @@ void printInfo() {
     Serial.print(RADIO_POWER_DBM);
     Serial.print(F(" max_tx="));
     Serial.print(MAX_TX_PAYLOAD);
-    Serial.println(F(" lab=hw-002 measurement_ping=1"));
+    Serial.print(F(" lab=hw-002t measurement_ping=1 timing_trace=1 timing_trace_version="));
+    Serial.println(HW2_TIMING_TRACE_VERSION);
 }
 
 bool resumeReceive() {
@@ -137,6 +147,7 @@ bool resumeReceive() {
 
 int16_t transmitWithoutRxIsr(const uint8_t *payload, size_t length) {
     packetReceived = false;
+    packetReceivedIrqUs = 0;
     radio.clearPacketReceivedAction();
     radio.standby();
     const int16_t state = radio.transmit(payload, length);
@@ -296,6 +307,7 @@ void performMeasurement(uint16_t sequence, size_t frameBytes, uint32_t timeoutMs
     const uint32_t expectedToaUs = static_cast<uint32_t>(radio.getTimeOnAir(frameBytes));
 
     packetReceived = false;
+    packetReceivedIrqUs = 0;
     radio.clearPacketReceivedAction();
     radio.standby();
 
@@ -370,7 +382,10 @@ bool replyToMeasurementPing(
     const uint8_t *received,
     size_t length,
     float observedRssi,
-    float observedSnr
+    float observedSnr,
+    uint32_t rxIrqUs,
+    uint32_t handlerStartUs,
+    uint32_t readDoneUs
 ) {
     if (!isMeasurementFrame(received, length, HW2_TYPE_PING)) {
         return false;
@@ -384,7 +399,16 @@ bool replyToMeasurementPing(
 
     const uint16_t sequence = readU16(received + 4);
     const uint32_t expectedToaUs = static_cast<uint32_t>(radio.getTimeOnAir(length));
+    const uint32_t txStartUs = micros();
     const int16_t state = transmitWithoutRxIsr(pong, length);
+    const uint32_t txDoneUs = micros();
+
+    const uint32_t irqToHandleUs = handlerStartUs - rxIrqUs;
+    const uint32_t handleToReadDoneUs = readDoneUs - handlerStartUs;
+    const uint32_t readDoneToTxStartUs = txStartUs - readDoneUs;
+    const uint32_t irqToTxStartUs = txStartUs - rxIrqUs;
+    const uint32_t txBlockUs = txDoneUs - txStartUs;
+    const uint32_t irqToTxDoneUs = txDoneUs - rxIrqUs;
 
     Serial.print(F("H2RESP seq="));
     Serial.print(sequence);
@@ -397,7 +421,21 @@ bool replyToMeasurementPing(
     Serial.print(F(" toa_us="));
     Serial.print(expectedToaUs);
     Serial.print(F(" state="));
-    Serial.println(state);
+    Serial.print(state);
+    Serial.print(F(" timing_v="));
+    Serial.print(HW2_TIMING_TRACE_VERSION);
+    Serial.print(F(" irq_to_handle_us="));
+    Serial.print(irqToHandleUs);
+    Serial.print(F(" handle_to_read_done_us="));
+    Serial.print(handleToReadDoneUs);
+    Serial.print(F(" read_done_to_tx_start_us="));
+    Serial.print(readDoneToTxStartUs);
+    Serial.print(F(" irq_to_tx_start_us="));
+    Serial.print(irqToTxStartUs);
+    Serial.print(F(" tx_block_us="));
+    Serial.print(txBlockUs);
+    Serial.print(F(" irq_to_tx_done_us="));
+    Serial.println(irqToTxDoneUs);
     return true;
 }
 
@@ -518,7 +556,10 @@ void handleReceivedPacket() {
     if (!packetReceived) {
         return;
     }
+
+    const uint32_t rxIrqUs = packetReceivedIrqUs;
     packetReceived = false;
+    const uint32_t handlerStartUs = micros();
 
     const size_t length = radio.getPacketLength();
     uint8_t payload[MAX_RX_PAYLOAD];
@@ -530,13 +571,22 @@ void handleReceivedPacket() {
     }
 
     const int16_t state = radio.readData(payload, length);
+    const uint32_t readDoneUs = micros();
     if (state == RADIOLIB_ERR_NONE) {
         const float observedRssi = radio.getRSSI();
         const float observedSnr = radio.getSNR();
 
-        // HW-002 PING is answered autonomously on the radio node. This keeps
-        // RTT independent from USB, Python scheduling and the host OS.
-        if (replyToMeasurementPing(payload, length, observedRssi, observedSnr)) {
+        // HW-002 PING is answered autonomously on the radio node. HW-002T
+        // adds responder-local timing around this path without changing H2.
+        if (replyToMeasurementPing(
+                payload,
+                length,
+                observedRssi,
+                observedSnr,
+                rxIrqUs,
+                handlerStartUs,
+                readDoneUs
+            )) {
             digitalWrite(BOARD_LED, !digitalRead(BOARD_LED));
             resumeReceive();
             return;
@@ -596,7 +646,7 @@ void setup() {
         }
     }
 
-    Serial.println(F("READY hw-002"));
+    Serial.println(F("READY hw-002t"));
     printInfo();
 }
 
