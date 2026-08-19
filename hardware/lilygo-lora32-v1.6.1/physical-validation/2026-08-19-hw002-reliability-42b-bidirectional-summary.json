@@ -2,6 +2,7 @@
   "lab": "HW-002",
   "schema": "pollicino-hw002-reliability-bidirectional-v1",
   "scope": "targeted same-bench 42-byte reliability repeats after the first CRC-mismatch observation",
+  "acquisition_runner": "frozen hw002.py used unchanged for both physical repeats",
   "runs": {
     "com4_initiator": {
       "attempts": 20,
@@ -51,6 +52,10 @@
   "historical_context": {
     "prior_six_size_matrix_crc_mismatch": true,
     "note": "The immediately preceding six-size matrix contained one COM4-initiator 42-byte state=-7 CRC-mismatch event. It is intentionally kept separate from these 40 targeted repeat attempts. No CRC mismatch occurred in the targeted repeats."
+  },
+  "post_acquisition_tooling": {
+    "failure_analyzer": "hardware/lilygo-lora32-v1.6.1/host/hw002_failures.py",
+    "note": "Added only after both physical repeats were frozen; it classifies stored JSON and does not alter acquisition or H2 wire behavior."
   },
   "scientific_boundary": "39/40 successes is an observed same-bench result, not an estimate of general deployment loss probability. The timeout cannot identify whether the initiating PING, the responder PONG, or another receive-path event was responsible. The earlier CRC event remains valid evidence even though it did not recur here."
 }
