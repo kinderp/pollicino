@@ -1,0 +1,52 @@
+{
+  "lab": "HW-001",
+  "status": "software-build-validated",
+  "physical_validation": false,
+  "physical_validation_reason": "The two user-owned boards have not yet been unpacked, visually identified, flashed, or exercised over RF.",
+  "github_actions": {
+    "run_id": 32229884231,
+    "job_id": 95997246258,
+    "scientific_branch_head": "3b2497b57a4ec6acbd39747eb07cd2e03b81cc13",
+    "tests_passed": 129,
+    "tests_elapsed_seconds": 6.43
+  },
+  "host_selftest": {
+    "success": true,
+    "pnd1_bytes": 42,
+    "pnf1_bytes": 60,
+    "serial_command_bytes": 88
+  },
+  "embedded_build": {
+    "platformio": "6.1.19",
+    "platform": "espressif32@6.13.0",
+    "board": "esp32dev",
+    "framework": "arduino",
+    "arduino_esp32": "3.20017.241212+sha.dcc1105b",
+    "radiolib": "7.6.0",
+    "toolchain_xtensa_esp32": "8.4.0+2021r2-patch5",
+    "esptool": "4.11.0",
+    "ram_used_bytes": 23032,
+    "ram_available_bytes": 327680,
+    "ram_used_fraction": 0.0703,
+    "flash_program_used_bytes": 307381,
+    "flash_program_available_bytes": 1310720,
+    "flash_program_used_fraction": 0.2345
+  },
+  "firmware": {
+    "firmware_bin_bytes": 307744,
+    "firmware_bin_sha256": "b5acaeccad6bb5088fca9e5d6fc4c93affe2492444031d44672f9aa3a4ca2784",
+    "firmware_elf_bytes": 7073180,
+    "firmware_elf_sha256": "e21814b2a23dc2e161bac1a6a8e12a58be797ba1a1cbf2840070c7dcc1e817b9"
+  },
+  "artifact": {
+    "name": "hw-001-lilygo-build",
+    "artifact_id": 9356879433,
+    "archive_size_bytes": 2819505,
+    "archive_digest": "sha256:09c7f57b3f760d8163a4ea41e77d609bc2450f19fec7e9b1d7eaa3ae8c6e5b0a"
+  },
+  "supersedes": {
+    "run_id": 32229419445,
+    "artifact_id": 9356726999,
+    "reason": "Pre-merge firmware review added fail-closed serial overflow handling and detached the receive ISR around blocking SX1276 transmit; the entire suite and firmware build were rerun."
+  }
+}
