@@ -1,0 +1,42 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-matrix-summary-v1",
+  "evidence_source": "user-reported hw002.py benchmark output",
+  "run": {
+    "initiator_port": "COM3",
+    "environment": "same-bench-indoor",
+    "distance_m": null,
+    "sizes": [16, 32, 42, 60, 120, 240],
+    "count_per_size": 3,
+    "transactions": 18,
+    "successes": 18,
+    "failures": 0,
+    "elapsed_s": 234.32800000000861,
+    "planner_estimated_minimum_wall_s": 234.26,
+    "tx_occupancy_cap_percent": 1.0,
+    "planned_per_node_tx_airtime_us": 2715000,
+    "confirmed_two_node_tx_airtime_us": 5430000,
+    "two_node_radio_bytes": 3060
+  },
+  "per_size": [
+    {"frame_bytes":16,"successes":3,"attempts":3,"toa_us_per_frame":52000,"rtt_mean_us":109438,"rtt_excess_over_two_frame_toa_us":5438,"airtime_fraction_of_mean_rtt_percent":95.03097644328295,"tx_block_mean_us":53768.0,"remote_rssi_mean_dbm":-39.0,"local_rssi_mean_dbm":-39.0,"remote_snr_mean_db":10.5,"local_snr_mean_db":9.75},
+    {"frame_bytes":32,"successes":3,"attempts":3,"toa_us_per_frame":72000,"rtt_mean_us":150522,"rtt_excess_over_two_frame_toa_us":6522,"airtime_fraction_of_mean_rtt_percent":95.66686671080924,"tx_block_mean_us":74327.66666666667,"remote_rssi_mean_dbm":-39.0,"local_rssi_mean_dbm":-39.0,"remote_snr_mean_db":10.916666666666666,"local_snr_mean_db":9.666666666666666},
+    {"frame_bytes":42,"successes":3,"attempts":3,"toa_us_per_frame":88000,"rtt_mean_us":181617,"rtt_excess_over_two_frame_toa_us":5617,"airtime_fraction_of_mean_rtt_percent":96.90722784761338,"tx_block_mean_us":89742.33333333333,"remote_rssi_mean_dbm":-39.0,"local_rssi_mean_dbm":-39.333333333333336,"remote_snr_mean_db":9.416666666666666,"local_snr_mean_db":9.666666666666666},
+    {"frame_bytes":60,"successes":3,"attempts":3,"toa_us_per_frame":113000,"rtt_mean_us":233405,"rtt_excess_over_two_frame_toa_us":7405,"airtime_fraction_of_mean_rtt_percent":96.82740301193205,"tx_block_mean_us":115446.0,"remote_rssi_mean_dbm":-39.0,"local_rssi_mean_dbm":-39.0,"remote_snr_mean_db":9.75,"local_snr_mean_db":9.916666666666666},
+    {"frame_bytes":120,"successes":3,"attempts":3,"toa_us_per_frame":200000,"rtt_mean_us":408269,"rtt_excess_over_two_frame_toa_us":8269,"airtime_fraction_of_mean_rtt_percent":97.97461967477325,"tx_block_mean_us":202809.0,"remote_rssi_mean_dbm":-39.0,"local_rssi_mean_dbm":-39.0,"remote_snr_mean_db":10.0,"local_snr_mean_db":10.083333333333334},
+    {"frame_bytes":240,"successes":3,"attempts":3,"toa_us_per_frame":380000,"rtt_mean_us":769406,"rtt_excess_over_two_frame_toa_us":9406,"airtime_fraction_of_mean_rtt_percent":98.77749848584493,"tx_block_mean_us":382671.0,"remote_rssi_mean_dbm":-39.333333333333336,"local_rssi_mean_dbm":-39.333333333333336,"remote_snr_mean_db":9.666666666666666,"local_snr_mean_db":9.75}
+  ],
+  "derived": {
+    "rtt_vs_roundtrip_toa_linear_fit_slope": 1.0057497617128421,
+    "rtt_vs_roundtrip_toa_linear_fit_intercept_ms": 5.375044105514793,
+    "rtt_vs_roundtrip_toa_r_squared": 0.999993578138126,
+    "note": "Linear fit is descriptive only: six same-bench size means, not a general channel model."
+  },
+  "claims_not_supported": {
+    "true_packet_loss_probability_zero": true,
+    "range_characterization": true,
+    "distance_dependence": true,
+    "nlos_characterization": true,
+    "general_regulatory_compliance": true
+  }
+}
