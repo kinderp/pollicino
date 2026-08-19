@@ -12,6 +12,7 @@ import hw002
 
 
 TIMING_TRACE_VERSION = 1
+LOOP_DELAY_VALUES = (0, 1)
 
 
 def parse_responder_trace(line: str) -> dict[str, Any]:
@@ -69,6 +70,16 @@ def parse_responder_trace(line: str) -> dict[str, Any]:
     return trace
 
 
+def parse_loop_delay_line(line: str) -> int:
+    fields = hw002.parse_key_value_line(line, "LOOPDELAY")
+    if "ms" not in fields:
+        raise ValueError("LOOPDELAY response missing ms field")
+    value = int(fields["ms"])
+    if value not in LOOP_DELAY_VALUES:
+        raise ValueError(f"unsupported LOOPDELAY value {value}")
+    return value
+
+
 def require_timing_capability(info_line: str, role: str) -> None:
     fields = hw002.parse_key_value_line(info_line, "INFO")
     if fields.get("timing_trace") != "1":
@@ -77,6 +88,70 @@ def require_timing_capability(info_line: str, role: str) -> None:
         raise RuntimeError(
             f"{role} timing trace version is not {TIMING_TRACE_VERSION}: {info_line}"
         )
+
+
+def current_loop_delay(info_line: str) -> int | None:
+    fields = hw002.parse_key_value_line(info_line, "INFO")
+    if fields.get("loop_delay_control") != "1":
+        return None
+    value = int(fields.get("loop_delay_ms", "-1"))
+    if value not in LOOP_DELAY_VALUES:
+        raise RuntimeError(f"firmware reports unsupported loop_delay_ms={value}")
+    return value
+
+
+def require_loop_delay_control(info_line: str, role: str) -> int:
+    value = current_loop_delay(info_line)
+    if value is None:
+        raise RuntimeError(f"{role} firmware does not advertise loop_delay_control=1")
+    return value
+
+
+def set_loop_delay(port, value: int) -> int:
+    if value not in LOOP_DELAY_VALUES:
+        raise ValueError(f"loop delay must be one of {LOOP_DELAY_VALUES}")
+    hw002.write_line(port, f"LOOPDELAY {value}")
+    actual = parse_loop_delay_line(hw002.wait_prefix(port, "LOOPDELAY ", 3.0))
+    if actual != value:
+        raise RuntimeError(f"requested LOOPDELAY {value}, firmware confirmed {actual}")
+    return actual
+
+
+def apply_responder_loop_policy(
+    initiator_info: str,
+    responder_info: str,
+    responder_port,
+    requested_ms: int | None,
+) -> tuple[str, dict[str, int | None]]:
+    initiator_ms = current_loop_delay(initiator_info)
+    responder_initial_ms = current_loop_delay(responder_info)
+
+    if requested_ms is None:
+        return responder_info, {
+            "requested_ms": None,
+            "applied_ms": responder_initial_ms,
+            "responder_initial_ms": responder_initial_ms,
+            "initiator_ms": initiator_ms,
+        }
+
+    require_loop_delay_control(initiator_info, "initiator")
+    require_loop_delay_control(responder_info, "responder")
+    set_loop_delay(responder_port, requested_ms)
+    responder_info_after = hw002.query_info(responder_port)
+    responder_applied_ms = require_loop_delay_control(
+        responder_info_after, "responder"
+    )
+    if responder_applied_ms != requested_ms:
+        raise RuntimeError(
+            f"responder INFO reports loop_delay_ms={responder_applied_ms}, "
+            f"expected {requested_ms}"
+        )
+    return responder_info_after, {
+        "requested_ms": requested_ms,
+        "applied_ms": responder_applied_ms,
+        "responder_initial_ms": responder_initial_ms,
+        "initiator_ms": initiator_ms,
+    }
 
 
 def read_matching_trace(
@@ -224,6 +299,7 @@ def run_single(
     sequence: int,
     frame_bytes: int,
     timeout_ms: int,
+    responder_loop_delay_ms: int | None,
 ) -> dict[str, Any]:
     initiator, responder = open_pair(initiator_name, responder_name)
     try:
@@ -231,6 +307,12 @@ def run_single(
         responder_info = hw002.query_info(responder)
         require_timing_capability(initiator_info, "initiator")
         require_timing_capability(responder_info, "responder")
+        responder_info, loop_policy = apply_responder_loop_policy(
+            initiator_info,
+            responder_info,
+            responder,
+            responder_loop_delay_ms,
+        )
         sample = measure_with_trace(
             initiator, responder, sequence, frame_bytes, timeout_ms
         )
@@ -240,6 +322,7 @@ def run_single(
             "responder_port": responder_name,
             "initiator_info": initiator_info,
             "responder_info": responder_info,
+            "loop_policy": loop_policy,
             "sample": sample,
             "timing_semantics": timing_semantics(),
         }
@@ -259,6 +342,7 @@ def run_benchmark(
     tx_occupancy_cap_percent: float | None,
     environment: str | None,
     distance_m: float | None,
+    responder_loop_delay_ms: int | None,
 ) -> dict[str, Any]:
     initiator, responder = open_pair(initiator_name, responder_name)
     try:
@@ -266,6 +350,12 @@ def run_benchmark(
         responder_info = hw002.query_info(responder)
         require_timing_capability(initiator_info, "initiator")
         require_timing_capability(responder_info, "responder")
+        responder_info, loop_policy = apply_responder_loop_policy(
+            initiator_info,
+            responder_info,
+            responder,
+            responder_loop_delay_ms,
+        )
 
         plan = hw002.build_plan(
             initiator,
@@ -281,6 +371,7 @@ def run_benchmark(
                 "responder_port": responder_name,
                 "initiator_info": initiator_info,
                 "responder_info": responder_info,
+                "loop_policy": loop_policy,
                 "plan": plan,
                 "timing_semantics": timing_semantics(),
             }
@@ -324,6 +415,7 @@ def run_benchmark(
             "responder_port": responder_name,
             "initiator_info": initiator_info,
             "responder_info": responder_info,
+            "loop_policy": loop_policy,
             "environment": environment,
             "distance_m": distance_m,
             "timeout_ms": timeout_ms,
@@ -353,12 +445,16 @@ def timing_semantics() -> dict[str, str]:
             "validation, PONG construction and getTimeOnAir(), up to the responder TX call."
         ),
         "tx_block_us": (
-            "Responder-local blocking duration of transmitWithoutRxIsr(), including standby/" 
+            "Responder-local blocking duration of transmitWithoutRxIsr(), including standby/"
             "driver work and the physical PONG transmission."
         ),
         "rtt_residual_us": (
             "Cross-node residual after subtracting measured local intervals. It is diagnostic "
             "only and must not be interpreted as propagation delay."
+        ),
+        "loop_policy": (
+            "For controlled A/B experiments the responder loop delay may be set to 1 ms "
+            "(baseline) or 0 ms (yield-only). The initiator remains at its reset/default policy."
         ),
         "clock_note": (
             "Initiator and responder use independent ESP32 clocks. Only durations measured "
@@ -381,6 +477,11 @@ def selftest() -> dict[str, Any]:
     )
     if trace["sequence"] != 7 or trace["irq_to_tx_done_us"] != 90700:
         raise AssertionError("H2RESP timing parser failed")
+
+    if parse_loop_delay_line("LOOPDELAY ms=0") != 0:
+        raise AssertionError("LOOPDELAY parser failed for zero")
+    if parse_loop_delay_line("LOOPDELAY ms=1") != 1:
+        raise AssertionError("LOOPDELAY parser failed for one")
 
     measurement = hw002.parse_measurement_line(
         "MRESULT seq=7 bytes=42 success=1 rtt_us=182000 tx_block_us=89700 "
@@ -406,6 +507,7 @@ def selftest() -> dict[str, Any]:
     return {
         "success": True,
         "trace_parser": True,
+        "loop_delay_parser": True,
         "timing_derivation": True,
         "timing_summary": True,
     }
@@ -435,6 +537,12 @@ def main() -> int:
     measure.add_argument("--seq", type=int, default=1)
     measure.add_argument("--bytes", type=int, default=42)
     measure.add_argument("--timeout-ms", type=int, default=3000)
+    measure.add_argument(
+        "--responder-loop-delay-ms",
+        type=int,
+        choices=LOOP_DELAY_VALUES,
+        help="set responder loop policy after serial reset: 1=baseline delay, 0=yield-only",
+    )
     measure.add_argument("--output", type=Path)
 
     bench = sub.add_parser(
@@ -449,6 +557,12 @@ def main() -> int:
     bench.add_argument("--execute", action="store_true")
     bench.add_argument("--airtime-budget-ms", type=float)
     bench.add_argument("--tx-occupancy-cap-percent", type=float)
+    bench.add_argument(
+        "--responder-loop-delay-ms",
+        type=int,
+        choices=LOOP_DELAY_VALUES,
+        help="set responder loop policy after serial reset: 1=baseline delay, 0=yield-only",
+    )
     bench.add_argument("--environment")
     bench.add_argument("--distance-m", type=float)
     bench.add_argument("--output", type=Path)
@@ -473,6 +587,7 @@ def main() -> int:
             args.seq,
             args.bytes,
             args.timeout_ms,
+            args.responder_loop_delay_ms,
         )
         write_json(result, args.output)
         return 0
@@ -491,6 +606,7 @@ def main() -> int:
             args.tx_occupancy_cap_percent,
             args.environment,
             args.distance_m,
+            args.responder_loop_delay_ms,
         )
         write_json(result, args.output)
         return 0

@@ -66,6 +66,7 @@ volatile uint32_t packetReceivedIrqUs = 0;
 char serialLine[SERIAL_LINE_BYTES];
 size_t serialLineLength = 0;
 bool serialDiscarding = false;
+uint8_t loopDelayMs = 1;
 
 void onPacketReceived() {
     // Capture RX-done as close to the DIO0 interrupt as possible. Unsigned
@@ -132,7 +133,9 @@ void printInfo() {
     Serial.print(F(" max_tx="));
     Serial.print(MAX_TX_PAYLOAD);
     Serial.print(F(" lab=hw-002t measurement_ping=1 timing_trace=1 timing_trace_version="));
-    Serial.println(HW2_TIMING_TRACE_VERSION);
+    Serial.print(HW2_TIMING_TRACE_VERSION);
+    Serial.print(F(" loop_delay_control=1 loop_delay_ms="));
+    Serial.println(loopDelayMs);
 }
 
 bool resumeReceive() {
@@ -449,6 +452,20 @@ void processCommand(char *line) {
         return;
     }
 
+    if (strncmp(line, "LOOPDELAY ", 10) == 0) {
+        unsigned long delayValue = 0;
+        char extra = '\0';
+        if (sscanf(line + 10, "%lu %c", &delayValue, &extra) != 1 ||
+            delayValue > 1UL) {
+            Serial.println(F("ERR invalid-loopdelay"));
+            return;
+        }
+        loopDelayMs = static_cast<uint8_t>(delayValue);
+        Serial.print(F("LOOPDELAY ms="));
+        Serial.println(loopDelayMs);
+        return;
+    }
+
     if (strncmp(line, "TOA ", 4) == 0) {
         unsigned long bytesValue = 0;
         char extra = '\0';
@@ -653,5 +670,9 @@ void setup() {
 void loop() {
     handleReceivedPacket();
     handleSerial();
-    delay(1);
+    if (loopDelayMs > 0) {
+        delay(loopDelayMs);
+    } else {
+        yield();
+    }
 }
