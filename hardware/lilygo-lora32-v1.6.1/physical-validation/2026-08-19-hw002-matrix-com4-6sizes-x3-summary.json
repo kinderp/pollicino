@@ -1,0 +1,49 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-matrix-summary-v1",
+  "evidence_source": "user-reported hw002.py benchmark output",
+  "run": {
+    "initiator_port": "COM4",
+    "environment": "same-bench-indoor",
+    "distance_m": null,
+    "sizes": [16, 32, 42, 60, 120, 240],
+    "count_per_size": 3,
+    "transactions": 18,
+    "successes": 17,
+    "failures": 1,
+    "elapsed_s": 234.29699999999139,
+    "planner_estimated_minimum_wall_s": 234.26,
+    "tx_occupancy_cap_percent": 1.0,
+    "planned_per_node_tx_airtime_us": 2715000,
+    "confirmed_responder_tx_airtime_lower_bound_us": 2627000,
+    "confirmed_two_node_tx_airtime_lower_bound_us": 5342000,
+    "two_node_radio_bytes_lower_bound": 3018
+  },
+  "per_size": [
+    {"frame_bytes":16,"attempts":3,"successes":3,"failures":0,"toa_us_per_frame":52000,"rtt_mean_us_successes":108951.66666666667,"tx_block_mean_us":53770.333333333336,"remote_rssi_mean_dbm_successes":-41.666666666666664,"local_rssi_mean_dbm_successes":-40.333333333333336,"remote_snr_mean_db_successes":9.833333333333334,"local_snr_mean_db_successes":10.0},
+    {"frame_bytes":32,"attempts":3,"successes":3,"failures":0,"toa_us_per_frame":72000,"rtt_mean_us_successes":150809.0,"tx_block_mean_us":74327.66666666667,"remote_rssi_mean_dbm_successes":-40.333333333333336,"local_rssi_mean_dbm_successes":-39.333333333333336,"remote_snr_mean_db_successes":10.333333333333334,"local_snr_mean_db_successes":10.0},
+    {"frame_bytes":42,"attempts":3,"successes":2,"failures":1,"toa_us_per_frame":88000,"rtt_mean_us_successes":181410.5,"tx_block_mean_us":89744.33333333333,"remote_rssi_mean_dbm_successes":-41.0,"local_rssi_mean_dbm_successes":-40.0,"remote_snr_mean_db_successes":10.125,"local_snr_mean_db_successes":10.25},
+    {"frame_bytes":60,"attempts":3,"successes":3,"failures":0,"toa_us_per_frame":113000,"rtt_mean_us_successes":233401.33333333334,"tx_block_mean_us":115444.0,"remote_rssi_mean_dbm_successes":-41.333333333333336,"local_rssi_mean_dbm_successes":-40.666666666666664,"remote_snr_mean_db_successes":9.416666666666666,"local_snr_mean_db_successes":9.916666666666666},
+    {"frame_bytes":120,"attempts":3,"successes":3,"failures":0,"toa_us_per_frame":200000,"rtt_mean_us_successes":408568.3333333333,"tx_block_mean_us":202810.0,"remote_rssi_mean_dbm_successes":-40.666666666666664,"local_rssi_mean_dbm_successes":-40.0,"remote_snr_mean_db_successes":10.0,"local_snr_mean_db_successes":9.916666666666666},
+    {"frame_bytes":240,"attempts":3,"successes":3,"failures":0,"toa_us_per_frame":380000,"rtt_mean_us_successes":769616.6666666666,"tx_block_mean_us":382671.6666666667,"remote_rssi_mean_dbm_successes":-39.666666666666664,"local_rssi_mean_dbm_successes":-39.0,"remote_snr_mean_db_successes":9.583333333333334,"local_snr_mean_db_successes":9.75}
+  ],
+  "observed_failures": [
+    {
+      "sequence": 8,
+      "frame_bytes": 42,
+      "error": "rx",
+      "state": -7,
+      "rtt_us": 181337,
+      "tx_block_us": 89714,
+      "toa_us": 88000,
+      "classification": "RADIOLIB_ERR_CRC_MISMATCH (-7)"
+    }
+  ],
+  "claims_not_supported": {
+    "true_packet_loss_probability": true,
+    "range_characterization": true,
+    "distance_dependence": true,
+    "nlos_characterization": true,
+    "general_regulatory_compliance": true
+  }
+}
