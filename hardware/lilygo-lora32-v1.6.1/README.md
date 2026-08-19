@@ -2,6 +2,31 @@
 
 HW-001 is the first real-radio lab for PollicinoNet. It is intentionally an **optional hardware adapter**: `pollicino.net` remains transport-agnostic and does not import Arduino, RadioLib, PlatformIO, LoRa or this firmware.
 
+## Validation status
+
+**Software/build validation: complete. Physical RF validation: pending.**
+
+The final hardened firmware branch head `3b2497b57a4ec6acbd39747eb07cd2e03b81cc13` passed:
+
+- 129 root/scientific tests;
+- the host PND1/PNF1 self-test;
+- a clean PlatformIO compile against RadioLib 7.6.0;
+- firmware artifact generation and SHA-256 capture.
+
+Final build provenance:
+
+- GitHub Actions run: `32229884231`;
+- artifact: `9356879433` (`hw-001-lilygo-build`);
+- artifact digest: `sha256:09c7f57b3f760d8163a4ea41e77d609bc2450f19fec7e9b1d7eaa3ae8c6e5b0a`;
+- `firmware.bin`: 307744 bytes, SHA-256 `b5acaeccad6bb5088fca9e5d6fc4c93affe2492444031d44672f9aa3a4ca2784`;
+- `firmware.elf`: 7073180 bytes, SHA-256 `e21814b2a23dc2e161bac1a6a8e12a58be797ba1a1cbf2840070c7dcc1e817b9`;
+- RAM at link time: 23032 / 327680 bytes (~7.0%);
+- program flash at link time: 307381 / 1310720 bytes (~23.5%).
+
+`build-metadata.json` is the machine-readable build record. `hardware-provenance.json` records the expected board target and source provenance.
+
+**No physical radio success is claimed yet.** The two user-owned boards still need to be unpacked, visually identified, flashed and tested. The Amazon ASIN is therefore an expected hardware mapping, not a substitute for checking the actual board markings.
+
 ## Target hardware
 
 Expected board for Amazon ASIN `B09FXHSS6P`:
@@ -49,7 +74,7 @@ For the first bench test:
 - do not run a continuous transmitter;
 - review current Italian/European SRD rules before longer outdoor or unattended tests.
 
-The current CEPT SRD recommendation is ERC/REC 70-03 (5 June 2026). The RF constants in HW-001 are a conservative **lab profile**, not a declaration of regulatory compliance for every deployment.
+The RF constants in HW-001 are a conservative **lab profile**, not a declaration of regulatory compliance for every deployment.
 
 ## Frozen RF profile
 
@@ -93,6 +118,12 @@ The radio firmware does **not** parse DNA, manifests, hashes or codecs. It carri
 - DNA-derived PND1 descriptors through the optional integration;
 - future PollicinoNet payloads that fit the radio-packet budget.
 
+### Radio/serial state hardening
+
+SX1276 DIO0 is used for `RxDone` while receiving and `TxDone` while transmitting. HW-001 explicitly detaches the receive callback around blocking transmission and reinstalls it before returning to receive mode, preventing `TxDone` from being mistaken for an incoming packet.
+
+The serial parser is also fail-closed: once a command exceeds its line budget, the entire remainder of that line is discarded through newline so an overlong tail cannot become a new command.
+
 ### Serial commands
 
 Host -> board:
@@ -114,11 +145,13 @@ USB text/hex overhead is **not radio overhead** and must never be counted as Pol
 
 ## Build
 
-PlatformIO Core 6.1.19 is the frozen host build tool for CI. The embedded environment follows LILYGO's current reference platform and library generation:
+PlatformIO Core 6.1.19 is the frozen host build tool. The validated embedded environment is:
 
 - `espressif32@6.13.0`;
-- Arduino framework;
-- RadioLib `7.6.0`.
+- Arduino ESP32 `3.20017.241212+sha.dcc1105b`;
+- RadioLib `7.6.0`;
+- Xtensa toolchain `8.4.0+2021r2-patch5`;
+- esptool `4.11.0`.
 
 From the repository root:
 
@@ -126,6 +159,8 @@ From the repository root:
 python -m pip install platformio==6.1.19
 pio run -d hardware/lilygo-lora32-v1.6.1
 ```
+
+After building, compare the generated `firmware.bin` hash with `build-metadata.json` if you want an exact reproduction check.
 
 ## Flash the two boards
 
@@ -153,6 +188,13 @@ Pure host/protocol self-test, no hardware needed:
 ```bash
 python hardware/lilygo-lora32-v1.6.1/host/bridge.py selftest
 ```
+
+The validated no-hardware result is:
+
+- PND1: 42 bytes;
+- PNF1: 60 bytes;
+- USB text command: 88 bytes;
+- exact self-test: true.
 
 ### First physical test with both boards on one computer
 
@@ -185,7 +227,7 @@ The actual RSSI/SNR values are measurements, not success thresholds.
 
 ## What HW-001 does not claim
 
-HW-001 is only the first physical transport proof. It does not yet validate:
+Until the physical loopback is run, HW-001 does not even claim successful RF transport on the user's specific boards. After that first proof, further labs will still be required for:
 
 - maximum range;
 - real packet-loss curves;
@@ -198,6 +240,6 @@ HW-001 is only the first physical transport proof. It does not yet validate:
 - DNA consent on-device;
 - cryptographic radio authentication.
 
-Those belong to later hardware labs. The immediate scientific question is narrower:
+The immediate physical question remains deliberately narrow:
 
-> Can two real SX1276 boards carry unmodified PND1 and PNF1 bytes and report physical-link RSSI/SNR while keeping PollicinoNet core independent of LoRa?
+> Can the two actual SX1276 boards carry unmodified PND1 and PNF1 bytes and report physical-link RSSI/SNR while keeping PollicinoNet core independent of LoRa?
