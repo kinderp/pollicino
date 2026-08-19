@@ -56,6 +56,7 @@
     "linear_fit_slope_rtt_us_per_irq_to_handle_us": 1.0040001294138614,
     "r_squared": 0.9957798739510878
   },
+  "causal_next_step": "A/B the responder loop cadence while keeping PHY, H2 wire format, frame size, pacing, placement and timing instrumentation fixed: baseline loop delay 1 ms versus a no-1-ms-sleep variant.",
   "interpretation": "Across both physical responder boards, almost all observed sub-millisecond RTT variation co-varies approximately one-for-one with responder RX-done IRQ to handleReceivedPacket latency. This localizes the phenomenon to responder scheduling/loop latency, but does not by itself prove delay(1) is the sole cause.",
   "scientific_boundary": "All correlations are descriptive for two sequential same-bench fixed-PHY runs. Samples are not independent, the cross-clock residual is not propagation delay, and no range or deployment loss claims are supported."
 }
