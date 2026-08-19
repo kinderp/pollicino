@@ -98,8 +98,10 @@ POLLICINO experiments must obey these rules:
 pollicino/
 ├── course/                  # fourth-year teaching path and student labs
 ├── docs/
-│   ├── theory/              # Shannon, coding, MDL, Kolmogorov, Transformers
+│   ├── theory/              # information, coding, ML and wireless theory
+│   ├── labs/                # reproducible hands-on laboratory guides
 │   └── research/            # protocol, PollicinoNet and scientific notes
+├── hardware/                # optional physical adapters and validated HW labs
 ├── configs/                 # backend-independent model specifications
 ├── src/pollicino/
 │   ├── common/              # metrics, data and shared contracts
@@ -204,12 +206,15 @@ No result counts as lossless unless exact reconstruction is independently verifi
 ## Where to start
 
 - Students: [`course/README.md`](course/README.md)
-- Theory: [`docs/theory/map.md`](docs/theory/map.md)
+- Theory map: [`docs/theory/map.md`](docs/theory/map.md)
+- Wireless / LoRa / Wi-Fi / Bluetooth: [`docs/theory/wireless-lora-wifi-bluetooth-it.md`](docs/theory/wireless-lora-wifi-bluetooth-it.md)
+- HW-001 practical guide (Italian): [`docs/labs/hw-001-lilygo-guida-pratica-it.md`](docs/labs/hw-001-lilygo-guida-pratica-it.md)
 - Research questions: [`docs/research/questions.md`](docs/research/questions.md)
 - Experimental protocol: [`docs/research/protocol.md`](docs/research/protocol.md)
 - PollicinoNet: [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md)
+- FreakWAN audit: [`docs/research/freakwan-audit.md`](docs/research/freakwan-audit.md)
 - Full roadmap: [`ROADMAP.md`](ROADMAP.md)
 
 ## Status
 
-The executable research line now includes deterministic lossless routing experiments through PILOT-013. PollicinoNet is a newly specified parallel research track; its PN experiments are proposals until implemented and measured.
+The executable research line includes deterministic lossless routing experiments through PILOT-013. PollicinoNet now has implemented standalone discovery/exact/P2P layers, an optional DNA integration, and a physically validated HW-001 bidirectional LoRa bridge on two LILYGO T3 V1.6.1 / SX1276 boards. HW-002 is the next hardware research step: characterize packet loss, RSSI/SNR, latency/airtime and physical TRC under controlled conditions.
