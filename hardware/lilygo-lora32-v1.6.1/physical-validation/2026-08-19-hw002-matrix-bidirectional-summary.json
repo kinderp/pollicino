@@ -1,0 +1,44 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-bidirectional-matrix-summary-v1",
+  "environment": "same-bench-indoor",
+  "radio_profile": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "sf": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10
+  },
+  "transactions": 36,
+  "successes": 35,
+  "failures": 1,
+  "observed_success_rate": 0.9722222222222222,
+  "observed_failure_rate": 0.027777777777777776,
+  "failure_types": {
+    "crc_mismatch": 1,
+    "timeout": 0,
+    "other": 0
+  },
+  "per_size": [
+    {"frame_bytes":16,"attempts":6,"successes":6,"failures":0,"observed_success_rate":1.0,"rtt_mean_us_successes":109194.83333333333,"rtt_min_us_successes":108893,"rtt_max_us_successes":109541},
+    {"frame_bytes":32,"attempts":6,"successes":6,"failures":0,"observed_success_rate":1.0,"rtt_mean_us_successes":150665.66666666666,"rtt_min_us_successes":150129,"rtt_max_us_successes":151271},
+    {"frame_bytes":42,"attempts":6,"successes":5,"failures":1,"observed_success_rate":0.8333333333333334,"rtt_mean_us_successes":181534.4,"rtt_min_us_successes":181386,"rtt_max_us_successes":181715},
+    {"frame_bytes":60,"attempts":6,"successes":6,"failures":0,"observed_success_rate":1.0,"rtt_mean_us_successes":233403.16666666666,"rtt_min_us_successes":233335,"rtt_max_us_successes":233500},
+    {"frame_bytes":120,"attempts":6,"successes":6,"failures":0,"observed_success_rate":1.0,"rtt_mean_us_successes":408418.6666666667,"rtt_min_us_successes":408165,"rtt_max_us_successes":408617},
+    {"frame_bytes":240,"attempts":6,"successes":6,"failures":0,"observed_success_rate":1.0,"rtt_mean_us_successes":769511.3333333334,"rtt_min_us_successes":769061,"rtt_max_us_successes":769911}
+  ],
+  "directional_success_metrics": {
+    "com3_to_com4": {
+      "rssi_mean_dbm": -39.457142857142856,
+      "snr_mean_db": 10.0,
+      "successful_observations": 35
+    },
+    "com4_to_com3": {
+      "rssi_mean_dbm": -39.91428571428571,
+      "snr_mean_db": 9.835714285714285,
+      "successful_observations": 35
+    }
+  },
+  "failure_interpretation": "The single state=-7 event is RadioLib 7.6.0 RADIOLIB_ERR_CRC_MISMATCH. It proves a CRC-invalid LoRa frame was detected during the initiator receive window. It does not by itself prove whether the responder PING was received or whether the CRC-invalid frame was the expected PONG.",
+  "scientific_boundary": "Observed rates are descriptive counts for 36 same-bench attempts, not estimates of general packet-loss probability. Distance, NLOS, interference sweeps and alternative PHY settings remain uncharacterized."
+}
