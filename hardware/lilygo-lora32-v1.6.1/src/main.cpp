@@ -38,6 +38,7 @@ SX1276 radio = new Module(
 volatile bool packetReceived = false;
 char serialLine[SERIAL_LINE_BYTES];
 size_t serialLineLength = 0;
+bool serialDiscarding = false;
 
 void onPacketReceived() {
     packetReceived = true;
@@ -132,9 +133,15 @@ void processCommand(char *line) {
         return;
     }
 
+    // DIO0 is RxDone while listening and TxDone while transmitting. Detach the
+    // receive ISR around blocking transmit so TxDone can never be mistaken for
+    // an incoming packet. RadioLib exposes this action explicitly on SX127x.
     packetReceived = false;
+    radio.clearPacketReceivedAction();
     radio.standby();
     const int16_t state = radio.transmit(payload, payloadLength);
+    radio.setPacketReceivedAction(onPacketReceived);
+
     if (state == RADIOLIB_ERR_NONE) {
         digitalWrite(BOARD_LED, !digitalRead(BOARD_LED));
         Serial.print(F("TXOK "));
@@ -153,6 +160,12 @@ void handleSerial() {
             continue;
         }
         if (value == '\n') {
+            if (serialDiscarding) {
+                serialDiscarding = false;
+                serialLineLength = 0;
+                continue;
+            }
+
             serialLine[serialLineLength] = '\0';
             if (serialLineLength > 0) {
                 processCommand(serialLine);
@@ -161,8 +174,14 @@ void handleSerial() {
             continue;
         }
 
+        // Once an overlong line is detected, discard the entire remainder up
+        // to newline. Never allow a tail fragment to become a fresh command.
+        if (serialDiscarding) {
+            continue;
+        }
         if (serialLineLength + 1 >= sizeof(serialLine)) {
             serialLineLength = 0;
+            serialDiscarding = true;
             Serial.println(F("ERR serial-line-too-long"));
             continue;
         }
