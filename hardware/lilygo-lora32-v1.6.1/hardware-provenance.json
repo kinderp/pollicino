@@ -1,0 +1,64 @@
+{
+  "lab": "HW-001",
+  "target": {
+    "expected_product_family": "LILYGO LoRa32 V1.6.1",
+    "expected_radio": "SX1276",
+    "expected_market_band": "868 MHz",
+    "amazon_asin": "B09FXHSS6P",
+    "physical_identity_confirmed": false,
+    "note": "The ASIN mapping is treated as an expectation only. The physical board and radio markings must be checked before flashing or transmitting."
+  },
+  "vendor_hardware_reference": {
+    "repository": "Xinyuan-LilyGO/LilyGo-LoRa-Series",
+    "path": "docs/en/t3_v161_sx1276/t3_v161_sx1276_hw.md",
+    "blob_sha": "5f96476dda4024576a13844a512706264eddc6cf",
+    "facts_used": {
+      "soc": "ESP32-PICO-D4",
+      "flash": "4 MB",
+      "psram": false,
+      "radio": "SX1276",
+      "radio_frequency_range_mhz": "830-945",
+      "antenna_required_before_transmit": true,
+      "remove_sd_during_upload": true,
+      "usb_bridge": "CH9102",
+      "pins": {
+        "sck": 5,
+        "miso": 19,
+        "mosi": 27,
+        "cs": 18,
+        "reset": 23,
+        "dio1": 33,
+        "led": 25
+      }
+    }
+  },
+  "vendor_sx1276_example": {
+    "repository": "Xinyuan-LilyGO/LilyGo-LoRa-Series",
+    "path": "examples/LoRa/T3_LoRa32/SX1276_PingPong/SX1276_PingPong.ino",
+    "blob_sha": "091d6126e1af31258a4cd6a7fcaca6093b44d757",
+    "additional_pin_from_example": {
+      "dio0": 26
+    },
+    "reference_frequency_mhz": 868.0
+  },
+  "radiolib_reference": {
+    "version": "7.6.0",
+    "lilygo_bundled_library_json_blob_sha": "073d2f2e9fe760091f5bcfb2f1e958ae5be492ef",
+    "sx127x_clear_packet_received_action_confirmed": true,
+    "sx127x_max_packet_bytes": 255
+  },
+  "hw001_bench_profile": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "sync_word_hex": "0x12",
+    "output_power_dbm": 10,
+    "preamble_symbols": 8,
+    "host_max_payload_bytes": 240
+  },
+  "regulatory_boundary": {
+    "compliance_claim": false,
+    "note": "Bench RF settings are adapter test settings. Outdoor, unattended, high-duty-cycle, or production use must be checked against current Italian and European SRD requirements before operation."
+  }
+}
