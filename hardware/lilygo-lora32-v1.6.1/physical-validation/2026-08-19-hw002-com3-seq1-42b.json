@@ -50,7 +50,7 @@
     "bidirectional_snr_observed_in_one_transaction": true,
     "firmware_level_rtt_observed": true,
     "radiolib_time_on_air_observed": true,
-    "reverse_initiator_role_validated_later_in_same_session": true
+    "opposite_board_initiator_role_validated_later_in_same_session": true
   },
   "claims_not_yet_supported": {
     "batch_packet_loss_curve": true,
@@ -60,5 +60,5 @@
     "environment_recorded": true,
     "regulatory_compliance_for_general_deployment": true
   },
-  "interpretation": "First successful HW-002 physical measurement transaction. The RTT exceeds the two-frame nominal LoRa time-on-air by 6.139 ms; that excess includes firmware/radio turnaround and blocking transmit overhead and must not be interpreted as propagation delay. A later reverse-role run in the same session also succeeded; see the bidirectional HW-002 summary."
+  "interpretation": "First successful HW-002 physical measurement transaction. The RTT exceeds the two-frame nominal LoRa time-on-air by 6.139 ms; that excess includes firmware/radio turnaround and blocking transmit overhead and must not be interpreted as propagation delay. A later opposite-role run in the same session also succeeded; see the bidirectional HW-002 summary."
 }
