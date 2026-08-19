@@ -1,0 +1,49 @@
+{
+  "lab": "HW-001",
+  "status": "PASS",
+  "scope": "bidirectional bench proof of byte-exact PND1 and PNF1 transport over two physical LoRa32 V1.6.1 boards",
+  "completed_at_local": "2026-08-19T11:21:00+02:00",
+  "radio_profile": {
+    "driver": "sx1276",
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10,
+    "max_tx_bytes": 240
+  },
+  "directions": [
+    {
+      "tx_port_at_run": "COM3",
+      "rx_port_at_run": "COM4",
+      "pnd1": {"bytes": 42, "exact": true, "rssi_dbm": -40.0, "snr_db": 9.8},
+      "pnf1": {"bytes": 60, "exact": true, "rssi_dbm": -40.0, "snr_db": 9.5},
+      "source_record": "2026-08-19-com3-to-com4.json"
+    },
+    {
+      "tx_port_at_run": "COM4",
+      "rx_port_at_run": "COM3",
+      "pnd1": {"bytes": 42, "exact": true, "rssi_dbm": -37.0, "snr_db": 9.5},
+      "pnf1": {"bytes": 60, "exact": true, "rssi_dbm": -36.0, "snr_db": 9.8},
+      "source_record": "2026-08-19-com4-to-com3.json"
+    }
+  ],
+  "supported_claims": {
+    "both_physical_endpoints_initialize_with_hw001_sx1276_driver": true,
+    "bidirectional_physical_lora_transport": true,
+    "bidirectional_pnd1_byte_exact": true,
+    "bidirectional_pnf1_byte_exact": true,
+    "rssi_and_snr_observed_in_both_directions": true,
+    "pollicinonet_core_remains_transport_independent": true
+  },
+  "not_characterized_by_hw001": [
+    "maximum range",
+    "packet loss curve",
+    "airtime calibration against simulator",
+    "retransmission behavior on physical radio",
+    "duty-cycle scheduler",
+    "energy consumption",
+    "production or general regulatory compliance"
+  ],
+  "next_lab": "HW-002 physical-link characterization and PN-002 simulator calibration"
+}
