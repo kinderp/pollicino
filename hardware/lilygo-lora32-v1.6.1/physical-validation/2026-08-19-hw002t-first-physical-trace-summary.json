@@ -1,0 +1,38 @@
+{
+  "lab": "HW-002T",
+  "schema": "pollicino-hw002t-first-physical-trace-summary-v1",
+  "evidence_source": "user-reported hw002_timing.py physical output",
+  "run": {
+    "initiator_port": "COM3",
+    "responder_port": "COM4",
+    "frame_bytes": 42,
+    "sequence": 1,
+    "success": true,
+    "rtt_us": 182709,
+    "toa_us_per_frame": 88000,
+    "initiator_tx_block_us": 89965,
+    "responder_trace_matched": true,
+    "responder_irq_to_handle_us": 734,
+    "responder_handle_to_read_done_us": 864,
+    "responder_read_done_to_tx_start_us": 689,
+    "responder_irq_to_tx_start_us": 2287,
+    "responder_tx_block_us": 90461,
+    "responder_irq_to_tx_done_us": 92748,
+    "rtt_residual_us": -4
+  },
+  "derived": {
+    "nominal_two_frame_toa_us": 176000,
+    "rtt_excess_us": 6709,
+    "initiator_tx_overhead_over_toa_us": 1965,
+    "responder_turnaround_us": 2287,
+    "responder_tx_overhead_over_toa_us": 2461,
+    "known_overhead_sum_us": 6713
+  },
+  "follow_up": {
+    "com3_initiator_com4_responder_series_completed": true,
+    "com4_initiator_com3_responder_series_completed": true,
+    "bidirectional_summary": "2026-08-19-hw002t-bidirectional-timing-summary.json",
+    "next_experiment": "controlled loop-delay A/B"
+  },
+  "scientific_boundary": "The residual is cross-clock diagnostic only, not propagation delay. The first trace is a checkpoint; causal claims rely on the later bidirectional timing series and still require a controlled loop-delay A/B."
+}
