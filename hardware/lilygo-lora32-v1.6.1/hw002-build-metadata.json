@@ -1,0 +1,59 @@
+{
+  "lab": "HW-002",
+  "status": "software_build_validated_physical_measurement_pending",
+  "validated_branch_head": "bfc0372d8b9eef9c55df2cfd144a6bf3ad12f691",
+  "github_actions": {
+    "run_id": 32240241409,
+    "job_id": 96028985205,
+    "conclusion": "success"
+  },
+  "tests": {
+    "root_scientific": {
+      "command": "pytest -q tests",
+      "passed": 129,
+      "elapsed_seconds": 5.58
+    },
+    "host_python_compile": true,
+    "hw001_selftest_regression": true,
+    "hw002_selftest": {
+      "success": true,
+      "toa_parser": true,
+      "measurement_parser": true,
+      "failure_parser": true,
+      "summary": true
+    }
+  },
+  "embedded_build": {
+    "platformio_core": "6.1.19",
+    "platform": "espressif32@6.13.0",
+    "board": "esp32dev",
+    "framework": "arduino",
+    "arduino_esp32": "3.20017.241212+sha.dcc1105b",
+    "radiolib": "7.6.0",
+    "xtensa_toolchain": "8.4.0+2021r2-patch5",
+    "esptool": "4.11.0",
+    "ram_used_bytes": 23032,
+    "ram_available_bytes": 327680,
+    "ram_percent": 7.0,
+    "program_flash_used_bytes": 337289,
+    "program_flash_available_bytes": 1310720,
+    "program_flash_percent": 25.7,
+    "compile_success": true
+  },
+  "measurement_contract": {
+    "firmware_level_ping_pong": true,
+    "host_outside_rtt_turnaround": true,
+    "radio_time_on_air_source": "RadioLib SX127x::getTimeOnAir(size_t)",
+    "physical_hw002_measurement_validated": false,
+    "note": "Compilation and host accounting are validated. No HW-002 physical RTT/loss result is claimed until the new firmware is flashed on both physical boards and a measurement succeeds."
+  },
+  "rf_profile_unchanged_from_hw001": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "sync_word_hex": "0x12",
+    "output_power_dbm": 10,
+    "preamble_symbols": 8
+  }
+}
