@@ -1,0 +1,43 @@
+{
+  "source": "2026-08-19-hw002-batch-com3-42b-10.json",
+  "sample_count": 10,
+  "observed_successes": 10,
+  "observed_failures": 0,
+  "observed_loss_rate": 0.0,
+  "rtt_us": {
+    "mean": 181562.7,
+    "min": 181077,
+    "max": 182037,
+    "spread": 960,
+    "sample_stddev": 430.97,
+    "first_five_mean": 181160.0,
+    "last_five_mean": 181965.4
+  },
+  "airtime": {
+    "nominal_round_trip_us": 176000,
+    "mean_rtt_excess_over_nominal_round_trip_us": 5562.7,
+    "nominal_airtime_fraction_of_mean_rtt_percent": 96.9362
+  },
+  "tx_block_us": {
+    "mean": 89714.1,
+    "min": 89709,
+    "max": 89729,
+    "sample_stddev": 6.35,
+    "mean_excess_over_nominal_toa_us": 1714.1
+  },
+  "link_quality": {
+    "initiator_received_pong_rssi_dbm_mean": -39.7,
+    "initiator_received_pong_snr_db_mean": 9.95,
+    "responder_received_ping_rssi_dbm_mean": -38.1,
+    "responder_received_ping_snr_db_mean": 9.625
+  },
+  "pacing": {
+    "configured_tx_occupancy_cap_percent": 1.0,
+    "minimum_start_interval_s": 8.8,
+    "observed_elapsed_s": 79.375,
+    "planner_reported_estimated_minimum_wall_s": 88.0,
+    "diagnosis": "planner wall-time estimate includes a post-final start interval that the executor does not wait; RF pacing itself is correct",
+    "expected_completion_s_for_all-success_42b_batch": 79.376
+  },
+  "scientific_boundary": "Zero failures in ten attempts is an observed result for this same-bench run, not evidence that the underlying loss probability is zero. The mirrored COM4-initiator batch should be executed with the identical runner before changing planner code."
+}
