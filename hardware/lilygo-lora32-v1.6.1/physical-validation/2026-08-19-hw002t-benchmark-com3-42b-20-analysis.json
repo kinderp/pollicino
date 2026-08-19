@@ -1,0 +1,52 @@
+{
+  "lab": "HW-002T",
+  "schema": "pollicino-hw002t-timing-analysis-v1",
+  "source": "user-reported 2026-08-19-hw002t-benchmark-com3-42b-20.json",
+  "direction": "COM3 initiator -> COM4 responder",
+  "environment": "same-bench-indoor-timing",
+  "frame_bytes": 42,
+  "attempts": 20,
+  "successes": 20,
+  "matched_responder_traces": 20,
+  "elapsed_s": 167.42199999999139,
+  "planner_estimated_minimum_wall_s": 167.376,
+  "rtt_us": {
+    "mean": 181495.7,
+    "min": 181170,
+    "max": 181925,
+    "range": 755
+  },
+  "responder_irq_to_handle_us": {
+    "mean": 432.55,
+    "min": 113,
+    "max": 849,
+    "range": 736
+  },
+  "other_phase_ranges_us": {
+    "handle_to_read_done": 20,
+    "read_done_to_tx_start": 16,
+    "initiator_tx_block": 18,
+    "responder_tx_block": 27,
+    "rtt_residual": 24
+  },
+  "descriptive_relation": {
+    "pearson_r_rtt_vs_irq_to_handle": 0.9995908911547712,
+    "linear_fit_rtt_us_per_irq_to_handle_us": 1.0121939989164277,
+    "linear_fit_intercept_us": 181057.87548576863,
+    "r_squared": 0.9991819496795887,
+    "pearson_r_excluding_first_sample": 0.9995349231147954,
+    "sequence_slope_rtt_us_per_sample": -36.43759398496017,
+    "sequence_slope_irq_to_handle_us_per_sample": -36.02030075187968
+  },
+  "mean_overhead_decomposition_us": {
+    "nominal_two_frame_toa": 176000.0,
+    "observed_rtt_excess": 5495.7,
+    "initiator_tx_over_toa": 1721.55,
+    "responder_irq_to_tx_start": 1712.2,
+    "responder_tx_over_toa": 2062.5,
+    "sum_known_overhead": 5496.25,
+    "mean_cross_clock_residual": -0.55
+  },
+  "interpretation": "In this sequential same-bench run, essentially all observed sub-millisecond RTT variation co-varies approximately one-for-one with responder RX-IRQ-to-handler latency. The remaining measured phases are nearly constant by comparison. This localizes the timing variation to the responder scheduling/loop interval, but does not by itself prove that delay(1) is the sole underlying cause.",
+  "scientific_boundary": "The correlation is descriptive for one sequential fixed-PHY run and the samples are not independent. The diagnostic residual is not propagation delay. A mirrored run with COM4 initiator / COM3 responder should be collected before changing timing firmware."
+}
