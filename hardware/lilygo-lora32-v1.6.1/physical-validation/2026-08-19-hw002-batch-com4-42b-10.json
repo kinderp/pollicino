@@ -1,1 +1,67 @@
-x
+{
+  "distance_m": null,
+  "elapsed_s": 79.40700000000652,
+  "environment": "same-bench-indoor",
+  "executed": true,
+  "measurement_semantics": {
+    "local": "RSSI/SNR measured by initiator for responder -> initiator PONG",
+    "remote": "RSSI/SNR measured by responder for initiator -> responder PING",
+    "rtt": "firmware radio transaction RTT: initiator TX + responder processing + responder TX + receive completion; USB/Python turnaround is excluded",
+    "toa": "RadioLib getTimeOnAir(frame_bytes), microseconds"
+  },
+  "plan": {
+    "count_per_size": 10,
+    "estimated_minimum_wall_seconds_for_requested_cap": 87.99999999999999,
+    "info": "INFO board=lilygo-lora32-v1.6.1 chip=sx1276 freq_mhz=868.100 bw_khz=125.0 sf=7 cr=4/5 power_dbm=10 max_tx=240 lab=hw-002 measurement_ping=1",
+    "planned_per_node_tx_airtime_us": 880000,
+    "planned_two_node_radio_bytes_if_all_successful": 840,
+    "regulatory_note": "The occupancy cap is an experiment pacing input, not a claim of legal compliance. Verify the current regional/sub-band rules before RF execution.",
+    "schema": "pollicino-hw002-plan-v1",
+    "sizes": [{"count":10,"frame_bytes":42,"minimum_start_interval_s_for_requested_cap":8.799999999999999,"per_node_planned_tx_airtime_us":880000,"round_trip_radio_bytes_if_successful":84,"toa_us_per_frame":88000}],
+    "transactions": 10,
+    "tx_occupancy_cap_percent": 1.0
+  },
+  "port": "COM4",
+  "samples": [
+    {"bytes":42,"host_elapsed_s":0.20399999999790452,"local_rssi_dbm":-38.0,"local_snr_db":9.5,"remote_rssi_dbm":-40.0,"remote_snr_db":10.0,"rtt_us":181915,"sequence":1,"success":true,"toa_us":88000,"tx_block_us":89725},
+    {"bytes":42,"host_elapsed_s":9.0,"local_rssi_dbm":-38.0,"local_snr_db":9.75,"remote_rssi_dbm":-41.0,"remote_snr_db":10.5,"rtt_us":181866,"sequence":2,"success":true,"toa_us":88000,"tx_block_us":89714},
+    {"bytes":42,"host_elapsed_s":17.796999999991385,"local_rssi_dbm":-39.0,"local_snr_db":10.0,"remote_rssi_dbm":-41.0,"remote_snr_db":9.75,"rtt_us":181895,"sequence":3,"success":true,"toa_us":88000,"tx_block_us":89717},
+    {"bytes":42,"host_elapsed_s":26.594000000011874,"local_rssi_dbm":-39.0,"local_snr_db":9.75,"remote_rssi_dbm":-39.0,"remote_snr_db":9.75,"rtt_us":181930,"sequence":4,"success":true,"toa_us":88000,"tx_block_us":89714},
+    {"bytes":42,"host_elapsed_s":35.39100000000326,"local_rssi_dbm":-38.0,"local_snr_db":9.5,"remote_rssi_dbm":-39.0,"remote_snr_db":9.25,"rtt_us":181959,"sequence":5,"success":true,"toa_us":88000,"tx_block_us":89710},
+    {"bytes":42,"host_elapsed_s":44.219000000011874,"local_rssi_dbm":-38.0,"local_snr_db":10.0,"remote_rssi_dbm":-39.0,"remote_snr_db":9.75,"rtt_us":181985,"sequence":6,"success":true,"toa_us":88000,"tx_block_us":89720},
+    {"bytes":42,"host_elapsed_s":53.01600000000326,"local_rssi_dbm":-37.0,"local_snr_db":10.0,"remote_rssi_dbm":-39.0,"remote_snr_db":9.75,"rtt_us":182028,"sequence":7,"success":true,"toa_us":88000,"tx_block_us":89717},
+    {"bytes":42,"host_elapsed_s":61.812999999994645,"local_rssi_dbm":-38.0,"local_snr_db":9.75,"remote_rssi_dbm":-39.0,"remote_snr_db":9.25,"rtt_us":181059,"sequence":8,"success":true,"toa_us":88000,"tx_block_us":89710},
+    {"bytes":42,"host_elapsed_s":70.60999999998603,"local_rssi_dbm":-39.0,"local_snr_db":9.5,"remote_rssi_dbm":-39.0,"remote_snr_db":10.0,"rtt_us":181085,"sequence":9,"success":true,"toa_us":88000,"tx_block_us":89712},
+    {"bytes":42,"host_elapsed_s":79.40700000000652,"local_rssi_dbm":-37.0,"local_snr_db":9.75,"remote_rssi_dbm":-39.0,"remote_snr_db":9.75,"rtt_us":181098,"sequence":10,"success":true,"toa_us":88000,"tx_block_us":89710}
+  ],
+  "schema": "pollicino-hw002-benchmark-v1",
+  "summary": {
+    "airtime_accounting":{"initiator_predicted_tx_airtime_us_exact":880000,"note":"On a failed transaction the responder may have transmitted a PONG that was lost, so responder/two-node values are lower bounds.","responder_confirmed_tx_airtime_us_lower_bound":880000,"two_node_confirmed_tx_airtime_us_lower_bound":1760000},
+    "attempts":10,"failures":0,
+    "local_rssi_dbm":{"max":-37.0,"mean":-38.1,"min":-39.0,"p50":-38.0,"p95":-37.0},
+    "local_snr_db":{"max":10.0,"mean":9.75,"min":9.5,"p50":9.75,"p95":10.0},
+    "loss_rate":0.0,
+    "radio_byte_accounting":{"initiator_bytes_exact":420,"responder_confirmed_bytes_lower_bound":420,"two_node_confirmed_bytes_lower_bound":840},
+    "remote_rssi_dbm":{"max":-39.0,"mean":-39.5,"min":-41.0,"p50":-39.0,"p95":-39.0},
+    "remote_snr_db":{"max":10.5,"mean":9.775,"min":9.25,"p50":9.75,"p95":10.5},
+    "rtt_us":{"max":182028,"mean":181682.0,"min":181059,"p50":181905.0,"p95":182028},
+    "success_rate":1.0,"successes":10,
+    "tx_block_us":{"max":89725,"mean":89714.9,"min":89710,"p50":89714.0,"p95":89725}
+  },
+  "summary_by_frame_bytes": {
+    "42": {
+      "airtime_accounting":{"initiator_predicted_tx_airtime_us_exact":880000,"note":"On a failed transaction the responder may have transmitted a PONG that was lost, so responder/two-node values are lower bounds.","responder_confirmed_tx_airtime_us_lower_bound":880000,"two_node_confirmed_tx_airtime_us_lower_bound":1760000},
+      "attempts":10,"failures":0,
+      "local_rssi_dbm":{"max":-37.0,"mean":-38.1,"min":-39.0,"p50":-38.0,"p95":-37.0},
+      "local_snr_db":{"max":10.0,"mean":9.75,"min":9.5,"p50":9.75,"p95":10.0},
+      "loss_rate":0.0,
+      "radio_byte_accounting":{"initiator_bytes_exact":420,"responder_confirmed_bytes_lower_bound":420,"two_node_confirmed_bytes_lower_bound":840},
+      "remote_rssi_dbm":{"max":-39.0,"mean":-39.5,"min":-41.0,"p50":-39.0,"p95":-39.0},
+      "remote_snr_db":{"max":10.5,"mean":9.775,"min":9.25,"p50":9.75,"p95":10.5},
+      "rtt_us":{"max":182028,"mean":181682.0,"min":181059,"p50":181905.0,"p95":182028},
+      "success_rate":1.0,"successes":10,
+      "tx_block_us":{"max":89725,"mean":89714.9,"min":89710,"p50":89714.0,"p95":89725}
+    }
+  },
+  "timeout_ms":3000
+}
