@@ -1,0 +1,56 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-reliability-bidirectional-v1",
+  "scope": "targeted same-bench 42-byte reliability repeats after the first CRC-mismatch observation",
+  "runs": {
+    "com4_initiator": {
+      "attempts": 20,
+      "successes": 20,
+      "failures": 0,
+      "rtt_mean_us_successes": 181741.7,
+      "elapsed_s": 167.40599999998813,
+      "planner_estimated_s": 167.376
+    },
+    "com3_initiator": {
+      "attempts": 20,
+      "successes": 19,
+      "failures": 1,
+      "rtt_mean_us_successes": 181545.0,
+      "elapsed_s": 167.375,
+      "planner_estimated_s": 167.376,
+      "failure": {
+        "sequence": 16,
+        "error": "timeout",
+        "state": -6,
+        "classification": "RADIOLIB_ERR_RX_TIMEOUT"
+      }
+    }
+  },
+  "combined": {
+    "attempts": 40,
+    "successes": 39,
+    "failures": 1,
+    "observed_failure_classes": {
+      "timeout": 1,
+      "crc_mismatch": 0
+    },
+    "successful_rtt_weighted_mean_us": 181645.87179487178,
+    "successful_link_metrics_by_physical_direction": {
+      "COM3_to_COM4": {
+        "observations": 39,
+        "rssi_mean_dbm": -37.94871794871795,
+        "snr_mean_db": 9.756410256410257
+      },
+      "COM4_to_COM3": {
+        "observations": 39,
+        "rssi_mean_dbm": -39.02564102564103,
+        "snr_mean_db": 9.89102564102564
+      }
+    }
+  },
+  "historical_context": {
+    "prior_six_size_matrix_crc_mismatch": true,
+    "note": "The immediately preceding six-size matrix contained one COM4-initiator 42-byte state=-7 CRC-mismatch event. It is intentionally kept separate from these 40 targeted repeat attempts. No CRC mismatch occurred in the targeted repeats."
+  },
+  "scientific_boundary": "39/40 successes is an observed same-bench result, not an estimate of general deployment loss probability. The timeout cannot identify whether the initiating PING, the responder PONG, or another receive-path event was responsible. The earlier CRC event remains valid evidence even though it did not recur here."
+}
