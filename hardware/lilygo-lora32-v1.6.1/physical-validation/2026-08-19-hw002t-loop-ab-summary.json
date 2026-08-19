@@ -1,0 +1,136 @@
+{
+  "schema": "pollicino-hw002t-loop-delay-aba-summary-v1",
+  "date": "2026-08-19",
+  "lab": "HW-002T",
+  "direction": "COM3 initiator -> COM4 responder",
+  "frame_bytes": 42,
+  "phy": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10,
+    "preamble_symbols": 8
+  },
+  "design": {
+    "sequence": ["A1", "B", "A2"],
+    "A1_responder_loop_delay_ms": 1,
+    "B_responder_loop_delay_ms": 0,
+    "A2_responder_loop_delay_ms": 1,
+    "B_policy": "yield-only",
+    "initiator_loop_delay_ms": 1,
+    "count_per_condition": 20,
+    "tx_occupancy_cap_percent": 1.0,
+    "timeout_ms": 3000,
+    "note": "Same firmware image and H2/PHY/timing instrumentation. Only responder loop policy was changed at runtime."
+  },
+  "source_files_local": {
+    "A1": "2026-08-19-hw002t-loop-ab-a1-com3-42b-20.json",
+    "B": "2026-08-19-hw002t-loop-ab-b0-com3-42b-20.json",
+    "A2": "2026-08-19-hw002t-loop-ab-a2-com3-42b-20.json"
+  },
+  "all_20_samples": {
+    "A1": {
+      "successes": 20,
+      "matched_traces": 20,
+      "rtt_mean_us": 182650.55,
+      "rtt_min_us": 181993,
+      "rtt_max_us": 183756,
+      "rtt_range_us": 1763,
+      "irq_to_handle_mean_us": 609.3,
+      "irq_to_handle_min_us": 11,
+      "irq_to_handle_max_us": 970,
+      "irq_to_handle_range_us": 959
+    },
+    "B": {
+      "successes": 20,
+      "matched_traces": 20,
+      "rtt_mean_us": 182005.0,
+      "rtt_min_us": 181980,
+      "rtt_max_us": 182101,
+      "rtt_range_us": 121,
+      "irq_to_handle_mean_us": 7.2,
+      "irq_to_handle_min_us": 2,
+      "irq_to_handle_max_us": 14,
+      "irq_to_handle_range_us": 12
+    },
+    "A2": {
+      "successes": 20,
+      "matched_traces": 20,
+      "rtt_mean_us": 182643.4,
+      "rtt_min_us": 182192,
+      "rtt_max_us": 182980,
+      "rtt_range_us": 788,
+      "irq_to_handle_mean_us": 648.3,
+      "irq_to_handle_min_us": 99,
+      "irq_to_handle_max_us": 994,
+      "irq_to_handle_range_us": 895
+    }
+  },
+  "stable_samples_2_to_20": {
+    "rationale": "After A1 and before B, sequence 1 was identified as a run-start transient because multiple non-IRQ phases were simultaneously inflated. The full 20-sample results remain reported above; this is a sensitivity analysis.",
+    "A1": {
+      "samples": 19,
+      "rtt_mean_us": 182592.36842105264,
+      "rtt_range_us": 973,
+      "rtt_sample_std_us": 294.1396513612607,
+      "irq_to_handle_mean_us": 601.578947368421,
+      "irq_to_handle_range_us": 959,
+      "irq_to_handle_sample_std_us": 293.6933994244629,
+      "pearson_r_rtt_vs_irq_to_handle": 0.9997518998856365,
+      "linear_fit_slope_rtt_us_per_irq_us": 1.00127097121135,
+      "r_squared": 0.9995038613249397
+    },
+    "B": {
+      "samples": 19,
+      "rtt_mean_us": 181999.94736842104,
+      "rtt_range_us": 33,
+      "rtt_sample_std_us": 9.823292524576056,
+      "irq_to_handle_mean_us": 7.473684210526316,
+      "irq_to_handle_range_us": 12,
+      "irq_to_handle_sample_std_us": 3.9492393227139546,
+      "pearson_r_rtt_vs_irq_to_handle": 0.35439369692583933,
+      "linear_fit_slope_rtt_us_per_irq_us": 0.8815148106526376,
+      "r_squared": 0.12559489242076366
+    },
+    "A2": {
+      "samples": 19,
+      "rtt_mean_us": 182667.15789473685,
+      "rtt_range_us": 619,
+      "rtt_sample_std_us": 195.60199475178464,
+      "irq_to_handle_mean_us": 677.2105263157895,
+      "irq_to_handle_range_us": 613,
+      "irq_to_handle_sample_std_us": 197.53300116615353,
+      "pearson_r_rtt_vs_irq_to_handle": 0.9990712695970155,
+      "linear_fit_slope_rtt_us_per_irq_us": 0.9893047342910575,
+      "r_squared": 0.9981434017341925
+    },
+    "B_vs_A1": {
+      "irq_range_reduction_fraction": 0.9874869655891554,
+      "rtt_range_reduction_fraction": 0.9660842754367934,
+      "irq_std_reduction_fraction": 0.9865531900599295,
+      "rtt_std_reduction_fraction": 0.9666033039778403,
+      "irq_mean_reduction_fraction": 0.9875765529308836,
+      "rtt_mean_change_us": -592.4210526316019
+    },
+    "B_vs_A2": {
+      "irq_range_reduction_fraction": 0.9804241435562806,
+      "rtt_range_reduction_fraction": 0.9466882067851373,
+      "irq_std_reduction_fraction": 0.9800071922190253,
+      "rtt_std_reduction_fraction": 0.9497791802325859,
+      "irq_mean_reduction_fraction": 0.9889640164762571,
+      "rtt_mean_change_us": -667.2105263158155
+    }
+  },
+  "rf_observation": {
+    "A1_local_rssi_mean_dbm": -41.95,
+    "B_local_rssi_mean_dbm": -42.1,
+    "A2_local_rssi_mean_dbm": -46.6,
+    "A1_remote_rssi_mean_dbm": -40.9,
+    "B_remote_rssi_mean_dbm": -41.35,
+    "A2_remote_rssi_mean_dbm": -45.2,
+    "note": "A2 shows several dB of RF-level drift versus A1/B. This limits claims of a perfectly identical propagation environment, but the software-local IRQ-to-handler modulation and its removal/reappearance remain directly observed."
+  },
+  "conclusion": "Replacing responder delay(1) with yield-only collapses RX-done IRQ-to-handler latency from hundreds of microseconds with an approximately 1 ms phase range to single-digit microseconds, and collapses the corresponding RTT modulation. Restoring delay(1) restores the broad IRQ-to-handler/RTT structure. Under this firmware and bench setup, the fixed 1 ms responder loop sleep is therefore a dominant causal contributor to the observed approximately 1 ms RTT modulation.",
+  "boundary": "This does not prove delay(1) is the sole source of all latency or jitter. Samples are sequential, the first sample has startup effects, A2 RF levels drifted, and the diagnostic cross-clock residual is not propagation delay. No range, NLOS, interference or deployment-loss claim follows from this experiment."
+}
