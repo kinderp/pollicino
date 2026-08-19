@@ -1,0 +1,61 @@
+{
+  "lab": "HW-002T",
+  "schema": "pollicino-hw002t-bidirectional-timing-summary-v1",
+  "scope": "same-bench 42-byte timing series with fixed PHY and 1% experimental pacing",
+  "runs": {
+    "com3_initiator_com4_responder": {
+      "attempts": 20,
+      "successes": 20,
+      "matched_traces": 20,
+      "elapsed_s": 167.42199999999139,
+      "rtt_mean_us": 181495.7,
+      "rtt_min_us": 181170,
+      "rtt_max_us": 181925,
+      "rtt_range_us": 755,
+      "irq_to_handle_mean_us": 432.55,
+      "irq_to_handle_min_us": 113,
+      "irq_to_handle_max_us": 849,
+      "irq_to_handle_range_us": 736,
+      "pearson_r_rtt_vs_irq_to_handle": 0.9995908911547711,
+      "linear_fit_slope_rtt_us_per_irq_to_handle_us": 1.0121939989164277,
+      "r_squared": 0.9991819496795894,
+      "mean_rtt_residual_us": -0.55,
+      "rtt_residual_min_us": -11,
+      "rtt_residual_max_us": 13
+    },
+    "com4_initiator_com3_responder": {
+      "attempts": 20,
+      "successes": 20,
+      "matched_traces": 20,
+      "elapsed_s": 167.45300000000861,
+      "rtt_mean_us": 181642.1,
+      "rtt_min_us": 181061,
+      "rtt_max_us": 182032,
+      "rtt_range_us": 971,
+      "irq_to_handle_mean_us": 575.8,
+      "irq_to_handle_min_us": 2,
+      "irq_to_handle_max_us": 977,
+      "irq_to_handle_range_us": 975,
+      "pearson_r_rtt_vs_irq_to_handle": 0.9969472030157764,
+      "linear_fit_slope_rtt_us_per_irq_to_handle_us": 0.9985786681501557,
+      "r_squared": 0.9939037256009797,
+      "mean_rtt_residual_us": -2.2,
+      "rtt_residual_min_us": -13,
+      "rtt_residual_max_us": 13,
+      "phase_wrap_observation": {
+        "from_sequence": 15,
+        "to_sequence": 16,
+        "rtt_change_us": -971,
+        "irq_to_handle_change_us": -975
+      }
+    }
+  },
+  "combined_successful_traces": {
+    "samples": 40,
+    "pearson_r_rtt_vs_irq_to_handle": 0.9978877060827475,
+    "linear_fit_slope_rtt_us_per_irq_to_handle_us": 1.0040001294138614,
+    "r_squared": 0.9957798739510878
+  },
+  "interpretation": "Across both physical responder boards, almost all observed sub-millisecond RTT variation co-varies approximately one-for-one with responder RX-done IRQ to handleReceivedPacket latency. This localizes the phenomenon to responder scheduling/loop latency, but does not by itself prove delay(1) is the sole cause.",
+  "scientific_boundary": "All correlations are descriptive for two sequential same-bench fixed-PHY runs. Samples are not independent, the cross-clock residual is not propagation delay, and no range or deployment loss claims are supported."
+}
