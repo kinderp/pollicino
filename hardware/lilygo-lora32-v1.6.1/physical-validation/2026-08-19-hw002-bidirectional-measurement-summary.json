@@ -1,0 +1,78 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-bidirectional-summary-v1",
+  "observed_at_local": "2026-08-19T12:24:00+02:00",
+  "evidence_source": "two user-reported hw002.py physical measurement runs",
+  "radio_profile": {
+    "board": "lilygo-lora32-v1.6.1",
+    "driver": "sx1276",
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10,
+    "frame_bytes_each_direction": 42,
+    "toa_us_per_frame": 88000
+  },
+  "runs": [
+    {
+      "initiator": "COM3",
+      "responder": "COM4",
+      "sequence": 1,
+      "success": true,
+      "a_to_b_rssi_dbm": -37.0,
+      "a_to_b_snr_db": 9.75,
+      "b_to_a_rssi_dbm": -39.0,
+      "b_to_a_snr_db": 9.75,
+      "rtt_us": 182139,
+      "tx_block_us": 89953
+    },
+    {
+      "initiator": "COM4",
+      "responder": "COM3",
+      "sequence": 2,
+      "success": true,
+      "a_to_b_rssi_dbm": -38.0,
+      "a_to_b_snr_db": 10.25,
+      "b_to_a_rssi_dbm": -40.0,
+      "b_to_a_snr_db": 9.75,
+      "rtt_us": 182059,
+      "tx_block_us": 89952
+    }
+  ],
+  "derived": {
+    "successful_transactions": 2,
+    "failed_transactions": 0,
+    "rtt_mean_us": 182099,
+    "rtt_min_us": 182059,
+    "rtt_max_us": 182139,
+    "rtt_two_sample_spread_us": 80,
+    "nominal_two_frame_radio_toa_us": 176000,
+    "rtt_excess_mean_us": 6099,
+    "nominal_airtime_fraction_of_mean_rtt_percent": 96.651,
+    "a_to_b_rssi_mean_dbm": -37.5,
+    "a_to_b_snr_mean_db": 10.0,
+    "b_to_a_rssi_mean_dbm": -39.5,
+    "b_to_a_snr_mean_db": 9.75,
+    "initiator_tx_block_mean_us": 89952.5,
+    "initiator_tx_block_excess_over_toa_mean_us": 1952.5
+  },
+  "claims_supported": {
+    "both_physical_boards_can_initiate_hw002_measurement": true,
+    "both_physical_boards_can_autonomously_respond": true,
+    "bidirectional_rssi_and_snr_observed": true,
+    "firmware_level_rtt_observed": true,
+    "radiolib_toa_observed": true,
+    "same_bench_two_run_rtt_is_highly_consistent": true
+  },
+  "claims_not_yet_supported": {
+    "packet_loss_rate": true,
+    "statistical_rtt_distribution": true,
+    "statistical_rssi_snr_distribution": true,
+    "range_characterization": true,
+    "obstacle_or_nlos_characterization": true,
+    "multiple_payload_size_physical_characterization": true,
+    "regulatory_compliance_for_general_deployment": true
+  },
+  "scientific_boundary": "Two successful same-bench transactions are a role-symmetry and instrumentation checkpoint, not a statistical link characterization. The next stage is a deliberately paced batch with explicit airtime budget, followed later by controlled distance/environment variation."
+}
