@@ -1,0 +1,35 @@
+{
+  "lab": "HW-002",
+  "schema": "pollicino-hw002-reliability-summary-v1",
+  "evidence_source": "user-reported hw002.py benchmark output",
+  "run": {
+    "initiator_port": "COM3",
+    "environment": "same-bench-indoor-reliability",
+    "frame_bytes": 42,
+    "attempts": 20,
+    "successes": 19,
+    "failures": 1,
+    "elapsed_s": 167.375,
+    "planner_estimated_minimum_wall_s": 167.376,
+    "tx_occupancy_cap_percent": 1.0
+  },
+  "successful_measurements": {
+    "rtt_mean_us": 181545.0,
+    "rtt_min_us": 181071,
+    "rtt_max_us": 182042,
+    "remote_rssi_mean_dbm": -37.526315789473685,
+    "remote_snr_mean_db": 9.657894736842104,
+    "local_rssi_mean_dbm": -38.78947368421053,
+    "local_snr_mean_db": 9.986842105263158
+  },
+  "failure": {
+    "sequence": 16,
+    "error": "timeout",
+    "state": -6,
+    "rtt_us": 3091752,
+    "tx_block_us": 89714,
+    "toa_us": 88000,
+    "classification": "RADIOLIB_ERR_RX_TIMEOUT"
+  },
+  "scientific_boundary": "This single timeout does not establish a 5% true loss probability. On a failed transaction the current initiator-side instrumentation cannot determine whether the responder never received the PING, transmitted a PONG that was lost, or another receive-path event prevented a valid PONG from being accepted."
+}
