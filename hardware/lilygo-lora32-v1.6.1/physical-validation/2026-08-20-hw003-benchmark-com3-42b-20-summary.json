@@ -1,0 +1,108 @@
+{
+  "schema": "pollicino-hw003-physical-summary-v1",
+  "date": "2026-08-20",
+  "direction": "COM3->COM4",
+  "frame_bytes": 42,
+  "count": 20,
+  "environment": "same-bench-indoor-hw003-event-driven",
+  "elapsed_s": 167.43799999999464,
+  "phy": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "sync_word": "0x12",
+    "power_dbm": 10,
+    "toa_us_per_frame": 88000
+  },
+  "result": {
+    "attempts": 20,
+    "successes": 20,
+    "matched_traces": 20,
+    "rtt_us": {
+      "mean": 181053.8,
+      "min": 181041,
+      "max": 181117,
+      "range": 76,
+      "p50": 181052.0,
+      "p95": 181062
+    },
+    "irq_to_handle_us": {
+      "mean": 16.4,
+      "min": 16,
+      "max": 23,
+      "range": 7,
+      "p50": 16.0,
+      "p95": 17
+    },
+    "irq_to_tx_start_us": {
+      "mean": 1240.75,
+      "min": 1234,
+      "max": 1258,
+      "range": 24,
+      "p50": 1239.5,
+      "p95": 1246
+    },
+    "rtt_residual_us": {
+      "mean": 22.8,
+      "min": 12,
+      "max": 30,
+      "range": 18,
+      "p50": 23.0,
+      "p95": 28
+    },
+    "scheduler": {
+      "counter_sequence_consistent": true,
+      "task_wait_count_start": 6,
+      "task_wait_count_end": 25,
+      "task_wait_count_delta": 19,
+      "task_wake_count_start": 6,
+      "task_wake_count_end": 25,
+      "task_wake_count_delta": 19,
+      "task_spurious_wake_count_start": 0,
+      "task_spurious_wake_count_end": 0,
+      "task_spurious_wake_count_delta": 0
+    }
+  },
+  "startup_sensitivity_samples_2_20": {
+    "rtt_us": {
+      "mean": 181050.47368421053,
+      "min": 181041,
+      "max": 181062,
+      "range": 21
+    },
+    "irq_to_handle_us": {
+      "mean": 16.42105263157895,
+      "min": 16,
+      "max": 23,
+      "range": 7
+    },
+    "irq_to_tx_start_us": {
+      "mean": 1239.842105263158,
+      "min": 1234,
+      "max": 1246,
+      "range": 12
+    }
+  },
+  "comparison_to_hw002t_stable_samples_2_20": {
+    "hw002t_a1_delay_1": {
+      "irq_to_handle_range_us": 959,
+      "rtt_range_us": 973
+    },
+    "hw002t_b_yield": {
+      "irq_to_handle_range_us": 12,
+      "rtt_range_us": 33
+    },
+    "hw002t_a2_delay_1": {
+      "irq_to_handle_range_us": 613,
+      "rtt_range_us": 619
+    },
+    "hw003_event_driven": {
+      "irq_to_handle_range_us": 7,
+      "rtt_range_us": 21
+    }
+  },
+  "interpretation": "With the Arduino loop retaining a 1 ms idle delay, the dedicated FreeRTOS responder task keeps RX-done IRQ-to-handler latency in a 7 us range and removes the approximately 1 ms polling modulation observed in HW-002T. Scheduler counters show one coherent wait/wake progression per recorded transaction and zero spurious wakeups. This supports event-driven decoupling of RX latency from the Arduino loop cadence. Scheduler blocking is not an electrical energy measurement.",
+  "raw_source_artifact": "hardware/lilygo-lora32-v1.6.1/physical-validation/2026-08-20-hw003-benchmark-com3-42b-20.json",
+  "raw_source_status": "Generated and preserved locally during the physical run; this summary is derived from the user-supplied runner output."
+}
