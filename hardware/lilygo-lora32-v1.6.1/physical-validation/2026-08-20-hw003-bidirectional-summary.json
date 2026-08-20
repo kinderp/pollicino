@@ -1,0 +1,75 @@
+{
+  "schema": "pollicino-hw003-bidirectional-summary-v1",
+  "date": "2026-08-20",
+  "environment": "same-bench-indoor",
+  "frame_bytes": 42,
+  "phy": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "power_dbm": 10,
+    "preamble_symbols": 8
+  },
+  "com3_to_com4": {
+    "initiator": "COM3",
+    "responder": "COM4",
+    "attempts": 20,
+    "successes": 20,
+    "matched_traces": 20,
+    "all_successful": {
+      "rtt_us": {"mean": 181053.8, "min": 181041, "max": 181117, "range": 76},
+      "irq_to_handle_us": {"mean": 16.4, "min": 16, "max": 23, "range": 7},
+      "irq_to_tx_start_us": {"mean": 1240.75, "min": 1234, "max": 1258, "range": 24},
+      "rtt_residual_us": {"mean": 22.8, "min": 12, "max": 30, "range": 18}
+    },
+    "stable_samples_2_to_20": {
+      "count": 19,
+      "irq_to_handle_us_range": 7,
+      "rtt_us_range": 21
+    },
+    "scheduler": {
+      "matched_scheduler_traces": 20,
+      "task_wait_count_start": 6,
+      "task_wait_count_end": 25,
+      "task_wake_count_start": 6,
+      "task_wake_count_end": 25,
+      "task_spurious_wake_count": 0,
+      "strict_trace_counter_sequence_consistent": true
+    },
+    "raw_local_artifact": "2026-08-20-hw003-benchmark-com3-42b-20.json"
+  },
+  "com4_to_com3": {
+    "initiator": "COM4",
+    "responder": "COM3",
+    "attempts": 20,
+    "successes": 18,
+    "failures": 2,
+    "matched_traces": 18,
+    "failure_sequences": [2, 20],
+    "failure_observation": "Both failed initiator transactions timed out with state=-6 while responder USB logged RXERR crc. These are receive/CRC failures before a valid H2 PING can generate H2RESP, not observed long IRQ-to-handler events.",
+    "successful_transactions": {
+      "rtt_us": {"mean": 181050.61111111112, "min": 181025, "max": 181201, "range": 176},
+      "irq_to_handle_us": {"mean": 16.77777777777778, "min": 16, "max": 28, "range": 12},
+      "irq_to_tx_start_us": {"mean": 1245.9444444444443, "min": 1235, "max": 1327, "range": 92},
+      "rtt_residual_us": {"mean": 20.27777777777778, "min": 8, "max": 30, "range": 22}
+    },
+    "stable_successes_excluding_sequence_1": {
+      "count": 17,
+      "sequences": "3..19 excluding no additional successes",
+      "irq_to_handle_us": {"mean": 16.11764705882353, "min": 16, "max": 17, "range": 1},
+      "rtt_us": {"mean": 181041.76470588235, "min": 181025, "max": 181050, "range": 25},
+      "irq_to_tx_start_us": {"mean": 1241.1764705882354, "min": 1235, "max": 1246, "range": 11}
+    },
+    "scheduler": {
+      "matched_scheduler_traces": 18,
+      "task_spurious_wake_count": 0,
+      "strict_trace_counter_sequence_consistent": false,
+      "interpretation": "The strict matched-trace adjacency check is false because CRC-failed transactions do not emit H2RESP. Sequence 1 reports wait/wake=1 and sequence 3 reports wait/wake=3, consistent with an intervening task wake on sequence 2, whose responder log is RXERR crc. Sequence 20 has no subsequent H2RESP from which to recover the final cumulative counter."
+    },
+    "raw_local_artifact": "2026-08-20-hw003-benchmark-com4-42b-20.json"
+  },
+  "latency_conclusion": "On both physical boards, successful valid H2 frames are handled by the event-driven responder task with low-microsecond IRQ-to-handler latency while the Arduino loop retains a 1 ms idle delay. The approximately 1 ms polling modulation seen in HW-002T is absent in both directions.",
+  "reliability_boundary": "The mirror run contains two responder CRC errors. The 18/20 bench count is descriptive only and must not be interpreted as deployment packet-loss probability. CRC reliability remains a separate follow-up from scheduler latency.",
+  "energy_boundary": "Scheduler blocking/wakeup counters are software proxies only; no watts, joules, current draw, or battery-life claim is made without external electrical measurement."
+}
