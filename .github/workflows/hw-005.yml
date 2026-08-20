@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/hw-005-link-margin
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
