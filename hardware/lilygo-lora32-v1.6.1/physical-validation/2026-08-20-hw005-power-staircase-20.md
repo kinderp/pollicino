@@ -34,7 +34,7 @@ SNR remained roughly around 9.5–10 dB on the responder-side means across the s
 
 ## Scheduler observation
 
-IRQ-to-handler remained in the event-driven low-latency regime: 12–36 us overall, mean 24.2 us, median 24 us. Eighteen of the 20 samples were exactly 24 us; the remaining values were 12, 28 and 36 us across the set. No dependence of scheduler latency on configured TX power is inferred from this small run.
+IRQ-to-handler remained in the event-driven low-latency regime: 12–36 us overall, mean 24.2 us, median 24 us. Seventeen of the 20 samples were exactly 24 us; the remaining values were 12, 28 and 36 us. No dependence of scheduler latency on configured TX power is inferred from this small run.
 
 ## Interpretation
 
