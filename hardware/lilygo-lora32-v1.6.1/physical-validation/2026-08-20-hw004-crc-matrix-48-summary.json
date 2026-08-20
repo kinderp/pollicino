@@ -1,0 +1,94 @@
+{
+  "schema": "pollicino-hw004-physical-summary-v1",
+  "date": "2026-08-20",
+  "environment": "same-bench-indoor-hw004-crc-matrix",
+  "ports": {
+    "a": "COM3",
+    "b": "COM4"
+  },
+  "phy": {
+    "frequency_mhz": 868.1,
+    "bandwidth_khz": 125.0,
+    "spreading_factor": 7,
+    "coding_rate": "4/5",
+    "tx_power_dbm": 10
+  },
+  "design": {
+    "sizes_bytes": [16, 32, 42, 60, 120, 240],
+    "rounds": 4,
+    "attempts_total": 48,
+    "attempts_per_direction_size_cell": 4,
+    "counterbalanced": true,
+    "tx_occupancy_cap_percent": 1.0,
+    "planned_per_node_tx_airtime_us": 7240000,
+    "elapsed_s": 688.625
+  },
+  "overall": {
+    "attempts": 48,
+    "successes": 48,
+    "failures": 0,
+    "crc_events": 0,
+    "matched_responder_traces": 48,
+    "wait_delta_equals_one": 48,
+    "wake_delta_equals_one": 48,
+    "spurious_wake_delta_total": 0,
+    "mutex_timeout_delta_total": 0,
+    "irq_to_handle_us": {
+      "min": 16,
+      "mean": 16.3125,
+      "p50": 16.0,
+      "p95": 17,
+      "max": 23
+    }
+  },
+  "by_direction": {
+    "COM3_to_COM4": {
+      "attempts": 24,
+      "successes": 24,
+      "failures": 0,
+      "crc_events": 0,
+      "irq_to_handle_us": {"min": 16, "mean": 16.083333333333332, "p50": 16.0, "p95": 17, "max": 17},
+      "wait_delta_equals_one": 24,
+      "wake_delta_equals_one": 24
+    },
+    "COM4_to_COM3": {
+      "attempts": 24,
+      "successes": 24,
+      "failures": 0,
+      "crc_events": 0,
+      "irq_to_handle_us": {"min": 16, "mean": 16.541666666666668, "p50": 16.0, "p95": 18, "max": 23},
+      "wait_delta_equals_one": 24,
+      "wake_delta_equals_one": 24
+    }
+  },
+  "by_frame_bytes": {
+    "16": {"attempts": 8, "successes": 8, "failures": 0, "crc_events": 0, "irq_to_handle_us": {"min": 16, "mean": 16.25, "max": 17}},
+    "32": {"attempts": 8, "successes": 8, "failures": 0, "crc_events": 0, "irq_to_handle_us": {"min": 16, "mean": 16.125, "max": 17}},
+    "42": {"attempts": 8, "successes": 8, "failures": 0, "crc_events": 0, "irq_to_handle_us": {"min": 16, "mean": 17.0, "max": 23}},
+    "60": {"attempts": 8, "successes": 8, "failures": 0, "crc_events": 0, "irq_to_handle_us": {"min": 16, "mean": 16.375, "max": 18}},
+    "120": {"attempts": 8, "successes": 8, "failures": 0, "crc_events": 0, "irq_to_handle_us": {"min": 16, "mean": 16.0, "max": 16}},
+    "240": {"attempts": 8, "successes": 8, "failures": 0, "crc_events": 0, "irq_to_handle_us": {"min": 16, "mean": 16.125, "max": 17}}
+  },
+  "toa_us_by_frame_bytes": {
+    "16": 52000,
+    "32": 72000,
+    "42": 88000,
+    "60": 113000,
+    "120": 200000,
+    "240": 380000
+  },
+  "interpretation": {
+    "supported": [
+      "No CRC or other reliability failure was observed in this 48-attempt counterbalanced same-bench matrix.",
+      "No persistent directional defect was observed: both directions completed 24/24 attempts.",
+      "No frame-size-associated failure pattern was observed: every tested size completed 8/8 attempts.",
+      "HW-003 event-driven scheduler behavior remained stable across directions and frame sizes."
+    ],
+    "not_supported": [
+      "The matrix does not prove that CRC events cannot recur.",
+      "The matrix does not estimate deployment packet-loss probability.",
+      "Zero observed failures prevents estimating a direction or size effect from this exploratory sample.",
+      "No range, NLOS, interference, or electrical-energy conclusion is made."
+    ]
+  }
+}
