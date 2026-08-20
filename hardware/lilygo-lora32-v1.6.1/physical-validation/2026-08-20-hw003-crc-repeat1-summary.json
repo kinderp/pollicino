@@ -1,0 +1,89 @@
+{
+  "schema": "pollicino-hw003-crc-repeat-summary-v1",
+  "date": "2026-08-20",
+  "direction": {
+    "initiator": "COM4",
+    "responder": "COM3"
+  },
+  "frame_bytes": 42,
+  "environment": "same-bench-indoor-hw003-crc-repeat1",
+  "repeat1": {
+    "attempts": 20,
+    "successes": 20,
+    "failures": 0,
+    "matched_scheduler_traces": 20,
+    "rtt_us": {
+      "min": 181038,
+      "max": 181096,
+      "range": 58,
+      "mean": 181049.55,
+      "p50": 181043.5,
+      "p95": 181066
+    },
+    "irq_to_handle_us": {
+      "min": 16,
+      "max": 17,
+      "range": 1,
+      "mean": 16.15,
+      "p50": 16.0,
+      "p95": 17
+    },
+    "irq_to_tx_start_us": {
+      "min": 1233,
+      "max": 1258,
+      "range": 25,
+      "mean": 1241.5
+    },
+    "rtt_residual_us": {
+      "min": 14,
+      "max": 41,
+      "range": 27,
+      "mean": 22.95
+    },
+    "scheduler": {
+      "counter_sequence_consistent": true,
+      "task_wait_count_start": 21,
+      "task_wait_count_end": 40,
+      "task_wake_count_start": 21,
+      "task_wake_count_end": 40,
+      "task_spurious_wake_count_start": 0,
+      "task_spurious_wake_count_end": 0
+    },
+    "rf_descriptive": {
+      "local_rssi_dbm_mean": -35.35,
+      "remote_rssi_dbm_mean": -36.9,
+      "local_snr_db_mean": 9.9625,
+      "remote_snr_db_mean": 9.95
+    }
+  },
+  "previous_mirror_run": {
+    "attempts": 20,
+    "successes": 18,
+    "failures": 2,
+    "crc_failure_sequences": [2, 20],
+    "failure_observation": "Both initiator timeouts were paired with responder RXERR crc.",
+    "successful_irq_to_handle_us": {
+      "min": 16,
+      "max": 28,
+      "mean": 16.77777777777778
+    }
+  },
+  "two_run_descriptive_total": {
+    "attempts": 40,
+    "successful_transactions": 38,
+    "crc_observations": 2,
+    "note": "Descriptive bench total only; not a packet-loss probability estimate."
+  },
+  "interpretation": {
+    "crc_failures_reproduced_in_immediate_repeat": false,
+    "deterministic_directional_crc_defect_supported": false,
+    "scheduler_latency_conclusion": "The event-driven responder remains low-microsecond and stable with COM3 as responder; the prior CRC observations did not reproduce in the immediate same-direction repeat.",
+    "reliability_boundary": "One clean repeat is insufficient to claim a deployment reliability rate or to prove the prior CRC events were purely random."
+  },
+  "boundaries": [
+    "Bench success counts are descriptive, not a deployment packet-loss probability.",
+    "No range, NLOS or interference conclusion is made.",
+    "Cross-clock RTT residual is diagnostic and is not one-way propagation delay.",
+    "Scheduler wait/wake counters are not an electrical energy measurement."
+  ]
+}
