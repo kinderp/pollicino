@@ -1,0 +1,68 @@
+{
+  "schema": "pollicino-hw005-physical-summary-v1",
+  "date": "2026-08-20",
+  "environment": "same-bench-indoor-hw005-power-staircase",
+  "frame_bytes": 42,
+  "powers_dbm": [10, 8, 6, 4, 2],
+  "attempts": 20,
+  "successes": 20,
+  "failures": 0,
+  "toa_us_per_frame": 88000,
+  "elapsed_s": 167.578,
+  "planned_per_node_tx_airtime_us": 1760000,
+  "power_path": "pa_boost",
+  "by_power_dbm": {
+    "10": {
+      "attempts": 4,
+      "successes": 4,
+      "local_rssi_dbm_mean": -35.0,
+      "remote_rssi_dbm_mean": -35.75,
+      "a_to_b": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -35.0, "remote_snr_db_mean": 10.125, "irq_to_handle_us_mean": 26.0},
+      "b_to_a": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -36.5, "remote_snr_db_mean": 10.0, "irq_to_handle_us_mean": 30.0}
+    },
+    "8": {
+      "attempts": 4,
+      "successes": 4,
+      "local_rssi_dbm_mean": -38.75,
+      "remote_rssi_dbm_mean": -38.75,
+      "a_to_b": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -38.5, "remote_snr_db_mean": 9.875, "irq_to_handle_us_mean": 24.0},
+      "b_to_a": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -39.0, "remote_snr_db_mean": 10.0, "irq_to_handle_us_mean": 24.0}
+    },
+    "6": {
+      "attempts": 4,
+      "successes": 4,
+      "local_rssi_dbm_mean": -40.75,
+      "remote_rssi_dbm_mean": -40.75,
+      "a_to_b": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -40.0, "remote_snr_db_mean": 9.875, "irq_to_handle_us_mean": 24.0},
+      "b_to_a": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -41.5, "remote_snr_db_mean": 9.75, "irq_to_handle_us_mean": 24.0}
+    },
+    "4": {
+      "attempts": 4,
+      "successes": 4,
+      "local_rssi_dbm_mean": -42.75,
+      "remote_rssi_dbm_mean": -43.0,
+      "a_to_b": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -42.5, "remote_snr_db_mean": 9.625, "irq_to_handle_us_mean": 24.0},
+      "b_to_a": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -43.5, "remote_snr_db_mean": 9.5, "irq_to_handle_us_mean": 24.0}
+    },
+    "2": {
+      "attempts": 4,
+      "successes": 4,
+      "local_rssi_dbm_mean": -43.5,
+      "remote_rssi_dbm_mean": -44.25,
+      "a_to_b": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -44.0, "remote_snr_db_mean": 9.75, "irq_to_handle_us_mean": 24.0},
+      "b_to_a": {"attempts": 2, "successes": 2, "remote_rssi_dbm_mean": -44.5, "remote_snr_db_mean": 9.5, "irq_to_handle_us_mean": 18.0}
+    }
+  },
+  "irq_to_handle_us": {"min": 12, "max": 36, "mean": 24.2, "median": 24.0},
+  "observations": {
+    "configured_power_change_db_10_to_2": -8,
+    "endpoint_local_rssi_change_db_10_to_2": -8.5,
+    "endpoint_remote_rssi_change_db_10_to_2": -8.5
+  },
+  "boundaries": [
+    "RSSI/SNR are receiver observations, not calibrated conducted TX-power measurements.",
+    "Same-bench success fractions are descriptive and are not deployment packet-loss probabilities.",
+    "The 2..10 dBm staircase stays on the PA_BOOST path.",
+    "No electrical energy measurement is performed."
+  ]
+}
