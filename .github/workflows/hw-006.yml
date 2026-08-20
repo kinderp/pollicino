@@ -34,7 +34,7 @@ jobs:
           python -m py_compile hardware/lilygo-lora32-v1.6.1/host/hw006.py
           python hardware/lilygo-lora32-v1.6.1/host/hw006.py selftest
       - name: Run project tests
-        run: pytest -q
+        run: pytest -q tests
       - name: Build frozen HW-003
         run: platformio run -d hardware/lilygo-lora32-v1.6.1 -e lilygo_lora32_v161_sx1276_hw003
       - name: Build frozen HW-005
