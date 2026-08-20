@@ -1,0 +1,36 @@
+name: HW-005 validation
+
+on:
+  push:
+    branches:
+      - agent/hw-005-link-margin
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install host dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyserial platformio
+      - name: Validate host tools
+        run: |
+          python -m py_compile hardware/lilygo-lora32-v1.6.1/host/hw002.py
+          python -m py_compile hardware/lilygo-lora32-v1.6.1/host/hw002_timing.py
+          python -m py_compile hardware/lilygo-lora32-v1.6.1/host/hw003.py
+          python -m py_compile hardware/lilygo-lora32-v1.6.1/host/hw005.py
+          python hardware/lilygo-lora32-v1.6.1/host/hw005.py selftest
+      - name: Build frozen HW-003
+        run: platformio run -d hardware/lilygo-lora32-v1.6.1 -e lilygo_lora32_v161_sx1276_hw003
+      - name: Build HW-005
+        run: platformio run -d hardware/lilygo-lora32-v1.6.1 -e lilygo_lora32_v161_sx1276_hw005
