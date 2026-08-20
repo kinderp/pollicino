@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/hw-006-untethered-responder
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
