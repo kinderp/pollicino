@@ -1,0 +1,83 @@
+name: Durable exact restart validation
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install project
+        run: python -m pip install -e ".[test]"
+      - name: Project tests
+        run: python -m pytest -q tests
+      - name: Durable restart smoke
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tempfile
+          from pollicino.net import (
+              DirectoryPollicinoStore,
+              ScarceLinkProfile,
+              load_exact_session_checkpoint,
+              save_exact_session_checkpoint,
+              sync_missing_chunks_step,
+          )
+
+          data = (b"pollicino-durable-restart-" * 20)[:448]
+          profile = ScarceLinkProfile(
+              max_frame_bytes=64,
+              bitrate_bps=5000,
+              ack_bytes=8,
+              max_retries=3,
+              seed=7,
+          )
+          with tempfile.TemporaryDirectory() as temporary:
+              root = Path(temporary)
+              sender_root = root / "sender"
+              receiver_root = root / "receiver"
+              checkpoint = root / "session.json"
+
+              _, state, first = sync_missing_chunks_step(
+                  data,
+                  chunk_size=64,
+                  sender_store=DirectoryPollicinoStore(sender_root),
+                  receiver_store=DirectoryPollicinoStore(receiver_root),
+                  profile=profile,
+                  transfer_id_base=7000,
+                  max_chunks=2,
+                  manifest_on_scarce=True,
+              )
+              assert first.transferred_chunk_indices == (0, 1)
+              save_exact_session_checkpoint(checkpoint, state)
+
+              restored = load_exact_session_checkpoint(checkpoint)
+              reconstructed, final_state, second = sync_missing_chunks_step(
+                  data,
+                  chunk_size=64,
+                  sender_store=DirectoryPollicinoStore(sender_root),
+                  receiver_store=DirectoryPollicinoStore(receiver_root),
+                  profile=profile,
+                  state=restored,
+                  max_chunks=100,
+                  manifest_on_scarce=True,
+              )
+              assert reconstructed == data
+              assert final_state.completed
+              assert second.cached_chunk_count_before == 2
+              assert second.manifest_wire_bytes == 0
+              assert len(DirectoryPollicinoStore(receiver_root)) == 7
+              print({
+                  "first_chunks": first.transferred_chunk_indices,
+                  "resume_chunks": second.transferred_chunk_indices,
+                  "cumulative_wire_bytes": final_state.cumulative_wire_bytes,
+                  "exact": reconstructed == data,
+              })
+          PY
