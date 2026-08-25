@@ -170,7 +170,7 @@ Primary accounting metric:
 TRC =
     discovery bits
   + rendezvous bits
-  + manifest bits
+  + manifest/control bits
   + payload/reference/residual bits
   + FEC bits
   + acknowledgement bits
@@ -320,7 +320,7 @@ Explicit `repeat=True` or disabled frame-size checking are synthetic/extrapolati
 
 ## RF-003 — Replay-driven exact-session testing
 
-**ACTIVE / first end-to-end path implemented**
+**DONE at current in-memory exact-session scope**
 
 Implemented:
 
@@ -336,13 +336,17 @@ Accounting safeguards:
 
 - local replayed TX bytes are exact;
 - remote ACK/response bytes on failed untethered attempts remain unknown and are reported as a lower bound;
-- exact deterministic-simulator accounting and lower-bound physical-replay accounting cannot be mixed in one resumed session.
+- exact deterministic-simulator accounting and lower-bound physical-replay accounting cannot be mixed in one resumed session;
+- primary data, primary ACK, retry data and retry ACK bytes are non-overlapping;
+- logical manifest + availability + chunk bytes are cross-checked against the physical primary/retry breakdown.
+
+See [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md).
 
 **NEXT**
 
 - durable receiver-store/session restart test;
-- richer TRC breakdown by discovery/manifest/availability/chunk/ACK/retransmission category;
-- replay-driven P2P/store-and-forward scenarios.
+- extend TRC to discovery/rendezvous and future FEC without double counting;
+- replay-driven store-and-forward scenarios.
 
 ## RF-004 — HW-006 calibration set
 
@@ -358,20 +362,21 @@ Do not infer a deployment packet-loss probability from a small checkpoint sample
 
 # Immediate implementation order
 
-Completed in the current software round:
+Completed in this software round:
 
 1. **RF evidence catalog + deterministic trace replay.**
 2. **Roadmap/status synchronization.**
 3. **Resumable EXACT session state above unchanged PNF1 retry.**
-4. **RF-replay-driven PNF1/session tests with explicit accounting semantics.**
+4. **RF-replay-driven PNF1/session tests with explicit evidence semantics.**
+5. **Non-overlapping exact-session TRC wire accounting.**
 
 Next software work while hardware is unavailable:
 
-5. **Durable content-addressed receiver store + restartable session checkpoint.**
-6. **Detailed TRC component accounting and replay-driven P2P/store-and-forward tests.**
+6. **Durable content-addressed receiver store + atomic restartable session checkpoint.**
+7. **Extend TRC across discovery/rendezvous and add replay-driven store-and-forward tests.**
 
 When hardware access returns:
 
-7. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
-8. **Calibrate the synthetic scarce-link model from measured evidence.**
-9. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
+8. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
+9. **Calibrate the synthetic scarce-link model from measured evidence.**
+10. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
