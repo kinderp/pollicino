@@ -110,6 +110,16 @@ from .bundle_route import (
     run_governed_store_forward_schedule,
     summarize_governed_end_to_end_trc,
 )
+from .bearer import (
+    BearerContactReport,
+    BearerGovernedContact,
+    BearerKind,
+    BearerProfile,
+    BearerTRCLine,
+    EvidenceBasis,
+    PerBearerTRCReport,
+    run_per_bearer_governed_schedule,
+)
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -120,6 +130,11 @@ __all__ = [
     "AvailabilitySummary",
     "BUNDLE_MAGIC",
     "BUNDLE_VERSION",
+    "BearerContactReport",
+    "BearerGovernedContact",
+    "BearerKind",
+    "BearerProfile",
+    "BearerTRCLine",
     "CHUNK_MANIFEST_MAGIC",
     "CUSTODY_LEDGER_SCHEMA",
     "CUSTODY_MAGIC",
@@ -136,6 +151,7 @@ __all__ = [
     "DiscoveryDescriptor",
     "EXACT_SESSION_SCHEMA",
     "EndToEndTRCReport",
+    "EvidenceBasis",
     "ExactSyncSessionState",
     "ExactSyncStepReport",
     "FRAME_HEADER_BYTES",
@@ -158,6 +174,7 @@ __all__ = [
     "MAX_KEY_BYTES",
     "MAX_METADATA_BYTES",
     "ManifestResolver",
+    "PerBearerTRCReport",
     "PollicinoStore",
     "RFEvidence",
     "RFReplayExhausted",
@@ -191,6 +208,7 @@ __all__ = [
     "reconstruct_from_store",
     "retrieve_exact",
     "run_governed_store_forward_schedule",
+    "run_per_bearer_governed_schedule",
     "run_store_forward_schedule",
     "save_custody_ledger",
     "save_exact_session_checkpoint",
