@@ -220,7 +220,7 @@ Physical replay keeps failed untethered transactions observationally unresolved 
 
 ## PN-005 — P2P chunk store and reconstruction
 
-**DONE at in-memory/session scope**
+**DONE at durable/session scope**
 
 - SHA-256 content-addressed chunks;
 - PCM1 manifests;
@@ -228,13 +228,17 @@ Physical replay keeps failed untethered transactions observationally unresolved 
 - missing-chunk synchronization;
 - measured cache/traffic curve;
 - chunk-boundary resumability: later steps advertise receiver availability and skip already verified chunks;
-- serializable session coordination state.
+- serializable session coordination state;
+- crash-safe on-disk `DirectoryPollicinoStore` with SHA-256 verification before advertising availability;
+- corrupt ordinary chunk files are treated as unavailable and may be repaired by verified re-transfer;
+- atomic checksummed exact-session checkpoints using same-directory temporary files, file fsync and `os.replace`;
+- tested fresh-process reconstruction of sender/receiver stores plus session state, with no retransmission of already verified chunks.
 
 **NEXT**
 
-- durable on-disk receiver store/session checkpoint for restart across processes/devices;
 - delta/patch experiments against prior versions;
-- store-and-forward scheduling across intermittent peers.
+- store-and-forward scheduling across intermittent peers;
+- define lifecycle/garbage-collection policy for durable chunk stores.
 
 ## PN-006 — Optional DNA integration
 
@@ -246,7 +250,7 @@ Physical replay keeps failed untethered transactions observationally unresolved 
 
 **DEFERRED EXPANSION**
 
-- broader Travel DNA field prototype after durable exact-session behavior is stable.
+- broader Travel DNA field prototype after exact-session/store-and-forward behavior is stable.
 
 ## PN-007 — Real scarce-link hardware pilot
 
@@ -320,7 +324,7 @@ Explicit `repeat=True` or disabled frame-size checking are synthetic/extrapolati
 
 ## RF-003 — Replay-driven exact-session testing
 
-**DONE at current in-memory exact-session scope**
+**DONE at durable exact-session scope**
 
 Implemented:
 
@@ -329,24 +333,30 @@ RF trace
  -> physical success/failure oracle
  -> PNF1 retry
  -> resumable chunk session
+ -> durable chunk store + atomic session checkpoint
+ -> fresh-process restart
  -> final exact reconstruction
 ```
 
-Accounting safeguards:
+Accounting and persistence safeguards:
 
 - local replayed TX bytes are exact;
 - remote ACK/response bytes on failed untethered attempts remain unknown and are reported as a lower bound;
 - exact deterministic-simulator accounting and lower-bound physical-replay accounting cannot be mixed in one resumed session;
 - primary data, primary ACK, retry data and retry ACK bytes are non-overlapping;
-- logical manifest + availability + chunk bytes are cross-checked against the physical primary/retry breakdown.
+- logical manifest + availability + chunk bytes are cross-checked against the physical primary/retry breakdown;
+- durable chunks are verified against their content address before being advertised;
+- checkpoint contents are schema-validated and SHA-256 protected;
+- a failed atomic checkpoint replace leaves the previously committed state readable;
+- a process restart reloads store + session state and sends only the remaining verified-missing chunks.
 
 See [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md).
 
 **NEXT**
 
-- durable receiver-store/session restart test;
 - extend TRC to discovery/rendezvous and future FEC without double counting;
-- replay-driven store-and-forward scenarios.
+- replay-driven store-and-forward scenarios;
+- durable-store retention/garbage-collection experiments.
 
 ## RF-004 — HW-006 calibration set
 
@@ -369,14 +379,15 @@ Completed in this software round:
 3. **Resumable EXACT session state above unchanged PNF1 retry.**
 4. **RF-replay-driven PNF1/session tests with explicit evidence semantics.**
 5. **Non-overlapping exact-session TRC wire accounting.**
+6. **Durable content-addressed store + atomic restartable session checkpoint.**
 
 Next software work while hardware is unavailable:
 
-6. **Durable content-addressed receiver store + atomic restartable session checkpoint.**
 7. **Extend TRC across discovery/rendezvous and add replay-driven store-and-forward tests.**
+8. **Define durable-store retention/garbage collection and delta/patch experiments.**
 
 When hardware access returns:
 
-8. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
-9. **Calibrate the synthetic scarce-link model from measured evidence.**
-10. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
+9. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
+10. **Calibrate the synthetic scarce-link model from measured evidence.**
+11. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
