@@ -12,10 +12,14 @@ from .routing_compare import (
     RoutingComparisonReport,
     RoutingStrategy,
     RoutingStrategyReport,
+    StrategyWindowReport,
     compare_synthetic_routing_strategies,
 )
 from .scheduling import BundlePriority, ScheduledBundle
 from .store_forward import ForwardPeer
+
+
+BENCHMARK_EVIDENCE_CLASS = "model_synthetic"
 
 
 def _require_id(name: str, value: str) -> None:
@@ -75,6 +79,28 @@ class RoutingBenchmarkScenarioReport:
 
 
 @dataclass(frozen=True, slots=True)
+class _WindowEvidence:
+    forwarding_decision_count: int = 0
+    transferred_chunk_count: int = 0
+    fairness_rescue_count: int = 0
+    payload_primary_wire_bytes: int = 0
+    protocol_metadata_primary_wire_bytes: int = 0
+    primary_ack_wire_bytes: int = 0
+    retransmission_data_wire_bytes: int = 0
+    retransmission_ack_wire_bytes: int = 0
+
+    @property
+    def classified_wire_bytes(self) -> int:
+        return (
+            self.payload_primary_wire_bytes
+            + self.protocol_metadata_primary_wire_bytes
+            + self.primary_ack_wire_bytes
+            + self.retransmission_data_wire_bytes
+            + self.retransmission_ack_wire_bytes
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class BenchmarkBearerAggregate:
     bearer_id: str
     kind: BearerKind
@@ -82,6 +108,27 @@ class BenchmarkBearerAggregate:
     window_count: int
     used_source_bytes: int
     total_wire_bytes: int
+    forwarding_decision_count: int
+    transferred_chunk_count: int
+    fairness_rescue_count: int
+    payload_primary_wire_bytes: int
+    protocol_metadata_primary_wire_bytes: int
+    primary_ack_wire_bytes: int
+    retransmission_data_wire_bytes: int
+    retransmission_ack_wire_bytes: int
+
+    @property
+    def retransmission_wire_bytes(self) -> int:
+        return self.retransmission_data_wire_bytes + self.retransmission_ack_wire_bytes
+
+    @property
+    def classified_wire_bytes(self) -> int:
+        return (
+            self.payload_primary_wire_bytes
+            + self.protocol_metadata_primary_wire_bytes
+            + self.primary_ack_wire_bytes
+            + self.retransmission_wire_bytes
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -98,6 +145,14 @@ class BenchmarkStrategyAggregate:
     total_wire_bytes: int
     skipped_window_count: int
     total_window_count: int
+    forwarding_decision_count: int
+    transferred_chunk_count: int
+    fairness_rescue_count: int
+    payload_primary_wire_bytes: int
+    protocol_metadata_primary_wire_bytes: int
+    primary_ack_wire_bytes: int
+    retransmission_data_wire_bytes: int
+    retransmission_ack_wire_bytes: int
     bearer_usage: tuple[BenchmarkBearerAggregate, ...]
 
     @property
@@ -128,11 +183,25 @@ class BenchmarkStrategyAggregate:
             return None
         return self.total_wire_bytes / self.delivered_bundle_count
 
+    @property
+    def retransmission_wire_bytes(self) -> int:
+        return self.retransmission_data_wire_bytes + self.retransmission_ack_wire_bytes
+
+    @property
+    def classified_wire_bytes(self) -> int:
+        return (
+            self.payload_primary_wire_bytes
+            + self.protocol_metadata_primary_wire_bytes
+            + self.primary_ack_wire_bytes
+            + self.retransmission_wire_bytes
+        )
+
 
 @dataclass(frozen=True, slots=True)
 class RoutingBenchmarkReport:
     scenarios: tuple[RoutingBenchmarkScenarioReport, ...]
     strategies: tuple[BenchmarkStrategyAggregate, ...]
+    evidence_class: str = BENCHMARK_EVIDENCE_CLASS
 
     def strategy(self, strategy_id: str) -> BenchmarkStrategyAggregate:
         for item in self.strategies:
@@ -154,6 +223,61 @@ def _bundle_created_at_by_id(scenario: RoutingBenchmarkScenario) -> dict[str, in
     }
 
 
+def _window_evidence(window: StrategyWindowReport) -> _WindowEvidence:
+    if window.scheduling is None:
+        return _WindowEvidence()
+
+    fair = window.scheduling.scheduling
+    forwarding_decisions = 0
+    transferred_chunks = 0
+    payload_primary = 0
+    protocol_metadata_primary = 0
+    primary_ack = 0
+    retransmission_data = 0
+    retransmission_ack = 0
+
+    for decision in fair.decisions:
+        if decision.selected_source_bytes > 0:
+            forwarding_decisions += 1
+        governed = decision.report
+        protocol_metadata_primary += (
+            governed.bundle_primary_data_wire_bytes
+            + governed.custody_primary_data_wire_bytes
+        )
+        primary_ack += governed.governance_primary_ack_wire_bytes
+        retransmission_data += governed.governance_retransmission_data_wire_bytes
+        retransmission_ack += governed.governance_retransmission_ack_wire_bytes
+
+        inner = governed.inner
+        if inner is None:
+            continue
+        transferred_chunks += len(inner.transferred_chunk_indices)
+        payload_primary += inner.payload_primary_data_wire_bytes
+        protocol_metadata_primary += (
+            inner.manifest_primary_data_wire_bytes
+            + inner.availability_primary_data_wire_bytes
+        )
+        primary_ack += inner.primary_ack_wire_bytes
+        retransmission_data += inner.retransmission_data_wire_bytes
+        retransmission_ack += inner.retransmission_ack_wire_bytes
+
+    evidence = _WindowEvidence(
+        forwarding_decision_count=forwarding_decisions,
+        transferred_chunk_count=transferred_chunks,
+        fairness_rescue_count=len(fair.rescued_bundle_ids),
+        payload_primary_wire_bytes=payload_primary,
+        protocol_metadata_primary_wire_bytes=protocol_metadata_primary,
+        primary_ack_wire_bytes=primary_ack,
+        retransmission_data_wire_bytes=retransmission_data,
+        retransmission_ack_wire_bytes=retransmission_ack,
+    )
+    if evidence.classified_wire_bytes != window.total_wire_bytes:
+        raise AssertionError(
+            "routing benchmark wire classification does not match contact wire total"
+        )
+    return evidence
+
+
 def _aggregate_strategy(
     strategy_id: str,
     scenario_reports: Sequence[tuple[RoutingBenchmarkScenario, RoutingStrategyReport]],
@@ -168,6 +292,14 @@ def _aggregate_strategy(
     total_wire_bytes = 0
     skipped_windows = 0
     total_windows = 0
+    forwarding_decisions = 0
+    transferred_chunks = 0
+    fairness_rescues = 0
+    payload_primary = 0
+    protocol_metadata_primary = 0
+    primary_ack = 0
+    retransmission_data = 0
+    retransmission_ack = 0
     bearer_totals: dict[str, list[object]] = {}
 
     for scenario, report in scenario_reports:
@@ -195,7 +327,57 @@ def _aggregate_strategy(
                 )
             latencies.append(latency)
 
+        evidence_by_bearer: dict[str, _WindowEvidence] = {}
+        for window in report.windows:
+            evidence = _window_evidence(window)
+            forwarding_decisions += evidence.forwarding_decision_count
+            transferred_chunks += evidence.transferred_chunk_count
+            fairness_rescues += evidence.fairness_rescue_count
+            payload_primary += evidence.payload_primary_wire_bytes
+            protocol_metadata_primary += evidence.protocol_metadata_primary_wire_bytes
+            primary_ack += evidence.primary_ack_wire_bytes
+            retransmission_data += evidence.retransmission_data_wire_bytes
+            retransmission_ack += evidence.retransmission_ack_wire_bytes
+
+            previous = evidence_by_bearer.get(window.bearer_id, _WindowEvidence())
+            evidence_by_bearer[window.bearer_id] = _WindowEvidence(
+                forwarding_decision_count=(
+                    previous.forwarding_decision_count
+                    + evidence.forwarding_decision_count
+                ),
+                transferred_chunk_count=(
+                    previous.transferred_chunk_count + evidence.transferred_chunk_count
+                ),
+                fairness_rescue_count=(
+                    previous.fairness_rescue_count + evidence.fairness_rescue_count
+                ),
+                payload_primary_wire_bytes=(
+                    previous.payload_primary_wire_bytes
+                    + evidence.payload_primary_wire_bytes
+                ),
+                protocol_metadata_primary_wire_bytes=(
+                    previous.protocol_metadata_primary_wire_bytes
+                    + evidence.protocol_metadata_primary_wire_bytes
+                ),
+                primary_ack_wire_bytes=(
+                    previous.primary_ack_wire_bytes + evidence.primary_ack_wire_bytes
+                ),
+                retransmission_data_wire_bytes=(
+                    previous.retransmission_data_wire_bytes
+                    + evidence.retransmission_data_wire_bytes
+                ),
+                retransmission_ack_wire_bytes=(
+                    previous.retransmission_ack_wire_bytes
+                    + evidence.retransmission_ack_wire_bytes
+                ),
+            )
+
         for usage in report.bearer_usage:
+            evidence = evidence_by_bearer.get(usage.bearer_id, _WindowEvidence())
+            if evidence.classified_wire_bytes != usage.total_wire_bytes:
+                raise AssertionError(
+                    "routing benchmark bearer wire classification does not match bearer total"
+                )
             current = bearer_totals.get(usage.bearer_id)
             if current is None:
                 bearer_totals[usage.bearer_id] = [
@@ -204,6 +386,14 @@ def _aggregate_strategy(
                     usage.window_count,
                     usage.used_source_bytes,
                     usage.total_wire_bytes,
+                    evidence.forwarding_decision_count,
+                    evidence.transferred_chunk_count,
+                    evidence.fairness_rescue_count,
+                    evidence.payload_primary_wire_bytes,
+                    evidence.protocol_metadata_primary_wire_bytes,
+                    evidence.primary_ack_wire_bytes,
+                    evidence.retransmission_data_wire_bytes,
+                    evidence.retransmission_ack_wire_bytes,
                 ]
                 continue
             if current[0] is not usage.kind:
@@ -214,6 +404,26 @@ def _aggregate_strategy(
             current[2] = int(current[2]) + usage.window_count
             current[3] = int(current[3]) + usage.used_source_bytes
             current[4] = int(current[4]) + usage.total_wire_bytes
+            current[5] = int(current[5]) + evidence.forwarding_decision_count
+            current[6] = int(current[6]) + evidence.transferred_chunk_count
+            current[7] = int(current[7]) + evidence.fairness_rescue_count
+            current[8] = int(current[8]) + evidence.payload_primary_wire_bytes
+            current[9] = int(current[9]) + evidence.protocol_metadata_primary_wire_bytes
+            current[10] = int(current[10]) + evidence.primary_ack_wire_bytes
+            current[11] = int(current[11]) + evidence.retransmission_data_wire_bytes
+            current[12] = int(current[12]) + evidence.retransmission_ack_wire_bytes
+
+    classified_wire_bytes = (
+        payload_primary
+        + protocol_metadata_primary
+        + primary_ack
+        + retransmission_data
+        + retransmission_ack
+    )
+    if classified_wire_bytes != total_wire_bytes:
+        raise AssertionError(
+            "routing benchmark aggregate wire classification does not match total"
+        )
 
     bearer_usage = tuple(
         BenchmarkBearerAggregate(
@@ -223,6 +433,14 @@ def _aggregate_strategy(
             window_count=int(values[2]),
             used_source_bytes=int(values[3]),
             total_wire_bytes=int(values[4]),
+            forwarding_decision_count=int(values[5]),
+            transferred_chunk_count=int(values[6]),
+            fairness_rescue_count=int(values[7]),
+            payload_primary_wire_bytes=int(values[8]),
+            protocol_metadata_primary_wire_bytes=int(values[9]),
+            primary_ack_wire_bytes=int(values[10]),
+            retransmission_data_wire_bytes=int(values[11]),
+            retransmission_ack_wire_bytes=int(values[12]),
         )
         for bearer_id, values in sorted(bearer_totals.items())
     )
@@ -239,6 +457,14 @@ def _aggregate_strategy(
         total_wire_bytes=total_wire_bytes,
         skipped_window_count=skipped_windows,
         total_window_count=total_windows,
+        forwarding_decision_count=forwarding_decisions,
+        transferred_chunk_count=transferred_chunks,
+        fairness_rescue_count=fairness_rescues,
+        payload_primary_wire_bytes=payload_primary,
+        protocol_metadata_primary_wire_bytes=protocol_metadata_primary,
+        primary_ack_wire_bytes=primary_ack,
+        retransmission_data_wire_bytes=retransmission_data,
+        retransmission_ack_wire_bytes=retransmission_ack,
         bearer_usage=bearer_usage,
     )
 
