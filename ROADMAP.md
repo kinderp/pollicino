@@ -194,12 +194,11 @@ TRC =
 - stop-and-wait retries;
 - duplicate handling;
 - ACK accounting;
-- deterministic byte/TRC-relevant measurements.
+- deterministic byte/TRC-relevant measurements;
+- physical RF outcome replay as an alternative transaction oracle;
+- resumable exact-session state above unchanged PNF1 framing.
 
-**NEXT**
-
-- consume physical RF replay traces in addition to synthetic loss probabilities;
-- add explicit interruption/resume state above frame retry.
+Physical replay keeps failed untethered transactions observationally unresolved and reports return/ACK bytes as a lower bound rather than pretending the remote path was observed.
 
 ## PN-003 — Coordinate -> rich-network retrieval
 
@@ -221,17 +220,19 @@ TRC =
 
 ## PN-005 — P2P chunk store and reconstruction
 
-**DONE**
+**DONE at in-memory/session scope**
 
 - SHA-256 content-addressed chunks;
 - PCM1 manifests;
 - PNA1 availability summaries;
 - missing-chunk synchronization;
-- measured cache/traffic curve.
+- measured cache/traffic curve;
+- chunk-boundary resumability: later steps advertise receiver availability and skip already verified chunks;
+- serializable session coordination state.
 
 **NEXT**
 
-- resumable multi-session synchronization;
+- durable on-disk receiver store/session checkpoint for restart across processes/devices;
 - delta/patch experiments against prior versions;
 - store-and-forward scheduling across intermittent peers.
 
@@ -245,7 +246,7 @@ TRC =
 
 **DEFERRED EXPANSION**
 
-- broader Travel DNA field prototype after exact-session/resume behavior is stable.
+- broader Travel DNA field prototype after durable exact-session behavior is stable.
 
 ## PN-007 — Real scarce-link hardware pilot
 
@@ -296,41 +297,52 @@ Never represent SEMANTIC output as exact DNA state, signatures, consent or crypt
 
 ## RF-001 — Evidence catalog
 
-**ACTIVE / implementation added**
+**DONE at current schema coverage**
 
-Normalize supported physical records without silently combining overlapping raw and derived summaries.
-
-Required outputs:
-
-- lab/schema coverage;
-- frame-size and TX-power coverage;
-- checkpoint names;
-- normalized success/failure counts per evidence record;
-- RSSI/SNR/RTT/IRQ metrics when actually present;
-- provenance links where recorded.
+- normalize supported HW-001..HW-006 evidence without combining overlapping raw/derived summaries;
+- report lab/schema/frame-size/TX-power/checkpoint coverage;
+- preserve source-level success/failure and telemetry only when actually recorded;
+- CLI smoke-tested against the repository physical-validation archive.
 
 ## RF-002 — Deterministic physical trace replay
 
-**ACTIVE / implementation added**
+**DONE at current raw-trace scope**
 
 - extract ordered samples from raw HW-002 benchmarks;
 - accept future executed HW-006 checkpoint records;
 - preserve ambiguous untethered timeouts;
 - never impute remote RSSI/SNR for failed HW-006 attempts;
-- fail if replay requests more physical samples than recorded unless explicit synthetic repetition is enabled.
+- reject silent replay beyond the number of recorded samples;
+- drive PNF1 retry behavior from physical transaction outcomes;
+- enforce recorded frame-size compatibility by default.
+
+Explicit `repeat=True` or disabled frame-size checking are synthetic/extrapolation modes and must not be cited as additional physical evidence.
 
 ## RF-003 — Replay-driven exact-session testing
 
+**ACTIVE / first end-to-end path implemented**
+
+Implemented:
+
+```text
+RF trace
+ -> physical success/failure oracle
+ -> PNF1 retry
+ -> resumable chunk session
+ -> final exact reconstruction
+```
+
+Accounting safeguards:
+
+- local replayed TX bytes are exact;
+- remote ACK/response bytes on failed untethered attempts remain unknown and are reported as a lower bound;
+- exact deterministic-simulator accounting and lower-bound physical-replay accounting cannot be mixed in one resumed session.
+
 **NEXT**
 
-Feed physical outcome traces into:
-
-- PNF1 retry tests;
-- resumable transfer/session logic;
-- P2P missing-chunk synchronization;
-- TRC accounting.
-
-The trace is evidence, not a universal channel model.
+- durable receiver-store/session restart test;
+- richer TRC breakdown by discovery/manifest/availability/chunk/ACK/retransmission category;
+- replay-driven P2P/store-and-forward scenarios.
 
 ## RF-004 — HW-006 calibration set
 
@@ -338,16 +350,28 @@ The trace is evidence, not a universal channel model.
 
 When the boards are available, record controlled same-room/distance/NLOS checkpoints with explicit geometry, antenna orientation, frame size, TX power, airtime budget and occupancy pacing.
 
+Current 42-byte physical traces cannot be silently reused for differently sized session-control frames. The replay layer deliberately exposes this measurement gap rather than hiding it through automatic extrapolation.
+
 Do not infer a deployment packet-loss probability from a small checkpoint sample.
 
 ---
 
 # Immediate implementation order
 
+Completed in the current software round:
+
 1. **RF evidence catalog + deterministic trace replay.**
 2. **Roadmap/status synchronization.**
-3. **Resumable EXACT session state above the existing PNF1 retry layer.**
-4. **Replay-driven interruption/recovery tests and TRC accounting.**
-5. **HW-006 physical checkpoint campaign when hardware access returns.**
-6. **Calibrate the synthetic scarce-link model from measured evidence.**
-7. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
+3. **Resumable EXACT session state above unchanged PNF1 retry.**
+4. **RF-replay-driven PNF1/session tests with explicit accounting semantics.**
+
+Next software work while hardware is unavailable:
+
+5. **Durable content-addressed receiver store + restartable session checkpoint.**
+6. **Detailed TRC component accounting and replay-driven P2P/store-and-forward tests.**
+
+When hardware access returns:
+
+7. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
+8. **Calibrate the synthetic scarce-link model from measured evidence.**
+9. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
