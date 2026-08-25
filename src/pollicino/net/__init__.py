@@ -153,6 +153,13 @@ from .fair_scheduling import (
     schedule_fair_bearer_contact,
     schedule_fair_contact_bundles,
 )
+from .contact_windows import (
+    BundlePropagationState,
+    SyntheticContactWindow,
+    SyntheticNetworkReport,
+    SyntheticWindowReport,
+    run_synthetic_contact_windows,
+)
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -171,6 +178,7 @@ __all__ = [
     "BearerSchedulingReport",
     "BearerTRCLine",
     "BundlePriority",
+    "BundlePropagationState",
     "BundleSchedulingDecision",
     "BundleWaitRecord",
     "CHUNK_MANIFEST_MAGIC",
@@ -241,6 +249,9 @@ __all__ = [
     "ScheduledBundle",
     "StoreForwardRouteReport",
     "StoreSyncReport",
+    "SyntheticContactWindow",
+    "SyntheticNetworkReport",
+    "SyntheticWindowReport",
     "TransferReport",
     "TransferWireBreakdown",
     "availability_for",
@@ -265,6 +276,7 @@ __all__ = [
     "run_governed_store_forward_schedule",
     "run_per_bearer_governed_schedule",
     "run_store_forward_schedule",
+    "run_synthetic_contact_windows",
     "save_custody_ledger",
     "save_exact_session_checkpoint",
     "save_fair_scheduler_state",
