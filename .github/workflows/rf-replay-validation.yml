@@ -1,0 +1,42 @@
+name: RF replay validation
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install project
+        run: python -m pip install -e ".[test]"
+      - name: Project tests
+        run: python -m pytest -q tests
+      - name: RF catalog smoke
+        run: |
+          pollicino-rf hardware/lilygo-lora32-v1.6.1/physical-validation --output /tmp/rf-catalog.json >/tmp/rf-catalog.stdout
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/rf-catalog.json').read_text())
+          assert data['schema'] == 'pollicino-rf-evidence-catalog-v1'
+          assert 'HW-002' in data['coverage']['labs']
+          assert 'HW-004' in data['coverage']['labs']
+          assert 'HW-005' in data['coverage']['labs']
+          assert data['replay_traces'] >= 1
+          print(json.dumps({
+              'files_seen': data['files_seen'],
+              'evidence_records': data['evidence_records'],
+              'replay_traces': data['replay_traces'],
+              'labs': data['coverage']['labs'],
+              'frame_bytes': data['coverage']['frame_bytes'],
+              'tx_power_dbm': data['coverage']['tx_power_dbm'],
+          }, sort_keys=True))
+          PY
