@@ -70,6 +70,7 @@ from .session import (
     ExactSyncStepReport,
     sync_missing_chunks_step,
 )
+from .trc import TransferWireBreakdown, classify_transfer_wire
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -114,9 +115,11 @@ __all__ = [
     "ScarceLinkProfile",
     "StoreSyncReport",
     "TransferReport",
+    "TransferWireBreakdown",
     "availability_for",
     "build_chunk_manifest",
     "catalog_rf_paths",
+    "classify_transfer_wire",
     "deliver_exact_adaptive",
     "extract_rf_trace",
     "fragment_payload",

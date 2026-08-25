@@ -12,6 +12,7 @@ from .store import (
     build_chunk_manifest,
     reconstruct_from_store,
 )
+from .trc import classify_transfer_wire
 
 
 EXACT_SESSION_SCHEMA = "pollicino-exact-sync-session-v1"
@@ -25,10 +26,9 @@ TransferCallable = Callable[..., tuple[bytes, Any]]
 class ExactSyncSessionState:
     """Serializable state for resumable exact chunk synchronization.
 
-    The state deliberately lives above PNF1. It records coordination and
-    accounting only; verified chunk bytes remain in the receiver's
-    ``PollicinoStore``. Persisting that store across process/device restarts is
-    a separate storage concern.
+    Coordination lives above PNF1. Verified chunk bytes remain in the
+    receiver's ``PollicinoStore``; durable store persistence is deliberately a
+    separate concern.
     """
 
     manifest_fingerprint: bytes
@@ -40,6 +40,11 @@ class ExactSyncSessionState:
     cumulative_availability_wire_bytes: int = 0
     cumulative_chunk_wire_bytes: int = 0
     cumulative_retransmissions: int = 0
+    cumulative_primary_data_wire_bytes: int = 0
+    cumulative_primary_ack_wire_bytes: int = 0
+    cumulative_retransmission_data_wire_bytes: int = 0
+    cumulative_retransmission_ack_wire_bytes: int = 0
+    cumulative_unknown_remote_failure_count: int = 0
     wire_accounting: str | None = None
     completed: bool = False
 
@@ -64,6 +69,20 @@ class ExactSyncSessionState:
             ("cumulative_availability_wire_bytes", self.cumulative_availability_wire_bytes),
             ("cumulative_chunk_wire_bytes", self.cumulative_chunk_wire_bytes),
             ("cumulative_retransmissions", self.cumulative_retransmissions),
+            ("cumulative_primary_data_wire_bytes", self.cumulative_primary_data_wire_bytes),
+            ("cumulative_primary_ack_wire_bytes", self.cumulative_primary_ack_wire_bytes),
+            (
+                "cumulative_retransmission_data_wire_bytes",
+                self.cumulative_retransmission_data_wire_bytes,
+            ),
+            (
+                "cumulative_retransmission_ack_wire_bytes",
+                self.cumulative_retransmission_ack_wire_bytes,
+            ),
+            (
+                "cumulative_unknown_remote_failure_count",
+                self.cumulative_unknown_remote_failure_count,
+            ),
         ):
             if not isinstance(value, int) or value < 0:
                 raise ValueError(f"{name} must be a non-negative integer")
@@ -75,6 +94,21 @@ class ExactSyncSessionState:
             + self.cumulative_availability_wire_bytes
             + self.cumulative_chunk_wire_bytes
         )
+
+    @property
+    def cumulative_primary_wire_bytes(self) -> int:
+        return self.cumulative_primary_data_wire_bytes + self.cumulative_primary_ack_wire_bytes
+
+    @property
+    def cumulative_retransmission_wire_bytes(self) -> int:
+        return (
+            self.cumulative_retransmission_data_wire_bytes
+            + self.cumulative_retransmission_ack_wire_bytes
+        )
+
+    @property
+    def cumulative_breakdown_wire_bytes(self) -> int:
+        return self.cumulative_primary_wire_bytes + self.cumulative_retransmission_wire_bytes
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -89,6 +123,14 @@ class ExactSyncSessionState:
             "cumulative_chunk_wire_bytes": self.cumulative_chunk_wire_bytes,
             "cumulative_wire_bytes": self.cumulative_wire_bytes,
             "cumulative_retransmissions": self.cumulative_retransmissions,
+            "cumulative_primary_data_wire_bytes": self.cumulative_primary_data_wire_bytes,
+            "cumulative_primary_ack_wire_bytes": self.cumulative_primary_ack_wire_bytes,
+            "cumulative_retransmission_data_wire_bytes": self.cumulative_retransmission_data_wire_bytes,
+            "cumulative_retransmission_ack_wire_bytes": self.cumulative_retransmission_ack_wire_bytes,
+            "cumulative_primary_wire_bytes": self.cumulative_primary_wire_bytes,
+            "cumulative_retransmission_wire_bytes": self.cumulative_retransmission_wire_bytes,
+            "cumulative_breakdown_wire_bytes": self.cumulative_breakdown_wire_bytes,
+            "cumulative_unknown_remote_failure_count": self.cumulative_unknown_remote_failure_count,
             "wire_accounting": self.wire_accounting,
             "completed": self.completed,
         }
@@ -116,6 +158,17 @@ class ExactSyncSessionState:
             cumulative_availability_wire_bytes=int(value.get("cumulative_availability_wire_bytes", 0)),
             cumulative_chunk_wire_bytes=int(value.get("cumulative_chunk_wire_bytes", 0)),
             cumulative_retransmissions=int(value.get("cumulative_retransmissions", 0)),
+            cumulative_primary_data_wire_bytes=int(value.get("cumulative_primary_data_wire_bytes", 0)),
+            cumulative_primary_ack_wire_bytes=int(value.get("cumulative_primary_ack_wire_bytes", 0)),
+            cumulative_retransmission_data_wire_bytes=int(
+                value.get("cumulative_retransmission_data_wire_bytes", 0)
+            ),
+            cumulative_retransmission_ack_wire_bytes=int(
+                value.get("cumulative_retransmission_ack_wire_bytes", 0)
+            ),
+            cumulative_unknown_remote_failure_count=int(
+                value.get("cumulative_unknown_remote_failure_count", 0)
+            ),
             wire_accounting=None if wire_accounting is None else str(wire_accounting),
             completed=bool(value.get("completed", False)),
         )
@@ -134,6 +187,11 @@ class ExactSyncStepReport:
     chunk_wire_bytes: int
     step_wire_bytes: int
     retransmissions: int
+    primary_data_wire_bytes: int
+    primary_ack_wire_bytes: int
+    retransmission_data_wire_bytes: int
+    retransmission_ack_wire_bytes: int
+    unknown_remote_failure_count: int
     cumulative_wire_bytes: int
     cumulative_retransmissions: int
     wire_accounting: str
@@ -141,6 +199,21 @@ class ExactSyncStepReport:
     complete: bool
     exact: bool
 
+    @property
+    def primary_wire_bytes(self) -> int:
+        return self.primary_data_wire_bytes + self.primary_ack_wire_bytes
+
+    @property
+    def retransmission_wire_bytes(self) -> int:
+        return self.retransmission_data_wire_bytes + self.retransmission_ack_wire_bytes
+
+    @property
+    def breakdown_wire_bytes(self) -> int:
+        return self.primary_wire_bytes + self.retransmission_wire_bytes
+
+    @property
+    def accounted_bits(self) -> int:
+        return self.step_wire_bytes * 8
 
 
 def _next_id(value: int) -> tuple[int, int]:
@@ -149,14 +222,12 @@ def _next_id(value: int) -> tuple[int, int]:
     return value, value + 1
 
 
-
 def _missing_indices(manifest: ChunkManifest, store: PollicinoStore) -> list[int]:
     return [
         index
         for index, ref in enumerate(manifest.chunks)
         if not store.has(ref.sha256_digest)
     ]
-
 
 
 def _new_state(
@@ -175,20 +246,6 @@ def _new_state(
     )
 
 
-
-def _report_wire_accounting(report: Any) -> tuple[int, str]:
-    if hasattr(report, "total_wire_bytes"):
-        return int(report.total_wire_bytes), str(
-            getattr(report, "wire_accounting", "deterministic_model_exact")
-        )
-    if hasattr(report, "total_wire_bytes_lower_bound"):
-        return int(report.total_wire_bytes_lower_bound), str(
-            getattr(report, "wire_accounting", "physical_replay_lower_bound")
-        )
-    raise TypeError("transfer report exposes no supported wire-byte accounting field")
-
-
-
 def _merge_accounting(current: str | None, observed: str) -> str:
     if current is None:
         return observed
@@ -197,7 +254,6 @@ def _merge_accounting(current: str | None, observed: str) -> str:
             f"cannot mix wire-accounting semantics in one session: {current!r} vs {observed!r}"
         )
     return current
-
 
 
 def sync_missing_chunks_step(
@@ -216,12 +272,13 @@ def sync_missing_chunks_step(
     """Advance an exact synchronization session by at most ``max_chunks``.
 
     Resumability is provided at verified chunk boundaries. PNF1 itself remains
-    unchanged and continues to own per-frame stop-and-wait behavior. The
-    default transmitter is the deterministic PN-002 simulator; callers may
-    inject a compatible transfer primitive such as ``RFReplayTransmitter``.
+    unchanged. The default transmitter is the deterministic PN-002 simulator;
+    callers may inject a compatible transfer primitive such as
+    ``RFReplayTransmitter.transmit_exact``.
 
-    Wire accounting cannot silently mix exact simulator bytes with physical
-    replay lower bounds inside one resumed session.
+    The report uses non-overlapping primary/retransmission wire categories and
+    preserves whether those bytes are exact model accounting or a physical
+    replay lower bound.
     """
 
     if not isinstance(max_chunks, int) or max_chunks < 0:
@@ -265,6 +322,11 @@ def sync_missing_chunks_step(
             chunk_wire_bytes=0,
             step_wire_bytes=0,
             retransmissions=0,
+            primary_data_wire_bytes=0,
+            primary_ack_wire_bytes=0,
+            retransmission_data_wire_bytes=0,
+            retransmission_ack_wire_bytes=0,
+            unknown_remote_failure_count=0,
             cumulative_wire_bytes=current.cumulative_wire_bytes,
             cumulative_retransmissions=current.cumulative_retransmissions,
             wire_accounting=current.wire_accounting or "none",
@@ -279,38 +341,60 @@ def sync_missing_chunks_step(
     availability_wire_bytes = 0
     chunk_wire_bytes = 0
     retransmissions = 0
+    primary_data_wire_bytes = 0
+    primary_ack_wire_bytes = 0
+    retransmission_data_wire_bytes = 0
+    retransmission_ack_wire_bytes = 0
+    unknown_remote_failure_count = 0
     manifest_delivered = current.manifest_delivered
     wire_accounting = current.wire_accounting
 
+    def account(payload: bytes, transfer_id: int, transfer_report: Any) -> int:
+        nonlocal wire_accounting
+        nonlocal primary_data_wire_bytes, primary_ack_wire_bytes
+        nonlocal retransmission_data_wire_bytes, retransmission_ack_wire_bytes
+        nonlocal unknown_remote_failure_count
+        breakdown = classify_transfer_wire(
+            payload,
+            transfer_id=transfer_id,
+            profile=profile,
+            report=transfer_report,
+        )
+        wire_accounting = _merge_accounting(wire_accounting, breakdown.accounting)
+        primary_data_wire_bytes += breakdown.primary_data_wire_bytes
+        primary_ack_wire_bytes += breakdown.primary_ack_wire_bytes
+        retransmission_data_wire_bytes += breakdown.retransmission_data_wire_bytes
+        retransmission_ack_wire_bytes += breakdown.retransmission_ack_wire_bytes
+        unknown_remote_failure_count += breakdown.unknown_remote_failure_count
+        return breakdown.accounted_wire_bytes
+
     if current.manifest_on_scarce and not manifest_delivered:
+        manifest_payload = manifest.encode()
         transfer_id, next_transfer_id = _next_id(next_transfer_id)
         received_manifest_wire, transfer_report = transfer(
-            manifest.encode(),
+            manifest_payload,
             transfer_id=transfer_id,
             profile=profile,
         )
         received_manifest = ChunkManifest.decode(received_manifest_wire)
         if received_manifest != manifest:
             raise AssertionError("chunk manifest changed during exact transfer")
-        wire_bytes, observed_accounting = _report_wire_accounting(transfer_report)
-        wire_accounting = _merge_accounting(wire_accounting, observed_accounting)
-        manifest_wire_bytes += wire_bytes
+        manifest_wire_bytes += account(manifest_payload, transfer_id, transfer_report)
         retransmissions += int(transfer_report.retransmissions)
         manifest_delivered = True
 
     summary = availability_for(manifest, receiver_store)
+    summary_payload = summary.encode()
     transfer_id, next_transfer_id = _next_id(next_transfer_id)
     received_summary_wire, summary_report = transfer(
-        summary.encode(),
+        summary_payload,
         transfer_id=transfer_id,
         profile=profile,
     )
     received_summary = AvailabilitySummary.decode(received_summary_wire)
     if received_summary.manifest_fingerprint != manifest.fingerprint:
         raise ValueError("availability summary targets a different chunk manifest")
-    wire_bytes, observed_accounting = _report_wire_accounting(summary_report)
-    wire_accounting = _merge_accounting(wire_accounting, observed_accounting)
-    availability_wire_bytes += wire_bytes
+    availability_wire_bytes += account(summary_payload, transfer_id, summary_report)
     retransmissions += int(summary_report.retransmissions)
 
     missing_before = [
@@ -341,9 +425,7 @@ def sync_missing_chunks_step(
         digest = receiver_store.put(received_chunk)
         if digest != ref.sha256_digest:
             raise ValueError("received chunk failed manifest SHA-256 verification")
-        wire_bytes, observed_accounting = _report_wire_accounting(chunk_report)
-        wire_accounting = _merge_accounting(wire_accounting, observed_accounting)
-        chunk_wire_bytes += wire_bytes
+        chunk_wire_bytes += account(packet, transfer_id, chunk_report)
         retransmissions += int(chunk_report.retransmissions)
         transferred_source_bytes += ref.length
 
@@ -358,6 +440,15 @@ def sync_missing_chunks_step(
             raise AssertionError("completed exact session reconstructed different bytes")
 
     step_wire_bytes = manifest_wire_bytes + availability_wire_bytes + chunk_wire_bytes
+    breakdown_wire_bytes = (
+        primary_data_wire_bytes
+        + primary_ack_wire_bytes
+        + retransmission_data_wire_bytes
+        + retransmission_ack_wire_bytes
+    )
+    if breakdown_wire_bytes != step_wire_bytes:
+        raise AssertionError("TRC wire breakdown does not equal logical session wire accounting")
+
     next_state = ExactSyncSessionState(
         manifest_fingerprint=current.manifest_fingerprint,
         next_transfer_id=next_transfer_id,
@@ -372,9 +463,27 @@ def sync_missing_chunks_step(
         ),
         cumulative_chunk_wire_bytes=current.cumulative_chunk_wire_bytes + chunk_wire_bytes,
         cumulative_retransmissions=current.cumulative_retransmissions + retransmissions,
+        cumulative_primary_data_wire_bytes=(
+            current.cumulative_primary_data_wire_bytes + primary_data_wire_bytes
+        ),
+        cumulative_primary_ack_wire_bytes=(
+            current.cumulative_primary_ack_wire_bytes + primary_ack_wire_bytes
+        ),
+        cumulative_retransmission_data_wire_bytes=(
+            current.cumulative_retransmission_data_wire_bytes + retransmission_data_wire_bytes
+        ),
+        cumulative_retransmission_ack_wire_bytes=(
+            current.cumulative_retransmission_ack_wire_bytes + retransmission_ack_wire_bytes
+        ),
+        cumulative_unknown_remote_failure_count=(
+            current.cumulative_unknown_remote_failure_count + unknown_remote_failure_count
+        ),
         wire_accounting=wire_accounting,
         completed=complete,
     )
+    if next_state.cumulative_breakdown_wire_bytes != next_state.cumulative_wire_bytes:
+        raise AssertionError("cumulative TRC breakdown diverged from session wire accounting")
+
     report = ExactSyncStepReport(
         step_number=next_state.step_count,
         cached_chunk_count_before=cached_before,
@@ -387,6 +496,11 @@ def sync_missing_chunks_step(
         chunk_wire_bytes=chunk_wire_bytes,
         step_wire_bytes=step_wire_bytes,
         retransmissions=retransmissions,
+        primary_data_wire_bytes=primary_data_wire_bytes,
+        primary_ack_wire_bytes=primary_ack_wire_bytes,
+        retransmission_data_wire_bytes=retransmission_data_wire_bytes,
+        retransmission_ack_wire_bytes=retransmission_ack_wire_bytes,
+        unknown_remote_failure_count=unknown_remote_failure_count,
         cumulative_wire_bytes=next_state.cumulative_wire_bytes,
         cumulative_retransmissions=next_state.cumulative_retransmissions,
         wire_accounting=wire_accounting or "none",

@@ -63,6 +63,12 @@ def test_resumable_session_can_be_driven_by_explicit_rf_extrapolation() -> None:
     assert state.wire_accounting == "local_data_exact_remote_ack_lower_bound"
     assert report.wire_accounting == state.wire_accounting
     assert report.retransmissions == 1
+    assert report.retransmission_data_wire_bytes > 0
+    assert report.retransmission_ack_wire_bytes == 0
+    assert report.unknown_remote_failure_count == 1
+    assert report.breakdown_wire_bytes == report.step_wire_bytes
+    assert state.cumulative_breakdown_wire_bytes == state.cumulative_wire_bytes
+    assert state.cumulative_unknown_remote_failure_count == 1
     assert replay.position == 3
     assert report.cumulative_wire_bytes == report.step_wire_bytes
 
@@ -84,5 +90,4 @@ def test_strict_42_byte_trace_rejects_differently_sized_session_control_frame() 
             transmitter=replay.transmit_exact,
         )
 
-    # The mismatch is detected before consuming the physical sample.
     assert replay.position == 0
