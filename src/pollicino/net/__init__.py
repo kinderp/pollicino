@@ -71,6 +71,12 @@ from .session import (
     sync_missing_chunks_step,
 )
 from .trc import TransferWireBreakdown, classify_transfer_wire
+from .persistence import (
+    SESSION_CHECKPOINT_SCHEMA,
+    DirectoryPollicinoStore,
+    load_exact_session_checkpoint,
+    save_exact_session_checkpoint,
+)
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -86,6 +92,7 @@ __all__ = [
     "ContentProvider",
     "DeliveryError",
     "DeliveryPolicy",
+    "DirectoryPollicinoStore",
     "DiscoveryDescriptor",
     "EXACT_SESSION_SCHEMA",
     "ExactSyncSessionState",
@@ -112,6 +119,7 @@ __all__ = [
     "RetrievalError",
     "RetrievalReport",
     "RetrievalSource",
+    "SESSION_CHECKPOINT_SCHEMA",
     "ScarceLinkProfile",
     "StoreSyncReport",
     "TransferReport",
@@ -123,11 +131,13 @@ __all__ = [
     "deliver_exact_adaptive",
     "extract_rf_trace",
     "fragment_payload",
+    "load_exact_session_checkpoint",
     "manifest_for_content",
     "normalize_rf_evidence",
     "reassemble_frames",
     "reconstruct_from_store",
     "retrieve_exact",
+    "save_exact_session_checkpoint",
     "sync_missing_chunks",
     "sync_missing_chunks_step",
     "transmit_exact",
