@@ -103,7 +103,7 @@ pollicino/
 │   │   ├── pytorch/
 │   │   └── mlx/
 │   ├── compression/         # deterministic coding and routing experiments
-│   └── net/                 # discovery, exact delivery, P2P/store-forward and RF evidence
+│   └── net/                 # discovery, exact delivery, governed store-forward and RF evidence
 ├── experiments/             # immutable experiment records
 ├── benchmarks/              # benchmark manifests and comparison outputs
 └── tests/                   # theory, parity, round-trip and network invariants
@@ -137,7 +137,7 @@ The standalone network path has implemented:
 - **PN-002:** deterministic scarce-link simulator, PNF1 exact-transfer framing/retry, physical RF replay and resumable exact-session state;
 - **PN-003:** opaque rendezvous coordinate -> manifest resolver -> full-hash retrieval;
 - **PN-004:** authorization-gated adaptive exact delivery across rich/scarce paths;
-- **PN-005:** content-addressed chunk reconstruction, durable on-disk stores, restartable sessions and deterministic intermittent store-and-forward relays;
+- **PN-005:** content-addressed chunk reconstruction, durable on-disk stores, restartable sessions, deterministic intermittent store-and-forward, TTL/hop governance, custody receipts and explicit-contact duplicate suppression;
 - **PN-006:** optional reversible DNA `DNATrace` adapter.
 
 The core remains transport-independent: LoRa-specific firmware and serial tooling live under `hardware/`.
@@ -204,7 +204,7 @@ See [`docs/research/durable-exact-session.md`](docs/research/durable-exact-sessi
 
 ## Intermittent store-and-forward
 
-PollicinoNet can now reconstruct an exact object even when origin and destination are never connected directly.
+PollicinoNet can reconstruct an exact object even when origin and destination are never connected directly.
 
 ```text
 time 1: origin -> relay      (manifest + some verified chunks)
@@ -215,9 +215,42 @@ time 4:          relay -> destination -> exact object
 
 Each contact is finite and directional. A target sends a PNA1 availability summary; the source forwards only chunks it actually possesses and can verify. A relay recreated from `DirectoryPollicinoStore` after a restart retains custody of its verified chunks. Corrupt relay chunks are treated as unavailable and are not forwarded.
 
-End-to-end TRC can now account, without overlapping categories, for explicit PND1 discovery copies, PNM1 rendezvous copies, PCM1/PNA1 control traffic, chunk payload, ACKs, retries and future FEC bytes through final exact reconstruction.
+End-to-end TRC accounts, without overlapping categories, for explicit PND1 discovery copies, PNM1 rendezvous copies, PCM1/PNA1 control traffic, chunk payload, ACKs, retries and future FEC bytes through final exact reconstruction.
 
 See [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md) and [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md).
+
+## Bundle governance
+
+Store-and-forward now has a deterministic governance layer above it:
+
+- **PNB1** binds a stable bundle ID to the originating PND1 discovery and PCM1 manifest while carrying the current hop position;
+- PND1 `ttl_seconds` and `hop_limit` are enforced before forwarding;
+- origin custody starts at hop 0 and each custody handoff consumes one hop;
+- **PNC1** receipts record peer, acquisition time, hop count, verified chunk count and partial/complete custody state;
+- custody observations and processed contact IDs can be persisted atomically across restart;
+- replaying the same explicit `contact_id` is a zero-wire no-op;
+- a genuinely new encounter uses a new contact ID and still relies on PNA1 to avoid retransmitting chunks already present;
+- governed end-to-end TRC includes PNB1 and PNC1 traffic in addition to discovery, rendezvous, manifests, availability, payload, ACKs and retries.
+
+TTL-expired and hop-exhausted encounters are rejected before consuming route bytes when the rejecting peer already has the required local governance state.
+
+See [`docs/research/bundle-governance.md`](docs/research/bundle-governance.md).
+
+## When physical tests are required
+
+The next software work can continue **without the boards**: bearer abstractions, per-bearer accounting schemas, relay quotas/retention, deterministic multi-relay schedules, synthetic policy comparisons, garbage collection and delta/patch experiments are all software/protocol questions.
+
+Physical HW-006 tests become necessary before PollicinoNet uses **measured LoRa behavior** for decisions or claims, especially:
+
+- real contact availability and contact-window duration at distance/NLOS;
+- realistic bytes/chunks per encounter;
+- measured loss/retry behavior in the transition region;
+- TTL/contact budgets derived from radio observations rather than synthetic inputs;
+- automatic LoRa/BLE/Wi-Fi/Internet bearer selection justified by measured performance;
+- physical replay of the actual PNB1/PNC1/control frame sizes;
+- any decision to change the frozen PHY.
+
+The first physical campaign remains the frozen HW-006 **42-byte / 2 dBm** progression. After a transition region is found, measure the actual governed-control/data frame sizes before calibrating LoRa-aware routing.
 
 ## Where to start
 
@@ -231,6 +264,7 @@ See [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md) a
 - RF evidence/replay: [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md)
 - Durable exact sessions: [`docs/research/durable-exact-session.md`](docs/research/durable-exact-session.md)
 - Store-and-forward: [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md)
+- Bundle governance: [`docs/research/bundle-governance.md`](docs/research/bundle-governance.md)
 - TRC accounting: [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md)
 - FreakWAN audit: [`docs/research/freakwan-audit.md`](docs/research/freakwan-audit.md)
 - Full roadmap: [`ROADMAP.md`](ROADMAP.md)
@@ -244,13 +278,14 @@ Completed while HW-006 physical tests are temporarily unavailable:
 3. RF-replay-driven retry/session testing;
 4. non-overlapping TRC wire accounting;
 5. durable content-addressed chunk store and atomic restartable session checkpoints;
-6. deterministic intermittent store-and-forward plus end-to-end DISCOVERY-to-reconstruction TRC.
+6. deterministic intermittent store-and-forward plus end-to-end DISCOVERY-to-reconstruction TRC;
+7. PNB1 TTL/hop governance, PNC1 custody receipts and persistent explicit-contact duplicate suppression.
 
 Next software work:
 
-1. enforce bundle TTL/hop budgets and add custody/duplicate-suppression records;
-2. add per-bearer TRC for mixed LoRa/BLE/Wi-Fi/Internet routes;
-3. define durable-store retention/garbage collection;
+1. add per-bearer TRC for LoRa/BLE/Wi-Fi/Internet without yet pretending synthetic bearer values are measurements;
+2. define relay quotas/retention/garbage collection;
+3. add deterministic synthetic multi-relay policy experiments;
 4. experiment with delta/patch transfer against prior versions.
 
-When hardware access returns, resume the frozen HW-006 sequence: same-room -> wall -> multi-wall/floor -> outdoor, then calibrate the synthetic scarce-link model before changing PHY parameters.
+When measured radio behavior becomes necessary, resume HW-006: same-room -> wall -> multi-wall/floor -> outdoor, then measure the actual control/data frame sizes and calibrate LoRa contact capacity before enabling measured LoRa-aware routing or changing PHY parameters.
