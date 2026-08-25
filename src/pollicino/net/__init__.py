@@ -59,6 +59,12 @@ from .rf import (
     extract_rf_trace,
     normalize_rf_evidence,
 )
+from .session import (
+    EXACT_SESSION_SCHEMA,
+    ExactSyncSessionState,
+    ExactSyncStepReport,
+    sync_missing_chunks_step,
+)
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -75,6 +81,9 @@ __all__ = [
     "DeliveryError",
     "DeliveryPolicy",
     "DiscoveryDescriptor",
+    "EXACT_SESSION_SCHEMA",
+    "ExactSyncSessionState",
+    "ExactSyncStepReport",
     "FRAME_HEADER_BYTES",
     "FRAME_MAGIC",
     "FragmentFrame",
@@ -109,5 +118,6 @@ __all__ = [
     "reconstruct_from_store",
     "retrieve_exact",
     "sync_missing_chunks",
+    "sync_missing_chunks_step",
     "transmit_exact",
 ]
