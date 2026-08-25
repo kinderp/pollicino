@@ -209,7 +209,6 @@ __all__ = [
     "DeliveryPolicy",
     "DirectoryPollicinoStore",
     "DiscoveryDescriptor",
-    "EMERGENCY",
     "EXACT_SESSION_SCHEMA",
     "EmergencyFloodProgressStrategy",
     "EndToEndTRCReport",
