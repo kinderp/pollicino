@@ -218,9 +218,9 @@ Physical replay keeps failed untethered transactions observationally unresolved 
 - scarce-link fallback;
 - honest accounting when a rich-path attempt fails.
 
-## PN-005 — P2P chunk store and reconstruction
+## PN-005 — P2P chunk store, durable restart and intermittent forwarding
 
-**DONE at durable/session scope**
+**DONE at deterministic store-and-forward scope**
 
 - SHA-256 content-addressed chunks;
 - PCM1 manifests;
@@ -232,13 +232,22 @@ Physical replay keeps failed untethered transactions observationally unresolved 
 - crash-safe on-disk `DirectoryPollicinoStore` with SHA-256 verification before advertising availability;
 - corrupt ordinary chunk files are treated as unavailable and may be repaired by verified re-transfer;
 - atomic checksummed exact-session checkpoints using same-directory temporary files, file fsync and `os.replace`;
-- tested fresh-process reconstruction of sender/receiver stores plus session state, with no retransmission of already verified chunks.
+- tested fresh-process reconstruction of sender/receiver stores plus session state, with no retransmission of already verified chunks;
+- finite directional peer contacts that transfer the PCM1 manifest only when absent, advertise verified PNA1 availability and forward at most an explicit number of source-owned missing chunks;
+- multi-hop `origin -> relay -> destination` exact reconstruction without any permanent origin-to-destination path;
+- durable relay restart between encounters;
+- corrupt relay chunks are neither advertised nor forwarded;
+- deterministic contact schedules with per-contact PNF1 transfer-id ranges and non-overlapping wire accounting.
+
+See [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md).
 
 **NEXT**
 
+- enforce bundle TTL and hop budgets across relay contacts;
+- add custody/duplicate-suppression records above content-level deduplication;
+- define relay storage quotas, retention and garbage collection;
 - delta/patch experiments against prior versions;
-- store-and-forward scheduling across intermittent peers;
-- define lifecycle/garbage-collection policy for durable chunk stores.
+- later compare opportunistic routing policies only after the deterministic primitives are stable.
 
 ## PN-006 — Optional DNA integration
 
@@ -322,20 +331,19 @@ Never represent SEMANTIC output as exact DNA state, signatures, consent or crypt
 
 Explicit `repeat=True` or disabled frame-size checking are synthetic/extrapolation modes and must not be cited as additional physical evidence.
 
-## RF-003 — Replay-driven exact-session testing
+## RF-003 — Replay/session/store-and-forward accounting
 
-**DONE at durable exact-session scope**
+**DONE at deterministic store-and-forward scope**
 
 Implemented:
 
 ```text
-RF trace
- -> physical success/failure oracle
+RF trace / deterministic link
  -> PNF1 retry
  -> resumable chunk session
  -> durable chunk store + atomic session checkpoint
- -> fresh-process restart
- -> final exact reconstruction
+ -> intermittent verified relay custody
+ -> destination exact reconstruction
 ```
 
 Accounting and persistence safeguards:
@@ -348,14 +356,17 @@ Accounting and persistence safeguards:
 - durable chunks are verified against their content address before being advertised;
 - checkpoint contents are schema-validated and SHA-256 protected;
 - a failed atomic checkpoint replace leaves the previously committed state readable;
-- a process restart reloads store + session state and sends only the remaining verified-missing chunks.
+- a process restart reloads store + session state and sends only the remaining verified-missing chunks;
+- store-and-forward contacts transfer only material the source peer can verify;
+- end-to-end TRC can include explicit PND1 discovery copies, PNM1 rendezvous copies, PCM1/PNA1 control traffic, chunk payload, ACKs, retries and future explicit FEC bytes without overlap.
 
-See [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md).
+See [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md) and [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md).
 
 **NEXT**
 
-- extend TRC to discovery/rendezvous and future FEC without double counting;
-- replay-driven store-and-forward scenarios;
+- TTL/hop/custody accounting and duplicate suppression;
+- per-bearer TRC for mixed LoRa/BLE/Wi-Fi/Internet routes;
+- replay-driven multi-relay scenarios once measured frame-size evidence exists;
 - durable-store retention/garbage-collection experiments.
 
 ## RF-004 — HW-006 calibration set
@@ -380,14 +391,16 @@ Completed in this software round:
 4. **RF-replay-driven PNF1/session tests with explicit evidence semantics.**
 5. **Non-overlapping exact-session TRC wire accounting.**
 6. **Durable content-addressed store + atomic restartable session checkpoint.**
+7. **Deterministic intermittent store-and-forward routing + end-to-end DISCOVERY-to-reconstruction TRC.**
 
 Next software work while hardware is unavailable:
 
-7. **Extend TRC across discovery/rendezvous and add replay-driven store-and-forward tests.**
-8. **Define durable-store retention/garbage collection and delta/patch experiments.**
+8. **Bundle TTL/hop enforcement + custody/duplicate-suppression records.**
+9. **Per-bearer TRC and multi-relay policy experiments.**
+10. **Durable-store retention/garbage collection and delta/patch experiments.**
 
 When hardware access returns:
 
-9. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
-10. **Calibrate the synthetic scarce-link model from measured evidence.**
-11. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
+11. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
+12. **Calibrate the synthetic scarce-link model from measured evidence.**
+13. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
