@@ -103,7 +103,7 @@ pollicino/
 │   │   ├── pytorch/
 │   │   └── mlx/
 │   ├── compression/         # deterministic coding and routing experiments
-│   └── net/                 # discovery, exact delivery, P2P store and RF evidence
+│   └── net/                 # discovery, exact delivery, P2P/store-forward and RF evidence
 ├── experiments/             # immutable experiment records
 ├── benchmarks/              # benchmark manifests and comparison outputs
 └── tests/                   # theory, parity, round-trip and network invariants
@@ -137,7 +137,7 @@ The standalone network path has implemented:
 - **PN-002:** deterministic scarce-link simulator, PNF1 exact-transfer framing/retry, physical RF replay and resumable exact-session state;
 - **PN-003:** opaque rendezvous coordinate -> manifest resolver -> full-hash retrieval;
 - **PN-004:** authorization-gated adaptive exact delivery across rich/scarce paths;
-- **PN-005:** content-addressed chunk reconstruction, availability summaries, durable on-disk stores and restartable session checkpoints;
+- **PN-005:** content-addressed chunk reconstruction, durable on-disk stores, restartable sessions and deterministic intermittent store-and-forward relays;
 - **PN-006:** optional reversible DNA `DNATrace` adapter.
 
 The core remains transport-independent: LoRa-specific firmware and serial tooling live under `hardware/`.
@@ -185,7 +185,7 @@ See [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md)
 
 ## Durable exact-session restart
 
-Exact transfers can now survive a process restart without retransmitting already verified chunks.
+Exact transfers can survive a process restart without retransmitting already verified chunks.
 
 ```text
 receive verified chunks
@@ -200,9 +200,24 @@ receive verified chunks
 
 The durable store re-hashes a chunk before advertising it as available. Corrupt ordinary files are therefore not trusted and may be repaired by a later verified transfer. Session checkpoints are written through same-directory temporary files, `fsync` and atomic `os.replace`, and include a SHA-256 checksum over canonical state JSON.
 
-The complete test suite includes a fresh-process-style restart test and a failure-before-replace test that preserves the previous committed checkpoint.
-
 See [`docs/research/durable-exact-session.md`](docs/research/durable-exact-session.md).
+
+## Intermittent store-and-forward
+
+PollicinoNet can now reconstruct an exact object even when origin and destination are never connected directly.
+
+```text
+time 1: origin -> relay      (manifest + some verified chunks)
+time 2:          relay -> destination
+time 3: origin -> relay      (remaining verified chunks)
+time 4:          relay -> destination -> exact object
+```
+
+Each contact is finite and directional. A target sends a PNA1 availability summary; the source forwards only chunks it actually possesses and can verify. A relay recreated from `DirectoryPollicinoStore` after a restart retains custody of its verified chunks. Corrupt relay chunks are treated as unavailable and are not forwarded.
+
+End-to-end TRC can now account, without overlapping categories, for explicit PND1 discovery copies, PNM1 rendezvous copies, PCM1/PNA1 control traffic, chunk payload, ACKs, retries and future FEC bytes through final exact reconstruction.
+
+See [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md) and [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md).
 
 ## Where to start
 
@@ -215,6 +230,7 @@ See [`docs/research/durable-exact-session.md`](docs/research/durable-exact-sessi
 - PollicinoNet architecture: [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md)
 - RF evidence/replay: [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md)
 - Durable exact sessions: [`docs/research/durable-exact-session.md`](docs/research/durable-exact-session.md)
+- Store-and-forward: [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md)
 - TRC accounting: [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md)
 - FreakWAN audit: [`docs/research/freakwan-audit.md`](docs/research/freakwan-audit.md)
 - Full roadmap: [`ROADMAP.md`](ROADMAP.md)
@@ -227,12 +243,13 @@ Completed while HW-006 physical tests are temporarily unavailable:
 2. resumable EXACT sessions above unchanged PNF1 retry;
 3. RF-replay-driven retry/session testing;
 4. non-overlapping TRC wire accounting;
-5. durable content-addressed chunk store and atomic restartable session checkpoints.
+5. durable content-addressed chunk store and atomic restartable session checkpoints;
+6. deterministic intermittent store-and-forward plus end-to-end DISCOVERY-to-reconstruction TRC.
 
 Next software work:
 
-1. extend TRC across discovery/rendezvous without double counting;
-2. add replay-driven **store-and-forward** scenarios across intermittent peers;
+1. enforce bundle TTL/hop budgets and add custody/duplicate-suppression records;
+2. add per-bearer TRC for mixed LoRa/BLE/Wi-Fi/Internet routes;
 3. define durable-store retention/garbage collection;
 4. experiment with delta/patch transfer against prior versions.
 
