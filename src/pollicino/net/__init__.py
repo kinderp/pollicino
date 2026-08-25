@@ -59,6 +59,11 @@ from .rf import (
     extract_rf_trace,
     normalize_rf_evidence,
 )
+from .rf_replay import (
+    RFReplayExhausted,
+    RFReplayTransferReport,
+    RFReplayTransmitter,
+)
 from .session import (
     EXACT_SESSION_SCHEMA,
     ExactSyncSessionState,
@@ -98,7 +103,10 @@ __all__ = [
     "ManifestResolver",
     "PollicinoStore",
     "RFEvidence",
+    "RFReplayExhausted",
     "RFReplayTrace",
+    "RFReplayTransferReport",
+    "RFReplayTransmitter",
     "RFTraceSample",
     "RetrievalError",
     "RetrievalReport",
