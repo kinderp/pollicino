@@ -1,55 +1,51 @@
 # POLLICINO
 
-**Learned lossless compression and generative file identification.**
+**Learned lossless compression, generative file identification, and information-minimized networking.**
 
 > *Lasciare meno briciole possibili, ma abbastanza da ritrovare esattamente la strada.*
 
-POLLICINO is a research-and-teaching project about a deceptively simple question:
+POLLICINO is a research-and-teaching project around one question:
 
-> **How few bits must be transmitted to reconstruct a file exactly when encoder and decoder share a learned model of the file distribution?**
+> **How few bits must be transmitted to reconstruct information exactly when encoder and decoder share useful prior knowledge?**
 
-The name comes from *Pollicino* (Tom Thumb): a very small trail can be sufficient to retrace a path. In this project, the “crumbs” are the bits that remain after a model has already captured as much predictable structure as possible.
+The repository now has three connected tracks:
 
-POLLICINO deliberately has two synchronized tracks:
+- **`course/` — teaching track:** from bits and entropy to a tiny Transformer and a bit-perfect codec;
+- **`research/` — compression track:** reproducible byte-level experiments, PyTorch/MLX parity, entropy coding and model-assisted identification;
+- **PollicinoNet — network track:** discovery, exact reconstruction, cache/P2P reuse and scarce-link delivery, with LoRa as the first physical target.
 
-- **`course/` — school track.** A fourth-year secondary-school course that starts from bits and files and ends with a tiny Transformer and a bit-perfect neural codec.
-- **`research/` — scientific track.** Reproducible byte-level experiments with equivalent PyTorch and MLX backends, entropy coding, exact reconstruction and model-assisted identification.
+## Central idea
 
-A parallel network research branch, **PollicinoNet**, studies the same information-minimization principle over ultra-low-bandwidth and intermittent links: discovery by compact coordinates, exact P2P reconstruction, opportunistic rich-link handover and a separate semantic realtime mode. LoRa is the first scarce-link target; DNA/Travel DNA is the first concrete application integration. See [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md).
-
-## The central idea
-
-A predictive model does not need to memorize every possible file. It learns a probability distribution over the next byte:
+A predictive model assigns a probability to the next byte:
 
 ```text
 P(x_i | x_1, ..., x_{i-1})
 ```
 
-If the correct next byte has high probability, it carries little new information. Its ideal coding cost is:
+The ideal information cost is:
 
 ```text
 I(x_i) = -log2 P(x_i | x_<i)
 ```
 
-For a sequence of `N` bytes, the predictive ideal is:
+For a sequence:
 
 ```text
 L(x) = - sum_i log2 P(x_i | x_<i)
 ```
 
-This connects the whole project:
+The compression path is therefore:
 
 ```text
-bits -> probability -> entropy -> prediction -> learning -> Transformer
-                                                   |
-                                                   v
-file -> byte model -> next-byte probabilities -> entropy coder -> .pol stream
-                                                               |
-                                                               v
-                                                    exact original file
+file
+  -> byte model
+  -> next-byte probabilities
+  -> deterministic entropy coder
+  -> compact .pol stream
+  -> exact reconstruction
 ```
 
-A second, exploratory branch studies the original POLLICINO intuition:
+The exploratory identification path studies a different trade-off:
 
 ```text
 shared learned model
@@ -63,34 +59,31 @@ ranked candidate space
 exact candidate search
         |
         v
-full cryptographic hash verification
+full cryptographic verification
 ```
 
-The scientific object is therefore not only compression ratio. We also study the trade-off:
-
-```text
-transmitted bits  <---->  reconstruction compute
-```
-
-PollicinoNet broadens that trade-off to network delivery:
+PollicinoNet generalizes the same principle to delivery:
 
 ```text
 scarce-link bits <----> shared state / cache / resolver / reconstruction compute
 ```
 
+The network rule is:
+
+> **Do not transmit the content when transmitting enough information to locate, derive or reconstruct it costs fewer bits.**
+
 ## Scientific invariants
 
-POLLICINO experiments must obey these rules:
-
-1. **Lossless means bit-perfect.** The reconstructed output must be byte-for-byte identical to the original.
-2. **SHA-256 verifies, it does not reconstruct.** A cryptographic hash is an integrity check, never hidden side information.
-3. **Model cost is reported.** Payload, checkpoint size and amortized model cost are separate metrics.
-4. **Random data are a negative control.** A uniform 256-symbol source has an ideal cost of exactly 8 bits/byte.
-5. **PyTorch and MLX follow the same model specification** wherever practical.
-6. **Every experiment is reproducible.** Seed, dataset hash, commit, hardware, framework, precision and configuration are recorded.
-7. **Classical compressors remain first-class baselines.** A neural system does not “win” merely because its model size is ignored.
-8. **Discovery is not proof.** A compact PollicinoNet coordinate may locate a manifest, but exact content identity is verified with a full cryptographic identifier.
-9. **Semantic is not lossless.** Perceptual/realtime reconstruction is an explicit separate contract and cannot represent authoritative exact state.
+1. **Lossless means byte-for-byte exact.**
+2. **SHA-256 verifies; it does not reconstruct.**
+3. **Model/checkpoint cost is reported separately from payload cost.**
+4. **Random data remain a negative control.**
+5. **PyTorch and MLX use equivalent model specifications wherever practical.**
+6. **Experiments record reproducibility metadata.**
+7. **Classical compressors remain first-class baselines.**
+8. **Discovery is not proof of identity.**
+9. **SEMANTIC output is explicitly separate from EXACT authoritative state.**
+10. **Physical RF evidence is never silently extrapolated into a deployment reliability claim.**
 
 ## Repository layout
 
@@ -99,109 +92,96 @@ pollicino/
 ├── course/                  # fourth-year teaching path and student labs
 ├── docs/
 │   ├── theory/              # information, coding, ML and wireless theory
-│   ├── labs/                # reproducible hands-on laboratory guides
-│   └── research/            # protocol, PollicinoNet and scientific notes
-├── hardware/                # optional physical adapters and validated HW labs
+│   ├── labs/                # reproducible practical guides
+│   └── research/            # scientific protocol and PollicinoNet notes
+├── hardware/                # LILYGO/SX1276 firmware, runners and physical evidence
 ├── configs/                 # backend-independent model specifications
 ├── src/pollicino/
-│   ├── common/              # metrics, data and shared contracts
-│   ├── baselines/           # uniform/statistical reference models
+│   ├── common/              # shared metrics and contracts
+│   ├── baselines/           # classical/statistical reference models
 │   ├── backends/
-│   │   ├── pytorch/         # reference research backend / future CUDA scaling
-│   │   └── mlx/             # Apple-Silicon backend
-│   └── compression/         # deterministic arithmetic/range coding
+│   │   ├── pytorch/
+│   │   └── mlx/
+│   ├── compression/         # deterministic coding and routing experiments
+│   └── net/                 # discovery, exact delivery, P2P store and RF evidence
 ├── experiments/             # immutable experiment records
 ├── benchmarks/              # benchmark manifests and comparison outputs
-└── tests/                   # theory, parity and round-trip invariants
+└── tests/                   # theory, parity, round-trip and network invariants
 ```
 
-## Milestone 0 — The eight-bit floor
+## Compression research status
 
-Before neural networks, establish the scientific zero point.
+The executable scientific line has reached **PILOT-013 — cheap admission routing**.
 
-For a model that assigns every byte equal probability:
+PILOT-013 preserved honest neural-forward accounting and met its hard compute cap, but its preregistered retained-gain target was negative. That result is retained as evidence rather than rewritten into a success. There is currently no merged **PILOT-014** result.
+
+The longer-term compression roadmap still includes:
 
 ```text
-P(byte) = 1 / 256
+statistical baselines
+    -> neural foundations
+    -> byte Transformer
+    -> PyTorch / MLX parity
+    -> deterministic neural codec
+    -> scientific benchmark
+    -> hybrid routing
+    -> generative identification
+    -> bandwidth / compute frontier
 ```
 
-therefore:
+## PollicinoNet software status
 
-```text
--log2(1 / 256) = 8 bits/byte
-```
+The standalone network path has implemented:
 
-The repository includes an executable baseline:
+- **PN-001:** compact deterministic PND1 discovery descriptor;
+- **PN-002:** deterministic scarce-link simulator and PNF1 exact-transfer framing;
+- **PN-003:** opaque rendezvous coordinate -> manifest resolver -> full-hash retrieval;
+- **PN-004:** authorization-gated adaptive exact delivery across rich/scarce paths;
+- **PN-005:** content-addressed `PollicinoStore`, chunk manifests, availability summaries and missing-chunk synchronization;
+- **PN-006:** optional reversible DNA `DNATrace` adapter.
+
+The core remains transport-independent: LoRa-specific firmware and serial tooling live under `hardware/`.
+
+## Physical LoRa status
+
+Target hardware: two **LILYGO / TTGO LoRa32 V1.6.1** boards with ESP32-PICO-D4 and SX1276 at 868 MHz.
+
+| Lab | Purpose | Status |
+|---|---|---|
+| HW-001 | byte-exact PND1/PNF1 transport in both directions | **physical PASS** |
+| HW-002 | RSSI/SNR, RTT, airtime and paced measurements | **physical PASS** |
+| HW-002T | timing/polling characterization | **physical PASS** |
+| HW-003 | event-driven FreeRTOS responder | **physical PASS** |
+| HW-004 | counterbalanced CRC/direction/frame-size matrix | **48/48 physical PASS, 0 CRC events** |
+| HW-005 | controlled 10 -> 2 dBm TX-power staircase | **20/20 physical PASS** |
+| HW-006 | untethered responder for distance/NLOS checkpoints | **software/build ready; physical checkpoint pending** |
+
+HW-006 deliberately freezes the H2 PING/PONG wire format and the established PHY while moving the remote node off USB power/serial observation. A timeout in untethered mode is classified as **ambiguous**: it cannot alone distinguish a lost PING, remote decode/CRC failure, lost PONG, remote reset/power loss, or another RF failure.
+
+## RF evidence catalog and replay
+
+Physical measurements can now be consumed as data instead of requiring the boards to be attached during software development.
 
 ```bash
-python -m pollicino.baselines.uniform path/to/file
+python -m pollicino.net.rf \
+  hardware/lilygo-lora32-v1.6.1/physical-validation
 ```
 
-It reports input bytes, theoretical bits-per-byte and verifies an exact reversible round trip with SHA-256.
+After package installation:
 
-This baseline is intentionally boring. That is its value: every later model must improve predictive code length without breaking exact reconstruction.
-
-## Milestone 1 — Learn a file statistically
-
-Implement and compare:
-
-```text
-uniform -> empirical byte frequencies -> bigram -> n-gram / Markov
+```bash
+pollicino-rf hardware/lilygo-lora32-v1.6.1/physical-validation
 ```
 
-Questions:
+The RF tool:
 
-- How much does context reduce cross-entropy?
-- On which file classes does it help?
-- When does a more complex model overfit?
-- How closely does theoretical log loss predict realized coded size?
+- normalizes supported HW-001..HW-006 evidence records;
+- extracts ordered replay traces from raw HW-002 runs and future executed HW-006 checkpoints;
+- preserves RSSI/SNR/RTT/ToA observations without imputing missing telemetry;
+- refuses by default to replay more physical samples than were actually recorded;
+- does **not** sum all historical files into a fake packet-loss estimate, because raw runs and derived summaries can overlap.
 
-## Milestone 2 — Build a neural predictor from first principles
-
-```text
-neuron -> MLP -> embeddings -> attention -> causal Transformer
-```
-
-No high-level pretrained-model library is required. The objective is to understand the components that make an LLM train.
-
-## Milestone 3 — PyTorch / MLX parity
-
-Train the same byte Transformer in both frameworks from a framework-independent YAML specification and compare:
-
-- parameter count,
-- learning curves,
-- bits/byte,
-- training throughput,
-- peak memory,
-- decode throughput,
-- reproducibility.
-
-## Milestone 4 — First real POLLICINO codec
-
-Connect next-byte probabilities to a deterministic arithmetic/range coder:
-
-```text
-original -> model -> probability table -> coder -> compressed payload
-compressed payload -> coder + same model -> original
-```
-
-Success criterion:
-
-```text
-SHA256(original) == SHA256(decoded)
-```
-
-## Milestone 5 — Generative identification
-
-Only after the entropy-coding baseline works, explore whether a learned model can narrow a candidate space enough that a short fingerprint and additional decoder compute can identify an exact chunk or file.
-
-The main research curve becomes:
-
-```text
-fingerprint bits -> candidates searched -> decode compute -> success probability
-```
-
-No result counts as lossless unless exact reconstruction is independently verified.
+See [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md).
 
 ## Where to start
 
@@ -211,10 +191,18 @@ No result counts as lossless unless exact reconstruction is independently verifi
 - HW-001 practical guide (Italian): [`docs/labs/hw-001-lilygo-guida-pratica-it.md`](docs/labs/hw-001-lilygo-guida-pratica-it.md)
 - Research questions: [`docs/research/questions.md`](docs/research/questions.md)
 - Experimental protocol: [`docs/research/protocol.md`](docs/research/protocol.md)
-- PollicinoNet: [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md)
+- PollicinoNet architecture: [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md)
+- RF evidence/replay: [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md)
 - FreakWAN audit: [`docs/research/freakwan-audit.md`](docs/research/freakwan-audit.md)
 - Full roadmap: [`ROADMAP.md`](ROADMAP.md)
 
-## Status
+## Immediate next steps
 
-The executable research line includes deterministic lossless routing experiments through PILOT-013. PollicinoNet now has implemented standalone discovery/exact/P2P layers, an optional DNA integration, and a physically validated HW-001 bidirectional LoRa bridge on two LILYGO T3 V1.6.1 / SX1276 boards. HW-002 is the next hardware research step: characterize packet loss, RSSI/SNR, latency/airtime and physical TRC under controlled conditions.
+Software work can continue while HW-006 physical tests are unavailable:
+
+1. keep the frozen HW-006 radio contract unchanged;
+2. use historical RF traces for deterministic replay and analysis;
+3. add resumable exact-session state above the existing PNF1 stop-and-wait retry layer;
+4. integrate RF replay into session/retry tests;
+5. run HW-006 same-room -> wall -> multi-wall/floor -> outdoor checkpoints when hardware access returns;
+6. use those measurements to calibrate future scarce-link simulations before changing PHY parameters.
