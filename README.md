@@ -134,10 +134,10 @@ statistical baselines
 The standalone network path has implemented:
 
 - **PN-001:** compact deterministic PND1 discovery descriptor;
-- **PN-002:** deterministic scarce-link simulator and PNF1 exact-transfer framing;
+- **PN-002:** deterministic scarce-link simulator, PNF1 exact-transfer framing/retry, physical RF replay and resumable exact-session state;
 - **PN-003:** opaque rendezvous coordinate -> manifest resolver -> full-hash retrieval;
 - **PN-004:** authorization-gated adaptive exact delivery across rich/scarce paths;
-- **PN-005:** content-addressed `PollicinoStore`, chunk manifests, availability summaries and missing-chunk synchronization;
+- **PN-005:** content-addressed chunk reconstruction, availability summaries, durable on-disk stores and restartable session checkpoints;
 - **PN-006:** optional reversible DNA `DNATrace` adapter.
 
 The core remains transport-independent: LoRa-specific firmware and serial tooling live under `hardware/`.
@@ -183,6 +183,27 @@ The RF tool:
 
 See [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md).
 
+## Durable exact-session restart
+
+Exact transfers can now survive a process restart without retransmitting already verified chunks.
+
+```text
+receive verified chunks
+  -> DirectoryPollicinoStore on disk
+  -> atomic checksummed session checkpoint
+  X  process stops
+  -> reopen stores + load checkpoint
+  -> recompute actual receiver availability
+  -> transmit only still-missing chunks
+  -> final SHA-256-verified reconstruction
+```
+
+The durable store re-hashes a chunk before advertising it as available. Corrupt ordinary files are therefore not trusted and may be repaired by a later verified transfer. Session checkpoints are written through same-directory temporary files, `fsync` and atomic `os.replace`, and include a SHA-256 checksum over canonical state JSON.
+
+The complete test suite includes a fresh-process-style restart test and a failure-before-replace test that preserves the previous committed checkpoint.
+
+See [`docs/research/durable-exact-session.md`](docs/research/durable-exact-session.md).
+
 ## Where to start
 
 - Students: [`course/README.md`](course/README.md)
@@ -193,16 +214,26 @@ See [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md)
 - Experimental protocol: [`docs/research/protocol.md`](docs/research/protocol.md)
 - PollicinoNet architecture: [`docs/research/pollicinonet.md`](docs/research/pollicinonet.md)
 - RF evidence/replay: [`docs/research/rf-evidence-replay.md`](docs/research/rf-evidence-replay.md)
+- Durable exact sessions: [`docs/research/durable-exact-session.md`](docs/research/durable-exact-session.md)
+- TRC accounting: [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md)
 - FreakWAN audit: [`docs/research/freakwan-audit.md`](docs/research/freakwan-audit.md)
 - Full roadmap: [`ROADMAP.md`](ROADMAP.md)
 
 ## Immediate next steps
 
-Software work can continue while HW-006 physical tests are unavailable:
+Completed while HW-006 physical tests are temporarily unavailable:
 
-1. keep the frozen HW-006 radio contract unchanged;
-2. use historical RF traces for deterministic replay and analysis;
-3. add resumable exact-session state above the existing PNF1 stop-and-wait retry layer;
-4. integrate RF replay into session/retry tests;
-5. run HW-006 same-room -> wall -> multi-wall/floor -> outdoor checkpoints when hardware access returns;
-6. use those measurements to calibrate future scarce-link simulations before changing PHY parameters.
+1. RF evidence catalog and deterministic physical replay;
+2. resumable EXACT sessions above unchanged PNF1 retry;
+3. RF-replay-driven retry/session testing;
+4. non-overlapping TRC wire accounting;
+5. durable content-addressed chunk store and atomic restartable session checkpoints.
+
+Next software work:
+
+1. extend TRC across discovery/rendezvous without double counting;
+2. add replay-driven **store-and-forward** scenarios across intermittent peers;
+3. define durable-store retention/garbage collection;
+4. experiment with delta/patch transfer against prior versions.
+
+When hardware access returns, resume the frozen HW-006 sequence: same-room -> wall -> multi-wall/floor -> outdoor, then calibrate the synthetic scarce-link model before changing PHY parameters.
