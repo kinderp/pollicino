@@ -51,6 +51,14 @@ from .wire import (
     MAX_KEY_BYTES,
     MAX_METADATA_BYTES,
 )
+from .rf import (
+    RFEvidence,
+    RFReplayTrace,
+    RFTraceSample,
+    catalog_rf_paths,
+    extract_rf_trace,
+    normalize_rf_evidence,
+)
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -80,6 +88,9 @@ __all__ = [
     "MAX_METADATA_BYTES",
     "ManifestResolver",
     "PollicinoStore",
+    "RFEvidence",
+    "RFReplayTrace",
+    "RFTraceSample",
     "RetrievalError",
     "RetrievalReport",
     "RetrievalSource",
@@ -88,9 +99,12 @@ __all__ = [
     "TransferReport",
     "availability_for",
     "build_chunk_manifest",
+    "catalog_rf_paths",
     "deliver_exact_adaptive",
+    "extract_rf_trace",
     "fragment_payload",
     "manifest_for_content",
+    "normalize_rf_evidence",
     "reassemble_frames",
     "reconstruct_from_store",
     "retrieve_exact",
