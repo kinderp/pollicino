@@ -218,9 +218,9 @@ Physical replay keeps failed untethered transactions observationally unresolved 
 - scarce-link fallback;
 - honest accounting when a rich-path attempt fails.
 
-## PN-005 — P2P chunk store, durable restart and intermittent forwarding
+## PN-005 — P2P chunk store, durable restart, intermittent forwarding and bundle governance
 
-**DONE at deterministic store-and-forward scope**
+**DONE at deterministic governed store-and-forward scope**
 
 - SHA-256 content-addressed chunks;
 - PCM1 manifests;
@@ -237,17 +237,24 @@ Physical replay keeps failed untethered transactions observationally unresolved 
 - multi-hop `origin -> relay -> destination` exact reconstruction without any permanent origin-to-destination path;
 - durable relay restart between encounters;
 - corrupt relay chunks are neither advertised nor forwarded;
-- deterministic contact schedules with per-contact PNF1 transfer-id ranges and non-overlapping wire accounting.
+- deterministic contact schedules with per-contact PNF1 transfer-id ranges and non-overlapping wire accounting;
+- PNB1 forwarding envelopes bind PCM1 identity to the originating PND1 discovery and carry explicit hop position;
+- PNC1 custody receipts record peer, acquisition time, hop count, verified chunk count and partial/complete state;
+- PND1 `ttl_seconds` and `hop_limit` are enforced before data forwarding;
+- TTL-expired and hop-exhausted encounters are rejected before consuming route wire bytes;
+- explicit `contact_id` replay is zero-wire idempotent while genuinely new contacts continue to use PNA1 content-level deduplication;
+- custody observations and processed contact IDs can be atomically persisted and checksum-validated across restart;
+- governed multi-hop schedules preserve exact reconstruction and include PNB1/PNC1 traffic in end-to-end TRC.
 
-See [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md).
+See [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md) and [`docs/research/bundle-governance.md`](docs/research/bundle-governance.md).
 
 **NEXT**
 
-- enforce bundle TTL and hop budgets across relay contacts;
-- add custody/duplicate-suppression records above content-level deduplication;
 - define relay storage quotas, retention and garbage collection;
+- add bearer identity/cost dimensions to TRC for LoRa/BLE/Wi-Fi/Internet;
+- add synthetic multi-relay routing policy comparisons while keeping measured-vs-modeled evidence explicit;
 - delta/patch experiments against prior versions;
-- later compare opportunistic routing policies only after the deterministic primitives are stable.
+- opportunistic routing optimization only after deterministic policy primitives and evidence boundaries are stable.
 
 ## PN-006 — Optional DNA integration
 
@@ -272,7 +279,7 @@ Physical progression:
 - HW-001 — **DONE:** bidirectional byte-exact PND1/PNF1 transport;
 - HW-002 — **DONE:** RSSI/SNR, RTT and airtime instrumentation;
 - HW-002T — **DONE:** polling/timing characterization;
-- HW-003 — **DONE:** event-driven FreeRTOS receive path;
+- HW-003 — **DONE:** event-driven FreeRTOS responder;
 - HW-004 — **DONE:** 48-attempt CRC/direction/frame-size matrix, 48/48 success, 0 CRC events;
 - HW-005 — **DONE:** 10/8/6/4/2 dBm staircase, 20/20 success;
 - HW-006 — **ACTIVE:** untethered responder software/build validated; distance/NLOS physical evidence pending.
@@ -331,9 +338,9 @@ Never represent SEMANTIC output as exact DNA state, signatures, consent or crypt
 
 Explicit `repeat=True` or disabled frame-size checking are synthetic/extrapolation modes and must not be cited as additional physical evidence.
 
-## RF-003 — Replay/session/store-and-forward accounting
+## RF-003 — Replay/session/store-and-forward/governance accounting
 
-**DONE at deterministic store-and-forward scope**
+**DONE at deterministic governed store-and-forward scope**
 
 Implemented:
 
@@ -343,6 +350,7 @@ RF trace / deterministic link
  -> resumable chunk session
  -> durable chunk store + atomic session checkpoint
  -> intermittent verified relay custody
+ -> PNB1 TTL/hop governance + PNC1 custody receipts
  -> destination exact reconstruction
 ```
 
@@ -358,16 +366,17 @@ Accounting and persistence safeguards:
 - a failed atomic checkpoint replace leaves the previously committed state readable;
 - a process restart reloads store + session state and sends only the remaining verified-missing chunks;
 - store-and-forward contacts transfer only material the source peer can verify;
-- end-to-end TRC can include explicit PND1 discovery copies, PNM1 rendezvous copies, PCM1/PNA1 control traffic, chunk payload, ACKs, retries and future explicit FEC bytes without overlap.
+- TTL/hop-blocked and duplicate-suppressed contacts are explicitly counted as dispositions and use zero route bytes when rejected from already-known local state;
+- governed end-to-end TRC can include explicit PND1 discovery copies, PNM1 rendezvous copies, PNB1 bundle control, PNC1 custody receipts, PCM1/PNA1 traffic, chunk payload, ACKs, retries and future explicit FEC bytes without overlap.
 
-See [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md) and [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md).
+See [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md), [`docs/research/store-and-forward.md`](docs/research/store-and-forward.md) and [`docs/research/bundle-governance.md`](docs/research/bundle-governance.md).
 
 **NEXT**
 
-- TTL/hop/custody accounting and duplicate suppression;
 - per-bearer TRC for mixed LoRa/BLE/Wi-Fi/Internet routes;
-- replay-driven multi-relay scenarios once measured frame-size evidence exists;
-- durable-store retention/garbage-collection experiments.
+- relay quota/retention/garbage-collection experiments;
+- synthetic multi-relay policy experiments with clear evidence labels;
+- replay-driven multi-relay calibration once measured frame-size/contact-window evidence exists.
 
 ## RF-004 — HW-006 calibration set
 
@@ -375,9 +384,35 @@ See [`docs/research/trc-accounting.md`](docs/research/trc-accounting.md) and [`d
 
 When the boards are available, record controlled same-room/distance/NLOS checkpoints with explicit geometry, antenna orientation, frame size, TX power, airtime budget and occupancy pacing.
 
-Current 42-byte physical traces cannot be silently reused for differently sized session-control frames. The replay layer deliberately exposes this measurement gap rather than hiding it through automatic extrapolation.
+Current 42-byte physical traces cannot be silently reused for differently sized session/governance control frames. The replay layer deliberately exposes this measurement gap rather than hiding it through automatic extrapolation.
 
 Do not infer a deployment packet-loss probability from a small checkpoint sample.
+
+---
+
+# Hardware evidence gate
+
+**Physical tests are not required yet** for further protocol/software work such as:
+
+- bearer abstraction and per-bearer accounting schemas;
+- relay quotas/retention/garbage collection;
+- deterministic multi-relay scheduling;
+- synthetic routing-policy comparisons;
+- delta/patch experiments;
+- correctness, idempotency and exact-reconstruction tests.
+
+**Physical HW-006 tests become necessary before** we claim or use measured LoRa values for:
+
+1. contact availability at distance/NLOS;
+2. usable contact-window duration;
+3. realistic chunks/bytes deliverable per encounter;
+4. loss/retry behavior in the transition region;
+5. TTL/contact budgets derived from the radio rather than chosen synthetically;
+6. automatic bearer/routing selection justified by real LoRa performance;
+7. calibration of differently sized PNB1/PNC1/session-control frames;
+8. any decision to change the frozen PHY.
+
+The first required physical campaign remains the frozen HW-006 progression at **42 bytes / 2 dBm**. Once a transition region is observed, add controlled measurements for the actual governance/control frame sizes before using those frames as physical replay evidence.
 
 ---
 
@@ -392,15 +427,17 @@ Completed in this software round:
 5. **Non-overlapping exact-session TRC wire accounting.**
 6. **Durable content-addressed store + atomic restartable session checkpoint.**
 7. **Deterministic intermittent store-and-forward routing + end-to-end DISCOVERY-to-reconstruction TRC.**
+8. **PNB1 TTL/hop governance + PNC1 custody + persistent explicit contact-id duplicate suppression.**
 
 Next software work while hardware is unavailable:
 
-8. **Bundle TTL/hop enforcement + custody/duplicate-suppression records.**
-9. **Per-bearer TRC and multi-relay policy experiments.**
-10. **Durable-store retention/garbage collection and delta/patch experiments.**
+9. **Per-bearer TRC schema and bearer-neutral routing inputs.**
+10. **Relay quotas/retention/garbage collection + synthetic multi-relay policy experiments.**
+11. **Delta/patch experiments against prior versions.**
 
-When hardware access returns:
+When hardware access returns and measured radio behavior is needed:
 
-11. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
-12. **Calibrate the synthetic scarce-link model from measured evidence.**
-13. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
+12. **HW-006 controlled same-room/distance/NLOS checkpoint campaign.**
+13. **Measure the actual control/data frame sizes used by governed store-and-forward.**
+14. **Calibrate contact capacity/loss and only then enable measured LoRa-aware routing decisions.**
+15. **Only then choose whether PHY/radio changes or the next compression pilot are justified.**
