@@ -92,7 +92,6 @@ class RFReplayTransmitter:
                 "explicit repeat=True is required for synthetic reuse"
             )
         sample = self.trace.samples[self.position % len(self.trace.samples)]
-        self.position += 1
         if (
             self.strict_frame_bytes
             and sample.frame_bytes is not None
@@ -103,6 +102,7 @@ class RFReplayTransmitter:
                 f"sample={sample.frame_bytes} encoded_pnf1={expected_frame_bytes}; "
                 "set strict_frame_bytes=False only for explicit extrapolation"
             )
+        self.position += 1
         return sample
 
     def snapshot(self) -> dict[str, Any]:
@@ -144,9 +144,9 @@ class RFReplayTransmitter:
             encoded = frame.encode()
             acknowledged = False
             for attempt in range(profile.max_retries + 1):
+                sample = self._take(len(encoded))
                 data_transmissions += 1
                 data_wire_bytes_exact += len(encoded)
-                sample = self._take(len(encoded))
 
                 if not sample.success:
                     failure_class = sample.failure_class or "other_failure"

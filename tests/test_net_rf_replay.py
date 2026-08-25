@@ -65,7 +65,7 @@ def test_physical_replay_drives_pnf1_retry_without_resolving_timeout_cause() -> 
     assert oracle.position == 2
 
 
-def test_frame_size_mismatch_fails_closed_by_default() -> None:
+def test_frame_size_mismatch_fails_closed_without_consuming_sample() -> None:
     mismatched = RFTraceSample(
         sequence=1,
         success=True,
@@ -76,6 +76,7 @@ def test_frame_size_mismatch_fails_closed_by_default() -> None:
 
     with pytest.raises(ValueError, match="frame-size mismatch"):
         oracle.transmit_exact(b"x" * 24, transfer_id=1, profile=profile())
+    assert oracle.position == 0
 
 
 def test_explicit_frame_size_extrapolation_is_possible_but_not_implicit() -> None:

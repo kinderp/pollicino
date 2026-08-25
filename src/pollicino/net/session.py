@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Mapping
+from typing import Any, Callable, Mapping
 
 from .link import ScarceLinkProfile, transmit_exact
 from .store import (
@@ -18,6 +18,7 @@ EXACT_SESSION_SCHEMA = "pollicino-exact-sync-session-v1"
 _CHUNK_INDEX_BYTES = 2
 _MAX_TRANSFER_ID = 0xFFFFFFFF
 _TRANSFER_ID_EXHAUSTED = _MAX_TRANSFER_ID + 1
+TransferCallable = Callable[..., tuple[bytes, Any]]
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,6 +40,7 @@ class ExactSyncSessionState:
     cumulative_availability_wire_bytes: int = 0
     cumulative_chunk_wire_bytes: int = 0
     cumulative_retransmissions: int = 0
+    wire_accounting: str | None = None
     completed: bool = False
 
     def __post_init__(self) -> None:
@@ -52,6 +54,10 @@ class ExactSyncSessionState:
             raise TypeError("manifest_delivered must be bool")
         if not self.manifest_on_scarce and not self.manifest_delivered:
             raise ValueError("pre-resolved manifest sessions must start with manifest_delivered=True")
+        if self.wire_accounting is not None and (
+            not isinstance(self.wire_accounting, str) or not self.wire_accounting
+        ):
+            raise ValueError("wire_accounting must be None or a non-empty string")
         for name, value in (
             ("step_count", self.step_count),
             ("cumulative_manifest_wire_bytes", self.cumulative_manifest_wire_bytes),
@@ -83,6 +89,7 @@ class ExactSyncSessionState:
             "cumulative_chunk_wire_bytes": self.cumulative_chunk_wire_bytes,
             "cumulative_wire_bytes": self.cumulative_wire_bytes,
             "cumulative_retransmissions": self.cumulative_retransmissions,
+            "wire_accounting": self.wire_accounting,
             "completed": self.completed,
         }
 
@@ -94,16 +101,22 @@ class ExactSyncSessionState:
             fingerprint = bytes.fromhex(str(value["manifest_fingerprint_sha256"]))
         except (KeyError, ValueError) as exc:
             raise ValueError("invalid manifest fingerprint in exact-session state") from exc
+        manifest_on_scarce = value.get("manifest_on_scarce")
+        manifest_delivered = value.get("manifest_delivered")
+        if not isinstance(manifest_on_scarce, bool) or not isinstance(manifest_delivered, bool):
+            raise ValueError("manifest flags in exact-session state must be booleans")
+        wire_accounting = value.get("wire_accounting")
         return cls(
             manifest_fingerprint=fingerprint,
             next_transfer_id=int(value["next_transfer_id"]),
-            manifest_on_scarce=bool(value["manifest_on_scarce"]),
-            manifest_delivered=bool(value["manifest_delivered"]),
+            manifest_on_scarce=manifest_on_scarce,
+            manifest_delivered=manifest_delivered,
             step_count=int(value.get("step_count", 0)),
             cumulative_manifest_wire_bytes=int(value.get("cumulative_manifest_wire_bytes", 0)),
             cumulative_availability_wire_bytes=int(value.get("cumulative_availability_wire_bytes", 0)),
             cumulative_chunk_wire_bytes=int(value.get("cumulative_chunk_wire_bytes", 0)),
             cumulative_retransmissions=int(value.get("cumulative_retransmissions", 0)),
+            wire_accounting=None if wire_accounting is None else str(wire_accounting),
             completed=bool(value.get("completed", False)),
         )
 
@@ -123,6 +136,7 @@ class ExactSyncStepReport:
     retransmissions: int
     cumulative_wire_bytes: int
     cumulative_retransmissions: int
+    wire_accounting: str
     next_transfer_id: int
     complete: bool
     exact: bool
@@ -162,6 +176,30 @@ def _new_state(
 
 
 
+def _report_wire_accounting(report: Any) -> tuple[int, str]:
+    if hasattr(report, "total_wire_bytes"):
+        return int(report.total_wire_bytes), str(
+            getattr(report, "wire_accounting", "deterministic_model_exact")
+        )
+    if hasattr(report, "total_wire_bytes_lower_bound"):
+        return int(report.total_wire_bytes_lower_bound), str(
+            getattr(report, "wire_accounting", "physical_replay_lower_bound")
+        )
+    raise TypeError("transfer report exposes no supported wire-byte accounting field")
+
+
+
+def _merge_accounting(current: str | None, observed: str) -> str:
+    if current is None:
+        return observed
+    if current != observed:
+        raise ValueError(
+            f"cannot mix wire-accounting semantics in one session: {current!r} vs {observed!r}"
+        )
+    return current
+
+
+
 def sync_missing_chunks_step(
     data: bytes,
     *,
@@ -173,18 +211,24 @@ def sync_missing_chunks_step(
     transfer_id_base: int | None = None,
     max_chunks: int = 1,
     manifest_on_scarce: bool = True,
+    transmitter: TransferCallable | None = None,
 ) -> tuple[bytes | None, ExactSyncSessionState, ExactSyncStepReport]:
     """Advance an exact synchronization session by at most ``max_chunks``.
 
     Resumability is provided at verified chunk boundaries. PNF1 itself remains
-    unchanged and continues to own per-frame stop-and-wait ACK/retry behavior.
-    A later call with the returned state and the same receiver store advertises
-    current availability and therefore does not retransmit already verified
-    chunks.
+    unchanged and continues to own per-frame stop-and-wait behavior. The
+    default transmitter is the deterministic PN-002 simulator; callers may
+    inject a compatible transfer primitive such as ``RFReplayTransmitter``.
+
+    Wire accounting cannot silently mix exact simulator bytes with physical
+    replay lower bounds inside one resumed session.
     """
 
     if not isinstance(max_chunks, int) or max_chunks < 0:
         raise ValueError("max_chunks must be a non-negative integer")
+    transfer: TransferCallable = transmit_exact if transmitter is None else transmitter
+    if not callable(transfer):
+        raise TypeError("transmitter must be callable")
 
     manifest, chunks = build_chunk_manifest(data, chunk_size=chunk_size)
     for chunk in chunks:
@@ -223,6 +267,7 @@ def sync_missing_chunks_step(
             retransmissions=0,
             cumulative_wire_bytes=current.cumulative_wire_bytes,
             cumulative_retransmissions=current.cumulative_retransmissions,
+            wire_accounting=current.wire_accounting or "none",
             next_transfer_id=current.next_transfer_id,
             complete=True,
             exact=reconstructed == data,
@@ -235,10 +280,11 @@ def sync_missing_chunks_step(
     chunk_wire_bytes = 0
     retransmissions = 0
     manifest_delivered = current.manifest_delivered
+    wire_accounting = current.wire_accounting
 
     if current.manifest_on_scarce and not manifest_delivered:
         transfer_id, next_transfer_id = _next_id(next_transfer_id)
-        received_manifest_wire, transfer_report = transmit_exact(
+        received_manifest_wire, transfer_report = transfer(
             manifest.encode(),
             transfer_id=transfer_id,
             profile=profile,
@@ -246,13 +292,15 @@ def sync_missing_chunks_step(
         received_manifest = ChunkManifest.decode(received_manifest_wire)
         if received_manifest != manifest:
             raise AssertionError("chunk manifest changed during exact transfer")
-        manifest_wire_bytes += transfer_report.total_wire_bytes
-        retransmissions += transfer_report.retransmissions
+        wire_bytes, observed_accounting = _report_wire_accounting(transfer_report)
+        wire_accounting = _merge_accounting(wire_accounting, observed_accounting)
+        manifest_wire_bytes += wire_bytes
+        retransmissions += int(transfer_report.retransmissions)
         manifest_delivered = True
 
     summary = availability_for(manifest, receiver_store)
     transfer_id, next_transfer_id = _next_id(next_transfer_id)
-    received_summary_wire, summary_report = transmit_exact(
+    received_summary_wire, summary_report = transfer(
         summary.encode(),
         transfer_id=transfer_id,
         profile=profile,
@@ -260,8 +308,10 @@ def sync_missing_chunks_step(
     received_summary = AvailabilitySummary.decode(received_summary_wire)
     if received_summary.manifest_fingerprint != manifest.fingerprint:
         raise ValueError("availability summary targets a different chunk manifest")
-    availability_wire_bytes += summary_report.total_wire_bytes
-    retransmissions += summary_report.retransmissions
+    wire_bytes, observed_accounting = _report_wire_accounting(summary_report)
+    wire_accounting = _merge_accounting(wire_accounting, observed_accounting)
+    availability_wire_bytes += wire_bytes
+    retransmissions += int(summary_report.retransmissions)
 
     missing_before = [
         index for index in range(len(manifest.chunks)) if not received_summary.has(index)
@@ -275,7 +325,7 @@ def sync_missing_chunks_step(
         source_chunk = sender_store.get(ref.sha256_digest)
         packet = index.to_bytes(_CHUNK_INDEX_BYTES, "big") + source_chunk
         transfer_id, next_transfer_id = _next_id(next_transfer_id)
-        received_packet, chunk_report = transmit_exact(
+        received_packet, chunk_report = transfer(
             packet,
             transfer_id=transfer_id,
             profile=profile,
@@ -291,8 +341,10 @@ def sync_missing_chunks_step(
         digest = receiver_store.put(received_chunk)
         if digest != ref.sha256_digest:
             raise ValueError("received chunk failed manifest SHA-256 verification")
-        chunk_wire_bytes += chunk_report.total_wire_bytes
-        retransmissions += chunk_report.retransmissions
+        wire_bytes, observed_accounting = _report_wire_accounting(chunk_report)
+        wire_accounting = _merge_accounting(wire_accounting, observed_accounting)
+        chunk_wire_bytes += wire_bytes
+        retransmissions += int(chunk_report.retransmissions)
         transferred_source_bytes += ref.length
 
     remaining = _missing_indices(manifest, receiver_store)
@@ -320,6 +372,7 @@ def sync_missing_chunks_step(
         ),
         cumulative_chunk_wire_bytes=current.cumulative_chunk_wire_bytes + chunk_wire_bytes,
         cumulative_retransmissions=current.cumulative_retransmissions + retransmissions,
+        wire_accounting=wire_accounting,
         completed=complete,
     )
     report = ExactSyncStepReport(
@@ -336,6 +389,7 @@ def sync_missing_chunks_step(
         retransmissions=retransmissions,
         cumulative_wire_bytes=next_state.cumulative_wire_bytes,
         cumulative_retransmissions=next_state.cumulative_retransmissions,
+        wire_accounting=wire_accounting or "none",
         next_transfer_id=next_state.next_transfer_id,
         complete=complete,
         exact=exact,
