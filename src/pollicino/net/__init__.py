@@ -103,6 +103,13 @@ from .bundle import (
     save_custody_ledger,
     seed_bundle_custody,
 )
+from .bundle_route import (
+    GovernedEndToEndTRCReport,
+    GovernedForwardContact,
+    GovernedRouteReport,
+    run_governed_store_forward_schedule,
+    summarize_governed_end_to_end_trc,
+)
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -139,6 +146,9 @@ __all__ = [
     "ForwardPeer",
     "FragmentFrame",
     "GovernedContactReport",
+    "GovernedEndToEndTRCReport",
+    "GovernedForwardContact",
+    "GovernedRouteReport",
     "InMemoryContentProvider",
     "InMemoryResolver",
     "MAGIC",
@@ -180,12 +190,14 @@ __all__ = [
     "reassemble_frames",
     "reconstruct_from_store",
     "retrieve_exact",
+    "run_governed_store_forward_schedule",
     "run_store_forward_schedule",
     "save_custody_ledger",
     "save_exact_session_checkpoint",
     "seed_bundle_custody",
     "seed_forwarding_object",
     "summarize_end_to_end_trc",
+    "summarize_governed_end_to_end_trc",
     "sync_missing_chunks",
     "sync_missing_chunks_step",
     "transmit_exact",
