@@ -36,16 +36,22 @@ def bearer(bearer_id: str, kind: BearerKind, seed: int) -> BearerProfile:
     )
 
 
-def scheduling_policy(bearer_id: str) -> BearerSchedulingPolicy:
+def scheduling_policy(
+    bearer_id: str,
+    *,
+    max_source_bytes: int = 4096,
+    max_bundles: int = 16,
+    starvation_seconds: int = 100,
+) -> BearerSchedulingPolicy:
     return BearerSchedulingPolicy(
         bearer_id=bearer_id,
         contact_policy=ContactSchedulingPolicy(
-            max_source_bytes=4096,
-            max_bundles=16,
+            max_source_bytes=max_source_bytes,
+            max_bundles=max_bundles,
             max_chunks_per_bundle=16,
         ),
         fairness_policy=FairnessPolicy(
-            starvation_seconds=100,
+            starvation_seconds=starvation_seconds,
             max_rescue_bundles=1,
             rescue_chunks_per_bundle=1,
         ),
@@ -168,6 +174,7 @@ def test_benchmark_aggregates_delivery_latency_and_bearer_tradeoffs() -> None:
     flood = report.strategy("flood-all")
     progress = report.strategy("gateway-progress")
 
+    assert report.evidence_class == "model_synthetic"
     assert flood.scenario_count == 2
     assert flood.bundle_opportunity_count == 2
     assert flood.delivered_bundle_count == 2
@@ -186,15 +193,87 @@ def test_benchmark_aggregates_delivery_latency_and_bearer_tradeoffs() -> None:
     assert progress.mean_delivery_latency_s == 25.0
     assert progress.total_wire_bytes < flood.total_wire_bytes
 
+    # Classic DTN transmission-count style metrics and byte-exact Pollicino TRC
+    # accounting are both exposed. No classified category may overlap another.
+    assert flood.forwarding_decision_count == 5
+    assert flood.transferred_chunk_count == 5
+    assert progress.forwarding_decision_count == 2
+    assert progress.transferred_chunk_count == 2
+    assert progress.forwarding_decision_count < flood.forwarding_decision_count
+    assert flood.payload_primary_wire_bytes > 0
+    assert flood.protocol_metadata_primary_wire_bytes > 0
+    assert flood.primary_ack_wire_bytes > 0
+    assert flood.classified_wire_bytes == flood.total_wire_bytes
+    assert progress.classified_wire_bytes == progress.total_wire_bytes
+
     flood_lora = next(item for item in flood.bearer_usage if item.bearer_id == "lora")
     progress_lora = next(item for item in progress.bearer_usage if item.bearer_id == "lora")
     assert flood_lora.scenario_count == 2
     assert flood_lora.used_source_bytes > progress_lora.used_source_bytes
+    assert flood_lora.forwarding_decision_count > progress_lora.forwarding_decision_count
+    assert flood_lora.classified_wire_bytes == flood_lora.total_wire_bytes
+    assert progress_lora.classified_wire_bytes == progress_lora.total_wire_bytes
 
     assert report.scenario("progress-works").tags == ("chain", "normal")
     # Every comparison clones network state; benchmark execution must not mutate inputs.
     assert len(first.peers["d"].store) == 0
     assert len(second.peers["d"].store) == 0
+
+
+def test_benchmark_aggregates_real_fairness_rescue_events() -> None:
+    peers = {
+        peer_id: ForwardPeer(peer_id, PollicinoStore())
+        for peer_id in ("a", "d")
+    }
+    ledger = CustodyLedger()
+    high = make_bundle(
+        "high-first",
+        origin=peers["a"],
+        ledger=ledger,
+        priority=BundlePriority.HIGH,
+        nonce=10,
+    )
+    normal = make_bundle(
+        "normal-starved",
+        origin=peers["a"],
+        ledger=ledger,
+        priority=BundlePriority.NORMAL,
+        nonce=11,
+    )
+    lora = bearer("lora", BearerKind.LORA, 53)
+    scenario = RoutingBenchmarkScenario(
+        scenario_id="fairness-rescue",
+        strategies=(FloodAllStrategy(),),
+        bundles=(high, normal),
+        peers=peers,
+        ledger=ledger,
+        windows=(
+            SyntheticContactWindow("first", "a", "d", "lora", 1001, 5, 64, 600),
+            SyntheticContactWindow("second", "a", "d", "lora", 1201, 5, 64, 700),
+        ),
+        bearers={"lora": lora},
+        scheduling_policies={
+            "lora": scheduling_policy(
+                "lora",
+                max_source_bytes=64,
+                max_bundles=1,
+                starvation_seconds=100,
+            )
+        },
+        scheduler_states={},
+        destination_ids=("d",),
+    )
+
+    report = run_synthetic_routing_benchmark((scenario,))
+    flood = report.strategy("flood-all")
+    lora_usage = flood.bearer_usage[0]
+
+    assert flood.delivered_bundle_count == 2
+    assert flood.forwarding_decision_count == 2
+    assert flood.transferred_chunk_count == 2
+    assert flood.fairness_rescue_count == 1
+    assert lora_usage.fairness_rescue_count == 1
+    assert flood.classified_wire_bytes == flood.total_wire_bytes
 
 
 def test_benchmark_requires_same_strategy_ids_in_every_scenario() -> None:
