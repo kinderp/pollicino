@@ -9,7 +9,6 @@ from pathlib import Path
 import struct
 from typing import Any, Callable, Mapping
 
-from .content import ContentManifest
 from .link import ScarceLinkProfile, transmit_exact
 from .persistence import _atomic_write_bytes
 from .store import ChunkManifest
@@ -252,12 +251,15 @@ class CustodyRecord:
             bundle_id = bytes.fromhex(str(value["bundle_id"]))
         except (KeyError, ValueError) as exc:
             raise ValueError("invalid custody bundle_id") from exc
+        peer_id = value.get("peer_id")
         complete = value.get("complete")
+        if not isinstance(peer_id, str) or not peer_id:
+            raise ValueError("custody peer_id must be a non-empty string")
         if not isinstance(complete, bool):
             raise ValueError("custody complete must be boolean")
         return cls(
             bundle_id=bundle_id,
-            peer_id=str(value["peer_id"]),
+            peer_id=peer_id,
             acquired_at_s=int(value["acquired_at_s"]),
             hop_count=int(value["hop_count"]),
             verified_chunk_count=int(value["verified_chunk_count"]),
@@ -312,8 +314,11 @@ class CustodyLedger:
             key=lambda item: (item["bundle_id"], item["peer_id"]),
         )
         contacts = sorted(
-            {"bundle_id": bundle_id.hex(), "contact_id": contact_id}
-            for bundle_id, contact_id in self._contacts
+            (
+                {"bundle_id": bundle_id.hex(), "contact_id": contact_id}
+                for bundle_id, contact_id in self._contacts
+            ),
+            key=lambda item: (item["bundle_id"], item["contact_id"]),
         )
         return {
             "schema": CUSTODY_LEDGER_SCHEMA,
@@ -339,9 +344,11 @@ class CustodyLedger:
                 raise ValueError("processed contact must be an object")
             try:
                 bundle_id = bytes.fromhex(str(item["bundle_id"]))
-                contact_id = str(item["contact_id"])
             except (KeyError, ValueError) as exc:
-                raise ValueError("invalid processed contact") from exc
+                raise ValueError("invalid processed contact bundle_id") from exc
+            contact_id = item.get("contact_id")
+            if not isinstance(contact_id, str) or not contact_id:
+                raise ValueError("processed contact_id must be a non-empty string")
             ledger.mark_contact(bundle_id, contact_id)
         return ledger
 
@@ -359,6 +366,9 @@ class GovernedContactReport:
     governance_primary_ack_wire_bytes: int
     governance_retransmission_data_wire_bytes: int
     governance_retransmission_ack_wire_bytes: int
+    governance_unknown_remote_failure_count: int
+    accounting: str
+    next_transfer_id: int
     inner: ForwardContactReport | None
 
     @property
@@ -457,6 +467,35 @@ def _next_id(value: int) -> tuple[int, int]:
     return value, value + 1
 
 
+def _blocked_report(
+    *,
+    contact_id: str,
+    source: ForwardPeer,
+    target: ForwardPeer,
+    disposition: str,
+    source_hop_count: int,
+    target_hop_count: int | None,
+    transfer_id_base: int,
+) -> GovernedContactReport:
+    return GovernedContactReport(
+        contact_id=contact_id,
+        source_id=source.peer_id,
+        target_id=target.peer_id,
+        disposition=disposition,
+        source_hop_count=source_hop_count,
+        target_hop_count=target_hop_count,
+        bundle_primary_data_wire_bytes=0,
+        custody_primary_data_wire_bytes=0,
+        governance_primary_ack_wire_bytes=0,
+        governance_retransmission_data_wire_bytes=0,
+        governance_retransmission_ack_wire_bytes=0,
+        governance_unknown_remote_failure_count=0,
+        accounting="none",
+        next_transfer_id=transfer_id_base,
+        inner=None,
+    )
+
+
 def governed_forward_contact(
     bundle: ForwardBundle,
     manifest: ChunkManifest,
@@ -471,7 +510,7 @@ def governed_forward_contact(
     now_s: int,
     transmitter: TransferCallable | None = None,
 ) -> tuple[bytes | None, GovernedContactReport]:
-    """Apply TTL/hop/custody/idempotency around one existing store-forward contact.
+    """Apply TTL/hop/custody/idempotency around one store-forward contact.
 
     Duplicate suppression is intentionally scoped to an explicit ``contact_id``.
     Replaying the same scheduled encounter is zero-wire; a genuinely new
@@ -491,54 +530,39 @@ def governed_forward_contact(
         raise ValueError("source peer does not hold custody for this bundle")
 
     if ledger.contact_seen(bundle.bundle_id, contact_id):
-        return None, GovernedContactReport(
+        return None, _blocked_report(
             contact_id=contact_id,
-            source_id=source.peer_id,
-            target_id=target.peer_id,
+            source=source,
+            target=target,
             disposition="duplicate_suppressed",
             source_hop_count=source_record.hop_count,
             target_hop_count=None,
-            bundle_primary_data_wire_bytes=0,
-            custody_primary_data_wire_bytes=0,
-            governance_primary_ack_wire_bytes=0,
-            governance_retransmission_data_wire_bytes=0,
-            governance_retransmission_ack_wire_bytes=0,
-            inner=None,
+            transfer_id_base=transfer_id_base,
         )
 
     if bundle.expired(now_s):
         ledger.mark_contact(bundle.bundle_id, contact_id)
-        return None, GovernedContactReport(
+        return None, _blocked_report(
             contact_id=contact_id,
-            source_id=source.peer_id,
-            target_id=target.peer_id,
+            source=source,
+            target=target,
             disposition="expired",
             source_hop_count=source_record.hop_count,
             target_hop_count=None,
-            bundle_primary_data_wire_bytes=0,
-            custody_primary_data_wire_bytes=0,
-            governance_primary_ack_wire_bytes=0,
-            governance_retransmission_data_wire_bytes=0,
-            governance_retransmission_ack_wire_bytes=0,
-            inner=None,
+            transfer_id_base=transfer_id_base,
         )
 
     target_hop = source_record.hop_count + 1
     if target_hop > bundle.hop_limit:
         ledger.mark_contact(bundle.bundle_id, contact_id)
-        return None, GovernedContactReport(
+        return None, _blocked_report(
             contact_id=contact_id,
-            source_id=source.peer_id,
-            target_id=target.peer_id,
+            source=source,
+            target=target,
             disposition="hop_limit_exhausted",
             source_hop_count=source_record.hop_count,
             target_hop_count=target_hop,
-            bundle_primary_data_wire_bytes=0,
-            custody_primary_data_wire_bytes=0,
-            governance_primary_ack_wire_bytes=0,
-            governance_retransmission_data_wire_bytes=0,
-            governance_retransmission_ack_wire_bytes=0,
-            inner=None,
+            transfer_id_base=transfer_id_base,
         )
 
     transfer: TransferCallable = transmit_exact if transmitter is None else transmitter
@@ -550,10 +574,11 @@ def governed_forward_contact(
     governance_ack = 0
     governance_retry_data = 0
     governance_retry_ack = 0
+    governance_unknown = 0
 
     def move(payload: bytes) -> tuple[bytes, TransferWireBreakdown]:
         nonlocal next_transfer_id, accounting
-        nonlocal governance_ack, governance_retry_data, governance_retry_ack
+        nonlocal governance_ack, governance_retry_data, governance_retry_ack, governance_unknown
         transfer_id, next_transfer_id = _next_id(next_transfer_id)
         received, report = transfer(payload, transfer_id=transfer_id, profile=profile)
         breakdown = classify_transfer_wire(
@@ -566,6 +591,7 @@ def governed_forward_contact(
         governance_ack += breakdown.primary_ack_wire_bytes
         governance_retry_data += breakdown.retransmission_data_wire_bytes
         governance_retry_ack += breakdown.retransmission_ack_wire_bytes
+        governance_unknown += breakdown.unknown_remote_failure_count
         return received, breakdown
 
     envelope_payload = bundle.encode_forward(target_hop)
@@ -621,5 +647,8 @@ def governed_forward_contact(
         governance_primary_ack_wire_bytes=governance_ack,
         governance_retransmission_data_wire_bytes=governance_retry_data,
         governance_retransmission_ack_wire_bytes=governance_retry_ack,
+        governance_unknown_remote_failure_count=governance_unknown,
+        accounting=accounting or inner.accounting,
+        next_transfer_id=next_transfer_id,
         inner=inner,
     )
