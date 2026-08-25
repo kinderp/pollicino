@@ -131,6 +131,14 @@ from .relay_storage import (
     load_relay_storage_catalog,
     save_relay_storage_catalog,
 )
+from .scheduling import (
+    BundlePriority,
+    BundleSchedulingDecision,
+    ContactSchedulingPolicy,
+    ContactSchedulingReport,
+    ScheduledBundle,
+    schedule_contact_bundles,
+)
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -146,12 +154,16 @@ __all__ = [
     "BearerKind",
     "BearerProfile",
     "BearerTRCLine",
+    "BundlePriority",
+    "BundleSchedulingDecision",
     "CHUNK_MANIFEST_MAGIC",
     "CUSTODY_LEDGER_SCHEMA",
     "CUSTODY_MAGIC",
     "CUSTODY_VERSION",
     "ChunkManifest",
     "ChunkRef",
+    "ContactSchedulingPolicy",
+    "ContactSchedulingReport",
     "ContentManifest",
     "ContentProvider",
     "CustodyLedger",
@@ -204,6 +216,7 @@ __all__ = [
     "RetrievalSource",
     "SESSION_CHECKPOINT_SCHEMA",
     "ScarceLinkProfile",
+    "ScheduledBundle",
     "StoreForwardRouteReport",
     "StoreSyncReport",
     "TransferReport",
@@ -232,6 +245,7 @@ __all__ = [
     "save_custody_ledger",
     "save_exact_session_checkpoint",
     "save_relay_storage_catalog",
+    "schedule_contact_bundles",
     "seed_bundle_custody",
     "seed_forwarding_object",
     "summarize_end_to_end_trc",
