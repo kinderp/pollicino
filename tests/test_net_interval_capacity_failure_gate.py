@@ -12,9 +12,17 @@ from pollicino.net.destination_interval import (
     DestinationIntervalObservation,
     DestinationIntervalStrategy,
 )
+from pollicino.net.destination_service import (
+    DestinationServiceControlProfile,
+    DestinationServiceNodeReferenceMode,
+    DestinationServiceObservation,
+    DestinationServiceStrategy,
+    account_destination_service_control,
+)
 from pollicino.net.fair_scheduling import BearerSchedulingPolicy, FairnessPolicy
 from pollicino.net.rapid_schedule import RapidPriorMeetingObservation, run_rapid_deadline_schedule
 from pollicino.net.routing_benchmark import RoutingBenchmarkScenario, run_synthetic_routing_benchmark
+from pollicino.net.routing_compare import compare_synthetic_routing_strategies
 from pollicino.net.scheduling import BundlePriority, ContactSchedulingPolicy, ScheduledBundle
 from pollicino.net.store_forward import ForwardPeer, seed_forwarding_object
 from pollicino.net.wire import DiscoveryDescriptor
@@ -137,6 +145,21 @@ def _interval_strategy() -> DestinationIntervalStrategy:
     )
 
 
+def _service_strategy() -> DestinationServiceStrategy:
+    return DestinationServiceStrategy(
+        destination_id="d",
+        prior_observations=(
+            DestinationServiceObservation("a", "d", 800, 16),
+            DestinationServiceObservation("a", "d", 875, 16),
+            DestinationServiceObservation("b", "d", 800, 16),
+            DestinationServiceObservation("b", "d", 850, 16),
+            DestinationServiceObservation("b", "d", 900, 16),
+            DestinationServiceObservation("c", "d", 800, 64),
+            DestinationServiceObservation("c", "d", 900, 64),
+        ),
+    )
+
+
 def test_interval_frequency_alone_misses_deadline_when_contact_capacity_differs() -> None:
     peers, ledger, item, windows, bearers, policies = _inputs()
     interval = _interval_strategy()
@@ -215,6 +238,47 @@ def test_rapid_uses_observed_transfer_opportunity_and_reaches_rich_relay_on_time
     # useful complete-replica candidate despite C's longer inter-meeting time.
     assert by_id["school-a-c"].routing.scheduling is not None
     assert by_id["c-d-rich"].encounter.direct_delivery
+
+
+def test_destination_service_is_enough_without_rapid_probability_or_replica_state() -> None:
+    peers, ledger, item, windows, bearers, policies = _inputs()
+    service = _service_strategy()
+    report = compare_synthetic_routing_strategies(
+        (service,),
+        (item,),
+        peers=peers,
+        ledger=ledger,
+        windows=windows,
+        bearers=bearers,
+        scheduling_policies=policies,
+        scheduler_states={},
+        destination_ids=("d",),
+    ).strategy("destination-service")
+
+    outcome = report.outcome_for_label("content-reference")
+    assert outcome.delivered
+    assert outcome.first_delivery_s == 1035
+    assert report.windows[0].scheduling is not None  # B: 50 * 4 = 200 < A: 75 * 4 = 300.
+    assert report.windows[1].scheduling is not None  # C: 100 * 1 = 100 < A: 300.
+    assert report.windows[3].scheduling is not None
+
+    full = account_destination_service_control(
+        service,
+        profile=DestinationServiceControlProfile(
+            DestinationServiceNodeReferenceMode.FULL_PSEUDONYM_128
+        ),
+        node_count=4,
+    )
+    indexed = account_destination_service_control(
+        service,
+        profile=DestinationServiceControlProfile(
+            DestinationServiceNodeReferenceMode.SHARED_U16_INDEX
+        ),
+        node_count=4,
+    )
+    assert service.quote_entry_count == 2
+    assert full.control_wire_bytes == 72
+    assert indexed.control_wire_bytes == 120
 
 
 def test_capacity_history_is_explicit_and_not_derived_from_contact_duration() -> None:
