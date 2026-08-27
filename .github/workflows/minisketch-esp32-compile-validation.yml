@@ -1,0 +1,118 @@
+name: Minisketch ESP32 compile feasibility
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PlatformIO
+        run: python -m pip install platformio
+      - name: Clone pinned upstream minisketch
+        run: |
+          git clone https://github.com/bitcoin-core/minisketch.git /tmp/minisketch
+          git -C /tmp/minisketch checkout 4a179c61e3cbe3ac2b3c027764ce8eb5183155e1
+      - name: Create baseline ESP32 project
+        run: |
+          mkdir -p /tmp/pio-base/src
+          cat > /tmp/pio-base/platformio.ini <<'EOF'
+          [env:esp32dev]
+          platform = espressif32
+          board = esp32dev
+          framework = arduino
+          monitor_speed = 115200
+          EOF
+          cat > /tmp/pio-base/src/main.cpp <<'EOF'
+          #include <Arduino.h>
+          void setup() {
+            Serial.begin(115200);
+            Serial.println("baseline");
+          }
+          void loop() {}
+          EOF
+          pio run -d /tmp/pio-base
+      - name: Create generic 16-bit minisketch ESP32 project
+        run: |
+          mkdir -p /tmp/pio-sketch/src /tmp/pio-sketch/lib/minisketch/include /tmp/pio-sketch/lib/minisketch/src/fields
+          cp /tmp/minisketch/include/minisketch.h /tmp/pio-sketch/lib/minisketch/include/
+          cp /tmp/minisketch/src/minisketch.cpp /tmp/pio-sketch/lib/minisketch/src/
+          cp /tmp/minisketch/src/*.h /tmp/pio-sketch/lib/minisketch/src/
+          cp /tmp/minisketch/src/fields/generic_*.cpp /tmp/pio-sketch/lib/minisketch/src/fields/
+          cp /tmp/minisketch/src/fields/*.h /tmp/pio-sketch/lib/minisketch/src/fields/
+          cat > /tmp/pio-sketch/platformio.ini <<'EOF'
+          [env:esp32dev]
+          platform = espressif32
+          board = esp32dev
+          framework = arduino
+          monitor_speed = 115200
+          build_flags =
+            -DDISABLE_DEFAULT_FIELDS
+            -DENABLE_FIELD_16
+            -Ilib/minisketch/include
+            -Ilib/minisketch/src
+          EOF
+          cat > /tmp/pio-sketch/src/main.cpp <<'EOF'
+          #include <Arduino.h>
+          #include <minisketch.h>
+
+          void setup() {
+            Serial.begin(115200);
+            minisketch* sketch = minisketch_create(16, 0, 32);
+            if (!sketch) {
+              Serial.println("minisketch-create-failed");
+              return;
+            }
+            minisketch_add_uint64(sketch, 1);
+            minisketch_add_uint64(sketch, 65535);
+            const size_t size = minisketch_serialized_size(sketch);
+            uint8_t buffer[64] = {};
+            if (size <= sizeof(buffer)) {
+              minisketch_serialize(sketch, buffer);
+              Serial.printf("minisketch-bytes=%u first=%u\n", (unsigned)size, (unsigned)buffer[0]);
+            }
+            minisketch_destroy(sketch);
+          }
+
+          void loop() {}
+          EOF
+          pio run -d /tmp/pio-sketch
+      - name: Compare linked footprint
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess
+
+          tool = Path.home() / '.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-size'
+          base_elf = Path('/tmp/pio-base/.pio/build/esp32dev/firmware.elf')
+          sketch_elf = Path('/tmp/pio-sketch/.pio/build/esp32dev/firmware.elf')
+          base_bin = Path('/tmp/pio-base/.pio/build/esp32dev/firmware.bin')
+          sketch_bin = Path('/tmp/pio-sketch/.pio/build/esp32dev/firmware.bin')
+          assert tool.is_file(), tool
+          assert base_elf.is_file() and sketch_elf.is_file()
+
+          def size(path):
+              out = subprocess.check_output([str(tool), str(path)], text=True)
+              print(out, end='')
+              lines = [line for line in out.splitlines() if line.strip()]
+              values = lines[-1].split()
+              return dict(text=int(values[0]), data=int(values[1]), bss=int(values[2]), dec=int(values[3]))
+
+          print('BASE ELF')
+          base = size(base_elf)
+          print('MINISKETCH ELF')
+          sketch = size(sketch_elf)
+          print('DELTA text=', sketch['text'] - base['text'])
+          print('DELTA data=', sketch['data'] - base['data'])
+          print('DELTA bss=', sketch['bss'] - base['bss'])
+          print('DELTA dec=', sketch['dec'] - base['dec'])
+          print('BASE firmware.bin=', base_bin.stat().st_size)
+          print('MINISKETCH firmware.bin=', sketch_bin.stat().st_size)
+          print('DELTA firmware.bin=', sketch_bin.stat().st_size - base_bin.stat().st_size)
+          PY
