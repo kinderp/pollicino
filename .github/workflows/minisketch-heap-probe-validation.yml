@@ -1,0 +1,49 @@
+name: Minisketch heap probe validation
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone pinned upstream minisketch
+        run: |
+          git clone https://github.com/bitcoin-core/minisketch.git /tmp/minisketch
+          git -C /tmp/minisketch checkout 4a179c61e3cbe3ac2b3c027764ce8eb5183155e1
+      - name: Compile generic 16-bit heap probe
+        run: |
+          g++ -std=c++11 -O2 \
+            -DDISABLE_DEFAULT_FIELDS -DENABLE_FIELD_16 \
+            -I/tmp/minisketch/include -I/tmp/minisketch/src \
+            tools/minisketch_heap_probe.cpp \
+            /tmp/minisketch/src/minisketch.cpp \
+            /tmp/minisketch/src/fields/generic_1byte.cpp \
+            /tmp/minisketch/src/fields/generic_2bytes.cpp \
+            /tmp/minisketch/src/fields/generic_3bytes.cpp \
+            /tmp/minisketch/src/fields/generic_4bytes.cpp \
+            /tmp/minisketch/src/fields/generic_5bytes.cpp \
+            /tmp/minisketch/src/fields/generic_6bytes.cpp \
+            /tmp/minisketch/src/fields/generic_7bytes.cpp \
+            /tmp/minisketch/src/fields/generic_8bytes.cpp \
+            -o /tmp/minisketch_heap_probe
+      - name: Run allocation probe
+        run: /tmp/minisketch_heap_probe | tee /tmp/minisketch_heap_probe.txt
+      - name: Validate cleanup and capacity-32 bound
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text = Path('/tmp/minisketch_heap_probe.txt').read_text()
+          assert all(int(value) == 0 for value in re.findall(r'after_destroy_delta=(-?\d+)', text))
+          first = text.split('CASE capacity=64', 1)[0]
+          retained = int(re.search(r'source_side_two_sketches_retained=(\d+)', first).group(1))
+          decode_peak = int(re.search(r'decode_peak_extra=(-?\d+)', first).group(1))
+          print('capacity32_source_side_two_sketches_retained=', retained)
+          print('capacity32_decode_peak_extra=', decode_peak)
+          assert retained < 4096
+          assert decode_peak < 16384
+          PY
