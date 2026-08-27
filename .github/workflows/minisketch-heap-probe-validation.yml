@@ -32,18 +32,43 @@ jobs:
             -o /tmp/minisketch_heap_probe
       - name: Run allocation probe
         run: /tmp/minisketch_heap_probe | tee /tmp/minisketch_heap_probe.txt
-      - name: Validate cleanup and capacity-32 bound
+      - name: Validate exact observed allocation scaling
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
+
           text = Path('/tmp/minisketch_heap_probe.txt').read_text()
-          assert all(int(value) == 0 for value in re.findall(r'after_destroy_delta=(-?\d+)', text))
-          first = text.split('CASE capacity=64', 1)[0]
-          retained = int(re.search(r'source_side_two_sketches_retained=(\d+)', first).group(1))
-          decode_peak = int(re.search(r'decode_peak_extra=(-?\d+)', first).group(1))
-          print('capacity32_source_side_two_sketches_retained=', retained)
-          print('capacity32_decode_peak_extra=', decode_peak)
-          assert retained < 4096
-          assert decode_peak < 16384
+          blocks = re.findall(
+              r'CASE capacity=(\d+).*?(?=CASE capacity=|\Z)',
+              text,
+              flags=re.S,
+          )
+          capacities = [20, 21, 32, 64, 128, 256, 512, 1024]
+          assert [int(value) for value in blocks] == capacities
+          assert all(
+              int(value) == 0
+              for value in re.findall(r'after_destroy_delta=(-?\d+)', text)
+          )
+
+          for capacity in capacities:
+              block = re.search(
+                  rf'CASE capacity={capacity}.*?(?=CASE capacity=|\Z)',
+                  text,
+                  flags=re.S,
+              ).group(0)
+              retained = int(re.search(
+                  r'source_side_two_sketches_retained=(\d+)', block
+              ).group(1))
+              decode_peak = int(re.search(
+                  r'decode_peak_extra=(-?\d+)', block
+              ).group(1))
+              expected_retained = 4 * capacity + 128
+              expected_decode_peak = 266 * capacity + 6
+              print(
+                  f'capacity={capacity} retained={retained} '
+                  f'decode_peak={decode_peak}'
+              )
+              assert retained == expected_retained
+              assert decode_peak == expected_decode_peak
           PY
