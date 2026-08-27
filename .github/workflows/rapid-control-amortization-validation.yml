@@ -28,25 +28,34 @@ jobs:
               RapidControlWireProfile, RapidNodeReferenceMode,
               account_rapid_control_wire,
           )
-          print('objects,epidemic,rapid_transfer,full_control,full_delta,indexed_control,indexed_delta,meeting_entries,replica_entries,queue_entries')
+          from pollicino.net.rapid_shared_quote_accounting import (
+              account_shared_opportunity_quotes,
+              rapid_modeled_total_with_shared_opportunity_quotes,
+          )
+          print('objects,epidemic,rapid_transfer,indexed_control,indexed_delta,queue_entries,shared_control,shared_delta,shared_queue_entries')
           for count in (1, 2, 5, 10, 20):
               rapid, epidemic = ns['_run'](count)
-              full_c = account_rapid_control_wire(
-                  rapid,
-                  profile=RapidControlWireProfile(RapidNodeReferenceMode.FULL_PSEUDONYM_128),
-                  node_count=4,
-              )
+              profile = RapidControlWireProfile(RapidNodeReferenceMode.SHARED_U16_INDEX)
               idx_c = account_rapid_control_wire(
                   rapid,
-                  profile=RapidControlWireProfile(RapidNodeReferenceMode.SHARED_U16_INDEX),
+                  profile=profile,
                   node_count=4,
               )
-              full = compare_rapid_wire_cost(rapid, baseline=epidemic, control=full_c)
               idx = compare_rapid_wire_cost(rapid, baseline=epidemic, control=idx_c)
+              shared = account_shared_opportunity_quotes(
+                  rapid,
+                  profile=profile,
+                  node_count=4,
+              )
+              shared_total = rapid_modeled_total_with_shared_opportunity_quotes(
+                  rapid,
+                  control=shared,
+              )
               print(count, epidemic.total_wire_bytes,
                     rapid.total_wire_bytes_excluding_rapid_control,
-                    full_c.control_wire_bytes, full.delta_vs_baseline_bytes,
                     idx_c.control_wire_bytes, idx.delta_vs_baseline_bytes,
-                    idx_c.meeting_entry_count, idx_c.replica_entry_count,
-                    idx_c.queue_quote_entry_count, sep=',')
+                    idx_c.queue_quote_entry_count,
+                    shared.modeled_control_wire_bytes,
+                    shared_total - epidemic.total_wire_bytes,
+                    shared.shared_queue_quote_entry_count, sep=',')
           PY
