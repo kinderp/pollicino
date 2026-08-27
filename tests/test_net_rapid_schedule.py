@@ -7,6 +7,12 @@ from pollicino.net.bearer import BearerKind, BearerProfile, EvidenceBasis
 from pollicino.net.bundle import CustodyLedger, ForwardBundle, seed_bundle_custody
 from pollicino.net.contact_windows import SyntheticContactWindow
 from pollicino.net.fair_scheduling import BearerSchedulingPolicy, FairnessPolicy
+from pollicino.net.rapid_control_wire import (
+    RapidControlWireProfile,
+    RapidNodeReferenceMode,
+    account_rapid_control_wire,
+    rapid_modeled_total_wire_bytes,
+)
 from pollicino.net.rapid_schedule import (
     RAPID_DEADLINE_PROTOTYPE_ID,
     RapidPriorMeetingObservation,
@@ -99,9 +105,8 @@ def _scenario_inputs():
     return peers, ledger, item, windows, prior
 
 
-def test_rapid_schedule_uses_learned_relay_and_delivers_on_time() -> None:
+def _run_rapid():
     peers, ledger, item, windows, prior = _scenario_inputs()
-
     report = run_rapid_deadline_schedule(
         (item,),
         peers=peers,
@@ -114,6 +119,11 @@ def test_rapid_schedule_uses_learned_relay_and_delivers_on_time() -> None:
         application_deadlines={item.bundle.bundle_id: 1030},
         prior_meetings=prior,
     )
+    return peers, ledger, item, windows, report
+
+
+def test_rapid_schedule_uses_learned_relay_and_delivers_on_time() -> None:
+    peers, ledger, item, _windows, report = _run_rapid()
 
     outcome = report.routing.outcome_for_label(item.label)
     assert report.strategy_id == RAPID_DEADLINE_PROTOTYPE_ID
@@ -137,22 +147,10 @@ def test_rapid_schedule_uses_learned_relay_and_delivers_on_time() -> None:
 
 
 def test_same_scenario_rapid_avoids_one_epidemic_content_replication() -> None:
-    peers, ledger, item, windows, prior = _scenario_inputs()
+    peers, ledger, item, windows, rapid = _run_rapid()
     bearers = {"lora": _bearer()}
     policies = {"lora": _policy()}
 
-    rapid = run_rapid_deadline_schedule(
-        (item,),
-        peers=peers,
-        ledger=ledger,
-        windows=windows,
-        bearers=bearers,
-        scheduling_policies=policies,
-        scheduler_states={},
-        destination_id="d",
-        application_deadlines={item.bundle.bundle_id: 1030},
-        prior_meetings=prior,
-    )
     epidemic = compare_synthetic_routing_strategies(
         (EpidemicStrategy(),),
         (item,),
@@ -173,8 +171,41 @@ def test_same_scenario_rapid_avoids_one_epidemic_content_replication() -> None:
     assert epidemic.used_source_bytes == 192  # A->X + A->B + B->D
     assert rapid.routing.total_wire_bytes < epidemic.total_wire_bytes
     assert rapid.control_entry_count_lower_bound > 0
-    # This is intentionally not a complete total-network-byte claim until RAPID
-    # control metadata receives an actual encoding.
+    # This remains only a governed-content comparison until the explicit RAPID
+    # control accounting below is included.
+
+
+def test_rapid_control_wire_is_explicit_and_shared_indices_do_not_hide_bootstrap() -> None:
+    _peers, _ledger, _item, _windows, rapid = _run_rapid()
+
+    full_profile = RapidControlWireProfile(
+        RapidNodeReferenceMode.FULL_PSEUDONYM_128
+    )
+    indexed_profile = RapidControlWireProfile(
+        RapidNodeReferenceMode.SHARED_U16_INDEX
+    )
+    full = account_rapid_control_wire(rapid, profile=full_profile, node_count=4)
+    indexed = account_rapid_control_wire(rapid, profile=indexed_profile, node_count=4)
+
+    assert full.control_wire_bytes > 0
+    assert full.bootstrap_wire_bytes == 0
+    assert indexed.bootstrap_wire_bytes == 4 + 4 * (2 + 16)
+    assert indexed.meeting_wire_bytes < full.meeting_wire_bytes
+    assert indexed.replica_wire_bytes < full.replica_wire_bytes
+    assert indexed.queue_quote_wire_bytes < full.queue_quote_wire_bytes
+    assert (
+        full.meeting_entry_count
+        + full.replica_entry_count
+        + full.delivery_entry_count
+        + full.queue_quote_entry_count
+        == rapid.control_entry_count_lower_bound
+    )
+    assert rapid_modeled_total_wire_bytes(rapid, control=full) == (
+        rapid.total_wire_bytes_excluding_rapid_control + full.control_wire_bytes
+    )
+    assert rapid_modeled_total_wire_bytes(rapid, control=indexed) == (
+        rapid.total_wire_bytes_excluding_rapid_control + indexed.control_wire_bytes
+    )
 
 
 def test_prior_history_must_precede_first_routing_window() -> None:
