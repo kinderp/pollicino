@@ -163,3 +163,28 @@ def test_break_even_sweep_preserves_delivery_and_exposes_control_regime() -> Non
     assert full_deltas[0] > 0
     assert full_deltas[-1] < 0
     assert indexed_deltas[-1] < 0
+
+
+def test_global_index_dictionary_can_erase_small_object_savings_as_node_count_grows() -> None:
+    rapid, epidemic = _run(64)
+    profile = RapidControlWireProfile(RapidNodeReferenceMode.SHARED_U16_INDEX)
+
+    deltas = {}
+    for node_count in (4, 8, 10, 11, 16, 32):
+        control = account_rapid_control_wire(
+            rapid,
+            profile=profile,
+            node_count=node_count,
+        )
+        deltas[node_count] = compare_rapid_wire_cost(
+            rapid,
+            baseline=epidemic,
+            control=control,
+        ).delta_vs_baseline_bytes
+
+    # Only the dictionary representation changes in this sensitivity test; the
+    # extra nodes are deliberately not invented as extra contacts/control facts.
+    assert deltas[4] == -122
+    assert deltas[10] < 0
+    assert deltas[11] > 0
+    assert deltas[32] > deltas[16] > deltas[11]
