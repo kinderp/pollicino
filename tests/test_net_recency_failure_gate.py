@@ -8,6 +8,13 @@ from pollicino.net.deadline_objectives import (
     ApplicationDeadlineObjective,
     evaluate_application_deadlines,
 )
+from pollicino.net.destination_interval import (
+    DestinationIntervalControlProfile,
+    DestinationIntervalNodeReferenceMode,
+    DestinationIntervalObservation,
+    DestinationIntervalStrategy,
+    account_destination_interval_control,
+)
 from pollicino.net.destination_recency import (
     DestinationRecencyControlProfile,
     DestinationRecencyNodeReferenceMode,
@@ -18,6 +25,7 @@ from pollicino.net.destination_recency import (
 from pollicino.net.fair_scheduling import BearerSchedulingPolicy, FairnessPolicy
 from pollicino.net.rapid_schedule import RapidPriorMeetingObservation, run_rapid_deadline_schedule
 from pollicino.net.routing_benchmark import RoutingBenchmarkScenario, run_synthetic_routing_benchmark
+from pollicino.net.routing_compare import compare_synthetic_routing_strategies
 from pollicino.net.scheduling import BundlePriority, ContactSchedulingPolicy, ScheduledBundle
 from pollicino.net.store_forward import ForwardPeer, seed_forwarding_object
 from pollicino.net.wire import DiscoveryDescriptor
@@ -199,6 +207,67 @@ def test_recent_rare_contact_can_mislead_destination_recency_while_rapid_meets_d
     )
     assert full_recency_control.control_wire_bytes > 0
     assert rapid.control_entry_count_lower_bound > recency.quote_entry_count
+
+
+def test_mean_destination_interval_is_enough_to_fix_the_recency_failure() -> None:
+    peers, ledger, item, windows = _inputs()
+    interval = DestinationIntervalStrategy(
+        destination_id="d",
+        prior_observations=(
+            # Same history supplied to RAPID, but this baseline retains only the
+            # direct running mean interval per node.
+            DestinationIntervalObservation("a", "d", 50),
+            DestinationIntervalObservation("a", "d", 950),
+            DestinationIntervalObservation("b", "d", 700),
+            DestinationIntervalObservation("b", "d", 800),
+            DestinationIntervalObservation("b", "d", 900),
+            DestinationIntervalObservation("x", "d", 990),
+        ),
+    )
+    report = compare_synthetic_routing_strategies(
+        (interval,),
+        (item,),
+        peers=peers,
+        ledger=ledger,
+        windows=windows,
+        bearers={"lora": _bearer()},
+        scheduling_policies={"lora": _policy()},
+        scheduler_states={},
+        destination_ids=("d",),
+    ).strategy("destination-interval")
+
+    outcome = report.outcome_for_label("micro-reference")
+    assert outcome.delivered
+    assert outcome.first_delivery_s == 1025
+    assert report.windows[0].scheduling is None  # X has only one sample: unknown interval
+    assert report.windows[1].scheduling is not None  # B mean=100 s beats A mean=900 s
+    assert report.windows[2].scheduling is not None
+    assert interval.mean_interval_seconds("a") == 900.0
+    assert interval.mean_interval_seconds("b") == 100.0
+    assert interval.mean_interval_seconds("x") is None
+    assert interval.interval_sample_count("a") == 1
+    assert interval.interval_sample_count("b") >= 2
+
+    # The decision needs the same number of non-destination quotes as recency,
+    # not RAPID's richer meeting/replica/queue state.
+    full = account_destination_interval_control(
+        interval,
+        profile=DestinationIntervalControlProfile(
+            DestinationIntervalNodeReferenceMode.FULL_PSEUDONYM_128
+        ),
+        node_count=4,
+    )
+    indexed = account_destination_interval_control(
+        interval,
+        profile=DestinationIntervalControlProfile(
+            DestinationIntervalNodeReferenceMode.SHARED_U16_INDEX
+        ),
+        node_count=4,
+    )
+    assert interval.quote_entry_count == 2
+    assert full.quote_entry_count == indexed.quote_entry_count == 2
+    assert full.control_wire_bytes == 56
+    assert indexed.control_wire_bytes == 104
 
 
 def test_discriminating_history_is_strictly_past_and_contains_no_future_hint() -> None:
