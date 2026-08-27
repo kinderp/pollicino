@@ -1,0 +1,57 @@
+name: Minisketch one-way validation
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - name: Project tests without optional native dependency
+        run: python -m pytest -q tests
+      - name: Build pinned upstream libminisketch
+        run: |
+          git clone https://github.com/bitcoin-core/minisketch.git /tmp/minisketch
+          git -C /tmp/minisketch checkout 4a179c61e3cbe3ac2b3c027764ce8eb5183155e1
+          cmake -S /tmp/minisketch -B /tmp/minisketch-build \
+            -DBUILD_SHARED_LIBS=ON \
+            -DMINISKETCH_BUILD_TESTS=OFF \
+            -DMINISKETCH_BUILD_BENCHMARK=OFF \
+            -DMINISKETCH_FIELDS=16
+          cmake --build /tmp/minisketch-build --parallel 2
+          echo "POLLICINO_MINISKETCH_LIB=/tmp/minisketch-build/lib/libminisketch.so" >> "$GITHUB_ENV"
+      - name: One-way receiver-sketch tests
+        run: python -m pytest -q tests/test_net_minisketch_one_way_host.py
+      - name: Print one-way wire checkpoint
+        run: |
+          python - <<'PY'
+          import runpy
+          ns = runpy.run_path('tests/test_net_minisketch_one_way_host.py')
+          from pollicino.net.availability_wire_benchmark import benchmark_availability_wire
+          from pollicino.net.link import transmit_exact
+          from pollicino.net.minisketch_one_way_host import reconcile_receiver_availability_at_source
+
+          source, receiver, source_only, receiver_only = ns['_source_receiver']()
+          profile = ns['_profile']()
+          r = reconcile_receiver_availability_at_source(source, receiver, capacity=32)
+          message = b'PNM2' + bytes(36) + r.serialized_receiver_sketch
+          _, wire = transmit_exact(message, transfer_id=900, profile=profile)
+          absolute = benchmark_availability_wire(receiver, profile=profile).best
+          print('source_only=', len(source_only))
+          print('receiver_only=', len(receiver_only))
+          print('raw_sketch=', r.serialized_sketch_bytes)
+          print('enveloped_sketch=', len(message))
+          print('sketch_frames=', wire.frame_count)
+          print('one_way_wire=', wire.total_wire_bytes)
+          print('absolute_id=', absolute.representation_id)
+          print('absolute_source=', absolute.source_bytes)
+          print('absolute_wire=', absolute.total_wire_bytes)
+          print('wire_ratio=', absolute.total_wire_bytes / wire.total_wire_bytes)
+          PY
