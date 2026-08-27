@@ -99,7 +99,11 @@ RAPID(N)
 
 No shared cost is divided away or ignored; it is paid once and its cost per bundle decreases only because more bundles reuse it.
 
-## Expected sweep from the explicit model
+## Validated sweep
+
+GitHub Actions `33116687295` — PASS.
+
+The validation ran the complete project suite plus `tests/test_net_rapid_amortization.py`; the targeted test confirms that the single-bundle checkpoints recompose exactly and that full-ID RAPID becomes cheaper at the second reused object under this explicit decomposition.
 
 ### Full-ID control
 
