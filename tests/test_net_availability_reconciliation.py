@@ -93,9 +93,22 @@ def test_sparse_and_range_modes_win_in_different_regimes() -> None:
         chunk_count,
         tuple(range(0, 40, 2)),
     )
+    available_u16 = encode_availability_candidate(
+        only_twenty_available,
+        AvailabilityResearchCodec.AVAILABLE_U16,
+    )
+    assert len(available_u16) == 40 + 20 * 2
+    assert decode_availability_candidate(available_u16) == only_twenty_available
+
+    # The first validation disproved the expectation that sparse indices must
+    # be smallest here. A 65,535-bit map containing only 20 one-bits is highly
+    # structured, so lossless zlib can compress the bitmap below the 80-byte
+    # available-u16 representation. Preserve that observed result rather than
+    # forcing the initially expected codec to win.
     best_available = smallest_availability_candidate(only_twenty_available)
-    assert best_available.codec is AvailabilityResearchCodec.AVAILABLE_U16
-    assert best_available.encoded_bytes == 40 + 20 * 2
+    assert best_available.codec is AvailabilityResearchCodec.BITMAP_ZLIB
+    assert best_available.encoded_bytes < len(available_u16)
+    assert decode_availability_candidate(best_available.encoded) == only_twenty_available
 
 
 def test_compressed_bitmap_is_useful_only_when_bitmap_has_structure() -> None:
