@@ -1,4 +1,4 @@
-name: RAPID queue inference validation
+name: RAPID inference chain validation
 
 on:
   push:
@@ -25,3 +25,4 @@ jobs:
           tests/test_net_rapid_meeting_control.py
           tests/test_net_rapid_replica_control.py
           tests/test_net_rapid_queue_inference.py
+          tests/test_net_rapid_inference.py
