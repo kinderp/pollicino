@@ -311,6 +311,14 @@ def evaluate_rapid_encounter(
             source=source,
             target=target,
         )
+        # This first RAPID encounter prototype assigns utility only to a
+        # complete candidate replica. If the current contact cannot carry every
+        # missing authoritative source byte, do not credit a partial copy with
+        # the delivery probability of a complete replica. Chunk-aware partial
+        # replica utility is a separate future research question.
+        if replication_bytes > window.logical_source_byte_budget:
+            continue
+
         source_meetings = _isolated_service_meetings(
             state,
             item,
