@@ -1,4 +1,4 @@
-name: Deadline and RAPID utility validation
+name: Deadline and RAPID prototype validation
 
 on:
   push:
@@ -24,3 +24,4 @@ jobs:
           tests/test_net_deadline_objectives.py
           tests/test_net_edu_deadline_discrimination.py
           tests/test_net_rapid_deadline_utility.py
+          tests/test_net_rapid_meeting_control.py
