@@ -17,40 +17,48 @@ jobs:
       - name: Project tests
         run: python -m pytest -q tests
       - name: PNA2 codec targeted tests
-        run: python -m pytest -q tests/test_net_availability_reconciliation.py
-      - name: Print max-chunk codec regimes
+        run: python -m pytest -q tests/test_net_availability_reconciliation.py tests/test_net_availability_wire_benchmark.py
+      - name: Print representative PNF1 wire regimes
         run: |
           python - <<'PY'
           import hashlib, math
-          from pollicino.net.availability_reconciliation import (
-              AvailabilityResearchCodec,
-              availability_codec_candidates,
-          )
+          from pollicino.net.availability_wire_benchmark import benchmark_availability_wire
+          from pollicino.net.link import ScarceLinkProfile
           from pollicino.net.store import AvailabilitySummary, MAX_CHUNKS
 
-          def summary(chunk_count, available):
-              bits = bytearray(math.ceil(chunk_count / 8))
+          def summary(available, label):
+              bits = bytearray(math.ceil(MAX_CHUNKS / 8))
               for index in available:
                   byte, bit = divmod(index, 8)
                   bits[byte] |= 1 << bit
               return AvailabilitySummary(
-                  manifest_fingerprint=hashlib.sha256(b'pna2-sweep').digest(),
-                  chunk_count=chunk_count,
+                  manifest_fingerprint=hashlib.sha256(label.encode()).digest(),
+                  chunk_count=MAX_CHUNKS,
                   available_bits=bytes(bits),
               )
 
-          n = MAX_CHUNKS
-          print('missing,pna1,missing_u16,missing_ranges,available_u16,available_ranges,zlib,best')
-          for missing_count in (0, 1, 5, 20, 100, 1000, 4095, 4096, 10000, 32768, 65535):
-              missing = set(range(missing_count))
-              s = summary(n, (i for i in range(n) if i not in missing))
-              sizes = {c.codec: c.encoded_bytes for c in availability_codec_candidates(s)}
-              best = min(sizes, key=lambda codec: (sizes[codec], int(codec)))
-              print(missing_count, len(s.encode()),
-                    sizes[AvailabilityResearchCodec.MISSING_U16],
-                    sizes[AvailabilityResearchCodec.MISSING_RANGES_U16],
-                    sizes[AvailabilityResearchCodec.AVAILABLE_U16],
-                    sizes[AvailabilityResearchCodec.AVAILABLE_RANGES_U16],
-                    sizes[AvailabilityResearchCodec.BITMAP_ZLIB],
-                    best.name, sep=',')
+          profile = ScarceLinkProfile(
+              max_frame_bytes=64, bitrate_bps=5000, ack_bytes=8,
+              max_retries=3, seed=173,
+          )
+          cases = {}
+          missing = set(range(100, 140, 2))
+          cases['sparse20'] = summary(
+              (i for i in range(MAX_CHUNKS) if i not in missing), 'sparse20'
+          )
+          missing = set(range(20_000, 24_096))
+          cases['range4096'] = summary(
+              (i for i in range(MAX_CHUNKS) if i not in missing), 'range4096'
+          )
+          cases['empty'] = summary((), 'empty')
+          cases['full'] = summary(range(MAX_CHUNKS), 'full')
+
+          print('case,best,source,frames,wire,pna1_source,pna1_frames,pna1_wire')
+          for name, state in cases.items():
+              report = benchmark_availability_wire(state, profile=profile)
+              best = report.best
+              print(name, best.representation_id, best.source_bytes,
+                    best.frame_count, best.total_wire_bytes,
+                    report.pna1.source_bytes, report.pna1.frame_count,
+                    report.pna1.total_wire_bytes, sep=',')
           PY
