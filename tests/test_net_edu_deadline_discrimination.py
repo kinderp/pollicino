@@ -162,15 +162,22 @@ def test_deadline_reveals_difference_hidden_by_eventual_delivery() -> None:
 def test_rapid_one_selection_on_same_edu_scenario_is_on_time_without_x_replica() -> None:
     scenario, item, _spray, _prophet = _scenario()
 
-    # RAPID may use only observations that precede the routing experiment. Two
-    # historical B<->D meetings establish an inter-meeting estimate; X receives
-    # no such future-looking hint.
+    # RAPID may use only observations that precede the routing experiment. B has
+    # a faster historical path to D; A also has explicit, slower history so the
+    # existing source replica is not silently ignored when marginal utility is
+    # computed. X receives no future-looking hint.
     prior = (
         RapidPriorMeetingObservation(
             "b", "d", 0, opportunity_bytes_a_to_b=64
         ),
         RapidPriorMeetingObservation(
             "b", "d", 40, opportunity_bytes_a_to_b=64
+        ),
+        RapidPriorMeetingObservation(
+            "a", "d", 0, opportunity_bytes_a_to_b=64
+        ),
+        RapidPriorMeetingObservation(
+            "a", "d", 100, opportunity_bytes_a_to_b=64
         ),
     )
     rapid = run_rapid_deadline_schedule(
