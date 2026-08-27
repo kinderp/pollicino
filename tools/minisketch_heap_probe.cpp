@@ -64,7 +64,6 @@ void add_set(minisketch* sketch, std::size_t common_count, std::size_t unique_st
 void run_case(std::size_t capacity, std::size_t common_count, std::size_t unique_each) {
     const std::size_t baseline = g_current;
 
-    // SOURCE persistent local sketch.
     reset_peak();
     minisketch* source = minisketch_create(16, 0, capacity);
     const Phase create_source = finish_phase(baseline);
@@ -76,8 +75,6 @@ void run_case(std::size_t capacity, std::size_t common_count, std::size_t unique
     add_set(source, common_count, common_count + 1, unique_each);
     const Phase add_source = finish_phase(before_add_source);
 
-    // RECEIVER builds and serializes on its own logical device. We measure this
-    // phase, then destroy it before measuring SOURCE-side remote+decode memory.
     reset_peak();
     const std::size_t before_receiver_create = g_current;
     minisketch* receiver = minisketch_create(16, 0, capacity);
@@ -100,8 +97,6 @@ void run_case(std::size_t capacity, std::size_t common_count, std::size_t unique
     const Phase serialize = finish_phase(before_serialize);
     minisketch_destroy(receiver);
 
-    // SOURCE receives/deserializes the receiver sketch. From here on only the
-    // source's local sketch and one remote sketch coexist on this logical node.
     reset_peak();
     const std::size_t before_remote_create = g_current;
     minisketch* remote = minisketch_create(16, 0, capacity);
@@ -157,12 +152,13 @@ int main() {
         return 2;
     }
 
-    // Pollicino's discriminating current case: 50,000 common chunks and ten
-    // unique chunks per peer, actual symmetric difference 20, capacity 32.
-    run_case(32, 50000, 10);
+    // Current discriminating case: actual symmetric difference 20. Capacities
+    // 20 and 21 correspond to the upstream fpbits=32 and fpbits=64 checkpoints.
+    for (std::size_t capacity : {20u, 21u, 32u}) {
+        run_case(capacity, 50000, 10);
+    }
 
-    // Capacity-scaling probes keep the same 20-element difference while
-    // over-provisioning the sketch, matching the earlier wire-budget research.
+    // Over-provisioning probes keep the same 20-element difference.
     for (std::size_t capacity : {64u, 128u, 256u, 512u, 1024u}) {
         run_case(capacity, 1000, 10);
     }
