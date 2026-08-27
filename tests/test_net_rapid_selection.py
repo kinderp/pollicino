@@ -26,8 +26,11 @@ def _inference(
     candidate_has: bool = False,
     deadline_passed: bool = False,
 ) -> RapidDeadlineInferenceReport:
-    before = 0.2
-    after = before + marginal
+    # Use zero as the synthetic baseline so tests that intentionally construct
+    # equal marginal-utility/byte ratios are not perturbed by unrelated float
+    # subtraction error from a non-zero probability_before value.
+    before = 0.0
+    after = marginal
     return RapidDeadlineInferenceReport(
         bundle_id=_bundle(label),
         destination_id=destination_id,
