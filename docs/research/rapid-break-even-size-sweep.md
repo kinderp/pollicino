@@ -95,6 +95,8 @@ Again the relevant metric is total modeled bytes, not object size alone.
 
 Do not yet add a general RAPID ranking hook to the common routing comparator.
 
+The RAPID control-wire and break-even helpers remain research modules imported explicitly by experiments. They are intentionally **not promoted into the stable `pollicino.net` top-level API** at this checkpoint.
+
 The next scientifically useful dimension is not another routing algorithm. It is **control-state amortization and network size**:
 
 - how control cost changes with node count;
