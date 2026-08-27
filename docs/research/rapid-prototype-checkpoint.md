@@ -1,6 +1,6 @@
 # RAPID prototype checkpoint
 
-Status: 2026-08-27 — utility + meeting/control foundations validated
+Status: 2026-08-27 — utility + meeting/control + replica/delivery control validated
 
 ## Why RAPID work is now justified
 
@@ -90,17 +90,9 @@ Nodes can exchange changed meeting-time metadata. The model:
 
 The 3-hop bound mirrors the practical meeting-time estimation approach described in the RAPID paper.
 
-### Important accounting rule
+The control model reports **metadata entry counts**, not wire bytes. No serialization has been selected yet.
 
-The control model reports **metadata entry counts**, not wire bytes.
-
-No serialization has been selected yet, therefore:
-
-```text
-control entry count != control wire bytes
-```
-
-The first exchange can legitimately contain redundant knowledge. Example validated in tests:
+A validated bootstrap example is:
 
 ```text
 A knows A-B
@@ -114,37 +106,89 @@ next unchanged exchange:
   total = 0
 ```
 
-That bootstrap cost is preserved instead of being optimized away by assumption.
+That initial duplicate knowledge is preserved as real modeled control work.
 
-## What is still missing before a RAPID routing strategy
+## Implemented layer 3 — replica-location and final-delivery knowledge
 
-### Layer 3 gate — replica-location + delivery acknowledgement metadata
+Module: `pollicino.net.rapid_replica_control`
 
-The next prototype must model the minimum distributed state needed to answer two questions without oracle knowledge:
+The model answers, using delayed gossip rather than future knowledge:
 
 ```text
 where are complete replicas believed to exist?
 has a final destination already received the bundle?
 ```
 
-The first model is deliberately separate from PNB1/PNC1 and radio ACKs:
+### Complete-replica advertisement
 
-- a **replica advertisement** is authored by the carrier it describes and has a monotonic per-bundle sequence;
-- advertisements can say `present=true` or `present=false`, so a later storage-eviction experiment can publish a tombstone rather than letting stale gossip resurrect a deleted replica;
-- only **complete, verified replicas** count in the first RAPID utility model; partial chunks remain Pollicino reconciliation state and are not silently treated as full RAPID copies;
-- a **delivery acknowledgement** is authored by the final destination and is monotonic: once a destination has delivered a bundle, gossip can propagate that fact and suppress future utility/replication work;
-- metadata exchange is delta-based with per-peer watermarks and reports entry counts only;
-- no control byte cost is assigned until a separate encoding experiment is justified and benchmarked.
+A carrier can publish its own state for a bundle:
 
-This is research metadata, not authenticated production state. Before field use, a separate security gate must define authenticity, replay protection and rollback resistance for carrier/destination-authored control facts.
+```text
+bundle_id
+carrier_id
+sequence
+present = true | false
+updated_at_s
+```
 
-### Buffer/queue inference
+Only complete verified replicas are represented in this layer. Partial Pollicino chunks remain reconciliation/cache state; they are not silently counted as RAPID message replicas.
+
+The per-carrier/per-bundle sequence is monotonic. `present=false` is a tombstone. Once a node has observed a newer tombstone, older gossip cannot resurrect the deleted replica.
+
+A carrier may later reacquire the object and publish a still-higher `present=true` sequence.
+
+### Final-delivery acknowledgement
+
+A final destination can publish a separate monotonic acknowledgement:
+
+```text
+bundle_id
+destination_id
+sequence
+delivered_at_s
+```
+
+This is deliberately different from:
+
+- radio/link ACK;
+- PNF1 frame ACK;
+- PNC1 custody receipt.
+
+Its meaning is application/end-destination delivery knowledge for routing inference and future useless-copy suppression.
+
+### Delta gossip
+
+Replica and delivery facts use per-peer generation watermarks. Unchanged repeated exchange becomes zero-entry control work after bootstrap. Exchange reports counts by metadata type, but still **does not assign wire bytes**.
+
+Validated properties include:
+
+- complete replica discovery through gossip;
+- unchanged delta exchange becomes quiet;
+- tombstones prevent stale resurrection;
+- reacquisition after deletion uses a higher authority sequence;
+- delivery acknowledgements propagate independently from replica state;
+- same-sequence conflicting facts fail closed;
+- bootstrap duplicate knowledge is visible rather than silently removed.
+
+### Security boundary
+
+The synthetic model assumes that a carrier authors its own replica facts and a destination authors its own delivery acknowledgements. Cryptographic authentication is not implemented yet. Field use requires a separate security gate for authentication, anti-replay and rollback resistance.
+
+## What is still missing before a RAPID routing strategy
+
+### Layer 4 — queue / transfer-opportunity inference
 
 The full delay estimate depends on packet position and expected transfer opportunity. Current deadline utility exposes `meetings_needed`, but a routing strategy must derive it from explicit workload/buffer assumptions rather than inventing it.
 
+The next prototype should therefore use observable local queue state plus explicit transfer opportunity assumptions to derive a bounded estimate. It must not derive physical capacity from synthetic contact duration.
+
+### Combined control view
+
+Meeting knowledge and replica/delivery knowledge currently live in separate research modules. They should first be combined through a read-only inference facade rather than merged into one giant mutable state object.
+
 ### Control encoding
 
-Only after the required metadata schema is stable should an encoding experiment convert control entries into bytes and include them in a separate routing-control accounting line.
+Only after meeting + replica + delivery metadata schemas are stable should an encoding experiment convert entries into bytes and add a separate routing-control accounting line.
 
 ### Storage pressure
 
@@ -153,31 +197,34 @@ RAPID can delete low-utility packets under storage pressure. Pollicino already h
 ## Next implementation order
 
 ```text
-replica-location metadata
-        |
-delivery-ack metadata
-        |
-meeting + replica control exchange
-        |
 queue / transfer-opportunity estimator
+        |
+read-only RAPID inference facade
+(meeting + replicas + deadline utility)
         |
 RAPID deadline selection strategy
         |
 paired comparison with
 Direct / Epidemic / Spray / PRoPHET
+        |
+control encoding / byte accounting
+        |
+storage-pressure experiment
 ```
 
-Do not skip directly to the last line.
+Do not skip directly to the selection strategy.
 
 ## Validation
 
-Latest complete validation at this checkpoint:
+Validated checkpoints:
 
-- GitHub Actions run `33065224388` — PASS;
-- project test suite — PASS;
-- deadline + RAPID targeted suite — PASS.
+- canonical DTN baselines: Actions `33064225835` — PASS;
+- deadline evaluator: Actions `33064502525` — PASS;
+- preregistered EDU deadline discrimination: Actions `33064648987` — PASS;
+- RAPID utility + meeting/control: Actions `33065224388` — PASS;
+- RAPID replica/delivery control: Actions `33065697210` — PASS.
 
-An earlier run intentionally exposed one incorrect test expectation about bootstrap metadata count; the model was retained and the test corrected from 2 to the actual 3 entries.
+An earlier meeting-control run exposed one incorrect test expectation about bootstrap metadata count; the model was retained and the test corrected from 2 to the actual 3 entries.
 
 ## API status
 
