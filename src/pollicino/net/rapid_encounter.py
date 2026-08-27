@@ -218,6 +218,10 @@ def evaluate_rapid_encounter(
     function builds conservative local RAPID inferences and runs the one-item
     selection kernel. Current-contact control state is updated, but no bundle,
     custody or store state is mutated.
+
+    The first prototype intentionally supports exactly one final destination so
+    deadline utility is never silently evaluated against an arbitrary element
+    of a destination set.
     """
 
     if not isinstance(state, RapidEncounterPrototypeState):
@@ -228,10 +232,14 @@ def evaluate_rapid_encounter(
         raise TypeError("window must be SyntheticContactWindow")
     if source.peer_id != window.source_id or target.peer_id != window.target_id:
         raise ValueError("source/target peers must match the synthetic contact window")
-    if not destination_ids or any(not isinstance(item, str) or not item for item in destination_ids):
-        raise ValueError("destination_ids must contain at least one non-empty ID")
-    if len(destination_ids) != len(set(destination_ids)):
-        raise ValueError("destination_ids must be unique")
+    if (
+        not isinstance(destination_ids, tuple)
+        or len(destination_ids) != 1
+        or not isinstance(destination_ids[0], str)
+        or not destination_ids[0]
+    ):
+        raise ValueError("RAPID encounter prototype requires exactly one destination ID")
+    destination_id = destination_ids[0]
     if not isinstance(application_deadlines, Mapping):
         raise TypeError("application_deadlines must be a mapping")
     for bundle_id, deadline_s in application_deadlines.items():
@@ -277,7 +285,7 @@ def evaluate_rapid_encounter(
         and _replication_source_bytes(item, source=source, target=target) > 0
     )
 
-    if target.peer_id in destination_ids:
+    if target.peer_id == destination_id:
         return RapidEncounterDecisionReport(
             encounter_id=window.encounter_id,
             source_id=source.peer_id,
@@ -307,13 +315,13 @@ def evaluate_rapid_encounter(
             state,
             item,
             peer_id=source.peer_id,
-            destination_id=destination_ids[0],
+            destination_id=destination_id,
         )
         target_meetings = _isolated_service_meetings(
             state,
             item,
             peer_id=target.peer_id,
-            destination_id=destination_ids[0],
+            destination_id=destination_id,
         )
         meetings_needed: dict[str, int] = {}
         if source_meetings is not None:
@@ -324,7 +332,7 @@ def evaluate_rapid_encounter(
 
         inference = infer_rapid_deadline_replication(
             bundle_id=item.bundle.bundle_id,
-            destination_id=destination_ids[0],
+            destination_id=destination_id,
             candidate_id=target.peer_id,
             now_s=now_s,
             application_deadline_s=deadline_s,
