@@ -1,4 +1,4 @@
-name: Deadline objective validation
+name: Deadline and RAPID utility validation
 
 on:
   push:
@@ -18,5 +18,9 @@ jobs:
         run: python -m pip install -e ".[test]"
       - name: Project tests
         run: python -m pytest -q tests
-      - name: Deadline targeted tests
-        run: python -m pytest -q tests/test_net_deadline_objectives.py
+      - name: Deadline and RAPID targeted tests
+        run: >-
+          python -m pytest -q
+          tests/test_net_deadline_objectives.py
+          tests/test_net_edu_deadline_discrimination.py
+          tests/test_net_rapid_deadline_utility.py
