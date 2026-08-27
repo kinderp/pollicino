@@ -247,9 +247,13 @@ def test_mean_destination_interval_is_enough_to_fix_the_recency_failure() -> Non
     # contributes a third interval of 120 s, so the honest final running mean is
     # (100 + 100 + 120) / 3 rather than a frozen pre-delivery value.
     assert interval.mean_interval_seconds("b") == 320 / 3
-    assert interval.mean_interval_seconds("x") is None
+    # X was UNKNOWN at the A->X decision because it had only the 990 contact.
+    # Its later real X->D contact at 1100 is a second sample and legitimately
+    # establishes a 110 s interval after the original decision has already been made.
+    assert interval.mean_interval_seconds("x") == 110.0
     assert interval.interval_sample_count("a") == 1
     assert interval.interval_sample_count("b") == 3
+    assert interval.interval_sample_count("x") == 1
 
     # The decision needs the same number of non-destination quotes as recency,
     # not RAPID's richer meeting/replica/queue state.
