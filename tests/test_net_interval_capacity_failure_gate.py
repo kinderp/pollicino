@@ -62,13 +62,20 @@ def _inputs():
         for peer_id in ("a", "b", "c", "d")
     }
     ledger = CustodyLedger()
-    digest = hashlib.sha256(b"frequent-thin-vs-slower-rich-contact").digest()
-    payload = (digest * 2)[:OBJECT_BYTES]
+    # Four distinct deterministic 16-byte chunks. Repeating one digest here
+    # would let the content-addressed store deduplicate chunks and would no
+    # longer test a true four-opportunity transfer.
+    payload = b"".join(
+        hashlib.sha256(f"capacity-gate-chunk-{index}".encode()).digest()[:CHUNK_BYTES]
+        for index in range(4)
+    )
+    assert len(payload) == OBJECT_BYTES
     manifest = seed_forwarding_object(
         payload,
         chunk_size=CHUNK_BYTES,
         store=peers["a"].store,
     )
+    assert len({ref.sha256_digest for ref in manifest.chunks}) == 4
     descriptor = DiscoveryDescriptor(
         object_class=1,
         rendezvous_key=b"capacity-gate",
@@ -99,7 +106,7 @@ def _inputs():
         SyntheticContactWindow("school-a-b", "a", "b", "lora", 1005, 5, 64, 100),
         SyntheticContactWindow("school-a-c", "a", "c", "lora", 1010, 5, 64, 200),
         # B reaches D frequently, but only 16 authoritative source bytes fit per
-        # modeled contact, so four 16-byte chunks require four meetings.
+        # modeled contact, so four distinct 16-byte chunks require four meetings.
         SyntheticContactWindow("b-d-1", "b", "d", "lora", 1020, 5, 16, 300),
         # C reaches D less frequently but through a rich opportunity that can
         # complete the object in one contact.
