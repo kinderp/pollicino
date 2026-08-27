@@ -243,10 +243,13 @@ def test_mean_destination_interval_is_enough_to_fix_the_recency_failure() -> Non
     assert report.windows[1].scheduling is not None  # B mean=100 s beats A mean=900 s
     assert report.windows[2].scheduling is not None
     assert interval.mean_interval_seconds("a") == 900.0
-    assert interval.mean_interval_seconds("b") == 100.0
+    # B was 100 s at the A->B decision. Its real B->D contact at 1020 then
+    # contributes a third interval of 120 s, so the honest final running mean is
+    # (100 + 100 + 120) / 3 rather than a frozen pre-delivery value.
+    assert interval.mean_interval_seconds("b") == 320 / 3
     assert interval.mean_interval_seconds("x") is None
     assert interval.interval_sample_count("a") == 1
-    assert interval.interval_sample_count("b") >= 2
+    assert interval.interval_sample_count("b") == 3
 
     # The decision needs the same number of non-destination quotes as recency,
     # not RAPID's richer meeting/replica/queue state.
