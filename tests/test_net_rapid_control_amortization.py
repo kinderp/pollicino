@@ -12,6 +12,11 @@ from pollicino.net.rapid_control_wire import (
     account_rapid_control_wire,
 )
 from pollicino.net.rapid_schedule import RapidPriorMeetingObservation, run_rapid_deadline_schedule
+from pollicino.net.rapid_shared_quote_accounting import (
+    account_shared_opportunity_quotes,
+    meetings_needed_from_shared_opportunity_quote,
+    rapid_modeled_total_with_shared_opportunity_quotes,
+)
 from pollicino.net.routing_baselines import EpidemicStrategy
 from pollicino.net.routing_compare import compare_synthetic_routing_strategies
 from pollicino.net.scheduling import BundlePriority, ContactSchedulingPolicy, ScheduledBundle
@@ -250,3 +255,52 @@ def test_multi_object_control_amortization_keeps_shared_bootstrap_visible() -> N
     # This experiment maps the regime; it does not require RAPID to win at every
     # object count. A sign change is a result, not a test failure.
     assert len(indexed_deltas) == len(checkpoints)
+
+
+def test_shared_opportunity_quote_replaces_triangular_per_bundle_quotes() -> None:
+    checkpoints = (1, 2, 5, 10, 20)
+    current_entries = []
+    shared_entries = []
+
+    for object_count in checkpoints:
+        rapid, epidemic = _run(object_count)
+        profile = RapidControlWireProfile(
+            RapidNodeReferenceMode.SHARED_U16_INDEX
+        )
+        shared = account_shared_opportunity_quotes(
+            rapid,
+            profile=profile,
+            node_count=4,
+        )
+        current_entries.append(shared.original_queue_quote_entry_count)
+        shared_entries.append(shared.shared_queue_quote_entry_count)
+
+        # In this controlled micro-object workload every candidate object is 64 B
+        # and B's explicitly observed B->D opportunity mean remains 64 B. One
+        # shared opportunity quote is therefore sufficient to reproduce the
+        # current isolated-service meetings-needed value for every candidate.
+        expected_meetings = meetings_needed_from_shared_opportunity_quote(
+            OBJECT_BYTES,
+            mean_opportunity_bytes=OBJECT_BYTES,
+        )
+        assert expected_meetings == 1
+        for window in rapid.windows:
+            if window.encounter.candidate_queue_quote_count <= 0:
+                continue
+            for inference in window.encounter.inferences:
+                if inference.candidate_replica_estimate is not None:
+                    assert inference.candidate_replica_estimate.meetings_needed == expected_meetings
+
+        # Only the quote representation changes. Governed Pollicino transfer
+        # bytes and the routing/delivery result are exactly the same.
+        assert rapid.routing.delivered_bundle_count == epidemic.delivered_bundle_count == object_count
+        assert rapid_modeled_total_with_shared_opportunity_quotes(
+            rapid,
+            control=shared,
+        ) == (
+            rapid.total_wire_bytes_excluding_rapid_control
+            + shared.modeled_control_wire_bytes
+        )
+
+    assert current_entries == [count * (count + 1) // 2 for count in checkpoints]
+    assert shared_entries == list(checkpoints)
