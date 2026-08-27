@@ -1,6 +1,6 @@
 # RAPID prototype checkpoint
 
-Status: 2026-08-27 — utility + meeting/control + replica/delivery control validated
+Status: 2026-08-27 — utility + distributed control + queue inference + read-only candidate inference validated
 
 ## Why RAPID work is now justified
 
@@ -26,7 +26,7 @@ Thus deadline-aware utility is not speculative complexity.
 
 The implementation plan follows the structure of the original RAPID work rather than using the name for a generic deadline sorter.
 
-RAPID has three coupled components:
+RAPID has three coupled responsibilities:
 
 1. selection by marginal utility per resource unit;
 2. inference of delivery probability/delay;
@@ -38,16 +38,14 @@ Primary reference:
 
 - A. Balasubramanian, B. N. Levine, A. Venkataramani, *DTN Routing as a Resource Allocation Problem*, ACM SIGCOMM 2007, https://people.cs.umass.edu/~arun/papers/RAPID.pdf
 
-## Implemented layer 1 — deadline utility
+## Layer 1 — deadline utility
 
 Module: `pollicino.net.rapid_deadline_utility`
-
-The current component models the tractable independent-exponential case from the RAPID inference discussion.
 
 For each existing replica carrier:
 
 ```text
-effective hazard = 1 / (mean direct meeting time * meetings needed)
+effective hazard = 1 / (mean meeting time * meetings needed)
 ```
 
 Across replicas:
@@ -67,30 +65,28 @@ Validated properties:
 
 - probability increases with useful replicas;
 - marginal gain falls as useful replicas accumulate;
-- a carrier expected to reach the destination sooner has greater deadline utility;
+- a faster expected carrier has greater deadline utility;
 - equal benefit with larger transfer size produces lower utility per byte;
 - queue pressure represented as additional required meetings lowers effective hazard;
 - utility becomes zero after the usefulness deadline.
 
 This is a mathematical component, **not a RAPID router**.
 
-## Implemented layer 2 — meeting/control knowledge
+## Layer 2 — meeting/control knowledge
 
 Module: `pollicino.net.rapid_meeting_control`
 
-Each node maintains local direct encounter history and learns an arithmetic mean inter-meeting interval after repeated encounters.
+Each node maintains direct encounter history and learns an arithmetic mean inter-meeting interval after repeated encounters.
 
-Nodes can exchange changed meeting-time metadata. The model:
+Metadata exchange:
 
-- keeps per-peer generation watermarks;
-- sends only entries that changed since the previous metadata exchange with that peer;
+- uses per-peer generation watermarks;
+- sends only changed entries after bootstrap;
 - accepts fresher estimates and rejects stale gossip;
-- does not immediately echo metadata just received from the same peer;
-- estimates expected meeting time through the locally known graph with a maximum 3-hop path.
+- avoids immediate echo back to the same peer;
+- can estimate an expected meeting path from local knowledge with a maximum 3-hop path.
 
-The 3-hop bound mirrors the practical meeting-time estimation approach described in the RAPID paper.
-
-The control model reports **metadata entry counts**, not wire bytes. No serialization has been selected yet.
+The control model reports **metadata entry counts**, not wire bytes. No control serialization has been selected yet.
 
 A validated bootstrap example is:
 
@@ -108,7 +104,7 @@ next unchanged exchange:
 
 That initial duplicate knowledge is preserved as real modeled control work.
 
-## Implemented layer 3 — replica-location and final-delivery knowledge
+## Layer 3 — replica-location and final-delivery knowledge
 
 Module: `pollicino.net.rapid_replica_control`
 
@@ -121,7 +117,7 @@ has a final destination already received the bundle?
 
 ### Complete-replica advertisement
 
-A carrier can publish its own state for a bundle:
+A carrier publishes:
 
 ```text
 bundle_id
@@ -131,15 +127,13 @@ present = true | false
 updated_at_s
 ```
 
-Only complete verified replicas are represented in this layer. Partial Pollicino chunks remain reconciliation/cache state; they are not silently counted as RAPID message replicas.
+Only complete verified replicas are represented. Partial Pollicino chunks remain reconciliation/cache state and are not silently counted as RAPID replicas.
 
-The per-carrier/per-bundle sequence is monotonic. `present=false` is a tombstone. Once a node has observed a newer tombstone, older gossip cannot resurrect the deleted replica.
-
-A carrier may later reacquire the object and publish a still-higher `present=true` sequence.
+`present=false` is a monotonic tombstone. After a newer deletion is observed, older gossip cannot resurrect that replica. A later reacquisition uses a still-higher sequence.
 
 ### Final-delivery acknowledgement
 
-A final destination can publish a separate monotonic acknowledgement:
+A final destination publishes:
 
 ```text
 bundle_id
@@ -148,47 +142,100 @@ sequence
 delivered_at_s
 ```
 
-This is deliberately different from:
+This is distinct from radio/link ACKs, PNF1 frame ACKs and PNC1 custody receipts.
 
-- radio/link ACK;
-- PNF1 frame ACK;
-- PNC1 custody receipt.
+Replica/delivery exchange is delta-based and reports metadata entry counts only.
 
-Its meaning is application/end-destination delivery knowledge for routing inference and future useless-copy suppression.
+Validated properties:
 
-### Delta gossip
-
-Replica and delivery facts use per-peer generation watermarks. Unchanged repeated exchange becomes zero-entry control work after bootstrap. Exchange reports counts by metadata type, but still **does not assign wire bytes**.
-
-Validated properties include:
-
-- complete replica discovery through gossip;
-- unchanged delta exchange becomes quiet;
-- tombstones prevent stale resurrection;
-- reacquisition after deletion uses a higher authority sequence;
-- delivery acknowledgements propagate independently from replica state;
+- replica discovery through gossip;
+- quiet repeated exchange after synchronization;
+- stale-replica resurrection prevented by tombstones;
+- reacquisition after deletion;
+- delivery ACK propagation independently from replica state;
 - same-sequence conflicting facts fail closed;
-- bootstrap duplicate knowledge is visible rather than silently removed.
+- bootstrap duplicate knowledge remains visible.
 
 ### Security boundary
 
-The synthetic model assumes that a carrier authors its own replica facts and a destination authors its own delivery acknowledgements. Cryptographic authentication is not implemented yet. Field use requires a separate security gate for authentication, anti-replay and rollback resistance.
+The synthetic model assumes carrier-authored replica facts and destination-authored delivery facts. Cryptographic authentication is not implemented yet. Field use requires a separate security gate for authenticity, replay protection and rollback resistance.
 
-## What is still missing before a RAPID routing strategy
+## Layer 4 — queue / transfer-opportunity inference
 
-### Layer 4 — queue / transfer-opportunity inference
+Module: `pollicino.net.rapid_queue_inference`
 
-The full delay estimate depends on packet position and expected transfer opportunity. Current deadline utility exposes `meetings_needed`, but a routing strategy must derive it from explicit workload/buffer assumptions rather than inventing it.
+The model estimates queue pressure without manufacturing physical capacity.
 
-The next prototype should therefore use observable local queue state plus explicit transfer opportunity assumptions to derive a bounded estimate. It must not derive physical capacity from synthetic contact duration.
+A local `RapidTransferOpportunityEstimator` observes only explicit opportunity-byte samples supplied by an experiment or measured adapter. It never derives capacity from contact duration, bearer kind or bitrate labels.
 
-### Combined control view
+Given an explicit queue and an observed mean opportunity:
 
-Meeting knowledge and replica/delivery knowledge currently live in separate research modules. They should first be combined through a read-only inference facade rather than merged into one giant mutable state object.
+```text
+bytes through selected bundle
+--------------------------------  -> future meetings needed
+expected bytes per opportunity
+```
+
+using a ceiling to identify the meeting on which that bundle could complete.
+
+If no destination opportunity has ever been observed, the estimate is `None`; there is no built-in default.
+
+Validated properties:
+
+- arithmetic mean from observed opportunities;
+- bytes ahead increase meetings needed;
+- one large object may need several future meetings;
+- no-history returns unknown;
+- no duration-to-capacity inference exists in the API.
+
+## Layer 5 — read-only deadline inference facade
+
+Module: `pollicino.net.rapid_inference`
+
+This layer combines current local knowledge without mutating any control state:
+
+```text
+meeting knowledge
++ known complete replicas
++ final delivery ACKs
++ explicit queue meetings-needed knowledge
++ application deadline
++ transfer bytes
+        |
+        v
+candidate marginal deadline utility
+```
+
+Important fail-closed rule:
+
+> If a known existing replica lacks its meeting estimate or queue estimate, the facade does not ignore that replica and compute an optimistically inflated marginal utility. The inference is marked incomplete and no rankable utility is returned.
+
+Other validated cases:
+
+- final delivery ACK forces marginal utility to zero;
+- a candidate that already has a complete replica is not rankable;
+- passed application deadline returns zero utility;
+- inference is observational and leaves meeting/replica state unchanged.
+
+## Remaining work before a RAPID routing strategy
+
+### Candidate queue knowledge exchange
+
+The current facade deliberately receives `meetings_needed_by_carrier` as explicit caller knowledge. A distributed router still needs a way to obtain the candidate/current carriers' queue estimates during control exchange without oracle access.
+
+### Selection interface constraint
+
+The current Pollicino routing strategy API filters bundles, while the common scheduler later reorders them by application priority/expiry/completion policy. RAPID requires ordering by `marginal utility / byte`.
+
+Do **not** overload application priority to fake RAPID ordering.
+
+The smallest next experiment is therefore a **one-selection-per-encounter RAPID prototype**: the strategy returns only the single highest-utility candidate, so the common scheduler cannot reorder multiple RAPID candidates. This tests the selection hypothesis without adding a new global scheduling abstraction.
+
+A general strategy-controlled ranking hook should be considered only if a second concrete use case needs it.
 
 ### Control encoding
 
-Only after meeting + replica + delivery metadata schemas are stable should an encoding experiment convert entries into bytes and add a separate routing-control accounting line.
+Only after the metadata schema and required candidate-queue exchange stabilize should an encoding experiment convert control entries into bytes and add a separate routing-control accounting line.
 
 ### Storage pressure
 
@@ -197,22 +244,18 @@ RAPID can delete low-utility packets under storage pressure. Pollicino already h
 ## Next implementation order
 
 ```text
-queue / transfer-opportunity estimator
+candidate/local queue estimate exchange
         |
-read-only RAPID inference facade
-(meeting + replicas + deadline utility)
+one-selection-per-encounter RAPID prototype
         |
-RAPID deadline selection strategy
-        |
-paired comparison with
+paired deadline comparison with
 Direct / Epidemic / Spray / PRoPHET
         |
 control encoding / byte accounting
         |
-storage-pressure experiment
+only then consider general ranking API
+or storage-pressure utility eviction
 ```
-
-Do not skip directly to the selection strategy.
 
 ## Validation
 
@@ -222,9 +265,11 @@ Validated checkpoints:
 - deadline evaluator: Actions `33064502525` — PASS;
 - preregistered EDU deadline discrimination: Actions `33064648987` — PASS;
 - RAPID utility + meeting/control: Actions `33065224388` — PASS;
-- RAPID replica/delivery control: Actions `33065697210` — PASS.
+- RAPID replica/delivery control: Actions `33065697210` — PASS;
+- RAPID queue inference: Actions `33065961577` — PASS;
+- complete read-only RAPID inference chain: Actions `33066156183` — PASS.
 
-An earlier meeting-control run exposed one incorrect test expectation about bootstrap metadata count; the model was retained and the test corrected from 2 to the actual 3 entries.
+Temporary validation workflows are removed after green runs.
 
 ## API status
 
