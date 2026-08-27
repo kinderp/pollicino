@@ -172,6 +172,13 @@ from .routing_compare import (
     StrategyWindowReport,
     compare_synthetic_routing_strategies,
 )
+from .routing_baselines import (
+    BinarySprayAndWaitStrategy,
+    DirectDeliveryStrategy,
+    EpidemicStrategy,
+    ProphetStrategy,
+)
+from .routing_baseline_factory import canonical_dtn_strategy_factory
 
 __all__ = [
     "AVAILABILITY_MAGIC",
@@ -189,6 +196,7 @@ __all__ = [
     "BearerSchedulingPolicy",
     "BearerSchedulingReport",
     "BearerTRCLine",
+    "BinarySprayAndWaitStrategy",
     "BundlePriority",
     "BundlePropagationState",
     "BundleSchedulingDecision",
@@ -207,11 +215,13 @@ __all__ = [
     "CustodyRecord",
     "DeliveryError",
     "DeliveryPolicy",
+    "DirectDeliveryStrategy",
     "DirectoryPollicinoStore",
     "DiscoveryDescriptor",
     "EXACT_SESSION_SCHEMA",
     "EmergencyFloodProgressStrategy",
     "EndToEndTRCReport",
+    "EpidemicStrategy",
     "EvidenceBasis",
     "ExactSyncSessionState",
     "ExactSyncStepReport",
@@ -245,6 +255,7 @@ __all__ = [
     "ManifestResolver",
     "PerBearerTRCReport",
     "PollicinoStore",
+    "ProphetStrategy",
     "RELAY_CATALOG_CHECKPOINT_SCHEMA",
     "RELAY_CATALOG_SCHEMA",
     "RFEvidence",
@@ -277,6 +288,7 @@ __all__ = [
     "TransferWireBreakdown",
     "availability_for",
     "build_chunk_manifest",
+    "canonical_dtn_strategy_factory",
     "catalog_rf_paths",
     "classify_transfer_wire",
     "collect_relay_storage",
