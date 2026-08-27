@@ -1,21 +1,63 @@
+import hashlib
+import math
 import os
+import random
 
 import pytest
 
 from pollicino.net.availability_wire_benchmark import benchmark_availability_wire
-from pollicino.net.link import transmit_exact
+from pollicino.net.link import ScarceLinkProfile, transmit_exact
 from pollicino.net.minisketch_host import MINISKETCH_LIBRARY_ENV
 from pollicino.net.minisketch_incremental_host import (
     attempt_decode_minisketch_prefix,
     serialize_availability_minisketch,
 )
-from test_net_minisketch_host import _partial_caches, _profile
+from pollicino.net.store import AvailabilitySummary, MAX_CHUNKS
 
 
 pytestmark = pytest.mark.skipif(
     not os.environ.get(MINISKETCH_LIBRARY_ENV),
     reason="optional libminisketch host prototype is not installed",
 )
+
+
+def _summary(indices, *, fingerprint: bytes) -> AvailabilitySummary:
+    bits = bytearray(math.ceil(MAX_CHUNKS / 8))
+    for index in indices:
+        byte_index, bit_index = divmod(index, 8)
+        bits[byte_index] |= 1 << bit_index
+    return AvailabilitySummary(
+        manifest_fingerprint=fingerprint,
+        chunk_count=MAX_CHUNKS,
+        available_bits=bytes(bits),
+    )
+
+
+def _partial_caches():
+    rng = random.Random(20260827)
+    universe = list(range(MAX_CHUNKS))
+    common = set(rng.sample(universe, 50_000))
+    remaining = [index for index in universe if index not in common]
+    left_only = set(rng.sample(remaining, 10))
+    remaining = [index for index in remaining if index not in left_only]
+    right_only = set(rng.sample(remaining, 10))
+    fingerprint = hashlib.sha256(b"native-minisketch-incremental").digest()
+    return (
+        _summary(common | left_only, fingerprint=fingerprint),
+        _summary(common | right_only, fingerprint=fingerprint),
+        tuple(sorted(left_only)),
+        tuple(sorted(right_only)),
+    )
+
+
+def _profile() -> ScarceLinkProfile:
+    return ScarceLinkProfile(
+        max_frame_bytes=64,
+        bitrate_bps=5000,
+        ack_bytes=8,
+        max_retries=3,
+        seed=192,
+    )
 
 
 def test_large_sketch_serialization_prefix_is_a_valid_smaller_sketch() -> None:
@@ -78,8 +120,10 @@ def test_doubling_extension_reuses_raw_prefix_and_stays_below_absolute_wire() ->
     final = None
     profile = _profile()
     incremental_wire = 0
+    sent_raw_bytes = 0
     for transfer_id, (capacity, increment) in enumerate(steps, start=300):
         accumulated += increment
+        sent_raw_bytes += len(increment)
         message = b"PNX2" + bytes(36) + increment
         received, wire = transmit_exact(
             message,
@@ -102,7 +146,7 @@ def test_doubling_extension_reuses_raw_prefix_and_stays_below_absolute_wire() ->
     assert final.left_only_indices == left_only
     assert len(accumulated) == 64
     # Raw sketch bytes are never retransmitted: 16 + 16 + 32 == final 64 bytes.
-    assert sum(len(increment) for _capacity, increment in steps) == len(cap32.serialized)
+    assert sent_raw_bytes == len(cap32.serialized)
 
     request = (
         b"PNQ2"
