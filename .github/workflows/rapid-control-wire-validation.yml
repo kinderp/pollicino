@@ -1,0 +1,51 @@
+name: RAPID control wire validation
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install project
+        run: python -m pip install -e ".[test]"
+      - name: Project tests
+        run: python -m pytest -q tests
+      - name: RAPID control targeted tests
+        run: python -m pytest -q tests/test_net_rapid_schedule.py tests/test_net_edu_deadline_discrimination.py
+      - name: Print modeled control checkpoint
+        run: |
+          python - <<'PY'
+          import runpy
+          ns = runpy.run_path('tests/test_net_rapid_schedule.py')
+          from pollicino.net.rapid_control_wire import (
+              RapidControlWireProfile, RapidNodeReferenceMode,
+              account_rapid_control_wire, rapid_modeled_total_wire_bytes,
+          )
+          from pollicino.net.routing_baselines import EpidemicStrategy
+          from pollicino.net.routing_compare import compare_synthetic_routing_strategies
+
+          peers, ledger, item, windows, rapid = ns['_run_rapid']()
+          epidemic = compare_synthetic_routing_strategies(
+              (EpidemicStrategy(),), (item,), peers=peers, ledger=ledger,
+              windows=windows, bearers={'lora': ns['_bearer']()},
+              scheduling_policies={'lora': ns['_policy']()}, scheduler_states={},
+              destination_ids=('d',),
+          ).strategy('epidemic')
+          for mode in (RapidNodeReferenceMode.FULL_PSEUDONYM_128, RapidNodeReferenceMode.SHARED_U16_INDEX):
+              profile = RapidControlWireProfile(mode)
+              control = account_rapid_control_wire(rapid, profile=profile, node_count=4)
+              print(mode.value)
+              print(' rapid_transfer_wire=', rapid.total_wire_bytes_excluding_rapid_control)
+              print(' rapid_control_wire=', control.control_wire_bytes)
+              print(' rapid_modeled_total=', rapid_modeled_total_wire_bytes(rapid, control=control))
+              print(' epidemic_wire=', epidemic.total_wire_bytes)
+              print(' entries=', rapid.control_entry_count_lower_bound)
+              print(' breakdown=', control)
+          PY
