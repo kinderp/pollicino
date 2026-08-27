@@ -59,7 +59,10 @@ def test_delta_exchange_does_not_echo_unchanged_metadata() -> None:
     first = exchange_rapid_meeting_metadata(a, b)
     second = exchange_rapid_meeting_metadata(a, b)
 
-    assert first.total_sent_entry_count == 2
+    # Bootstrap has no previous metadata watermark: A sends A-B while B sends
+    # both its A-B estimate and B-D estimate. The shared A-B entry is a real
+    # initial control duplication in this model, not silently optimized away.
+    assert first.total_sent_entry_count == 3
     assert second.total_sent_entry_count == 0
 
     _observe_pair(b, d, 100)  # new B-D estimate generation
