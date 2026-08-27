@@ -118,13 +118,25 @@ That bootstrap cost is preserved instead of being optimized away by assumption.
 
 ## What is still missing before a RAPID routing strategy
 
-### Replica-location state
+### Layer 3 gate — replica-location + delivery acknowledgement metadata
 
-RAPID utility depends on the set of nodes carrying each replica. Pollicino custody can provide local verified possession, but a RAPID node also needs delayed knowledge of remote replicas.
+The next prototype must model the minimum distributed state needed to answer two questions without oracle knowledge:
 
-### Delivered-packet acknowledgements
+```text
+where are complete replicas believed to exist?
+has a final destination already received the bundle?
+```
 
-The paper propagates delivery acknowledgements to eliminate useless state/copies. This needs an explicit model separate from Pollicino chunk ACKs.
+The first model is deliberately separate from PNB1/PNC1 and radio ACKs:
+
+- a **replica advertisement** is authored by the carrier it describes and has a monotonic per-bundle sequence;
+- advertisements can say `present=true` or `present=false`, so a later storage-eviction experiment can publish a tombstone rather than letting stale gossip resurrect a deleted replica;
+- only **complete, verified replicas** count in the first RAPID utility model; partial chunks remain Pollicino reconciliation state and are not silently treated as full RAPID copies;
+- a **delivery acknowledgement** is authored by the final destination and is monotonic: once a destination has delivered a bundle, gossip can propagate that fact and suppress future utility/replication work;
+- metadata exchange is delta-based with per-peer watermarks and reports entry counts only;
+- no control byte cost is assigned until a separate encoding experiment is justified and benchmarked.
+
+This is research metadata, not authenticated production state. Before field use, a separate security gate must define authenticity, replay protection and rollback resistance for carrier/destination-authored control facts.
 
 ### Buffer/queue inference
 
@@ -136,7 +148,7 @@ Only after the required metadata schema is stable should an encoding experiment 
 
 ### Storage pressure
 
-RAPID can delete low-utility packets under storage pressure. Pollicino already has relay quota/retention/GC, but routing-integrated utility eviction remains a separate gated experiment.
+RAPID can delete low-utility packets under storage pressure. Pollicino already has relay quota/retention/GC, but routing-integrated utility eviction remains a separate gated experiment. Replica tombstones prepare the control model for that future without implementing eviction now.
 
 ## Next implementation order
 
