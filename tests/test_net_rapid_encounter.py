@@ -34,7 +34,7 @@ def _bundle(
     )
     descriptor = DiscoveryDescriptor(
         object_class=1,
-        rendezvous_key=f"rapid-encounter-{label}".encode(),
+        rendezvous_key=hashlib.sha256(f"rapid-encounter-{label}".encode()).digest()[:16],
         ttl_seconds=2000,
         hop_limit=16,
         nonce=nonce,
@@ -97,8 +97,6 @@ def test_non_destination_encounter_selects_best_deadline_utility_per_byte() -> N
     )
     state = RapidEncounterPrototypeState()
 
-    # Genuine prior history: A reaches D more slowly than B; both have explicit
-    # 64-byte destination-facing transfer opportunities.
     _seed_destination_history(
         state,
         carrier_id="a",
@@ -115,14 +113,7 @@ def test_non_destination_encounter_selects_best_deadline_utility_per_byte() -> N
     )
 
     window = SyntheticContactWindow(
-        "a-b",
-        "a",
-        "b",
-        "lora",
-        1100,
-        10,
-        128,
-        100,
+        "a-b", "a", "b", "lora", 1100, 10, 128, 100
     )
     before_target_items = len(peers["b"].store)
     report = evaluate_rapid_encounter(
@@ -145,7 +136,7 @@ def test_non_destination_encounter_selects_best_deadline_utility_per_byte() -> N
     assert report.candidate_queue_quote_count == 2
     assert report.control_entry_count_lower_bound > 0
     assert all(item.knowledge_complete for item in report.inferences)
-    assert len(peers["b"].store) == before_target_items == 0  # decision-only
+    assert len(peers["b"].store) == before_target_items == 0
     assert ledger.get(small.bundle.bundle_id, "b") is None
     assert ledger.get(large.bundle.bundle_id, "b") is None
 
@@ -272,8 +263,6 @@ def test_non_destination_does_not_rank_full_replica_that_cannot_fit_contact_budg
         application_deadlines={item.bundle.bundle_id: 1300},
     )
 
-    # Layer-3 replica utility is defined for a complete candidate replica. A
-    # partial 64/128-byte copy must not be credited with the full replica gain.
     assert report.selected_bundle_id is None
     assert report.inferences == ()
 
