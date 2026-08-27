@@ -9,6 +9,10 @@ from pollicino.net.deadline_objectives import (
     evaluate_application_deadlines,
 )
 from pollicino.net.fair_scheduling import BearerSchedulingPolicy, FairnessPolicy
+from pollicino.net.rapid_schedule import (
+    RapidPriorMeetingObservation,
+    run_rapid_deadline_schedule,
+)
 from pollicino.net.routing_baselines import (
     BinarySprayAndWaitStrategy,
     DirectDeliveryStrategy,
@@ -153,3 +157,53 @@ def test_deadline_reveals_difference_hidden_by_eventual_delivery() -> None:
 
     assert benchmark.evidence_class == "model_synthetic"
     assert deadline.evidence_class == "model_synthetic"
+
+
+def test_rapid_one_selection_on_same_edu_scenario_is_on_time_without_x_replica() -> None:
+    scenario, item, _spray, _prophet = _scenario()
+
+    # RAPID may use only observations that precede the routing experiment. Two
+    # historical B<->D meetings establish an inter-meeting estimate; X receives
+    # no such future-looking hint.
+    prior = (
+        RapidPriorMeetingObservation(
+            "b", "d", 0, opportunity_bytes_a_to_b=64
+        ),
+        RapidPriorMeetingObservation(
+            "b", "d", 40, opportunity_bytes_a_to_b=64
+        ),
+    )
+    rapid = run_rapid_deadline_schedule(
+        scenario.bundles,
+        peers=scenario.peers,
+        ledger=scenario.ledger,
+        windows=scenario.windows,
+        bearers=scenario.bearers,
+        scheduling_policies=scenario.scheduling_policies,
+        scheduler_states=scenario.scheduler_states,
+        destination_id="d",
+        application_deadlines={item.bundle.bundle_id: 1030},
+        prior_meetings=prior,
+    )
+
+    outcome = rapid.routing.outcome_for_label("edu-resource")
+    assert outcome.delivered
+    assert outcome.first_delivery_s == 1025
+    assert outcome.first_delivery_s <= 1030
+
+    by_encounter = {window.encounter.encounter_id: window for window in rapid.windows}
+    assert by_encounter["a-x"].routing.scheduling is None
+    assert by_encounter["a-b"].routing.selected_bundle_ids == (
+        item.bundle.bundle_id.hex(),
+    )
+    assert by_encounter["b-d-on-time"].encounter.direct_delivery
+
+    epidemic = run_synthetic_routing_benchmark((scenario,)).strategy("epidemic")
+    assert rapid.routing.used_source_bytes < epidemic.used_source_bytes
+    assert rapid.routing.total_wire_bytes < epidemic.total_wire_bytes
+    assert rapid.control_entry_count_lower_bound > 0
+
+    # RAPID control work is still entry-count only. Until it has an explicit
+    # encoding, the lower content-transfer bytes are not a complete network-byte
+    # superiority claim.
+    assert rapid.evidence_class == "model_synthetic"
