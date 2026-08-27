@@ -1,6 +1,6 @@
 # HW-MSK-001 — LILYGO minisketch embedded-runtime probe
 
-Status: **firmware/capture preparation; physical execution pending**
+Status: **SOFTWARE READY; physical execution pending**
 
 ## Purpose
 
@@ -20,6 +20,53 @@ The firmware:
 - runs five trials per capacity;
 - reconciles a deterministic 20-element symmetric difference;
 - logs exactness, free/min heap, largest free block and phase timings.
+
+## Software/build checkpoint
+
+GitHub Actions `33088214482` — **PASS**.
+
+The exact probe project was validated with:
+
+```text
+PlatformIO 6.1.19
+espressif32@6.13.0
+board esp32dev
+Arduino-ESP32 3.20017.241212+sha.dcc1105b
+Xtensa toolchain 8.4.0+2021r2-patch5
+upstream minisketch commit 4a179c61e3cbe3ac2b3c027764ce8eb5183155e1
+```
+
+Validation covered:
+
+- Python `prepare.py` syntax: PASS;
+- Python `capture.py` syntax: PASS;
+- pinned upstream dependency preparation: PASS;
+- full firmware compile/link: PASS;
+- upstream pin file verification: PASS.
+
+PlatformIO-reported footprint:
+
+```text
+RAM:   21,480 / 327,680 B = 6.6%
+Flash: 289,977 / 1,310,720 B = 22.1%
+```
+
+ELF sections:
+
+```text
+text = 207,709 B
+data =  82,524 B
+bss  =   4,953 B
+dec  = 295,186 B
+```
+
+Generated `firmware.bin`:
+
+```text
+290,336 B
+```
+
+These are build/static-footprint facts only. They do not prove runtime heap use or speed on the physical ESP32-PICO-D4.
 
 ## Why capacities 20 / 21 / 32
 
