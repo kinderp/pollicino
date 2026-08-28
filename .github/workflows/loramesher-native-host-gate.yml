@@ -1,0 +1,28 @@
+name: LoRaMesher native host gate
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PlatformIO
+        run: python -m pip install platformio
+      - name: Clone pinned LoRaMesher
+        run: |
+          git clone https://github.com/LoRaMesher/LoRaMesher.git /tmp/LoRaMesher
+          git -C /tmp/LoRaMesher checkout 1abec4a850389afcfdcae0e41c965b58bbeb701f
+          test "$(git -C /tmp/LoRaMesher rev-parse HEAD)" = "1abec4a850389afcfdcae0e41c965b58bbeb701f"
+      - name: List pinned native tests
+        working-directory: /tmp/LoRaMesher
+        run: pio test -e test_native --list-tests
+      - name: Run LoraMesher lifecycle/API native tests
+        working-directory: /tmp/LoRaMesher
+        run: pio test -e test_native -v -f test_loramesher
