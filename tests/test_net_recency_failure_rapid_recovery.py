@@ -4,6 +4,10 @@ from pollicino.net import PollicinoStore, ScarceLinkProfile
 from pollicino.net.bearer import BearerKind, BearerProfile, EvidenceBasis
 from pollicino.net.bundle import CustodyLedger, ForwardBundle, seed_bundle_custody
 from pollicino.net.contact_windows import SyntheticContactWindow
+from pollicino.net.destination_interval import (
+    DestinationIntervalObservation,
+    DestinationIntervalStrategy,
+)
 from pollicino.net.destination_recency import (
     DestinationRecencyObservation,
     DestinationRecencyStrategy,
@@ -121,6 +125,39 @@ def test_destination_recency_can_choose_fresh_but_late_carrier() -> None:
     assert outcome.first_delivery_s > DEADLINE_S
 
 
+def test_destination_interval_recovers_with_only_direct_regularity_state() -> None:
+    peers, ledger, item, windows = _scenario()
+    interval = DestinationIntervalStrategy(
+        destination_id="d",
+        prior_observations=(
+            DestinationIntervalObservation("a", "d", 0),
+            DestinationIntervalObservation("a", "d", 100),
+            DestinationIntervalObservation("b", "d", 0),
+            DestinationIntervalObservation("b", "d", 200),
+            DestinationIntervalObservation("c", "d", 0),
+            DestinationIntervalObservation("c", "d", 40),
+        ),
+    )
+    report = compare_synthetic_routing_strategies(
+        (interval,),
+        (item,),
+        peers=peers,
+        ledger=ledger,
+        windows=windows,
+        bearers={"lora": _bearer()},
+        scheduling_policies={"lora": _policy()},
+        scheduler_states={},
+        destination_ids=("d",),
+    ).strategy("destination-interval")
+
+    outcome = report.outcome_for_label(item.label)
+    assert report.windows[0].scheduling is None      # B mean 200 > A mean 100
+    assert report.windows[1].scheduling is not None  # C mean 40 < A mean 100
+    assert outcome.delivered
+    assert outcome.first_delivery_s == 1045
+    assert outcome.first_delivery_s <= DEADLINE_S
+
+
 def test_rapid_recovers_via_older_but_faster_regular_carrier() -> None:
     peers, ledger, item, windows = _scenario()
 
@@ -158,7 +195,7 @@ def test_rapid_recovers_via_older_but_faster_regular_carrier() -> None:
     assert outcome.first_delivery_s <= DEADLINE_S
 
 
-def test_discriminator_changes_usefulness_not_eventual_delivery() -> None:
+def test_discriminator_promotes_interval_before_rapid() -> None:
     peers, ledger, item, windows = _scenario()
     recency = DestinationRecencyStrategy(
         destination_id="d",
@@ -168,8 +205,19 @@ def test_discriminator_changes_usefulness_not_eventual_delivery() -> None:
             DestinationRecencyObservation("c", "d", 950),
         ),
     )
-    simple = compare_synthetic_routing_strategies(
-        (recency,),
+    interval = DestinationIntervalStrategy(
+        destination_id="d",
+        prior_observations=(
+            DestinationIntervalObservation("a", "d", 0),
+            DestinationIntervalObservation("a", "d", 100),
+            DestinationIntervalObservation("b", "d", 0),
+            DestinationIntervalObservation("b", "d", 200),
+            DestinationIntervalObservation("c", "d", 0),
+            DestinationIntervalObservation("c", "d", 40),
+        ),
+    )
+    comparison = compare_synthetic_routing_strategies(
+        (recency, interval),
         (item,),
         peers=peers,
         ledger=ledger,
@@ -178,8 +226,7 @@ def test_discriminator_changes_usefulness_not_eventual_delivery() -> None:
         scheduling_policies={"lora": _policy()},
         scheduler_states={},
         destination_ids=("d",),
-    ).strategy("destination-recency")
-
+    )
     rapid = run_rapid_deadline_schedule(
         (item,),
         peers=peers,
@@ -200,9 +247,12 @@ def test_discriminator_changes_usefulness_not_eventual_delivery() -> None:
         ),
     )
 
-    simple_outcome = simple.outcome_for_label(item.label)
+    recency_outcome = comparison.strategy("destination-recency").outcome_for_label(item.label)
+    interval_outcome = comparison.strategy("destination-interval").outcome_for_label(item.label)
     rapid_outcome = rapid.routing.outcome_for_label(item.label)
-    assert simple_outcome.delivered and rapid_outcome.delivered
-    assert simple_outcome.first_delivery_s > DEADLINE_S
+    assert recency_outcome.first_delivery_s == 1105
+    assert interval_outcome.first_delivery_s == rapid_outcome.first_delivery_s == 1045
+    assert recency_outcome.first_delivery_s > DEADLINE_S
+    assert interval_outcome.first_delivery_s <= DEADLINE_S
     assert rapid_outcome.first_delivery_s <= DEADLINE_S
     assert rapid.evidence_class == "model_synthetic"
