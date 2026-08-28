@@ -113,7 +113,9 @@ def test_destination_recency_can_choose_fresh_but_late_carrier() -> None:
     outcome = report.outcome_for_label(item.label)
     assert report.windows[0].scheduling is not None  # A->B: 990 > 970
     assert report.windows[1].scheduling is None      # A->C: 950 < 970
-    assert report.windows[2].scheduling is None      # C never received the object
+    # Direct-delivery policy still offers C->D, but C never received the object,
+    # so the governed scheduler has no useful source bytes to send.
+    assert report.windows[2].used_source_bytes == 0
     assert outcome.delivered
     assert outcome.first_delivery_s == 1105
     assert outcome.first_delivery_s > DEADLINE_S
