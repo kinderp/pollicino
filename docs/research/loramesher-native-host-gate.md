@@ -66,7 +66,7 @@ A cheaper same-instance restart may be adopted later only if the pinned/relevant
 
 ## Gate 1 — pinned native build/test
 
-Before writing a Pollicino C++ bridge:
+Procedure:
 
 1. clone the exact upstream commit;
 2. install PlatformIO in CI;
@@ -74,48 +74,85 @@ Before writing a Pollicino C++ bridge:
 4. record the exact pass/fail result;
 5. keep this result separate from Pollicino unit tests.
 
-This proves only host compatibility of upstream at the pinned revision.
+### Result
 
-## Gate 2 — opaque payload bridge
+**PASS — GitHub Actions `33189427257`.**
 
-Only after Gate 1 passes, add a minimal host-native experiment that demonstrates:
+At pinned commit `1abec4a850389afcfdcae0e41c965b58bbeb701f`, the selected upstream native LoRaMesher lifecycle/API test set builds and passes under the CI native environment.
+
+This establishes only:
 
 ```text
-Pollicino opaque bytes
-        |
-        v
-LoRaMesher Send(... vector<uint8_t>)
-        |
-        v
-host simulated connected segment
-        |
-        v
-SetDataCallback(... vector<uint8_t>)
-        |
-        v
-byte-identical payload
+pinned LoRaMesher revision
+        +
+current native toolchain
+        -> upstream host test compatibility
 ```
 
-Metrics for this gate:
+It does **not** establish:
 
-- input/output byte identity;
-- LoRaMesher data/control bytes if upstream instrumentation exposes them cleanly;
-- startup/join simulated time separately from data delivery;
-- no Pollicino PNB1/PNC1 mutation inside the mesh bridge.
+- Pollicino payload compatibility;
+- exact LILYGO/TTGO T3 V1.6.1 board support;
+- real SX1276 RF behavior;
+- physical join time;
+- range/capacity/loss/energy.
+
+## Gate 2 — real PNF1 opaque payload bridge
+
+Status: **ACTIVE**.
+
+The experiment deliberately uses the current Pollicino production encoder instead of rebuilding the PNF1 layout in C++:
+
+```text
+pollicino.net.link.FragmentFrame.encode()
+        |
+        | generated binary PNF1 fixture
+        v
+LoRaMesher native 3-node line
+        |
+        | 2-hop DATA forwarding
+        v
+received DATA payload
+        |
+        v
+byte-for-byte equality
+```
+
+The fixture generator is:
+
+`/scripts/emit_loramesher_pnf1_fixture.py`
+
+The injected upstream-native test is:
+
+`/experiments/loramesher/pollicino_pnf1_multihop_test.cpp`
+
+The generated frame intentionally contains binary payload values including `0x00` and `0xFF`; LoRaMesher is therefore being tested as an opaque byte-vector bearer rather than as a text/message adapter.
+
+Gate success requires:
+
+- upstream 3-node connected segment forms in native simulation;
+- source has a 2-hop route to destination;
+- `Send(... vector<uint8_t>)` accepts the generated PNF1 frame;
+- destination receives exactly one DATA payload;
+- received bytes equal the generated PNF1 frame exactly.
+
+No PNB1/PNC1 state is moved into LoRaMesher. PNF1 remains a Pollicino object before and after the bearer.
 
 ## Gate 3 — Pollicino bearer adapter
 
-Only after opaque payload works should adapter ID `loramesher` gain a registered Pollicino data-plane implementation.
+Only after Gate 2 passes should adapter ID `loramesher` gain a registered Pollicino data-plane implementation.
 
 Until then:
 
 - `LoRaMesherBearerProbe` may select the `CONNECTED_MESH` lifecycle context;
 - `NodeBearerTransport` deliberately fails closed for adapter `loramesher` because no validated data bridge exists.
 
+The already validated model-only data plane uses explicit names such as `school-mesh-model`; it must never be reported as actual LoRaMesher traffic.
+
 ## Hardware boundary
 
 No result in Gate 1 or Gate 2 proves compatibility with the user's exact LILYGO/TTGO T3 V1.6.1 pins/radio wiring or physical mesh behavior.
 
-Exact-board build/operation, startup/join time, range, wall/floor behavior, useful contact capacity and energy remain later physical/embedded work.
+Exact-board build/operation, startup/join time, range, wall/floor behavior, useful contact capacity and energy remain later embedded/physical work.
 
 **GATE PROVE FISICHE HW-006** remains required before using real LoRa values in Pollicino routing or capacity models.
