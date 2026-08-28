@@ -1,6 +1,10 @@
 import hashlib
 
 from pollicino.net import PollicinoStore
+from pollicino.net.destination_queue_service import (
+    estimate_destination_queue_service,
+    queue_service_prefers_target,
+)
 from pollicino.net.destination_service import (
     DestinationServiceObservation,
     DestinationServiceStrategy,
@@ -132,6 +136,27 @@ def test_explicit_queue_backlog_makes_equal_service_carriers_materially_differen
     assert utility.marginal_utility > 0
     assert utility.marginal_utility_per_byte > 0
     assert utility.probability_after > utility.probability_before
+
+
+def test_minimal_queue_aware_service_baseline_captures_same_discriminator() -> None:
+    source = estimate_destination_queue_service(
+        mean_interval_seconds=MEAN_INTERVAL_S,
+        mean_opportunity_bytes=OPPORTUNITY_BYTES,
+        bytes_ahead=4 * OBJECT_BYTES,
+        object_bytes=OBJECT_BYTES,
+    )
+    target = estimate_destination_queue_service(
+        mean_interval_seconds=MEAN_INTERVAL_S,
+        mean_opportunity_bytes=OPPORTUNITY_BYTES,
+        bytes_ahead=0,
+        object_bytes=OBJECT_BYTES,
+    )
+
+    assert source.meetings_needed == 5
+    assert source.service_seconds == 250.0
+    assert target.meetings_needed == 1
+    assert target.service_seconds == 50.0
+    assert queue_service_prefers_target(source=source, target=target)
 
 
 def test_queue_backlog_is_the_only_discriminator_in_this_gate() -> None:
