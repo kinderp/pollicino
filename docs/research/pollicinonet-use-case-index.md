@@ -1,6 +1,6 @@
 # PollicinoNet use-case index
 
-Status: living index, 2026-08-27
+Status: living index, 2026-08-28
 
 This index is the navigation surface for concrete PollicinoNet use cases. Detailed proposals remain governed by `use-case-justification-gate.md`: appearing here does not imply adoption of a protocol, dependency, routing algorithm or PHY change.
 
@@ -16,6 +16,8 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 | `UC-MOBILITY-001` | Scheduled vehicle / commuter relay | exploit repeated mobile routes as predictable bridges between disconnected clusters | PRIMARY / PROTOTYPE-DRIVING | `uc-mobility-001-scheduled-vehicle-relay.md` |
 | `UC-OPS-001` | Offline fleet management and configuration ferry | converge signed config/version/health state for disconnected Pollicino nodes | PRIMARY / PROTOTYPE-DRIVING | `uc-ops-001-offline-fleet-management.md` |
 | `UC-EDU-001` | Offline classroom resource and assignment relay | distribute signed learning-resource metadata and return private receipts across intermittent student contacts | PRIMARY / PROTOTYPE-DRIVING | `uc-edu-001-classroom-resource-relay.md` |
+| `UC-TRACE-001` | Privacy-preserving encounter observatory | collect bounded contact summaries and replay the real temporal graph without turning the network into student tracking | PRIMARY / PROTOTYPE-DRIVING INFRASTRUCTURE | `uc-trace-001-privacy-preserving-encounter-observatory.md` |
+| `UC-CITSCI-001` | Student field-observation / citizen-science ferry | move compact human observations now and resolve rich evidence later | PRIMARY / PROTOTYPE-DRIVING | `uc-citsci-001-student-field-observation-ferry.md` |
 
 ## Integration / territorial use cases
 
@@ -25,6 +27,8 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 | `UC-RAIATEA-001` | Raiatea offline document sync | carry rights-aware document identity/manifest/wanted state, retrieve authorized payload later | PROTOTYPE / integration | `uc-raiatea-001-offline-document-manifest-sync.md` |
 | `UC-RURAL-001` | Offline community knowledge/service kiosk | keep a useful local cache offline and asynchronously refresh it via mobile relays | PROTOTYPE | `uc-rural-001-offline-service-kiosk.md` |
 | `UC-MAP-001` | Offline geospatial and local-hazard delta exchange | move only relevant changed map/layer references instead of full geospatial datasets | PROTOTYPE / emergency-adjacent | `uc-map-001-offline-geospatial-delta-exchange.md` |
+| `UC-ASSET-001` | Offline physical-asset catalog and reservation ferry | reconcile availability and bounded reservation leases for physical school/lab/library resources | PROTOTYPE / educational integration | `uc-asset-001-offline-physical-asset-catalog.md` |
+| `UC-TRANSIT-001` | Offline public-transport timetable/service delta ferry | propagate authoritative route/status deltas with usefulness deadlines and later rich-feed resolution | PROTOTYPE / territorial research | `uc-transit-001-offline-public-transport-delta-ferry.md` |
 
 ## Domain-specific / security / future research use cases
 
@@ -34,6 +38,7 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 | `UC-ROBOT-001` | Field robot / drone delayed data exchange | move supervisory/status/reference data during intermittent field contacts; bulk data later | RESEARCH | `uc-robot-001-field-robot-data-exchange.md` |
 | `UC-TRUST-001` | Offline trust, key-rotation and revocation ferry | distribute compact signed trust generations when online status services are unavailable | RESEARCH / SECURITY INFRASTRUCTURE | `uc-trust-001-offline-trust-revocation-ferry.md` |
 | `UC-COMPUTE-001` | Delay-tolerant edge job and result ferry | carry asynchronous jobs toward compute-rich nodes and return result references | RESEARCH / PROTOTYPE | `uc-compute-001-delay-tolerant-job-result-ferry.md` |
+| `UC-TIME-001` | Signed time-anchor and clock-drift ferry | maintain bounded time/freshness uncertainty across disconnected nodes without assuming permanent NTP/GNSS | RESEARCH / INFRASTRUCTURE PROTOTYPE | `uc-time-001-signed-time-anchor-ferry.md` |
 
 ## Practical priority for the Messina student network
 
@@ -41,15 +46,20 @@ The most immediately actionable workloads are not necessarily the most ambitious
 
 ### Tier A — first real-network candidates after HW-006
 
-1. `UC-OPS-001`: the network needs to manage its own distributed nodes; start with harmless signed version/config fixtures, not firmware flashing.
-2. `UC-IOT-001`: fixed sensors + student data mules create repeatable, measurable tiny-data traffic.
-3. `UC-EDU-001`: public/open classroom resource descriptors make the experimental network understandable and useful to students without requiring personal data.
-4. `UC-CONTENT-002`: compact reference discovery/reconciliation is well matched to scarce LoRa links and later home Wi-Fi resolution.
-5. `UC-MOBILITY-001`: repeated school/commuter routes can be tested after privacy-safe contact logging exists.
+1. `UC-TRACE-001`: after privacy governance/consent, collect bounded encounter evidence so later routing/topology claims can use measured temporal graphs instead of invented mobility.
+2. `UC-OPS-001`: the network needs to manage its own distributed nodes; start with harmless signed version/config fixtures, not firmware flashing.
+3. `UC-IOT-001`: fixed sensors + student data mules create repeatable, measurable tiny-data traffic.
+4. `UC-EDU-001`: public/open classroom resource descriptors make the experimental network understandable and useful to students without requiring personal data.
+5. `UC-CITSCI-001`: human-created field observations create a meaningful school project while large media stays on Wi-Fi/Internet.
+6. `UC-CONTENT-002`: compact reference discovery/reconciliation is well matched to scarce LoRa links and later home Wi-Fi resolution.
+7. `UC-ASSET-001`: synthetic/public physical-asset catalogs provide an easy eventual-consistency/lease workload without personal data on the shared link.
+8. `UC-MOBILITY-001`: repeated school/commuter routes can be tested after privacy-safe contact logging exists.
 
 ### Tier B — software-first, stronger governance before field use
 
 - `UC-EMERG-001` and `UC-MAP-001`: high public value but must remain non-operational until authenticity, authoritative sources and field evidence are independently validated.
+- `UC-TRANSIT-001`: strong territorial relevance, but public-service freshness/provenance and any operator/vehicle experiment need separate governance.
+- `UC-TIME-001`: potentially foundational for trace/deadline/security evidence; physical oscillator/drift measurements are needed before real bounds.
 - `UC-TRUST-001`: needed for a mature network, but security-critical and unsuitable for casual production rollout.
 - `UC-BACKUP-001`: useful with encrypted fixtures and bounded trusted replicas.
 
@@ -74,7 +84,7 @@ RICH_LOCAL / Wi-Fi or LAN
 INTERNET / remote provider or gateway
 ```
 
-Examples now include DNA micro-information, content references, sensor observations, emergency bulletins, fleet configuration, educational resources, trust state, backups and document/map manifests. This is increasingly strong evidence for **studying** a shared bearer/runtime boundary, but the architecture gate still requires measured simplification before stable adoption.
+Examples now include DNA micro-information, content references, sensor and citizen-science observations, emergency/public-transport deltas, fleet configuration, encounter traces, educational resources, physical-asset leases, trust/time state, backups and document/map manifests. This is increasingly strong evidence for **studying** a shared bearer/runtime boundary, but the architecture gate still requires measured simplification before stable adoption.
 
 ## Workloads that should remain distinct
 
@@ -83,9 +93,14 @@ Avoid collapsing the following into one generic “message” benchmark:
 - **DNA/topic:** semantic relevance and subscriptions;
 - **emergency bulletin:** usefulness deadline + authenticity/provenance;
 - **sensor ferry:** freshness / many-to-one time series;
+- **citizen science:** human provenance, review state, geoprivacy and deferred rich evidence;
 - **content/reference index:** discovery, wanted state, catalog reconciliation and later rich retrieval;
 - **fleet management:** configuration convergence, acknowledgement and rollback;
+- **encounter observatory:** privacy-filtered temporal-graph recovery and replay fidelity;
 - **education:** delivery-before-class/deadline plus privacy-preserving return receipts;
+- **physical assets:** eventual inventory convergence, reservation leases and conflict handling;
+- **public transport:** authoritative route/status generations and useful-before-departure deadlines;
+- **time:** uncertainty growth, signed anchors and anti-rollback;
 - **trust:** rollback-resistant security-state convergence;
 - **geospatial:** geographic relevance, version/delta semantics and location privacy;
 - **backup:** durability and bounded replication;
@@ -126,7 +141,11 @@ All use cases above can begin with `MODEL_SYNTHETIC` experiments using the exist
 - version/generation convergence;
 - signed fixture verification;
 - job/capability queues;
-- coarse geographic-interest filters.
+- coarse geographic-interest filters;
+- privacy-filtered encounter aggregation and trace replay;
+- simulated clock offset/drift and time uncertainty;
+- physical-asset lease/conflict fixtures;
+- route/status freshness and useful-before-departure deadlines.
 
 ## Physical evidence boundary
 
@@ -139,6 +158,8 @@ HW-006 remains required before claims about:
 - useful bytes per encounter;
 - real student/vehicle route capacity;
 - real topology/routing superiority;
-- physical energy or battery performance.
+- physical energy or battery performance;
+- real encounter/inter-contact distributions;
+- real oscillator/RTC drift bounds.
 
 The frozen first campaign remains **42-byte frames / 2 dBm**, following the existing same-room → separation → wall → multi-wall/floor → outdoor evidence sequence.
