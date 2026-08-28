@@ -82,7 +82,7 @@ def test_destination_service_cannot_distinguish_equal_service_with_different_bac
 
     # DestinationServiceStrategy forwards only on strictly smaller service time;
     # equal interval/opportunity therefore provides no reason to prefer C.
-    assert candidate_service < source_service is False
+    assert not (candidate_service < source_service)
 
 
 def test_explicit_queue_backlog_makes_equal_service_carriers_materially_different() -> None:
