@@ -1,0 +1,20 @@
+name: LoRaMesher bearer runtime validation
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - name: Project tests
+        run: python -m pytest -q tests
+      - name: LoRaMesher lifecycle targeted tests
+        run: python -m pytest -q tests/test_loramesher_bearer_runtime.py tests/test_node_bearer_runtime.py tests/test_node_governed_reference_mule.py
