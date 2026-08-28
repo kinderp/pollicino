@@ -23,7 +23,7 @@ home node
 RICH_HOME -> application resolver
 ```
 
-This checkpoint does **not** claim a LoRaMesher integration, automatic bearer detection, physical RF performance or a production BitTorrent/NAS adapter.
+This checkpoint does **not** claim a LoRaMesher integration, automatic physical bearer detection, measured RF performance or a production BitTorrent/NAS adapter.
 
 ## New prototype pieces
 
@@ -40,7 +40,7 @@ It contains:
 
 Examples of provider IDs can include `magnet`, `http`, `filesystem`, `cid` or future application-specific resolvers. The Pollicino network core does not interpret or execute the locator.
 
-This means a magnet URI is not a new Pollicino wire protocol. It is simply the payload of a small exact object.
+A magnet URI therefore is not a new Pollicino wire protocol. It is simply the payload of a small exact object.
 
 ### `HomeReferenceResolver`
 
@@ -50,12 +50,15 @@ This keeps external side effects such as NAS access, HTTP retrieval or an author
 
 ### `PollicinoNodeRuntime`
 
-The first host-side node runtime persists:
+The host-side node runtime persists:
 
 - a crash-safe `DirectoryPollicinoStore`;
-- the verified PCM1 manifests the node knows;
-- partial or complete chunk state in the existing store;
-- the current lifecycle mode.
+- verified PCM1 manifest registry;
+- partial or complete chunk state;
+- immutable PNB1 bundle identity;
+- node-local PNC1 custody records;
+- contact IDs originated by this node for persistent replay suppression;
+- current lifecycle mode.
 
 Prototype modes:
 
@@ -66,19 +69,19 @@ OPPORTUNISTIC_DTN
 RICH_HOME
 ```
 
-Changing mode never rewrites object identity, manifests or chunk bytes.
+Changing mode never rewrites object identity, manifest, bundle identity, custody hop or chunk bytes.
 
-The runtime reuses the existing `forward_contact()` implementation rather than creating another transfer protocol.
+The runtime reuses existing `forward_contact()` and `governed_forward_contact()` implementations rather than creating another network protocol.
 
-## Validated vertical flow
+## Validated exact reference-mule flow
 
 Actions `33188000071` — PASS.
 
-The test performs:
+The first test performs:
 
 1. student A and student B enter `CONNECTED_MESH`;
 2. A creates an authorized demo portable reference and seeds it as a normal PCM1 exact object;
-3. A -> B executes a real deterministic scarce-link store-forward contact;
+3. A -> B executes a deterministic scarce-link store-forward contact;
 4. B reconstructs and verifies the exact reference;
 5. B transitions to `OPPORTUNISTIC_DTN`;
 6. B is destroyed/re-created from the same persistent directory, proving mode + verified object state survive restart;
@@ -87,16 +90,54 @@ The test performs:
 9. HOME reconstructs the portable reference and explicitly dispatches it to a registered `magnet` test handler;
 10. both network contacts report non-zero modeled wire traffic.
 
-A second test interrupts the object after only one chunk, changes mode, restarts the mule, and later completes the object. The already verified PCM1/chunk state survives and is reused.
+A second test interrupts the object after one chunk, changes mode, restarts the mule, and later completes the object. Already verified PCM1/chunk state survives and is reused.
+
+## Validated node-local governed custody
+
+Actions `33188310500` — PASS.
+
+The governed vertical test extends the same daily carry with PNB1/PNC1 semantics:
+
+```text
+student A
+  PNC1 custody hop 0
+        |
+        | school governed contact
+        v
+student B
+  PNC1 custody hop 1
+        |
+        | mode change + restart
+        | territorial governed contact
+        v
+home gateway
+  PNC1 custody hop 2
+```
+
+Each runtime persists only its own custody observations. During a directional encounter, a temporary ledger is assembled from the minimum source/target records required by the existing governance implementation. The whole network custody graph is not copied into either node.
+
+Validated properties:
+
+- source custody hop 0 survives publication;
+- student mule obtains hop 1 and bundle identity;
+- mule restart preserves exact payload, PCM1 manifest, PNB1 identity and its own PNC1 record;
+- restarted mule can act as authoritative source of the second hop;
+- HOME receives hop 2;
+- replaying the same source-originated `contact_id` after another restart is `duplicate_suppressed` with **0 wire bytes**;
+- `hop_limit=1` permits the first hop and rejects the second hop with **0 wire bytes**.
+
+This removes the earlier campaign-global custody limitation from the vertical slice without introducing a global routing oracle.
 
 ## What this proves
 
-At host/model scope, the following architecture is now executable rather than only documented:
+At host/model scope, the following architecture is executable rather than only documented:
 
 ```text
-one Pollicino object identity
+one Pollicino EXACT object / bundle
         |
         +-- school connected context
+        |
+        +-- node-local custody
         |
         +-- persistent carry/restart
         |
@@ -105,44 +146,47 @@ one Pollicino object identity
         +-- home rich-network resolution
 ```
 
-The application reference can be tiny even when the content resolved later is large. Pollicino transports the minimum reference object; a rich-network application decides what to do with it later.
+The application reference can be tiny even when the content resolved later is large. Pollicino transports the minimum reference object; a rich-network application decides explicitly what to do with it later.
 
 ## Current limitations / next gates
 
-### 1. Node-local governed custody
+### 1. Bearer runtime — ACTIVE
 
-The first runtime deliberately uses the already proven PCM1/PNA1 `forward_contact()` path. It does not silently recreate PNB1/PNC1 ownership inside the runtime.
+`NodeMode` now has a generic lifecycle controller under validation. The required behavior is:
 
-Existing PNB1/PNC1 governance and durable `CustodyLedger` remain available in `pollicino.net.bundle`, but their current deterministic API uses a campaign ledger shared by the experiment.
+- positively detected richer context can be entered immediately;
+- a single lost mesh/status observation must not cause flapping;
+- repeated loss confirmation permits fallback;
+- mode transitions must preserve exact object, PNB1 identity and PNC1 custody.
 
-Next gate: determine the smallest honest way to persist and exchange **node-local** custody/contact state without turning a local node runtime into a hidden global oracle.
+No real LoRaMesher dependency or radio-quality inference belongs in this controller.
 
-### 2. Bearer runtime
+### 2. LoRaMesher / FreakWAN adapters
 
-`NodeMode` is currently explicit lifecycle context. No automatic mesh detection or hysteresis is implemented yet.
-
-Next bearer work should expose a small adapter contract and prove the same object state survives adapter changes. Do not make LoRaMesher a dependency before the host adapter comparison passes.
-
-### 3. LoRaMesher / FreakWAN
-
-Not integrated in this checkpoint.
+Not physically integrated in this checkpoint.
 
 - LoRaMesher remains a connected-school bearer candidate.
 - raw Pollicino remains the DTN/evidence baseline.
 - FreakWAN remains a practical off-grid field baseline.
 
-### 4. Real home adapters
+The first LoRaMesher adapter should map its own runtime readiness/status into the generic bearer controller. It must not invent contact capacity from synchronization status.
+
+### 3. Real home adapters
 
 No qBittorrent, filesystem/NAS or HTTP side effect is performed. Add those only as explicit opt-in application adapters with authorization/policy tests.
+
+### 4. DNA full application layer
+
+The existing DNATrace adapter is not yet the full Topic/Subscription/Geo/expiry/provenance vertical. That should reuse this node runtime after bearer lifecycle is stable.
 
 ### 5. Physical evidence
 
 All contact bytes in this slice are deterministic model execution.
 
-Real LoRa contact capacity, range, NLOS performance and mode-selection claims remain behind **GATE PROVE FISICHE HW-006**.
+Real LoRa contact capacity, range, NLOS performance and radio-driven mode-selection claims remain behind **GATE PROVE FISICHE HW-006**.
 
 ## Gate decision
 
 **PROTOTYPE / CONTINUE.**
 
-The reference-mule use case now has an executable end-to-end host slice. This justifies continuing toward node-local governance and a bearer adapter contract; it does not justify a new wire format, automatic LoRaMesher adoption or physical deployment claims.
+The reference-mule use case now has executable exact transfer, persistence, node-local bundle governance/custody and rich-home application resolution. The next justified layer is bearer lifecycle/adapters. This does not justify a new wire format, automatic LoRaMesher adoption or physical deployment claims.
