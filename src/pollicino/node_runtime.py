@@ -9,6 +9,16 @@ import os
 from pathlib import Path
 from typing import Mapping
 
+from .net.bundle import (
+    CustodyLedger,
+    CustodyRecord,
+    ForwardBundle,
+    GovernedContactReport,
+    governed_forward_contact,
+    load_custody_ledger,
+    save_custody_ledger,
+    seed_bundle_custody,
+)
 from .net.link import ScarceLinkProfile
 from .net.persistence import DirectoryPollicinoStore, _atomic_write_bytes
 from .net.store import ChunkManifest, reconstruct_from_store
@@ -18,6 +28,7 @@ from .net.store_forward import (
     forward_contact,
     seed_forwarding_object,
 )
+from .net.wire import DiscoveryDescriptor
 
 
 NODE_STATE_SCHEMA = "pollicino-node-runtime-v1"
@@ -63,6 +74,50 @@ class NodeObjectRecord:
 
 
 @dataclass(frozen=True, slots=True)
+class NodeBundleRecord:
+    """Persist one immutable PNB1 identity without persisting a route oracle."""
+
+    bundle_id: bytes
+    forward_zero_hop: bytes
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.bundle_id, bytes) or len(self.bundle_id) != 32:
+            raise ValueError("bundle_id must be exactly 32 bytes")
+        if not isinstance(self.forward_zero_hop, bytes):
+            raise TypeError("forward_zero_hop must be bytes")
+        bundle, hop = ForwardBundle.decode_forward(self.forward_zero_hop)
+        if hop != 0 or bundle.bundle_id != self.bundle_id:
+            raise ValueError("persisted bundle identity is invalid")
+
+    @property
+    def bundle(self) -> ForwardBundle:
+        bundle, hop = ForwardBundle.decode_forward(self.forward_zero_hop)
+        if hop != 0:
+            raise AssertionError("persisted node bundle unexpectedly contains a route hop")
+        return bundle
+
+    def to_mapping(self) -> dict[str, str]:
+        return {
+            "bundle_id": self.bundle_id.hex(),
+            "forward_zero_hop": self.forward_zero_hop.hex(),
+        }
+
+    @classmethod
+    def from_mapping(cls, value: Mapping[str, object]) -> NodeBundleRecord:
+        bundle_id = value.get("bundle_id")
+        forward = value.get("forward_zero_hop")
+        if not isinstance(bundle_id, str) or not isinstance(forward, str):
+            raise ValueError("invalid node bundle record")
+        try:
+            return cls(
+                bundle_id=bytes.fromhex(bundle_id),
+                forward_zero_hop=bytes.fromhex(forward),
+            )
+        except ValueError as exc:
+            raise ValueError("node bundle record is not valid hexadecimal") from exc
+
+
+@dataclass(frozen=True, slots=True)
 class NodeContactReport:
     source_mode: NodeMode
     target_mode: NodeMode
@@ -77,17 +132,33 @@ class NodeContactReport:
         return self.forwarding.total_wire_bytes
 
 
+@dataclass(frozen=True, slots=True)
+class NodeGovernedContactReport:
+    source_mode: NodeMode
+    target_mode: NodeMode
+    governance: GovernedContactReport
+
+    @property
+    def exact(self) -> bool:
+        return self.governance.inner is not None and self.governance.inner.target_exact
+
+    @property
+    def total_wire_bytes(self) -> int:
+        return self.governance.total_wire_bytes
+
+
 class PollicinoNodeRuntime:
-    """Small persistent host-side vertical slice for a carried Pollicino node.
+    """Persistent host-side vertical slice for a carried Pollicino node.
 
-    The runtime intentionally reuses the existing PollicinoStore/PCM1/PNA1
-    store-forward path. Modes are lifecycle context only: changing mode never
-    rewrites object bytes, manifests, or chunk identity.
+    The runtime reuses the existing PollicinoStore/PCM1/PNA1 store-forward and
+    PNB1/PNC1 governance paths. Modes are lifecycle context only: changing mode
+    never rewrites object bytes, manifests, bundle identity or chunk identity.
 
-    This first slice persists the content store, known-manifest registry and
-    current mode. PNB1/PNC1 custody remains governed by the existing campaign
-    ledger and is not silently reimplemented here; node-local governed custody
-    is a separate follow-up gate.
+    Custody is node-local in this prototype. Each runtime persists only its own
+    PNC1 records plus contact IDs it originated. A governed encounter builds a
+    temporary ledger containing only the source/target records needed by the
+    existing ``governed_forward_contact`` implementation; the full network
+    custody graph is never copied into either node.
     """
 
     def __init__(
@@ -101,10 +172,18 @@ class PollicinoNodeRuntime:
         self._root = Path(root)
         self._root.mkdir(parents=True, exist_ok=True)
         self._state_path = self._root / "node-state.json"
+        self._custody_path = self._root / "custody-ledger.json"
         self.store = DirectoryPollicinoStore(self._root / "store")
         self.peer = ForwardPeer(node_id, self.store)
         self._mode = NodeMode.DISCOVERING
         self._objects: dict[bytes, NodeObjectRecord] = {}
+        self._bundles: dict[bytes, NodeBundleRecord] = {}
+
+        if self._custody_path.exists():
+            self.custody = load_custody_ledger(self._custody_path)
+        else:
+            self.custody = CustodyLedger()
+            self._save_custody()
 
         if self._state_path.exists():
             self._load_state(expected_node_id=node_id)
@@ -127,6 +206,10 @@ class PollicinoNodeRuntime:
     def known_object_count(self) -> int:
         return len(self._objects)
 
+    @property
+    def known_bundle_count(self) -> int:
+        return len(self._bundles)
+
     def transition(self, mode: NodeMode) -> None:
         if not isinstance(mode, NodeMode):
             raise TypeError("mode must be NodeMode")
@@ -147,6 +230,34 @@ class PollicinoNodeRuntime:
         )
         self._register_manifest(manifest, label=label)
         return manifest
+
+    def publish_governed(
+        self,
+        payload: bytes,
+        *,
+        chunk_size: int,
+        descriptor: DiscoveryDescriptor,
+        created_at_s: int,
+        label: str = "",
+    ) -> tuple[ChunkManifest, ForwardBundle]:
+        if not isinstance(descriptor, DiscoveryDescriptor):
+            raise TypeError("descriptor must be DiscoveryDescriptor")
+        manifest = self.publish_exact(payload, chunk_size=chunk_size, label=label)
+        bundle = ForwardBundle.from_descriptor(
+            manifest,
+            descriptor,
+            created_at_s=created_at_s,
+        )
+        seed_bundle_custody(
+            bundle,
+            manifest,
+            origin=self.peer,
+            ledger=self.custody,
+            now_s=created_at_s,
+        )
+        self._register_bundle(bundle)
+        self._save_custody()
+        return manifest, bundle
 
     def knows_manifest(self, manifest_fingerprint: bytes) -> bool:
         return manifest_fingerprint in self._objects
@@ -176,6 +287,18 @@ class PollicinoNodeRuntime:
         manifest = self.manifest(manifest_fingerprint)
         return reconstruct_from_store(manifest, self.store)
 
+    def knows_bundle(self, bundle_id: bytes) -> bool:
+        return bundle_id in self._bundles
+
+    def bundle(self, bundle_id: bytes) -> ForwardBundle:
+        try:
+            return self._bundles[bundle_id].bundle
+        except KeyError as exc:
+            raise LookupError("node does not know this bundle") from exc
+
+    def custody_record(self, bundle_id: bytes) -> CustodyRecord | None:
+        return self.custody.get(bundle_id, self.node_id)
+
     def receive_from(
         self,
         source: PollicinoNodeRuntime,
@@ -196,19 +319,84 @@ class PollicinoNodeRuntime:
             max_chunks=max_chunks,
         )
 
-        # Once PCM1 itself is verified locally, retain knowledge of the object
-        # even if only a subset of its chunks arrived during this contact.
         if self.store.has(manifest.fingerprint):
-            label = ""
-            if source.knows_manifest(manifest.fingerprint):
-                label = source.object_record(manifest.fingerprint).label
-            self._register_manifest(manifest, label=label)
+            self._register_manifest(manifest, label=source._label_for(manifest.fingerprint))
 
         return NodeContactReport(
             source_mode=source.mode,
             target_mode=self.mode,
             forwarding=report,
         )
+
+    def receive_governed_from(
+        self,
+        source: PollicinoNodeRuntime,
+        bundle: ForwardBundle,
+        manifest: ChunkManifest,
+        *,
+        profile: ScarceLinkProfile,
+        transfer_id_base: int,
+        max_chunks: int,
+        contact_id: str,
+        now_s: int,
+    ) -> NodeGovernedContactReport:
+        if not isinstance(source, PollicinoNodeRuntime):
+            raise TypeError("source must be PollicinoNodeRuntime")
+        if not isinstance(bundle, ForwardBundle):
+            raise TypeError("bundle must be ForwardBundle")
+        if not source.knows_bundle(bundle.bundle_id):
+            raise ValueError("source runtime does not know the governed bundle")
+        source_record = source.custody_record(bundle.bundle_id)
+        if source_record is None:
+            raise ValueError("source runtime has no local custody for the bundle")
+
+        encounter = CustodyLedger()
+        encounter.record(source_record)
+        target_record = self.custody_record(bundle.bundle_id)
+        if target_record is not None:
+            encounter.record(target_record)
+        if source.custody.contact_seen(bundle.bundle_id, contact_id):
+            encounter.mark_contact(bundle.bundle_id, contact_id)
+
+        _, report = governed_forward_contact(
+            bundle,
+            manifest,
+            source=source.peer,
+            target=self.peer,
+            ledger=encounter,
+            profile=profile,
+            transfer_id_base=transfer_id_base,
+            max_chunks=max_chunks,
+            contact_id=contact_id,
+            now_s=now_s,
+        )
+
+        # Idempotency belongs to the node that initiated this directional
+        # contact. It can therefore suppress an exact replay after restart
+        # without requiring a network-global contact database.
+        if encounter.contact_seen(bundle.bundle_id, contact_id):
+            source.custody.mark_contact(bundle.bundle_id, contact_id)
+            source._save_custody()
+
+        received_record = encounter.get(bundle.bundle_id, self.node_id)
+        if received_record is not None:
+            self.custody.record(received_record)
+            self._save_custody()
+
+        if self.store.has(manifest.fingerprint):
+            self._register_manifest(manifest, label=source._label_for(manifest.fingerprint))
+        if received_record is not None:
+            self._register_bundle(bundle)
+
+        return NodeGovernedContactReport(
+            source_mode=source.mode,
+            target_mode=self.mode,
+            governance=report,
+        )
+
+    def _label_for(self, manifest_fingerprint: bytes) -> str:
+        record = self._objects.get(manifest_fingerprint)
+        return "" if record is None else record.label
 
     def _register_manifest(self, manifest: ChunkManifest, *, label: str) -> None:
         if not isinstance(manifest, ChunkManifest):
@@ -227,6 +415,21 @@ class PollicinoNodeRuntime:
         self._objects[manifest.fingerprint] = record
         self._save_state()
 
+    def _register_bundle(self, bundle: ForwardBundle) -> None:
+        if not isinstance(bundle, ForwardBundle):
+            raise TypeError("bundle must be ForwardBundle")
+        if not self.knows_manifest(bundle.manifest_fingerprint):
+            raise ValueError("cannot register bundle before its manifest is known")
+        record = NodeBundleRecord(
+            bundle_id=bundle.bundle_id,
+            forward_zero_hop=bundle.encode_forward(0),
+        )
+        previous = self._bundles.get(bundle.bundle_id)
+        if previous is not None and previous != record:
+            raise ValueError("bundle_id is already bound to different immutable fields")
+        self._bundles[bundle.bundle_id] = record
+        self._save_state()
+
     def _state_mapping(self) -> dict[str, object]:
         return {
             "schema": NODE_STATE_SCHEMA,
@@ -235,6 +438,10 @@ class PollicinoNodeRuntime:
             "objects": [
                 self._objects[key].to_mapping()
                 for key in sorted(self._objects)
+            ],
+            "bundles": [
+                self._bundles[key].to_mapping()
+                for key in sorted(self._bundles)
             ],
         }
 
@@ -266,6 +473,9 @@ class PollicinoNodeRuntime:
         ).encode("utf-8")
         _atomic_write_bytes(self._state_path, encoded)
 
+    def _save_custody(self) -> None:
+        save_custody_ledger(self._custody_path, self.custody)
+
     def _load_state(self, *, expected_node_id: str) -> None:
         try:
             envelope = json.loads(self._state_path.read_bytes())
@@ -292,18 +502,17 @@ class PollicinoNodeRuntime:
             self._mode = NodeMode(mode)
         except ValueError as exc:
             raise ValueError("node runtime mode is unsupported") from exc
+
         objects = body.get("objects")
         if not isinstance(objects, list):
             raise ValueError("node runtime objects must be a list")
-        loaded: dict[bytes, NodeObjectRecord] = {}
+        loaded_objects: dict[bytes, NodeObjectRecord] = {}
         for value in objects:
             if not isinstance(value, Mapping):
                 raise ValueError("node runtime object record must be an object")
             record = NodeObjectRecord.from_mapping(value)
-            if record.manifest_fingerprint in loaded:
+            if record.manifest_fingerprint in loaded_objects:
                 raise ValueError("duplicate object in node runtime state")
-            # State must never advertise a manifest that the verified store
-            # cannot actually provide after restart.
             try:
                 encoded_manifest = self.store.get(record.manifest_fingerprint)
             except LookupError as exc:
@@ -311,5 +520,22 @@ class PollicinoNodeRuntime:
             manifest = ChunkManifest.decode(encoded_manifest)
             if manifest.fingerprint != record.manifest_fingerprint:
                 raise ValueError("node runtime state manifest failed verification")
-            loaded[record.manifest_fingerprint] = record
-        self._objects = loaded
+            loaded_objects[record.manifest_fingerprint] = record
+        self._objects = loaded_objects
+
+        # Backward-compatible with the very first prototype state that had only
+        # mode + object records.
+        bundles = body.get("bundles", [])
+        if not isinstance(bundles, list):
+            raise ValueError("node runtime bundles must be a list")
+        loaded_bundles: dict[bytes, NodeBundleRecord] = {}
+        for value in bundles:
+            if not isinstance(value, Mapping):
+                raise ValueError("node runtime bundle record must be an object")
+            record = NodeBundleRecord.from_mapping(value)
+            if record.bundle_id in loaded_bundles:
+                raise ValueError("duplicate bundle in node runtime state")
+            if record.bundle.manifest_fingerprint not in self._objects:
+                raise ValueError("node runtime bundle references an unknown manifest")
+            loaded_bundles[record.bundle_id] = record
+        self._bundles = loaded_bundles
