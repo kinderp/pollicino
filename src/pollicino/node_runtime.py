@@ -25,6 +25,7 @@ from .net.store import ChunkManifest, reconstruct_from_store
 from .net.store_forward import (
     ForwardContactReport,
     ForwardPeer,
+    TransferCallable,
     forward_contact,
     seed_forwarding_object,
 )
@@ -339,6 +340,7 @@ class PollicinoNodeRuntime:
         max_chunks: int,
         contact_id: str,
         now_s: int,
+        transmitter: TransferCallable | None = None,
     ) -> NodeGovernedContactReport:
         if not isinstance(source, PollicinoNodeRuntime):
             raise TypeError("source must be PollicinoNodeRuntime")
@@ -369,6 +371,7 @@ class PollicinoNodeRuntime:
             max_chunks=max_chunks,
             contact_id=contact_id,
             now_s=now_s,
+            transmitter=transmitter,
         )
 
         # Idempotency belongs to the node that initiated this directional
