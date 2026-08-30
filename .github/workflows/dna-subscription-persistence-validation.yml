@@ -1,0 +1,20 @@
+name: DNA subscription persistence validation
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[test]"
+      - name: Project tests
+        run: python -m pytest -q tests
+      - name: DNA subscription persistence lifecycle tests
+        run: python -m pytest -q tests/test_dna_subscription_persistence_lifecycle.py
