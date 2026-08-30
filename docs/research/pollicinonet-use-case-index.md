@@ -1,6 +1,6 @@
 # PollicinoNet use-case index
 
-Status: living index, 2026-08-29
+Status: living index, 2026-08-30 — 32 distinct use-case families
 
 This index is the navigation surface for concrete PollicinoNet use cases. Detailed proposals remain governed by `use-case-justification-gate.md`: appearing here does not imply adoption of a protocol, dependency, routing algorithm, security mechanism or PHY change.
 
@@ -20,6 +20,8 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 | `UC-CITSCI-001` | Student field-observation / citizen-science ferry | move compact human observations now and resolve rich evidence later | PRIMARY / PROTOTYPE-DRIVING | `uc-citsci-001-student-field-observation-ferry.md` |
 | `UC-TASK-001` | Offline task and volunteer coordination board | reconcile claims/completions/leases/deadlines for work items created under partitions | PRIMARY / PROTOTYPE-DRIVING, emergency-adjacent | `uc-task-001-offline-task-coordination-board.md` |
 | `UC-EGRESS-001` | Opportunistic Internet request/reply ferry | carry an idempotent request to a trusted rich-link egress and return the asynchronous reply | PRIMARY / PROTOTYPE-DRIVING MULTI-BEARER | `uc-egress-001-opportunistic-internet-request-reply-ferry.md` |
+| `UC-PREFETCH-001` | Mobility-aware cache prepositioning | decide which bounded objects/references to seed on which carriers before the school graph fragments | PRIMARY / PROTOTYPE-DRIVING SCHEDULING | `uc-prefetch-001-mobility-aware-cache-prepositioning.md` |
+| `UC-SERVICE-001` | Offline service / capability directory | discover which intermittent node can eventually provide egress, compute, resolver or sensor service | PRIMARY / PROTOTYPE-DRIVING INFRASTRUCTURE | `uc-service-001-offline-service-capability-directory.md` |
 
 ## Integration / territorial / educational use cases
 
@@ -34,6 +36,7 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 | `UC-MSG-001` | Private delay-tolerant mailbox | destination-specific encrypted micro-messages plus delayed receipts across non-contemporaneous contacts | PROTOTYPE / privacy-sensitive | `uc-msg-001-private-delay-tolerant-mailbox.md` |
 | `UC-EVIDENCE-001` | Integrity-first field evidence manifest ferry | bind later rich-media retrieval to compact hash/provenance/custody state | RESEARCH / PROTOTYPE, emergency-adjacent | `uc-evidence-001-integrity-first-field-evidence-ferry.md` |
 | `UC-GAME-001` | Opportunistic relay challenge | generate safe, controlled store-carry-forward traffic for teaching and supervised field validation | PROTOTYPE / educational test harness | `uc-game-001-opportunistic-relay-challenge.md` |
+| `UC-COURIER-001` | Physical object custody and handoff | reconcile delayed handoff/return receipts for supervised kits, samples or lab items | PROTOTYPE / educational field candidate | `uc-courier-001-physical-object-custody-handoff.md` |
 
 ## Domain-specific / security / future research use cases
 
@@ -45,24 +48,29 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 | `UC-TRUST-001` | Offline trust, key-rotation and revocation ferry | distribute compact signed trust generations when online status services are unavailable | RESEARCH / SECURITY INFRASTRUCTURE | `uc-trust-001-offline-trust-revocation-ferry.md` |
 | `UC-COMPUTE-001` | Delay-tolerant edge job and result ferry | carry asynchronous jobs toward compute-rich nodes and return result references | RESEARCH / PROTOTYPE | `uc-compute-001-delay-tolerant-job-result-ferry.md` |
 | `UC-TIME-001` | Signed time-anchor and clock-drift ferry | maintain bounded time/freshness uncertainty across disconnected nodes without assuming permanent NTP/GNSS | RESEARCH / INFRASTRUCTURE PROTOTYPE | `uc-time-001-signed-time-anchor-ferry.md` |
+| `UC-WITNESS-001` | Offline transparency / witness gossip | compare compact signed publication checkpoints across partitions to detect synthetic split views/rollback | RESEARCH / SECURITY INFRASTRUCTURE | `uc-witness-001-offline-transparency-witness-gossip.md` |
+| `UC-SHARD-001` | Diversity-coded multipath object carriage | test k-of-n coded redundancy versus one-copy/full replication under carrier dropout and storage limits | RESEARCH / SOFTWARE PROTOTYPE | `uc-shard-001-diversity-coded-multipath-object-carriage.md` |
 
 ## Practical priority for the Messina student network
 
-The most immediately actionable workloads are not necessarily the most ambitious ones. Town names are scenario labels, never assumed RF links.
+Town names are scenario labels, never assumed RF links. The most immediately actionable workloads are those that produce useful, measurable traffic without collecting sensitive student data.
 
-### Tier A — first real-network candidates after HW-006
+### Tier A — first real-network candidates after HW-006 and their own governance gates
 
-1. `UC-TRACE-001`: after privacy governance/consent, collect bounded encounter evidence so routing/topology claims can use measured temporal graphs.
-2. `UC-GAME-001`: synthetic signed tokens create a safe first student workload with known expected outcomes and no need for GPS or private content.
-3. `UC-OPS-001`: manage harmless signed version/config fixtures for the distributed boards themselves.
-4. `UC-IOT-001`: fixed sensors + student data mules create repeatable tiny-data traffic.
-5. `UC-EDU-001`: public/open classroom resource descriptors make the network visibly useful to students.
-6. `UC-CITSCI-001`: field observations create a real educational project while rich media stays on Wi-Fi.
-7. `UC-TASK-001`: harmless lab task cards introduce real conflict/deadline semantics; emergency drills come only later.
-8. `UC-EGRESS-001`: fake/allowlisted services exercise `DTN -> RICH_HOME -> DTN` request/reply behavior.
-9. `UC-CONTENT-002`: reference discovery/reconciliation is naturally matched to scarce contacts and later home resolution.
-10. `UC-ASSET-001`: synthetic/public physical-asset catalogs provide a safe eventual-consistency workload.
-11. `UC-MOBILITY-001`: repeated routes become testable after privacy-safe contact logging exists.
+1. `UC-TRACE-001`: privacy-bounded encounter evidence so later topology/routing claims can use measured temporal graphs.
+2. `UC-GAME-001`: synthetic signed tokens as a safe first student workload with known expected outcomes.
+3. `UC-PREFETCH-001`: exploit the dense school phase to seed small objects/references before students return to territorial clusters.
+4. `UC-SERVICE-001`: advertise safe test services such as school resolver/egress/compute fixtures and discover them through carried state.
+5. `UC-OPS-001`: manage harmless signed version/config fixtures for the distributed boards themselves.
+6. `UC-IOT-001`: fixed sensors + student data mules create repeatable tiny-data traffic.
+7. `UC-EDU-001`: public/open classroom resource descriptors make the network visibly useful.
+8. `UC-CITSCI-001`: field observations create a real educational project while rich media stays on Wi-Fi.
+9. `UC-TASK-001`: harmless lab task cards introduce conflict/deadline semantics; emergency drills come later.
+10. `UC-EGRESS-001`: fake/allowlisted services exercise `DTN -> RICH_HOME -> DTN` request/reply behavior.
+11. `UC-COURIER-001`: supervised kit/sample handoff creates tangible physical/digital custody state without GPS.
+12. `UC-CONTENT-002`: reference discovery/reconciliation naturally matches scarce contacts and later home resolution.
+13. `UC-ASSET-001`: synthetic/public physical-asset catalogs provide a safe eventual-consistency workload.
+14. `UC-MOBILITY-001`: repeated routes become testable after privacy-safe contact logging exists.
 
 ### Tier B — software-first, stronger governance before field use
 
@@ -71,15 +79,17 @@ The most immediately actionable workloads are not necessarily the most ambitious
 - `UC-MSG-001`: use bot/test endpoints first; human messaging requires E2E key lifecycle, metadata minimization and school/privacy governance.
 - `UC-TIME-001`: potentially foundational; physical oscillator/drift measurements are needed before real bounds.
 - `UC-TRUST-001`: security-critical and unsuitable for casual production rollout.
+- `UC-WITNESS-001`: test-log split-view experiment is safe in software; production transparency integration requires a concrete threat model and independent security review.
 - `UC-BACKUP-001`: useful with encrypted fixtures and bounded trusted replicas.
 
 ### Tier C — integration/research expansion
 
 - Raiatea, rural kiosk, AI artifacts, `UC-FL-001`, robots/drones and delay-tolerant compute jobs.
+- `UC-SHARD-001`: keep software-only until coded diversity beats simple bounded replication after accounting for all bytes/compute/storage.
 
 ## Cross-use-case architecture pressure
 
-The catalog now contains many materially different workloads whose object state may need to survive:
+Many materially different workloads now need object state to survive:
 
 ```text
 CONNECTED_MESH / school-local contacts
@@ -94,46 +104,50 @@ RICH_HOME / Wi-Fi or LAN
 INTERNET / remote service or gateway
 ```
 
-New examples strengthen different parts of that path:
+The new 2026-08-30 cases strengthen different parts of this path:
 
-- MSG: private destination + asynchronous receipt;
-- TASK: conflict/lease/deadline state;
-- EGRESS: request identity and idempotency across a rich-link service boundary;
-- FL: model generation/staleness of computed contributions;
-- EVIDENCE: integrity/provenance before rich payload retrieval;
-- GAME: controlled educational workload spanning mesh and carry phases.
+- PREFETCH: placement before the graph fragments;
+- SERVICE: capability discovery even when provider and requester are not contemporaneously connected;
+- COURIER: delayed application state tied to a supervised physical handoff;
+- WITNESS: tiny exact security checkpoints that benefit from independent cross-partition carriers;
+- SHARD: controlled redundancy representation across multiple mobile paths.
 
-This is evidence for continuing to **study** a shared bearer/runtime boundary. It is not permission to add a new protocol or abstraction unless the existing architecture gate and measured simplification criteria are met.
+This supports continued study of a shared bearer/runtime boundary; it does not by itself authorize a new wire protocol.
 
 ## Workloads that should remain distinct
 
-Avoid collapsing everything into one generic “message” benchmark:
+Avoid collapsing everything into one generic “message” benchmark. Distinct success metrics now include:
 
-- **DNA/topic:** semantic relevance and subscriptions;
-- **emergency bulletin:** usefulness deadline + authenticity/provenance;
-- **sensor ferry:** freshness / many-to-one time series;
-- **citizen science:** human provenance, review state, geoprivacy and deferred rich evidence;
-- **content/reference index:** discovery, wanted state, catalog reconciliation and later rich retrieval;
-- **fleet management:** configuration convergence, acknowledgement and rollback;
-- **encounter observatory:** privacy-filtered temporal-graph recovery and replay fidelity;
-- **education:** delivery-before-class/deadline plus privacy-preserving return receipts;
-- **physical assets:** eventual inventory convergence, reservation leases and conflict handling;
-- **public transport:** authoritative route/status generations and useful-before-departure deadlines;
-- **private mailbox:** destination confidentiality, metadata minimization and delayed receipts;
-- **task board:** claim/completion conflict, lease and deadline semantics;
-- **Internet egress:** idempotent request/reply correlation and gateway authorization;
-- **field evidence:** content integrity, provenance and custody gaps;
-- **game/test harness:** known challenge completion plus safe student interaction;
-- **federated learning:** model-update staleness, convergence and participation fairness;
-- **time:** uncertainty growth, signed anchors and anti-rollback;
-- **trust:** rollback-resistant security-state convergence;
-- **geospatial:** geographic relevance, version/delta semantics and location privacy;
-- **backup:** durability and bounded replication;
-- **scheduled mobility:** contact predictability and route robustness;
-- **compute:** job deadline/capability, idempotency and result return;
-- **robot/drone:** delayed supervisory state with a strict safety boundary.
+- DNA/topic: semantic relevance/subscriptions;
+- emergency: usefulness deadline + authenticity/provenance;
+- sensor ferry: freshness / many-to-one time series;
+- citizen science: human provenance, review state and deferred rich evidence;
+- content/reference index: discovery, wanted state, catalog reconciliation and later retrieval;
+- prefetch: placement utility per seeded/stored byte before separation;
+- service directory: capability freshness, provider selection and authorization separation;
+- fleet management: configuration convergence, acknowledgement and rollback;
+- encounter observatory: privacy-filtered temporal-graph recovery;
+- education: delivery-before-class plus private return receipt;
+- asset catalog: inventory convergence/reservation lease;
+- physical courier: custody generation and handoff/return correctness;
+- public transport: authoritative status generation and useful-before-departure deadline;
+- private mailbox: confidentiality/metadata minimization/delayed receipt;
+- task board: claim/completion conflict and lease;
+- Internet egress: idempotent request/reply and gateway authorization;
+- field evidence: integrity/provenance/custody gaps;
+- game harness: known application completion under supervised mobility;
+- federated learning: model-update staleness/convergence/fairness;
+- time: uncertainty growth and signed anchors;
+- trust: rollback-resistant security-state convergence;
+- witness gossip: cross-partition signed-view consistency;
+- geospatial: geographic relevance/version/delta semantics;
+- backup: durability and bounded replication;
+- scheduled mobility: contact predictability/route robustness;
+- compute: job deadline/capability/idempotency;
+- robot/drone: delayed supervisory state under a strict safety boundary;
+- coded shards: exact-reconstruction reliability versus replication/storage overhead.
 
-They may share transport primitives while keeping different success metrics.
+They may share transport primitives while keeping different success/kill criteria.
 
 ## Messina educational network pattern
 
@@ -146,11 +160,13 @@ territorial cluster C -- student/vehicle mule --+       |
                                                         +--> Wi-Fi/Internet gateway
 ```
 
-The morning school phase can exercise connected-mesh behavior; afternoon/evening phases exercise store-carry-forward; home/school rich links can resolve payloads or execute allowlisted egress requests. Exact object/bundle identity must survive the lifecycle transition.
+The morning school phase can exercise connected-mesh behavior and controlled pre-positioning; afternoon/evening phases exercise store-carry-forward; home/school rich links can resolve payloads, advertise services or execute allowlisted requests. Exact object/bundle identity must survive lifecycle transitions.
+
+Province-specific research scenarios can later include ferry/commuter or island/mainland logical contact schedules, but real Strait/Aeolian/road coverage and vehicle contact capacity require separate measured campaigns and permissions.
 
 ## Software-first rule
 
-All use cases can begin as `MODEL_SYNTHETIC` experiments. Useful immediate dimensions now include:
+All use cases can begin as `MODEL_SYNTHETIC` experiments. Useful immediate dimensions include:
 
 - topology/contact schedule and future TRACE replay;
 - logical byte budget independent from physical duration;
@@ -162,10 +178,15 @@ All use cases can begin as `MODEL_SYNTHETIC` experiments. Useful immediate dimen
 - simulated clock offset/drift and uncertainty;
 - leases/conflict/task state transitions;
 - idempotent request/reply plus asymmetric return paths;
+- service advertisement freshness and provider churn;
+- morning pre-positioning under finite cache budgets;
+- synthetic physical-item custody generations;
 - synthetic encrypted mailbox payloads and receipts;
 - integrity hashes, staged corruption and custody receipts;
+- transparency checkpoint split-view fixtures;
 - tiny-model FL staleness/convergence experiments;
-- game-token anti-replay and controlled application completion.
+- game-token anti-replay and controlled completion;
+- coded-shard carrier dropout versus simple replication.
 
 A model result remains a model result even if the topology uses real town names.
 
@@ -179,11 +200,13 @@ HW-006 remains required before claims about:
 - distance/NLOS behavior;
 - useful bytes per encounter;
 - real student/vehicle route capacity;
-- real topology/routing superiority;
+- real topology/routing/pre-positioning superiority;
 - physical energy/battery performance;
 - real encounter/inter-contact distributions;
-- real oscillator/RTC drift bounds.
+- real oscillator/RTC drift bounds;
+- embedded erasure-code feasibility/energy;
+- real service-advertisement or physical-handoff latency over LoRa.
 
 The frozen first campaign remains **42-byte frames / 2 dBm**, following the existing same-room -> separation -> wall -> multi-wall/floor -> outdoor evidence sequence.
 
-Use-case-specific hardware/security gates may add requirements after HW-006; they do not weaken it.
+Use-case-specific hardware/security/privacy gates may add requirements after HW-006; they do not weaken it.
