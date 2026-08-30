@@ -95,6 +95,8 @@ loramesher_host_application_bytes
 
 for both governance and inner transfer accounting.
 
+Validation: GitHub Actions `33293440813` — PASS for the complete project test suite and the targeted DNA Topic/Subscription vertical-slice tests.
+
 ## What this proves
 
 At host/model scope, Pollicino can now apply a concrete subscription policy above the transport layer and then reuse exactly the same governed object and bearer runtime for accepted DNA micro-information.
