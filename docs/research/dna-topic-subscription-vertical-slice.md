@@ -143,22 +143,81 @@ home gateway / RICH_HOME
 
 Validation: GitHub Actions `33293580711` — PASS for the complete project test suite and the targeted subscription-persistence lifecycle tests.
 
+## DNA application coordinator
+
+`src/pollicino/integrations/dna_application.py` closes the manual-policy plumbing left by the first two slices.
+
+`DNAApplicationCoordinator` binds one `PollicinoNodeRuntime` to the node-owned persistent `DNASubscriptionRegistry` and exposes two product-facing operations:
+
+- `publish_active()` resolves the node's active subscription automatically before governed publication;
+- `offer_to()` delegates acceptance to the target node's coordinator, so the target resolves and applies its own active subscription before bearer evaluation or transfer.
+
+The target-owned decision is intentional. A sender does not need to persist or invent another node's interests merely to offer a DNA object. This preserves a clean future boundary for privacy, subscription exchange and transport-agnostic matching.
+
+The coordinator fails closed when no active subscription exists, rejects a registry belonging to another node, and does not add any network or DNA wire fields.
+
+`tests/test_dna_application_coordinator.py` validates a multi-item daily lifecycle:
+
+```text
+school publishes
+    social/700 A
+    social/700 B
+    social/701
+    travel/17
+        |
+        v
+student mule subscription = social/700
+        |
+        +-- social/701 -> intent_miss before bearer selection
+        +-- travel/17  -> domain_miss before bearer selection
+        +-- social/700 A -> LoRaMesher governed hop / custody 1
+        +-- social/700 B -> LoRaMesher governed hop / custody 1
+        |
+        v
+carry + runtime restart
+        |
+        | coordinator reconstructed from persisted runtime + registry
+        v
+territorial opportunistic bearer
+        |
+        +-- social/700 A -> home / custody 2
+        +-- social/700 B -> home / custody 2
+        |
+        v
+RICH_HOME
+```
+
+Validation: GitHub Actions `33294244095` — PASS for the complete project test suite and the targeted DNA application-coordinator tests.
+
 ## What this proves
 
 At host/model scope, Pollicino can now apply a concrete subscription policy above the transport layer and reuse exactly the same governed object and bearer runtime for accepted DNA micro-information.
 
-The carried-node application can also persist/select a subscription across mode changes and process restarts. In the validated school -> carry -> territory/home flow, a subscribed DNA item crosses both governed hops while a non-subscribed item is never ingested by the mule and therefore cannot appear at home.
+The carried-node application persists/selects subscriptions across mode changes and process restarts. The application coordinator removes caller-supplied subscription plumbing: the target node owns its acceptance policy, multiple subscribed micro-information items survive the full school -> carry -> territory/home lifecycle, and non-subscribed items stop before ingestion/transfer.
 
-This closes the first two software slices of the `topic/subscription-scoped DNA information` requirement in `UC-DNA-001` without turning Topic into a new routing protocol or adding DNA semantics to PollicinoNet core.
+This closes the Pollicino-side software slice required to exercise `topic/subscription-scoped DNA information` in `UC-DNA-001` without turning Topic into a routing protocol or adding DNA semantics to PollicinoNet core.
 
 ## What this does not prove
 
-This checkpoint does not define the future authoritative DNA Topic/Subscription contract, subscription dissemination, privacy policy, conflict resolution, user-facing subscription UI, RF capacity or LoRaMesher performance.
+This checkpoint does not define the authoritative DNA Topic/Subscription contract, subscription dissemination, privacy/visibility policy, conflict resolution, user-facing subscription UI, RF capacity or LoRaMesher performance.
 
 It also does not change the physical evidence boundary. Range, interference, wall/floor penetration, real airtime and energy remain behind **GATE PROVE FISICHE HW-006**.
 
-## Next concrete software step
+## Next contract step belongs in DNA
 
-The next product step should stay above the transport layer: introduce a narrow DNA application coordinator that owns the persisted `DNASubscriptionRegistry` and automatically applies its active subscription to publish/forward decisions, so callers no longer have to pass the subscription object manually. The coordinator should then be exercised with multiple subscribed items and restart/carry behavior before any subscription dissemination protocol or new DNA wire schema is considered.
+The next architectural step should now happen in the DNA repository rather than by expanding the experimental Pollicino model.
 
-If DNA later publishes an authoritative Topic/Subscription contract, the experimental selector model should migrate to that contract without changing the Pollicino network core.
+DNA should define an authoritative, transport-independent Topic/Subscription contract that can replace `DNATopicSubscription` without requiring changes to the Pollicino network core. At minimum the DNA work must decide:
+
+- whether `domains` and `intentCodes` remain the canonical subscription selectors or are wrapped by a richer topic expression;
+- exact AND/OR/wildcard matching semantics;
+- stable identifiers and versioning;
+- ownership, privacy and visibility of subscriptions;
+- local-only versus shareable subscription representations;
+- expiry/lifetime and revocation semantics;
+- canonical serialization and validation;
+- relationship to `DNATrace`, discovery and transport envelopes;
+- whether subscription dissemination is a separate optional protocol rather than part of the core contract;
+- migration/adaptation from the validated Pollicino experimental semantics.
+
+Until DNA publishes that authoritative contract, Pollicino should keep the current selector model explicitly experimental and avoid adding new subscription wire formats.
