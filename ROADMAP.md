@@ -390,6 +390,241 @@ Do not infer a deployment packet-loss probability from a small checkpoint sample
 
 ---
 
+# Track D — Substrate generalization and application integrations
+
+Track D exists to prevent two opposite architecture failures:
+
+1. every application reimplements its own P2P/cache/DTN stack;
+2. Pollicino core absorbs application semantics and stops being a generic substrate.
+
+The governing rule is:
+
+```text
+application semantics
+        |
+        v
+application-owned adapter
+        |
+        v
+PollicinoNet generic substrate
+```
+
+See [`docs/research/substrate-generality-gate.md`](docs/research/substrate-generality-gate.md) and [`docs/research/uc-faro-001-distributed-scientific-knowledge-package-exchange.md`](docs/research/uc-faro-001-distributed-scientific-knowledge-package-exchange.md).
+
+## D0 — Independent consumer generality
+
+**ACTIVE / CROSS-PROJECT VALIDATION**
+
+Current materially independent consumers/conformance cases:
+
+- DNA / Travel DNA;
+- FARO;
+- Raiatea and other integrations as later candidates.
+
+FARO `RG2-PX0` concluded:
+
+```text
+POLLICINO_SUBSTRATE_REUSE_READY_WITH_BOUNDARIES
+confidence: HIGH
+```
+
+The checkpoint found that FARO should not build a parallel P2P/DTN/cache substrate and that current Pollicino exact-content/store/resolver/provider primitives are strong reuse candidates.
+
+Required invariant:
+
+```text
+Pollicino exact delivery
+    != application trust
+    != application authorization
+    != FARO scientific validation
+```
+
+**NEXT EVIDENCE**
+
+- FARO PX1 exact-content vertical slice;
+- prove canonical FAROPackage bytes survive stable-main Pollicino store/reconstruction;
+- prove package identity/signature/trust/evidence/local-validation state are unchanged;
+- keep the adapter on the FARO side.
+
+## D1 — Stable external exact-content surface
+
+**ACTIVE / STABILIZATION PRESSURE**
+
+Current main-line candidates already independently useful to applications include:
+
+```text
+PND1 / DiscoveryDescriptor
+PNM1 / ContentManifest
+RetrievalSource
+ManifestResolver
+ContentProvider
+PollicinoStore
+PCM1
+PNA1
+exact reconstruction
+```
+
+External consumers should pin and test the exact Pollicino commit they use.
+
+Research-only PR #52 surfaces must not silently become stable external dependencies.
+
+**NEXT**
+
+- document an external-consumer stability matrix;
+- identify the minimum public/import surface required by FARO PX1;
+- stabilize only after at least one real external adapter demonstrates the need;
+- avoid copying Pollicino implementation into consumer repositories.
+
+## D2 — Generic bounded reference catalog
+
+**PENDING / SECOND-CONSUMER JUSTIFIED, IMPLEMENTATION NOT YET AUTHORIZED**
+
+Independent pressure now exists from:
+
+- `UC-CONTENT-002` — mobile authorized-content reference search;
+- `UC-FARO-001` — distributed scientific-package reference discovery.
+
+Candidate common behavior:
+
+- bounded references;
+- TTL/expiry;
+- item/byte quotas;
+- duplicate suppression;
+- simple set reconciliation;
+- pull-only selected entries.
+
+Application-specific metadata remains application-owned.
+
+Do not create a universal catalog query language prematurely.
+
+**GATE ORDER**
+
+1. FARO PX1 exact-content success;
+2. compare application-owned bounded reference fixtures;
+3. simplest explicit-list/pull baseline;
+4. only then consider a generic catalog contract.
+
+## D3 — Generic asynchronous query/result transport
+
+**PENDING / PROTOTYPE PRESSURE**
+
+Independent pressure:
+
+- `UC-QUERY-001` — delayed federated metadata query;
+- future FARO distributed package/evidence discovery.
+
+Preferred initial architecture:
+
+```text
+application-owned query payload
+        |
+        v
+bounded Pollicino transport/governance envelope
+        |
+        v
+application/provider executes semantics
+        |
+        v
+bounded application result references
+```
+
+Pollicino must not understand FARO hardware/model/evidence filters or Raiatea search semantics.
+
+## D4 — Persistent distributed node surface
+
+**ACTIVE AS RESEARCH / NOT YET STABLE EXTERNAL API**
+
+PR #52 currently contains substantial experimental implementation for:
+
+- persistent verified stores;
+- restartable exact sessions;
+- PNB1/PNC1;
+- custody;
+- store-and-forward;
+- node runtime;
+- bearer runtime;
+- relay quotas/retention/GC;
+- advanced reconciliation/routing experiments.
+
+This is strong reuse potential, but an external consumer such as FARO must not depend on it silently.
+
+**NEXT**
+
+- define a stable-surface extraction/stabilization gate after exact-content integration proves the application boundary;
+- keep application semantics outside the runtime;
+- preserve deterministic/synthetic versus measured evidence labels;
+- do not claim production DTN readiness from host-model validation.
+
+## D5 — Distributed security state and witness gossip
+
+**RESEARCH / SECURITY-SENSITIVE**
+
+Existing use cases:
+
+- `UC-TRUST-001` — offline rotation/revocation/security-state ferry;
+- `UC-WITNESS-001` — signed checkpoint gossip and split-view detection.
+
+FARO supplies concrete future fixtures for:
+
+- publisher-key rotation/revocation;
+- stale trust generations;
+- registry/index equivocation;
+- signed checkpoint comparison.
+
+Pollicino may carry exact signed objects/checkpoints. FARO remains authoritative for publisher trust, evidence and registry semantics.
+
+No production security authority is created in Pollicino by this track.
+
+## D6 — Serverless Internet distribution adapters
+
+**DEFERRED / DESIGN GATE REQUIRED**
+
+FARO introduces a concrete future objective:
+
+> distribute Pollicino/FARO knowledge without requiring one project owner to fund a mandatory central server, storage service or bandwidth source.
+
+This justifies comparison of existing systems, not immediate implementation.
+
+Baselines/candidates include:
+
+- static HTTP/object mirrors;
+- BitTorrent;
+- Mainline DHT;
+- IPFS or another content-addressed provider;
+- hybrid mirror + P2P arrangements.
+
+Potential future roles:
+
+```text
+BitTorrent       -> immutable object/catalog-shard distribution
+Mainline DHT     -> provider/rendezvous discovery
+BEP44            -> tiny signed mutable publisher/catalog head
+BEP46            -> mutable pointer to current torrent/catalog generation
+```
+
+Do not implement these before the immutable exact-content and bounded-catalog models are validated.
+
+Do not invent a proprietary Pollicino global DHT unless established systems fail a measured requirement.
+
+## D7 — Multi-application integration
+
+**PENDING**
+
+Longer-term conformance matrix:
+
+```text
+DNA      -> intent/subscription/privacy-sensitive micro-information
+FARO     -> signed scientific knowledge packages
+Raiatea  -> document/reference/provenance integration
+CONTENT  -> generic authorized references and payloads
+```
+
+Success means these consumers share substrate primitives without forcing their semantics into Pollicino core.
+
+The strongest negative signal is application branching in the substrate. If a feature needs `if application == ...`, keep it in an adapter or reject the abstraction.
+
+---
+
 # Hardware evidence gate
 
 **Physical tests are not required yet** for further protocol/software work such as:
@@ -399,7 +634,9 @@ Do not infer a deployment packet-loss probability from a small checkpoint sample
 - deterministic multi-relay scheduling;
 - synthetic routing-policy comparisons;
 - delta/patch experiments;
-- correctness, idempotency and exact-reconstruction tests.
+- correctness, idempotency and exact-reconstruction tests;
+- FARO/DNA/Raiatea adapter and exact-content conformance tests;
+- bounded reference/catalog/query design at software/model scope.
 
 **Physical HW-006 tests become necessary before** we claim or use measured LoRa values for:
 
@@ -434,6 +671,14 @@ Next software work while hardware is unavailable:
 9. **Per-bearer TRC schema and bearer-neutral routing inputs.**
 10. **Relay quotas/retention/garbage collection + synthetic multi-relay policy experiments.**
 11. **Delta/patch experiments against prior versions.**
+
+Parallel cross-project/generalization work that does not require hardware:
+
+- FARO PX1 exact-content conformance against a pinned stable-main Pollicino surface;
+- stable external-consumer surface audit for exact-content/store/resolver/provider primitives;
+- bounded-reference comparison using CONTENT-002 + FARO as independent consumers;
+- generic async query/result boundary study only after exact-content/reference evidence;
+- no BitTorrent/DHT/BEP44/BEP46 execution until the serverless Internet design gate is justified.
 
 When hardware access returns and measured radio behavior is needed:
 

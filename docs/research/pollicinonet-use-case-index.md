@@ -1,8 +1,10 @@
 # PollicinoNet use-case index
 
-Status: living index, 2026-08-31 — 37 distinct use-case families
+Status: living index, 2026-08-31 — 38 distinct use-case families
 
 This index is the navigation surface for concrete PollicinoNet use cases. Detailed proposals remain governed by `use-case-justification-gate.md`: appearing here does not imply adoption of a protocol, dependency, routing algorithm, security mechanism or PHY change.
+
+Cross-application abstractions are also governed by `substrate-generality-gate.md`: application semantics remain outside Pollicino core unless genuine reusable behavior is established.
 
 ## Current primary / prototype-driving use cases
 
@@ -11,6 +13,7 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 | `UC-DNA-001` | School hub / student data mule for topic-scoped DNA information | dense morning mixing + sparse territorial dissemination of relevant micro-information | PRIMARY / PROTOTYPE-DRIVING | `pollicinonet-use-cases.md` |
 | `UC-CONTENT-001` | Reference and content data mule | carry magnet/URL/CID/manifest/wanted state now, retrieve authorized content later on rich links | PRIMARY / PROTOTYPE-DRIVING | `uc-content-001-reference-and-content-data-mule.md` |
 | `UC-CONTENT-002` | Mobile reference search index | discover useful references from encountered peers without pushing lifetime catalogs | PRIMARY / PROTOTYPE-DRIVING | `uc-content-002-mobile-reference-search-index.md` |
+| `UC-FARO-001` | Distributed scientific knowledge package exchange | preserve/find/replicate exact signed FAROPackage bytes without moving scientific trust/evidence semantics into Pollicino | PRIMARY / CROSS-PROJECT CONFORMANCE / SOFTWARE-FIRST | `uc-faro-001-distributed-scientific-knowledge-package-exchange.md` |
 | `UC-EMERG-001` | Resilient community bulletin | move compact time-sensitive/provenance-aware notices across disrupted clusters | PRIMARY / PROTOTYPE-DRIVING | `uc-emerg-001-resilient-community-bulletin.md` |
 | `UC-IOT-001` | Community sensor ferry | collect many tiny time-series observations from sparse sensors and deliver later | PRIMARY / PROTOTYPE-DRIVING | `uc-iot-001-community-sensor-ferry.md` |
 | `UC-MOBILITY-001` | Scheduled vehicle / commuter relay | exploit repeated mobile routes as predictable bridges between disconnected clusters | PRIMARY / PROTOTYPE-DRIVING | `uc-mobility-001-scheduled-vehicle-relay.md` |
@@ -60,6 +63,8 @@ This index is the navigation surface for concrete PollicinoNet use cases. Detail
 
 Town names are scenario labels, never assumed RF links. The most immediately actionable workloads are those that produce useful, measurable traffic without collecting sensitive student data.
 
+`UC-FARO-001` is intentionally not ranked as a field/student-network workload here: it is a software-first cross-project conformance case for the generic substrate.
+
 ### Tier A — first real-network candidates after HW-006 and their own governance gates
 
 1. `UC-TRACE-001`: privacy-bounded encounter evidence so later topology/routing claims can use measured temporal graphs.
@@ -93,7 +98,7 @@ Town names are scenario labels, never assumed RF links. The most immediately act
 
 ### Tier C — integration/research expansion
 
-- Raiatea rich integration, rural kiosk, AI artifacts, `UC-FL-001`, robots/drones and delay-tolerant compute jobs.
+- FARO exact-content integration and later bounded-reference conformance, Raiatea rich integration, rural kiosk, AI artifacts, `UC-FL-001`, robots/drones and delay-tolerant compute jobs.
 - `UC-SHARD-001`: keep software-only until coded diversity beats simple bounded replication after accounting for all bytes/compute/storage.
 
 ## Cross-use-case architecture pressure
@@ -119,15 +124,17 @@ The new 2026-08-31 cases stress different parts of this path:
 - QUERY: asynchronous request and multi-provider result paths across different bearers;
 - CORROBORATE: independent delayed evidence, provenance and freshness under partition;
 - MUSTER: privacy-minimized state reconciliation at multiple checkpoints;
-- CREDENTIAL: offline verification plus delayed security-state refresh.
+- CREDENTIAL: offline verification plus delayed security-state refresh;
+- FARO: preserve an application-owned signed scientific-package identity across exact storage/providers and, later, distributed discovery without converting transport integrity into scientific trust.
 
-This supports continued study of a shared bearer/runtime boundary; it does not by itself authorize a new wire protocol.
+FARO also creates a second independent consumer for exact-content/reference/catalog pressure beyond DNA/content workloads. This supports continued study of a shared substrate boundary; it does not by itself authorize a new wire protocol or promote PR #52 research APIs to stable status.
 
 ## Workloads that should remain distinct
 
 Avoid collapsing everything into one generic “message” benchmark. Distinct success metrics now include:
 
 - DNA/topic: semantic relevance/subscriptions;
+- FARO: exact canonical package preservation while publisher authenticity, evidence grade, applicability, local validation and Recommendation remain application-owned;
 - emergency: usefulness deadline + authenticity/provenance;
 - event corroboration: independent-source freshness and false/stale promotion;
 - sensor ferry: freshness / many-to-one time series;
@@ -205,7 +212,8 @@ All use cases can begin as `MODEL_SYNTHETIC` experiments. Useful immediate dimen
 - transparency checkpoint split-view fixtures;
 - tiny-model FL staleness/convergence experiments;
 - game-token anti-replay and controlled completion;
-- coded-shard carrier dropout versus simple replication.
+- coded-shard carrier dropout versus simple replication;
+- FARO canonical-package exact-content round trips with trust/evidence/local-validation non-escalation.
 
 A model result remains a model result even if the topology uses real town names.
 
