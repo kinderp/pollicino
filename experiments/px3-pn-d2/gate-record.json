@@ -1,0 +1,30 @@
+{
+  "accounting": "MODEL_PROTOCOL_ACCOUNTING_ONLY",
+  "advanced_reconciliation": "DEFERRED_NOT_JUSTIFIED",
+  "application_specific_core_branches": 0,
+  "base_commit": "750405a4aba86e7335141383396edf84347fc1d8",
+  "benchmark": "NOT_RUN_BY_DESIGN",
+  "classification": "POLLICINO_BOUNDED_REFERENCE_CATALOG_LOCAL_READY",
+  "confidence": "HIGH",
+  "docs_checkpoint": "7f6457427b68ec8145f992fb0bf81cade94e1e38",
+  "gate": "PX3-PN-D2",
+  "network_used": "NOT_USED_BY_DESIGN",
+  "network_wire_format_created": false,
+  "next_gate": "PN-D2R",
+  "pr52_dependency": "NONE",
+  "state_format": "LOCAL_CANONICAL_STATE_FORMAT",
+  "target_result": {
+    "baseline_strategy": "FULL_REFERENCE_LIST",
+    "baseline_total_modeled_bytes": 550080,
+    "candidate_strategy": "RECONCILE_AND_PULL",
+    "candidate_total_modeled_bytes": 39596,
+    "catalog_size": 1000,
+    "overlap": 0.0,
+    "reduction_fraction": 0.9280177428737638,
+    "reduction_percent": 92.80177428737638,
+    "selected_fraction": 0.01,
+    "success_threshold_percent": 50.0,
+    "threshold_crossed": true
+  },
+  "variant_model": "A_SINGLE_OPAQUE_REFERENCE"
+}

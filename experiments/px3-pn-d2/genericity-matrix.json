@@ -1,0 +1,21 @@
+{
+  "application_specific_core_branches": 0,
+  "fixtures": [
+    {
+      "final_closure": "6edf1f7d6f3ff91e07822a28910e7335958e1da3",
+      "name": "FARO_LIKE_SANITIZED",
+      "runtime_dependency": false,
+      "semantic_parsing_in_core": false,
+      "source_evidence": "FARO PX2"
+    },
+    {
+      "external_contact": false,
+      "name": "CONTENT_LIKE_SYNTHETIC_LAWFUL",
+      "semantic_parsing_in_core": false
+    }
+  ],
+  "forbidden_semantic_token_matches": [],
+  "new_dependency": false,
+  "same_core": "pollicino.net.catalog.BoundedReferenceCatalog",
+  "variant_model": "A_SINGLE_OPAQUE_REFERENCE"
+}

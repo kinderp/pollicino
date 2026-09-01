@@ -1,0 +1,7 @@
+{
+  "bound_failure_state_unchanged": true,
+  "conflict_arbitration": "NONE",
+  "conflict_state_unchanged": true,
+  "one_over_exchange": "EXCHANGE_BOUND_REJECTED",
+  "same_key_different_value": "REFERENCE_CONFLICT"
+}

@@ -1,0 +1,39 @@
+{
+  "contacts": [
+    {
+      "contact": "A<->B",
+      "left_digest": "410ae6cea8bbce8b952122e9f3333c24c702653972dd62c1ef326008127451a9",
+      "left_items": 5,
+      "right_digest": "410ae6cea8bbce8b952122e9f3333c24c702653972dd62c1ef326008127451a9",
+      "right_items": 5
+    },
+    {
+      "contact": "B<->C",
+      "left_digest": "304851c725938da67de9f51a72311a495f1876699592d348954e1f51ce3b90e9",
+      "left_items": 6,
+      "right_digest": "304851c725938da67de9f51a72311a495f1876699592d348954e1f51ce3b90e9",
+      "right_items": 6
+    },
+    {
+      "contact": "A<->C",
+      "left_digest": "304851c725938da67de9f51a72311a495f1876699592d348954e1f51ce3b90e9",
+      "left_items": 6,
+      "right_digest": "304851c725938da67de9f51a72311a495f1876699592d348954e1f51ce3b90e9",
+      "right_items": 6
+    }
+  ],
+  "deterministic_convergence": true,
+  "final_digests": {
+    "A": "304851c725938da67de9f51a72311a495f1876699592d348954e1f51ce3b90e9",
+    "B": "304851c725938da67de9f51a72311a495f1876699592d348954e1f51ce3b90e9",
+    "C": "304851c725938da67de9f51a72311a495f1876699592d348954e1f51ce3b90e9"
+  },
+  "final_item_count": 6,
+  "independent_initial_catalogs": true,
+  "initial_digests": {
+    "A": "26f9516204a2224288a729df32d501ad05ec5539aaa4a0cc5f79bdcfe4759422",
+    "B": "be21f997ccdcc8850bb97c1559a3a6c9b8d00730d9083b4d582cc3f7f4385696",
+    "C": "4be50a905faffc42a82ea2540f03885277b3130d4ddee3c0f87a406088240287"
+  },
+  "transport": "LOCAL_METHOD_CALLS_ONLY"
+}
