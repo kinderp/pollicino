@@ -389,7 +389,10 @@ def main() -> None:
             ),
             "confidence": "HIGH" if ready else "LOW",
             "base_commit": "750405a4aba86e7335141383396edf84347fc1d8",
+            "branch": "pollicino/px3-pn-d2-bounded-reference-catalog",
             "docs_checkpoint": "7f6457427b68ec8145f992fb0bf81cade94e1e38",
+            "implementation_commit": "5fd578ac54a223892ddaa692119606d9e99d151b",
+            "observed_pr52_head_read_only": "be8bf8a8f3f9410efd3c82deaacd2f9917709f80",
             "pr52_dependency": "NONE",
             "network_used": "NOT_USED_BY_DESIGN",
             "benchmark": "NOT_RUN_BY_DESIGN",
@@ -410,4 +413,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -11,4 +11,3 @@ The run performs no network operation and no performance benchmark. All byte
 figures are `MODEL_PROTOCOL_ACCOUNTING_ONLY`; the encoding model is documented
 inside `catalog-matrix.json`. Generated JSON is sorted and contains no clock or
 host-dependent field.
-

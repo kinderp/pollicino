@@ -94,4 +94,3 @@ No strategy produces at least a 25% reduction in any size >= 100 workload.
 The final matrix will use deterministic sizes 10, 100, and 1000; overlaps 0%,
 50%, 90%, and 99% where integral; and selection fractions 100%, 10%, and 1%.
 No physical or runtime-network measurement is authorized.
-
