@@ -1,6 +1,6 @@
 # PollicinoNet Independent Consumer Generality Gate
 
-Status: ACTIVE / CROSS-PROJECT ARCHITECTURE GATE, 2026-08-31
+Status: ACTIVE / CROSS-PROJECT ARCHITECTURE GATE, updated 2026-09-01
 
 ## Purpose
 
@@ -129,7 +129,9 @@ exact Pollicino object
 
 Likewise custody, replica count, provider count or cache availability must not be interpreted as stronger application evidence unless the application explicitly evaluates independent provenance itself.
 
-## Current FARO checkpoint
+## FARO cross-project checkpoints
+
+### RG2-PX0 — architecture/convergence
 
 FARO `RG2-PX0` classified the integration direction as:
 
@@ -151,15 +153,74 @@ It identified thin application-side adapters for FAROPackage bytes, provider ref
 
 It kept FARO ownership of package identity, signatures, evidence, trust, applicability, local validation and Recommendation.
 
-It also kept distributed catalog, asynchronous query/result, prefetch, equivocation gossip and diversity replication behind future gates, and deferred BitTorrent/Mainline-DHT/BEP44/BEP46 execution.
+### PX1 — executable exact-content conformance
 
-This is evidence for the generality direction, not a promotion of research-only PR #52 APIs to stable status.
+FARO `PX1 — FAROPackage over Pollicino Exact Content Vertical Slice` concluded:
+
+```text
+FAROPACKAGE_POLLICINO_EXACT_CONTENT_READY
+confidence: HIGH
+```
+
+PX1 used Pollicino main pinned at:
+
+```text
+750405a4aba86e7335141383396edf84347fc1d8
+```
+
+and reported:
+
+```text
+POLLICINO_RELEVANT: 29 PASS
+POLLICINO_ROOT: 125 PASS / 2 SKIP
+FARO_TESTS: 436 PASS
+PX1_FOCUSED: 28 PASS
+```
+
+The external consumer exercised `DiscoveryDescriptor`, `ContentManifest`, `RetrievalSource`, resolver/provider, `PollicinoStore`, PCM1/PNA1 partial-cache synchronization and exact reconstruction without depending on PR #52.
+
+PX1 directly demonstrated that:
+
+- canonical FAROPackage bytes round-trip exactly;
+- FARO package ID/digest remain unchanged;
+- different Pollicino chunk layouts may change PCM1 transport identity without changing FARO package identity;
+- signatures and scientific origin remain application-owned;
+- unknown trust remains unknown/advisory;
+- blocked/revoked authority remains blocked by FARO policy;
+- `validated_here` does not change;
+- synthetic evidence remains synthetic;
+- E3 LIMIT evidence remains LIMIT;
+- provider count/cache hits do not become scientific corroboration;
+- fetch/reconstruction do not mutate FARO LocalKnowledgeStore, LocalTrustStore or Recommendation.
+
+See `faro-px1-exact-content-checkpoint.md` for the detailed cross-project record.
+
+This is now evidence that the pinned current-main exact-content/store/resolver/provider surface is **externally exercised by a materially independent consumer**.
+
+It is still not a promise that every current symbol is a versioned stable public API.
+
+## Current exact-content decision
+
+For the specific exact-content/store/resolver/provider behavior exercised by PX1:
+
+```text
+GENERIC_REUSE_PROVEN_AT_PINNED_MAIN_SCOPE
+```
+
+Long-term API compatibility remains:
+
+```text
+STABILIZATION_REQUIRED
+```
+
+Research-only PR #52 persistence/DTN/custody/bearer surfaces remain outside this decision.
 
 ## Stable-surface rule
 
 External consumers must be told which Pollicino capabilities are:
 
 - stable/main implemented;
+- externally exercised at a pinned main commit;
 - research-branch implemented;
 - prototype implemented;
 - design-only;
@@ -167,11 +228,15 @@ External consumers must be told which Pollicino capabilities are:
 
 An external consumer must not unknowingly depend on research-only APIs.
 
-Current FARO integration should prefer the pinned Pollicino main exact-content surface before using persistence/DTN/custody/bearer functionality from PR #52.
+Current FARO integration should continue to prefer the pinned Pollicino main exact-content surface before using persistence/DTN/custody/bearer functionality from PR #52.
 
 ## Generic catalog gate
 
-A generic bounded reference catalog becomes justified only if measurements show common behavior across at least two consumers.
+PX1 satisfies the prerequisite that `UC-FARO-001` can obtain the exact package behind a reference without changing FARO semantics.
+
+The next commonality question is now active:
+
+> Can `UC-CONTENT-002` and `UC-FARO-001` share a genuinely generic bounded reference-catalog primitive without moving application metadata/query semantics into Pollicino core?
 
 Current independent pressure:
 
@@ -181,13 +246,28 @@ Current independent pressure:
 Candidate common behavior:
 
 - bounded reference IDs;
-- TTL/expiry;
+- deterministic canonical representation;
+- TTL/expiry where required;
 - byte/item quota;
 - duplicate suppression;
-- simple set reconciliation;
-- pull only selected references.
+- receiver-known-ID comparison;
+- simple exact set reconciliation;
+- pull only selected/new references.
 
 Application-specific metadata remains opaque/application-owned unless genuine commonality is demonstrated.
+
+### Required baseline order
+
+Before a new generic catalog protocol or sketch is adopted, compare:
+
+1. explicit bounded reference list;
+2. deterministic sorted IDs;
+3. receiver-known-ID list/comparison;
+4. explicit pull of selected references;
+5. simplest exact reconciliation;
+6. only then compressed summaries/sketches if measured need remains.
+
+A FARO-only catalog implementation must remain in FARO unless the cross-consumer experiment proves common behavior.
 
 ## Generic query gate
 
@@ -209,6 +289,8 @@ bounded application result references
 ```
 
 FARO hardware/model filters remain FARO semantics. Raiatea full-text/vector semantics remain Raiatea semantics.
+
+This is not yet the next implementation gate; bounded references/catalog come first.
 
 ## Security-state and witness gate
 
@@ -257,6 +339,8 @@ For each candidate shared abstraction use:
 
 **ACTIVE / CONTINUE.**
 
-DNA plus FARO provide two materially different consumers and therefore justify explicit generality testing of PollicinoNet's exact-content, reference, catalog, query and future distributed-storage boundaries.
+The exact-content/store/provider boundary has now passed a real cross-project executable conformance checkpoint through FARO PX1 at a pinned Pollicino main commit.
 
-Do not yet promote experimental catalog/DTN/security/P2P surfaces merely because FARO needs them. The next evidence should come from FARO PX1 exact-content integration and subsequent bounded-catalog experiments.
+The next justified generality experiment is the bounded-reference/catalog boundary using `UC-CONTENT-002` and `UC-FARO-001` as independent consumers.
+
+Do not yet promote a new catalog wire format, PR #52 DTN APIs, security-distribution machinery, BitTorrent/DHT/BEP44/BEP46 execution, or application-specific query semantics into Pollicino core merely because FARO needs them.

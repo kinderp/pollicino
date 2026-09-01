@@ -41,7 +41,20 @@ See:
 - `docs/research/uc-faro-001-distributed-scientific-knowledge-package-exchange.md`;
 - `docs/research/pollicinonet-use-case-index.md`.
 
-FARO cross-project gate RG2-PX0 classified the current direction as `POLLICINO_SUBSTRATE_REUSE_READY_WITH_BOUNDARIES` with HIGH confidence. This is evidence for the boundary, not a declaration that the research-only PR #52 persistence/DTN/custody/bearer surfaces are stable external APIs.
+FARO cross-project gate RG2-PX0 classified the direction as `POLLICINO_SUBSTRATE_REUSE_READY_WITH_BOUNDARIES` with HIGH confidence.
+
+FARO PX1 subsequently classified the real exact-content vertical slice as:
+
+```text
+FAROPACKAGE_POLLICINO_EXACT_CONTENT_READY
+confidence: HIGH
+```
+
+PX1 pinned Pollicino main at `750405a4aba86e7335141383396edf84347fc1d8`, used no PR #52 runtime dependency, passed 29/29 relevant Pollicino tests and the declared Pollicino root suite at 125 PASS / 2 SKIP, and demonstrated that canonical FAROPackage bytes survive exact store/retrieval/partial-cache reconstruction while FARO package identity, signatures, publisher origin, evidence grade, trust, `validated_here` and Recommendation authority remain unchanged.
+
+This is evidence that the current main exact-content/store/resolver/provider surface is **externally exercised at a pinned commit**. It is not a declaration that every main symbol is a versioned public API, and it does not promote the research-only PR #52 persistence/DTN/custody/bearer surfaces to stable external status.
+
+The next cross-project question is the bounded-reference/catalog boundary (`FARO PX2`), not Internet P2P execution.
 
 ## Hardware evidence gate
 
