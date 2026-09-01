@@ -39,6 +39,8 @@ See:
 
 - `docs/research/substrate-generality-gate.md`;
 - `docs/research/uc-faro-001-distributed-scientific-knowledge-package-exchange.md`;
+- `docs/research/faro-px1-exact-content-checkpoint.md`;
+- `docs/research/faro-px2-bounded-reference-catalog-checkpoint.md`;
 - `docs/research/pollicinonet-use-case-index.md`.
 
 FARO cross-project gate RG2-PX0 classified the direction as `POLLICINO_SUBSTRATE_REUSE_READY_WITH_BOUNDARIES` with HIGH confidence.
@@ -52,9 +54,18 @@ confidence: HIGH
 
 PX1 pinned Pollicino main at `750405a4aba86e7335141383396edf84347fc1d8`, used no PR #52 runtime dependency, passed 29/29 relevant Pollicino tests and the declared Pollicino root suite at 125 PASS / 2 SKIP, and demonstrated that canonical FAROPackage bytes survive exact store/retrieval/partial-cache reconstruction while FARO package identity, signatures, publisher origin, evidence grade, trust, `validated_here` and Recommendation authority remain unchanged.
 
-This is evidence that the current main exact-content/store/resolver/provider surface is **externally exercised at a pinned commit**. It is not a declaration that every main symbol is a versioned public API, and it does not promote the research-only PR #52 persistence/DTN/custody/bearer surfaces to stable external status.
+FARO PX2 then classified the bounded reference/catalog experiment as:
 
-The next cross-project question is the bounded-reference/catalog boundary (`FARO PX2`), not Internet P2P execution.
+```text
+BOUNDED_REFERENCE_CATALOG_GENERIC_CANDIDATE_READY
+confidence: HIGH
+```
+
+PX2 used the same pinned Pollicino main without modifying Pollicino or depending on PR #52. A FARO scientific-reference fixture and an independent CONTENT-like opaque-reference fixture used the same bounded catalog/reconciliation engine with zero application-specific branches. `RECONCILE_AND_PULL` crossed the preregistered success threshold for unknown-catalog discovery, while advanced sketches remained unjustified. The result promotes bounded reference/catalog behavior only to a **generic candidate**, not to a stable or distributed Pollicino capability.
+
+This is evidence that the current main exact-content/store/resolver/provider surface is **externally exercised at a pinned commit** and that the bounded catalog problem has passed a two-consumer genericity gate. It is not a declaration that every main symbol is a versioned public API, and it does not promote the research-only PR #52 persistence/DTN/custody/bearer surfaces to stable external status.
+
+The next cross-project Gate is `PX3-PN-D2 — Pollicino Generic Bounded Reference Catalog Local Multi-Node Validation`. It remains local/software-only: no DTN, public network, BitTorrent, DHT or BEP44/BEP46 execution is authorized by PX2.
 
 ## Hardware evidence gate
 
