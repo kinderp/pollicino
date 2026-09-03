@@ -1,0 +1,13 @@
+{
+  "label": "FAULT_INJECTION_MODEL",
+  "outcomes": [
+    {"result": "OLD_AUTHORITY_PRESERVED", "stage": "BEFORE_TEMP_CREATE"},
+    {"result": "OLD_AUTHORITY_PRESERVED", "stage": "DURING_WRITE"},
+    {"result": "OLD_AUTHORITY_PRESERVED", "stage": "AFTER_WRITE_BEFORE_FILE_FSYNC"},
+    {"result": "OLD_AUTHORITY_PRESERVED", "stage": "AFTER_FILE_FSYNC_BEFORE_REPLACE"},
+    {"result": "FAIL_STOP_REOPEN_REQUIRED", "stage": "AFTER_REPLACE_BEFORE_DIRECTORY_FSYNC"},
+    {"result": "FAIL_STOP_REOPEN_REQUIRED", "stage": "AFTER_DIRECTORY_FSYNC_BEFORE_MEMORY_SWAP"}
+  ],
+  "physical_power_loss_tested": false,
+  "schema_version": "pollicino.px5-pn-d2r.fault-injection.v1"
+}

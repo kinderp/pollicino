@@ -1,0 +1,13 @@
+{
+  "cases": {
+    "canonical_payload_identity": "PASS",
+    "clean_restart": "PASS",
+    "conflict_after_restart": "PASS",
+    "duplicate_after_restart": "PASS",
+    "no_state": "NO_DURABLE_STATE",
+    "quota_after_restart": "PASS",
+    "subprocess_restart": "PASS"
+  },
+  "correctness_sizes": [10, 100, 1000, 10000],
+  "schema_version": "pollicino.px5-pn-d2r.restart-matrix.v1"
+}

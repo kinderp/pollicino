@@ -1,0 +1,16 @@
+{
+  "canonical_convergence": "PASS",
+  "independent_persistence_paths": true,
+  "nodes": {
+    "NODE_A": {"restart": "PASS"},
+    "NODE_B": {"restart": "PASS"},
+    "NODE_C": {"restart": "PASS"}
+  },
+  "reconciliation": {
+    "A_B": "PASS",
+    "A_C": "PASS",
+    "B_C": "PASS",
+    "engine": "NATIVE_RECONCILE_AND_PULL"
+  },
+  "schema_version": "pollicino.px5-pn-d2r.multi-node-results.v1"
+}

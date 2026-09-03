@@ -1,0 +1,16 @@
+{
+  "application_specific_persistence_branches": 0,
+  "auto_fetch": false,
+  "auto_import": false,
+  "discovery_after_restart": "PASS",
+  "exact_faro_commit": "44af3e4f0fbdd4f3373a9d464f54892481f0d891",
+  "explicit_import": "PASS",
+  "invalid_signature_separation": "PASS",
+  "knowledge_store_mutation_before_import": "NONE",
+  "malformed_opaque_value_boundary": "PASS",
+  "px1_fetch_after_restart": "PASS",
+  "recommendation_mutation": "NONE",
+  "schema_version": "pollicino.px5-pn-d2r.faro-conformance.v1",
+  "trust_store_mutation": "NONE",
+  "variant_conflict_after_restart": "PASS"
+}

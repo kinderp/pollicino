@@ -1,0 +1,14 @@
+{
+  "accounting": "LOCAL_PERSISTENCE_MODEL_ONLY",
+  "benchmark": "NOT_RUN_BY_DESIGN",
+  "classification": "POLLICINO_PERSISTENT_BOUNDED_REFERENCE_CATALOG_READY_WITH_LIMITS",
+  "confidence": "HIGH",
+  "faro_conformance_commit": "44af3e4f0fbdd4f3373a9d464f54892481f0d891",
+  "gate": "PX5-PN-D2R",
+  "implementation_commit": "cdae923e6084eabe24ce593c7e591bbff68504a5",
+  "network": "NOT_USED_BY_DESIGN",
+  "next_gate": "PX6-PN-D3",
+  "pollicino_base": "6dbc79e3cfff1a34a90d42e703bcc4124b9cf5ea",
+  "schema_version": "pollicino.px5-pn-d2r.gate-record.v1",
+  "status": "COMPLETED"
+}

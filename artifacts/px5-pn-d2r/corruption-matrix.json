@@ -1,0 +1,12 @@
+{
+  "ambiguous_generation": "FAIL_CLOSED",
+  "both_generations_corrupt": "FAIL_CLOSED",
+  "bounds_on_load": "FAIL_CLOSED",
+  "corrupt_digest": "DETECTED",
+  "corrupt_header": "DETECTED",
+  "corrupt_payload": "DETECTED",
+  "previous_generation_recovery": "RECOVERED_PREVIOUS_GENERATION",
+  "schema_version": "pollicino.px5-pn-d2r.corruption-matrix.v1",
+  "truncation": "DETECTED",
+  "unsupported_version": "PERSISTENCE_VERSION_UNSUPPORTED"
+}

@@ -1,0 +1,19 @@
+{
+  "catalog_semantics_changed": false,
+  "concurrency": {
+    "concurrent_readers": "NOT_SUPPORTED",
+    "concurrent_writers": "FAIL_EXPLICITLY",
+    "scope": "SINGLE_PROCESS_SINGLE_WRITER_SUPPORTED"
+  },
+  "envelope": {
+    "digest": "SHA256_PREFIX_AND_PAYLOAD",
+    "fields": ["magic", "version", "local_generation", "payload_length", "digest", "px3_canonical_payload"],
+    "format": "LOCAL_PERSISTENCE_FORMAT",
+    "version": 1
+  },
+  "generations": 2,
+  "native_catalog_modified": false,
+  "schema_version": "pollicino.px5-pn-d2r.persistence-design.v1",
+  "strategy": "DUAL_GENERATION_ATOMIC_SNAPSHOT",
+  "write_amplification": "KNOWN_LOCAL_LIMIT"
+}
