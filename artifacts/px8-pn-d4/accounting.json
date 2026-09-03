@@ -1,0 +1,18 @@
+{
+  "schema": "pollicino.px8.accounting.v1",
+  "model": "LOCAL_PROTOCOL_ACCOUNTING_ONLY",
+  "benchmark": "NOT_RUN_BY_DESIGN",
+  "measured_bandwidth_claim": false,
+  "latency_claim": false,
+  "counts": [
+    "queries_by_direction",
+    "results_by_direction",
+    "references_by_direction",
+    "canonical_entry_bytes_by_type_and_direction",
+    "records_considered",
+    "records_skipped_already_known",
+    "budget_used_and_remaining",
+    "remaining_missing_work"
+  ],
+  "already_durable_records_retransferred": 0
+}

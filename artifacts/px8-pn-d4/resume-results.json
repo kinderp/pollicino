@@ -1,0 +1,16 @@
+{
+  "schema": "pollicino.px8.resume-results.v1",
+  "resume_model": "NEW_CONTACT_RECONCILES_FROM_DURABLE_STATE",
+  "sender_restart": "PASS",
+  "receiver_restart": "PASS",
+  "mule_restart": "PASS",
+  "real_subprocess_restart": "PASS",
+  "report_deleted_before_resume": "PASS",
+  "already_durable_records_retransferred": 0,
+  "multi_page_restore_regression": {
+    "queries": 105,
+    "results": 105,
+    "status": "PASS"
+  },
+  "manual_state_reconstruction_required": false
+}

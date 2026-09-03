@@ -1,0 +1,31 @@
+{
+  "schema": "pollicino.px8.contact-runs.v1",
+  "runs": [
+    {
+      "name": "empty",
+      "outcome": "NO_MORE_ELIGIBLE_WORK",
+      "items_transferred": 0,
+      "encoded_bytes": 0,
+      "mutations": 0
+    },
+    {
+      "name": "bidirectional_all_types",
+      "outcome": "NO_MORE_ELIGIBLE_WORK",
+      "left_to_right": {"queries": 1, "results": 1, "references": 1},
+      "right_to_left": {"queries": 1, "results": 1, "references": 1}
+    },
+    {
+      "name": "large_contact_1",
+      "outcome": "BUDGET_EXHAUSTED",
+      "query_items_transferred": 100,
+      "remaining_missing": 5
+    },
+    {
+      "name": "large_contact_2_after_restart",
+      "outcome": "NO_MORE_ELIGIBLE_WORK",
+      "query_items_transferred": 5,
+      "already_durable_records_retransferred": 0,
+      "canonical_convergence": true
+    }
+  ]
+}

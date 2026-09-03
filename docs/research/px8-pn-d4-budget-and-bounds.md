@@ -26,3 +26,6 @@ all earlier commits remain durable. Identifier reconciliation uses the existing
 reported but do not consume transfer budget and are never counted as missing
 record retransfers.
 
+Observed: the 105-query run used exactly 100 items in Contact 1 and 5 in
+Contact 2 after restart. A byte budget one byte below the next canonical entry
+size applied zero bytes of that record. Both tests passed.

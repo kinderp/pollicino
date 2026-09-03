@@ -1,0 +1,18 @@
+{
+  "schema": "pollicino.px8.contact-model.v1",
+  "selected": "EPHEMERAL_SESSION_DURABLE_STATE_RECONCILIATION",
+  "resume": "NEW_CONTACT_RECONCILES_FROM_DURABLE_STATE",
+  "model_a_passed": true,
+  "persistent_contact_cursor_required": false,
+  "persistent_custody_log_required": false,
+  "persistent_session_id_required": false,
+  "report_is_protocol_state": false,
+  "resume_authority": [
+    "D2_DURABLE_CATALOG_STATE",
+    "D3_DURABLE_QUERY_RESULT_STATE"
+  ],
+  "models_rejected": {
+    "PERSISTENT_CONTACT_CURSOR": "NO_CORRECTNESS_REQUIREMENT",
+    "CUSTODY_OUTBOX_LOG": "OUT_OF_SCOPE_AND_NOT_REQUIRED"
+  }
+}

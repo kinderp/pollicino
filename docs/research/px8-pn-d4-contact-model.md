@@ -32,3 +32,9 @@ If any invariant requires remembered per-contact progress, stop and classify
 
 Provisional selection: `EPHEMERAL_SESSION_DURABLE_STATE_RECONCILIATION`.
 
+## Observed decision
+
+All preregistered Model A invariants passed, including the 105-record restart
+case and report deletion. Final selection:
+`EPHEMERAL_SESSION_DURABLE_STATE_RECONCILIATION`. Models B and C are not
+required and remain outside the implementation.

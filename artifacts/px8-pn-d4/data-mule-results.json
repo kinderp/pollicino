@@ -1,0 +1,19 @@
+{
+  "schema": "pollicino.px8.data-mule-results.v1",
+  "nodes": ["A", "B", "C"],
+  "query_path": "A_TO_C_RESTART_C_TO_B",
+  "query_path_status": "PASS",
+  "result_path": "B_TO_C_RESTART_C_TO_A",
+  "result_path_status": "PASS",
+  "mule_application_evaluator": false,
+  "orphan_result_carry": "PASS",
+  "orphan_correlation_after_query": "PASS",
+  "reference_path": "B_TO_C_RESTART_C_TO_A",
+  "reference_path_status": "PASS",
+  "reference_selection_each_hop": "EXPLICIT",
+  "reference_byte_identity": true,
+  "duplicate_loop": "NOOP_AFTER_CONVERGENCE",
+  "routing": false,
+  "custody": false,
+  "destructive_handoff": false
+}

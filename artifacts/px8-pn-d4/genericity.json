@@ -1,0 +1,18 @@
+{
+  "schema": "pollicino.px8.genericity.v1",
+  "application_specific_contact_core_branches": 0,
+  "bearer_specific_contact_core_branches": 0,
+  "pr52_runtime_dependency": false,
+  "network_code": false,
+  "socket_code": false,
+  "stable_wire_protocol": false,
+  "fragmentation": false,
+  "routing": false,
+  "custody": false,
+  "hop_count": false,
+  "ttl": false,
+  "gc": false,
+  "query_authentication": false,
+  "background_worker": false,
+  "retry_timers": false
+}

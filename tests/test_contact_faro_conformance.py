@@ -307,4 +307,3 @@ def test_faro_reference_variant_conflict_remains_faro_layered(tmp_path: Path) ->
         with pytest.raises(Exception) as raised:
             a.discovery_source.advertise_reference(variant)
         assert getattr(raised.value, "code", None) == "REFERENCE_VARIANT_CONFLICT"
-

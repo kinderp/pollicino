@@ -1,0 +1,27 @@
+{
+  "schema": "pollicino.research-gate-record.v1",
+  "gate": "PX8-PN-D4",
+  "classification": "POLLICINO_BEARER_NEUTRAL_CONTACT_STORE_CARRY_FORWARD_READY_WITH_LIMITS",
+  "confidence": "HIGH",
+  "pollicino_base": "3d574773035677d30eb566dc1fa7c0f0ecb9c051",
+  "base_recovery_required": false,
+  "implementation_commit": "fac2966e8b553d9bce5e6cc2ebe0c523d9f36c41",
+  "faro_conformance_commit": "43725b2988f24ebad93fbb79f11cbb3d410432aa",
+  "faro_modified": false,
+  "contact_progress_model": "EPHEMERAL_SESSION_DURABLE_STATE_RECONCILIATION",
+  "contact_resume_model": "NEW_CONTACT_RECONCILES_FROM_DURABLE_STATE",
+  "contact_persistence_required": false,
+  "faro_contact_conformance": "FARO_PX8_CONTACT_CONFORMANCE_READY_WITH_LIMITS",
+  "tests": {
+    "px3": {"passed": 43},
+    "px5": {"passed": 55},
+    "px6": {"passed": 41},
+    "px8_focused": {"passed": 29},
+    "pollicino_declared": {"passed": 289, "skipped": 5},
+    "faro_full": {"passed": 542, "subtests_passed": 40}
+  },
+  "next_gate": "PX9-PN-B1",
+  "benchmark": "NOT_RUN_BY_DESIGN",
+  "accounting": "LOCAL_PROTOCOL_ACCOUNTING_ONLY",
+  "upstream_contact": "NONE"
+}

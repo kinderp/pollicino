@@ -1,0 +1,18 @@
+{
+  "schema": "pollicino.px8.interruption-results.v1",
+  "model": "CONTACT_INTERRUPTION_MODEL",
+  "real_network_failure_test": false,
+  "results": {
+    "before_first_apply_receiver_unchanged": true,
+    "after_query_apply_durable": true,
+    "after_result_apply_durable": true,
+    "after_reference_apply_durable": true,
+    "between_phases": true,
+    "before_next_record": true,
+    "item_budget_exhaustion_normal": true,
+    "byte_budget_prevents_partial_apply": true,
+    "query_quota_fail_closed": true,
+    "catalog_quota_fail_closed": true,
+    "prior_successful_work_survives_error": true
+  }
+}

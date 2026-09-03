@@ -1,0 +1,12 @@
+{
+  "schema": "pollicino.px8.bounds.v1",
+  "max_contact_items": 100,
+  "max_contact_bytes": 2606200,
+  "max_query_record_encoded_bytes": 4230,
+  "max_result_record_encoded_bytes": 26062,
+  "max_reference_record_encoded_bytes": 4358,
+  "derivation": "100_TIMES_LARGEST_LAWFUL_EXISTING_CANONICAL_RECORD_ENTRY",
+  "unlimited_sentinel": false,
+  "atomic_unit": "COMPLETE_D2_OR_D3_RECORD",
+  "native_bounds_bypassed": false
+}

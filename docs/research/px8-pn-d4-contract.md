@@ -22,4 +22,3 @@ diagnostics and are never protocol state.
 D4 executes no query evaluator and performs no automatic reference selection,
 package retrieval, import, trust, evidence, recommendation, routing, expiry,
 garbage collection, authentication, or background retry.
-

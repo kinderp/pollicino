@@ -27,4 +27,3 @@ existing reconciliation functions.
 
 The D2 and D3 local canonical formats remain unchanged. D4 adds no hop, path,
 contact, peer, acknowledgement, or session field to any record.
-

@@ -1,0 +1,32 @@
+{
+  "schema": "pollicino.px8.faro-conformance.v1",
+  "commit": "43725b2988f24ebad93fbb79f11cbb3d410432aa",
+  "recovery_required": false,
+  "modified": false,
+  "status": "FARO_PX8_CONTACT_CONFORMANCE_READY_WITH_LIMITS",
+  "query_mule": "PASS",
+  "result_mule": "PASS",
+  "candidate_after_mule": "PASS",
+  "zero_match_mule": "PASS",
+  "automatic_reference_pull": false,
+  "explicit_d2_reference_mule": "PASS",
+  "px1_exact_fetch": "PASS",
+  "knowledge_mutation_before_import": "NONE",
+  "trust_mutation": "NONE",
+  "recommendation_mutation": "NONE",
+  "explicit_import": "PASS",
+  "trust_divergence": ["UNKNOWN", "REVOKED_BLOCKED"],
+  "invalid_signature_layering": "FARO_SIGNATURE_FAILURE",
+  "reference_variant_conflict": "REFERENCE_VARIANT_CONFLICT",
+  "focused_regressions_on_exact_px6": {"passed": 74},
+  "px8_head_regressions": {
+    "px7": {"passed": 14},
+    "px1": {"passed": 20},
+    "px4": {
+      "passed": 39,
+      "checkpoint_guard_failures": 1,
+      "failure_reason": "LEGACY_ALLOWLIST_ACCEPTS_ONLY_PX3_OR_PX6_GIT_HEAD"
+    }
+  },
+  "full_suite": {"tests_passed": 542, "subtests_passed": 40}
+}

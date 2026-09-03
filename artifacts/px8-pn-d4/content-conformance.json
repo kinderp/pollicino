@@ -1,0 +1,9 @@
+{
+  "schema": "pollicino.px8.content-conformance.v1",
+  "status": "PASS",
+  "consumer": "SYNTHETIC_OPAQUE_DOCUMENT_LOOKUP",
+  "same_contact_core": true,
+  "query_identity_preserved": true,
+  "result_identity_preserved": true,
+  "application_branches": 0
+}
