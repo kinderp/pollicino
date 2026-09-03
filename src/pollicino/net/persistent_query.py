@@ -96,10 +96,23 @@ class PersistentQueryResultStore(QueryResultStore):
         self._durable.ensure_usable()
 
     def _load_into_memory(self, store: QueryResultStore) -> None:
-        for query_id in store.sorted_query_ids():
-            QueryResultStore.add_query(self, store.get_query(query_id))
-        for identity in store.sorted_result_ids():
-            QueryResultStore.add_result(self, store.get_result(identity))
+        offset = 0
+        while True:
+            query_ids = store.sorted_query_ids(offset=offset)
+            if not query_ids:
+                break
+            for query_id in query_ids:
+                QueryResultStore.add_query(self, store.get_query(query_id))
+            offset += len(query_ids)
+
+        offset = 0
+        while True:
+            result_ids = store.sorted_result_ids(offset=offset)
+            if not result_ids:
+                break
+            for identity in result_ids:
+                QueryResultStore.add_result(self, store.get_result(identity))
+            offset += len(result_ids)
 
     def _staged_clone(self) -> QueryResultStore:
         return QueryResultStore.from_canonical_state(

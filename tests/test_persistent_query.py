@@ -26,6 +26,7 @@ from pollicino.net.persistent_query import (
     PersistentQueryResultStore,
 )
 from pollicino.net.query import (
+    MAX_QUERY_EXCHANGE_ITEMS,
     MAX_QUERY_RESULT_ENCODED_BYTES,
     QueryConflictError,
     QueryMutationResult,
@@ -108,6 +109,28 @@ with PersistentQueryResultStore(sys.argv[1]) as s:
 """
     subprocess.run([sys.executable, "-c", writer, str(root)], check=True, env=environment)
     subprocess.run([sys.executable, "-c", reader, str(root)], check=True, env=environment)
+
+
+def test_restart_restores_every_exchange_page(tmp_path: Path) -> None:
+    root = tmp_path / "multi-page"
+    query_records = tuple(query(index) for index in range(MAX_QUERY_EXCHANGE_ITEMS + 5))
+    result_records = tuple(
+        result(index, index, (key(index),))
+        for index in range(MAX_QUERY_EXCHANGE_ITEMS + 5)
+    )
+    with PersistentQueryResultStore(root) as store:
+        store.add_queries(query_records)
+        store.add_results(result_records)
+
+    with PersistentQueryResultStore(root) as reopened:
+        assert reopened.query_count == len(query_records)
+        assert reopened.result_count == len(result_records)
+        assert reopened.sorted_query_ids(offset=MAX_QUERY_EXCHANGE_ITEMS) == tuple(
+            record.query_id for record in query_records[MAX_QUERY_EXCHANGE_ITEMS:]
+        )
+        assert reopened.sorted_result_ids(offset=MAX_QUERY_EXCHANGE_ITEMS) == tuple(
+            record.identity for record in result_records[MAX_QUERY_EXCHANGE_ITEMS:]
+        )
 
 
 def test_duplicate_after_restart_does_not_rewrite(tmp_path: Path) -> None:
