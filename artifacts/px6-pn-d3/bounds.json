@@ -1,0 +1,13 @@
+{
+  "catalog_key_bytes": 256,
+  "exchange_items": 100,
+  "orphan_results": 1000,
+  "query_id_bytes": 128,
+  "query_payload_bytes": 4096,
+  "query_result_payload_bytes": 16777216,
+  "result_id_bytes": 128,
+  "result_keys": 100,
+  "results_per_query": 100,
+  "stored_queries": 10000,
+  "stored_results": 10000
+}

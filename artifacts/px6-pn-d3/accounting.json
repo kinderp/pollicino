@@ -1,0 +1,16 @@
+{
+  "accounting": "MODEL_PROTOCOL_ACCOUNTING_ONLY",
+  "benchmark": "NOT_RUN_BY_DESIGN",
+  "fixture": {
+    "catalog_items": 1000,
+    "key_bytes": 32,
+    "query_id_bytes": 16,
+    "query_payload_bytes": 96,
+    "reference_bytes": 512,
+    "result_id_bytes": 16,
+    "selected_items": 10
+  },
+  "full_catalog_bytes": 550049,
+  "query_result_selected_pull_bytes": 5996,
+  "reduction_percent": 98.91
+}

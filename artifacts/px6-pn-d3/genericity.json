@@ -1,0 +1,11 @@
+{
+  "application_handler_persisted": false,
+  "application_specific_query_core_branches": 0,
+  "core_files": [
+    "src/pollicino/net/local_persistence.py",
+    "src/pollicino/net/persistent_query.py",
+    "src/pollicino/net/query.py"
+  ],
+  "opaque_means_encrypted": false,
+  "pr52_dependency": "NONE"
+}

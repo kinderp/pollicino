@@ -1,0 +1,12 @@
+{
+  "candidate_models": {
+    "A": "OPAQUE_QUERY_PLUS_CATALOG_KEY_RESULTS",
+    "B": "OPAQUE_QUERY_PLUS_OPAQUE_RESULT_BYTES",
+    "C": "QUERY_RESULT_OBJECTS_IN_REFERENCE_CATALOG"
+  },
+  "candidate_key_duplicates": "REJECT",
+  "empty_result": "ANSWERED_WITH_NO_MATCHES",
+  "query_id_policy": "CALLER_OWNED_OPAQUE_QUERY_ID",
+  "result_id_policy": "CALLER_OR_RESPONDER_OWNED_OPAQUE_RESULT_ID_SCOPED_BY_QUERY",
+  "selected_model": "OPAQUE_QUERY_PLUS_CATALOG_KEY_RESULTS"
+}

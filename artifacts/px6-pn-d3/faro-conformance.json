@@ -1,0 +1,16 @@
+{
+  "auto_fetch": false,
+  "auto_import": false,
+  "classification": "FARO_D3_CONFORMANCE_READY_TEST_ADAPTER_ONLY",
+  "exact_faro_commit": "44af3e4f0fbdd4f3373a9d464f54892481f0d891",
+  "invalid_signature_layering": "PASS",
+  "knowledge_mutation_before_import": "NONE",
+  "positive_match": "PASS",
+  "px1_exact_fetch_after_result": "PASS",
+  "query_evaluator": "FARO_OWNED_TEST_HARNESS",
+  "query_format": "faro.registry-query.v0",
+  "recommendation_mutation": "NONE",
+  "trust_mutation": "NONE",
+  "variant_conflict": "REFERENCE_VARIANT_CONFLICT",
+  "zero_match": "PASS"
+}

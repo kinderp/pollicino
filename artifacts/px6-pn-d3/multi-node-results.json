@@ -1,0 +1,12 @@
+{
+  "a_to_b_query": "PASS",
+  "a_to_c_query": "PASS",
+  "b_to_a_delayed_result": "PASS",
+  "c_to_a_delayed_result": "PASS",
+  "delivery_guarantee": false,
+  "logical_nodes": ["NODE_A", "NODE_B", "NODE_C"],
+  "loop_deduplication": "PASS",
+  "network_used": false,
+  "post_restart_convergence": "PASS",
+  "two_responder_order_independence": "PASS"
+}

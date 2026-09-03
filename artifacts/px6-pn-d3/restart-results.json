@@ -1,0 +1,12 @@
+{
+  "ambiguous_generation": "FAIL_CLOSED",
+  "both_generations_corrupt": "FAIL_CLOSED",
+  "handler_reattachment": "PASS",
+  "post_replace": "FAIL_STOP_REOPEN_REQUIRED",
+  "pre_replace": "PREVIOUS_AUTHORITY_PRESERVED",
+  "previous_generation": "RECOVERED_PREVIOUS_GENERATION",
+  "query_restart": "PASS",
+  "result_restart": "PASS",
+  "second_writer": "REJECTED",
+  "subprocess_restart": "PASS"
+}
