@@ -1,0 +1,11 @@
+{
+  "schema": "pollicino.px9.existing-link-compatibility.v1",
+  "link_py_modified": false,
+  "link_py_imported_by_b1": false,
+  "pnf1_in_b1": false,
+  "transmit_exact_in_b1": false,
+  "scarce_link_profile_exact_b1_match": false,
+  "future_adapter_possible": true,
+  "future_adapter_proven": false,
+  "reuse_decision": "SEPARATE_MODULE_CANDIDATE_REUSE_MISMATCH"
+}

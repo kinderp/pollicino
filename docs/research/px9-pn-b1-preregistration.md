@@ -47,6 +47,10 @@ by a separate positive bearer-attempt limit no greater than the D4 item ceiling.
 The scripted link has no queue: at most one complete unit is in flight. Its
 event trace is capped by the attempt limit. There is no internal retry loop.
 
+Implementation clarification: “no queue” means no retained cross-attempt or
+cross-contact backlog. The deterministic delay action temporarily holds exactly
+one complete unit inside one attempt, then releases it; the bound remains one.
+
 ## Kill criterion
 
 If any registered loss, uncertainty, disconnect, restart, or recontact case
@@ -54,4 +58,3 @@ requires a persistent ACK database, contact/session cursor, peer-progress
 journal, custody log, or ambiguous partial record state, stop. Classify the
 candidate as a missing generic capability or as falsification of PX8 durable
 reconciliation; do not add that state to make the test pass.
-

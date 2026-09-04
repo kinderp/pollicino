@@ -1,0 +1,19 @@
+{
+  "schema": "pollicino.px9.loss-matrix.v1",
+  "deterministic": true,
+  "actions": [
+    "DELIVER",
+    "DROP",
+    "DUPLICATE",
+    "DISCONNECT",
+    "DELAY_DELIVER",
+    "DELIVER_UNCERTAIN"
+  ],
+  "loss_before_commit_receiver_unchanged": "PASS",
+  "loss_after_prior_commits_preserves_commits": "PASS",
+  "directional_asymmetry": "PASS",
+  "repeated_loss_no_false_convergence": "PASS",
+  "permanent_loss_bounded": "PASS",
+  "receiver_quota_failure_preserves_prior_commits": "PASS",
+  "hidden_retry_count": 0
+}

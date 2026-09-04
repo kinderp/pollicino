@@ -1,0 +1,10 @@
+{
+  "schema": "pollicino.px9.restart-results.v1",
+  "loss_then_restart_still_missing": "PASS",
+  "commit_then_restart_skipped": "PASS",
+  "real_subprocess_boundary": "PASS",
+  "queries_reopened": 105,
+  "results_reopened": 105,
+  "bounded_contact_commits": [100, 100, 10],
+  "canonical_final_state": "EQUAL"
+}

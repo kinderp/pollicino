@@ -1,0 +1,12 @@
+{
+  "schema": "pollicino.px9.bearer-contract.v1",
+  "unit": "complete bounded D2/D3 record",
+  "stable_wire_format": false,
+  "fragmentation": false,
+  "retry": false,
+  "ack": false,
+  "persistent_session_state": false,
+  "progress_authority": "D2_D3_DURABLE_STATE",
+  "receiver_apply": "EXACT_PRESENTED_RECORD_VIA_NATIVE_STORE",
+  "accounting": "EXPERIMENTAL_BEARER_ACCOUNTING_ONLY"
+}

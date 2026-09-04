@@ -1,0 +1,26 @@
+{
+  "schema": "pollicino.px9.classification.v1",
+  "gate": "PX9-PN-B1",
+  "classification": "POLLICINO_BEARER_ADAPTER_LOSSY_IN_MEMORY_READY_WITH_LIMITS",
+  "confidence": "HIGH",
+  "kill_criterion_triggered": false,
+  "validation": {
+    "focused_px9": {"passed": 29, "skipped": 0},
+    "focused_d2_d3_d4_px8_px9": {"passed": 193, "skipped": 3},
+    "declared_tests_suite": {"passed": 318, "skipped": 5},
+    "compileall": "PASS",
+    "json_artifacts_parsed": 11
+  },
+  "px3_valid_unchanged": true,
+  "px5_valid_unchanged": true,
+  "px6_valid_unchanged": true,
+  "px8_valid_unchanged": true,
+  "unexpected_adversarial_failures": [],
+  "failure_taxonomy": {
+    "initial_symmetric_skip_assertion": "A_TEST_HARNESS_OR_IMPAIRMENT_MODEL_ERROR",
+    "quota_error_report_reconciliation": "B_BAD_BEARER_ADAPTER_DESIGN_REPAIRED",
+    "bad_bearer_substitution": "B_BAD_BEARER_ADAPTER_DESIGN",
+    "transmit_exact_reuse": "C_EXISTING_B1_CANDIDATE_REUSE_MISMATCH",
+    "serialization_fragmentation_real_backend": "G_OUT_OF_SCOPE_FUTURE_GATE_REQUIREMENT"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "pollicino.px9.neutrality-scan.v1",
+  "application_specific_bearer_core_branches": 0,
+  "concrete_bearer_d4_core_branches": 0,
+  "bearer_import_in_contact_py": false,
+  "link_import_in_bearer_py": false,
+  "historical_gate_documents_modified": 0,
+  "faro_dna_delivery_content_terms_in_bearer_core": 0
+}

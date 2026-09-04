@@ -1,0 +1,10 @@
+{
+  "schema": "pollicino.px9.duplicate-matrix.v1",
+  "query_duplicate": "IDEMPOTENT_PASS",
+  "result_duplicate": "IDEMPOTENT_PASS",
+  "reference_duplicate": "IDEMPOTENT_PASS",
+  "query_conflict": "FAIL_CLOSED_PASS",
+  "result_conflict": "FAIL_CLOSED_PASS",
+  "reference_conflict": "FAIL_CLOSED_PASS",
+  "substituted_complete_unit": "BEARER_CONTRACT_ERROR_NO_MUTATION"
+}

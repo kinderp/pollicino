@@ -1,0 +1,10 @@
+{
+  "schema": "pollicino.px9.interruption-recontact.v1",
+  "disconnect_after_complete_commit": "PASS",
+  "prior_commits_durable": true,
+  "fresh_contact_uses_durable_reconciliation": true,
+  "sender_uncertainty_after_commit": "PASS",
+  "persistent_ack_required": false,
+  "persistent_contact_cursor_required": false,
+  "persistent_peer_journal_required": false
+}
