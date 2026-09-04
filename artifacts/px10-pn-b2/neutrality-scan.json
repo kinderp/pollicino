@@ -1,0 +1,9 @@
+{
+  "schema": "pollicino.px10.neutrality-scan.v1",
+  "application_specific_b2_branches": 0,
+  "concrete_bearer_d4_branches": 0,
+  "pnf1_in_b2": false,
+  "fragmentation_in_b2": false,
+  "link_py_imported": false,
+  "historical_checkpoint_files_modified": 0
+}

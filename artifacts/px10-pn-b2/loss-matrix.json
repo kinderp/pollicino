@@ -1,0 +1,15 @@
+{
+  "schema": "pollicino.px10.loss-matrix.v1",
+  "metadata_loss": "SAFE_RECONTACT_PASS",
+  "request_loss": "SAFE_RECONTACT_PASS",
+  "record_loss": "SAFE_RECONTACT_PASS",
+  "metadata_duplicate": "IDEMPOTENT_PASS",
+  "request_duplicate": "IDEMPOTENT_PASS",
+  "query_result_reference_record_duplicate": "IDEMPOTENT_PASS",
+  "directional_asymmetry": "SAFE_PARTIAL_PASS",
+  "disconnect_after_commit": "DURABLE_RESUME_PASS",
+  "sender_uncertainty": "DURABLE_RECONCILIATION_PASS",
+  "permanent_metadata_loss_false_convergence": false,
+  "permanent_record_loss_false_convergence": false,
+  "automatic_retry": false
+}

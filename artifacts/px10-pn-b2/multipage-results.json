@@ -1,0 +1,14 @@
+{
+  "schema": "pollicino.px10.multipage-results.v1",
+  "queries": 105,
+  "results": 105,
+  "contacts": [
+    {"outcome": "BUDGET_EXHAUSTED", "commits": 98, "control_messages": 2, "control_bytes": 4490, "record_messages": 98, "record_bytes": 6860, "record_logical_bytes": 2646, "bearer_attempts": 100},
+    {"outcome": "BUDGET_EXHAUSTED", "commits": 92, "control_messages": 8, "control_bytes": 13982, "record_messages": 92, "record_bytes": 6185, "record_logical_bytes": 2229, "bearer_attempts": 100},
+    {"outcome": "NO_MORE_PLANNED_WORK", "commits": 20, "control_messages": 10, "control_bytes": 17910, "record_messages": 20, "record_bytes": 1340, "record_logical_bytes": 480, "bearer_attempts": 30}
+  ],
+  "restart_between_contacts": true,
+  "total_commits": 210,
+  "canonical_state_equal": true,
+  "extreme_page_fairness": "NOT_PROVEN"
+}

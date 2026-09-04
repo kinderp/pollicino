@@ -1,0 +1,13 @@
+{
+  "schema": "pollicino.px10.mule-results.v1",
+  "query_path": "A_TO_C_RESTART_C_TO_B",
+  "metadata_loss_injected": true,
+  "result_path": "B_TO_C_RESTART_C_TO_A",
+  "sender_uncertainty_injected": true,
+  "reference_path": "B_TO_C_RESTART_C_TO_A",
+  "disconnect_injected": true,
+  "selection_explicit_at_each_reference_hop": true,
+  "automatic_reference_transfer": false,
+  "semantic_blind_mule": true,
+  "result": "PASS"
+}

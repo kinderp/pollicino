@@ -1,0 +1,11 @@
+{
+  "schema": "pollicino.px10.direct-visibility-audit.v1",
+  "production_driver": "run_independent_contact",
+  "direct_remote_store_reads": 0,
+  "remote_catalog_access": false,
+  "remote_query_result_access": false,
+  "remote_state_digest_access": false,
+  "remote_identifier_enumeration": false,
+  "endpoint_input": ["local endpoint state", "encoded bearer messages", "local selection policy"],
+  "mechanical_source_test": "PASS"
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "pollicino.px10.classification.v1",
+  "gate_identifier": "PX10-PN-B2",
+  "identifier_status": "CANDIDATE_SUPPLIED_BY_REPOSITORY_OWNER",
+  "classification": "POLLICINO_INDEPENDENT_ENDPOINT_RECONCILIATION_READY_WITH_LIMITS",
+  "confidence": "HIGH",
+  "kill_criterion_triggered": false,
+  "success_criteria": {
+    "direct_remote_store_reads": 0,
+    "application_specific_b2_branches": 0,
+    "persistent_ack_state_required": false,
+    "persistent_session_state_required": false,
+    "loss_before_commit_mutations": 0,
+    "sender_uncertainty_record_retransfers_after_restart": 0,
+    "conflicts_fail_closed": true,
+    "permanent_loss_false_convergence": false,
+    "bounded_contact_termination": true,
+    "multipage_reconciliation": "PASS",
+    "mule_restart": "PASS"
+  },
+  "validation": {
+    "focused_px10": {"passed": 50, "skipped": 0},
+    "declared_tests_suite": {"passed": 368, "skipped": 5},
+    "compileall": "PASS",
+    "json_artifacts_parsed": 12
+  },
+  "prior_gates_valid_unchanged": ["PX3", "PX5", "PX6", "PX8", "PX9"],
+  "failure_taxonomy": {
+    "native_error_message_assertion": "A_TEST_HARNESS_ERROR_REPAIRED",
+    "px9_object_bearer_control_metadata": "C_B1_ADAPTER_INTEGRATION_ERROR_RESOLVED_ADDITIVELY",
+    "real_io_fragmentation_authentication": "I_OUT_OF_SCOPE_FUTURE_GATE"
+  },
+  "new_limit": "EXTREME_EXACT_PAGE_FAIRNESS_NOT_PROVEN"
+}

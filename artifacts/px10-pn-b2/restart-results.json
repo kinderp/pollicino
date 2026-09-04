@@ -1,0 +1,9 @@
+{
+  "schema": "pollicino.px10.restart-results.v1",
+  "commit_then_restart_record_retransfers": 0,
+  "loss_then_restart_still_missing": "PASS",
+  "sender_uncertainty_then_restart": "PASS",
+  "subprocess_created_state": "PASS",
+  "persistent_ack_required": false,
+  "persistent_session_required": false
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "pollicino.px10.corruption-matrix.v1",
+  "bit_corrupt_metadata": "B2_DECODE_ERROR_NO_MUTATION",
+  "bit_corrupt_record": "B2_DECODE_ERROR_BEFORE_NATIVE_APPLY",
+  "truncated_message": "B2_DECODE_ERROR_NO_MUTATION",
+  "unknown_magic": "B2_DECODE_ERROR",
+  "unknown_version": "B2_DECODE_ERROR",
+  "unknown_type": "B2_DECODE_ERROR",
+  "length_mismatch": "B2_DECODE_ERROR",
+  "false_digest_known_identity": "NATIVE_CONFLICT_NO_MUTATION",
+  "query_conflict": "FAIL_CLOSED",
+  "result_conflict": "FAIL_CLOSED",
+  "reference_conflict": "FAIL_CLOSED"
+}

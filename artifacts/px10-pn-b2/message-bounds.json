@@ -1,0 +1,16 @@
+{
+  "schema": "pollicino.px10.message-bounds.v1",
+  "identities_per_page": 100,
+  "control_messages_per_contact": 100,
+  "control_bytes_hard_ceiling": 2924500,
+  "control_bytes_default_budget": 2606200,
+  "record_messages_per_contact": 100,
+  "record_bytes_hard_ceiling": 2924500,
+  "record_bytes_default_budget": 2606200,
+  "record_logical_bytes_budget": 2606200,
+  "bearer_attempts_per_contact": 100,
+  "trace_entries_per_contact": 100,
+  "decode_input_bytes": 29245,
+  "outbound_messages_per_endpoint_response": 100,
+  "presentations_per_attempt": 2
+}

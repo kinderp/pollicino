@@ -1,0 +1,12 @@
+{
+  "schema": "pollicino.px10.reconciliation-matrix.v1",
+  "message_types": ["ADVERTISEMENT", "REQUEST", "RECORD", "REFERENCE_SELECTION"],
+  "query_reconciliation": "PASS",
+  "result_reconciliation": "PASS",
+  "explicit_reference_reconciliation": "PASS",
+  "lossless_px8_canonical_equivalence": "PASS",
+  "metadata_authority": "TRANSFER_PLANNING_ONLY",
+  "possession_authority": "NATIVE_D2_D3_DURABLE_STORE",
+  "automatic_reference_selection": false,
+  "persistent_protocol_state": false
+}

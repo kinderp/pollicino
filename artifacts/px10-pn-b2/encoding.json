@@ -1,0 +1,16 @@
+{
+  "schema": "pollicino.px10.encoding.v1",
+  "label": "EXPERIMENTAL_B2_ENCODING",
+  "format": "pollicino.experimental-b2.v1",
+  "canonical": true,
+  "stable_public_wire_protocol": false,
+  "magic": "PB2E",
+  "version": 1,
+  "header": ">4sBBI32s",
+  "header_bytes": 42,
+  "body_integrity": "SHA256",
+  "authenticated": false,
+  "maximum_encoded_message_bytes": 29245,
+  "round_trip": "PASS",
+  "same_logical_message_same_bytes": "PASS"
+}
