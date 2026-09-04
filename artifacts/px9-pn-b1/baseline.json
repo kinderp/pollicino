@@ -1,0 +1,19 @@
+{
+  "schema": "pollicino.px9.baseline.v1",
+  "gate": "PX9-PN-B1",
+  "baseline_ref": "checkpoint/px8-pn-d4",
+  "baseline_sha": "e5cd094677e36e9f4b7a58c2aa81c897e7f43dc9",
+  "baseline_worktree_clean": true,
+  "declared_suite": {
+    "command": "pytest -q tests",
+    "passed": 289,
+    "skipped": 5
+  },
+  "focused_d2_d3_d4_px8": {
+    "passed": 164,
+    "skipped": 3
+  },
+  "compileall": "PASS",
+  "checkpoint_repair_performed": false,
+  "known_unrelated_root_collection_issue": "course fixtures require lesson-local main imports and optional Torch"
+}
