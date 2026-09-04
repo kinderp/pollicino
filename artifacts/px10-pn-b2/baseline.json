@@ -1,0 +1,16 @@
+{
+  "schema": "pollicino.px10.baseline.v1",
+  "gate_identifier": "PX10-PN-B2",
+  "identifier_status": "CANDIDATE_SUPPLIED_BY_REPOSITORY_OWNER",
+  "authoritative_replacement_found": false,
+  "baseline_sha": "c8b8ebcec4414849fc8d72011c45771224caeb3d",
+  "implementation_sha": "2f74e23b68bb71b95d19bcbe70ecff5eb2f5c809",
+  "baseline_worktree_clean": true,
+  "local_checkpoint": {
+    "ref": "checkpoint/px9-pn-b1",
+    "sha": "c8b8ebcec4414849fc8d72011c45771224caeb3d"
+  },
+  "px9_focused": {"passed": 29, "skipped": 0},
+  "declared_tests_suite": {"passed": 318, "skipped": 5},
+  "compileall": "PASS"
+}
