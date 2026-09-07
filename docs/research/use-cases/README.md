@@ -37,6 +37,11 @@ Core rules for every use case:
 | [UC-020](uc-020-trusted-time-checkpoint-ferry.md) | Trusted Time Checkpoint Ferry | freshness/expiry evidence without permanent time service | drift + delayed signed-checkpoint simulator | useful early | Medium–High |
 | [UC-021](uc-021-threshold-sealed-sensitive-courier.md) | Threshold-Sealed Sensitive Courier | let untrusted carriers transport sensitive content without reading it | encrypted object + `k-of-n` key shares | later | High |
 | [UC-022](uc-022-multi-witness-event-corroboration.md) | Multi-Witness Event Corroboration | avoid trusting one noisy sensor/edge inference | signed claims + delayed/conflicting witnesses | useful early | Medium–High |
+| [UC-023](uc-023-delay-tolerant-private-mailbox.md) | Delay-Tolerant Private Mailbox | private asynchronous human messaging across disconnected groups | encrypted outbox + courier + delayed receipt | useful early | Medium |
+| [UC-024](uc-024-content-need-rendezvous.md) | Content-Need Rendezvous / Interest Ferry | request content without knowing which peer currently has it | `ContentNeed` propagation + arbitrary cache satisfaction | useful early | Medium–High |
+| [UC-025](uc-025-scheduled-mobility-backbone.md) | Scheduled Mobility Backbone | exploit recurring contact opportunities without assuming they occur | uncertain contact-plan routing vs baseline | useful early | Medium–High |
+| [UC-026](uc-026-delegated-offline-action-ticket.md) | Delegated Offline Action Ticket | authorize one scoped offline action without broad credentials | signed one-use ticket + replay/crash tests | useful early | High |
+| [UC-027](uc-027-post-event-vibration-log-courier.md) | Post-Event Vibration / Structural Log Courier | move event summaries now and exact high-rate evidence later | synthetic waveforms + summary/hash retrieval | useful early | Medium–High |
 
 ## Current top 3 next experiments for the Messina student network
 
@@ -44,16 +49,21 @@ Core rules for every use case:
 
 This still comes first because it produces the **real contact traces** needed to make later routing/content simulations less hypothetical. Controlled routes with 3+ boards can reveal contact windows, useful relays and queue opportunities without requiring continuous coverage. The privacy rule is strict: measure encounters, not student lives.
 
-### 2. UC-019 — Offline Trust Epoch and Revocation Ferry
+### 2. UC-023 — Delay-Tolerant Private Mailbox
 
-This is now the strongest small-payload security experiment. Four boards are enough to create two partitions, revoke a synthetic identity, let a student relay carry a newer signed trust epoch and verify that the isolated group changes application-level trust decisions only after validating the update. It exercises exact state, anti-replay, downgrade resistance and explicit staleness without bulk transfer or a new PHY.
+This is now the best immediate human-visible experiment after the observatory. Four boards are enough to create two disconnected groups plus a moving courier, and success is objectively easy to understand: one encrypted logical message leaves an outbox, survives disconnection/duplication, arrives once and eventually returns a receipt. It exercises the core store-carry-forward behavior without requiring bulk transfer or special sensors.
 
-### 3. UC-018 — Erasure-Coded Content Swarm
+### 3. UC-024 — Content-Need Rendezvous / Interest Ferry
 
-Once contact traces exist, this gives the network a concrete P2P/content-distribution research question: can a destination reconstruct an exact object from independent partial carriers more effectively than with ordinary replicated chunks under the **same measured mobility trace**? The answer must come from measurements, but the experiment is easy to define and makes student movement itself part of the distributed storage/transport fabric.
+This is the strongest new architectural use case because it adds the **pull side** of the P2P network. A requester can propagate a compact need without knowing which cache owns the object; any authorized holder can satisfy it later. Once this works, the same mechanism can feed Raiatea documents, map tiles, backup chunks, AI artifacts and trust updates while keeping exact verification separate from probabilistic discovery.
 
 ### Strong follow-ups
 
+- **UC-025 — Scheduled Mobility Backbone:** strong research track after UC-008 because recurring student/rail/bus/ferry-style contact windows can be compared against schedule-blind forwarding on the same measured traces.
+- **UC-019 — Offline Trust Epoch and Revocation Ferry:** remains the strongest compact security-state experiment; pair it with UC-026 later.
+- **UC-018 — Erasure-Coded Content Swarm:** remains a concrete P2P/content-distribution experiment once real contact traces exist.
+- **UC-026 — Delegated Offline Action Ticket:** excellent security/robotics experiment once trust/freshness semantics are stable; restrict hardware to harmless demo actions.
+- **UC-027 — Post-Event Vibration / Structural Log Courier:** locally meaningful Messina IoT experiment that cleanly separates compact event summaries from exact high-rate evidence.
 - **UC-022 — Multi-Witness Event Corroboration:** excellent bridge between IoT, edge AI, emergency drills and exact evidence retrieval; useful once 3+ sensor/edge nodes are available.
 - **UC-015 — Partition-Tolerant Resource Ledger:** still one of the cleanest distributed-systems experiments because payloads are tiny and convergence is objectively testable.
 - **UC-017 — Offline Map and Route Tile Ferry:** highly visible content-addressed demo with real LoRa→BLE/Wi-Fi handover.
@@ -85,7 +95,12 @@ The following can be implemented without any radio hardware:
 15. implement UC-020 clock-drift/reboot models and signed checkpoint propagation while preserving explicit time uncertainty;
 16. implement UC-021 with a reviewed threshold-sharing library over synthetic data, proving that carriers transport shares without plaintext authority;
 17. implement UC-022 signed event claims, conflicting/delayed witnesses, provenance and exact-evidence attachment after semantic corroboration;
-18. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success and exact hash verification as applicable.
+18. implement UC-023 encrypted `MessageEnvelope`/outbox/inbox state, bounded-copy forwarding, delayed receipts and persistent duplicate suppression;
+19. implement UC-024 `ContentNeed` propagation, multi-provider response, stale availability, cancellation after exact satisfaction and request-privacy tests;
+20. implement UC-025 uncertain recurring `ContactPlan` routing and compare schedule-aware decisions with schedule-blind baselines under identical traces;
+21. implement UC-026 canonical signed one-use action tickets, replay/crash-consistency tests and explicit interaction with UC-019/UC-020 freshness state;
+22. implement UC-027 synthetic vibration windows, compact event summaries, exact evidence hashes, retention pressure and delayed evidence retrieval;
+23. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty and exact hash verification as applicable.
 
 This reuses the current architecture instead of creating a special PHY or a separate networking stack per scenario.
 
@@ -96,6 +111,11 @@ After the simulator contracts are stable:
 - repeatable 2-node and 3+ node relay measurements;
 - controlled walking/bicycle data-mule passes;
 - privacy-safe contact-window collection for UC-008;
+- a UC-023 four-node mailbox test with two disconnected groups, one moving courier and a delayed receipt;
+- a UC-024 4+ node cache/request experiment where the requester cannot directly contact the content holder and the final object moves over a richer bearer;
+- repeated UC-025 controlled routes with deliberate delays/missed contacts before any claim that schedule-aware forwarding helps;
+- a UC-026 harmless one-use action-ticket test on an LED/servo/demo rover with replay and power-cycle negative controls;
+- a UC-027 2–3 accelerometer/IMU bench experiment with controlled vibration, LoRa summary and later exact waveform retrieval;
 - sensor-node backlog collection;
 - real LoRa discovery followed by BLE/Wi-Fi/LAN handover;
 - one synthetic field-report relay chain with exact evidence retrieval;
@@ -111,7 +131,7 @@ After the simulator contracts are stable:
 - UC-022 3+ controlled sensor/edge witnesses with deliberate false-positive/conflict injections and later exact-evidence retrieval;
 - firmware/configuration experiments only on spare non-critical hardware with rollback tests;
 - federated-adapter experiments only after the software protocol is stable, with public/synthetic data first;
-- only later, vehicle/UAV tests with the relevant safety/legal controls.
+- only later, public-transport or UAV deployments with the relevant permission, safety and legal controls.
 
 Measured packet loss, RSSI/SNR, airtime, latency, contact duration, energy where relevant, clock drift and reconstruction/convergence success must be recorded explicitly. Simulator outcomes must not be promoted to field claims.
 
@@ -120,6 +140,11 @@ Measured packet loss, RSSI/SNR, airtime, latency, contact duration, energy where
 The use cases are consistent with existing research directions without copying their assumptions into the PollicinoNet core:
 
 - delay-tolerant/opportunistic networking and public-transport data mules;
+- DTN reliability work that explicitly avoids assuming simultaneous end-to-end paths, relevant to UC-023;
+- information-centric/named-data forwarding and in-network caching, relevant to UC-024's request-by-content model;
+- scheduled/semischeduled public-transport mobility models and Age-of-Information analysis, relevant to UC-025;
+- cryptographically scoped offline-verifiable delegation tokens, relevant to UC-026 but not a reason to import a complex authorization stack blindly;
+- LoRa vibration/geotechnical monitoring with local edge processing and event summaries, relevant to UC-027;
 - multi-hop LoRa relay-placement research, useful as a reminder that relay position strongly affects delay, throughput and coverage;
 - incremental firmware-update work over LoRa/LoRaWAN, including compact binary deltas and bounded-update architectures;
 - blackout/disaster-resilient hybrid mesh work combining scarce and richer local bearers;
