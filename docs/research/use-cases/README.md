@@ -47,6 +47,11 @@ Core rules for every use case:
 | [UC-030](uc-030-privacy-preserving-muster-checkin.md) | Privacy-Preserving Muster / Safety Check-In | delayed checkpoint presence without continuous tracking | rotating synthetic IDs + replay/stale check-in tests | useful early | Medium |
 | [UC-031](uc-031-sensor-calibration-provenance-ferry.md) | Sensor Calibration and Provenance Ferry | keep calibration version/evidence explicit on offline sensors | synthetic drift + versioned calibration propagation | useful early | Medium |
 | [UC-032](uc-032-active-learning-label-courier.md) | Active-Learning Label Courier | spend scarce annotation/network effort on informative samples | public/synthetic data + delayed label workflow | later | Medium–High |
+| [UC-033](uc-033-secure-rich-bearer-handoff-bootstrap.md) | Secure Rich-Bearer Handoff Bootstrap | securely switch from LoRa discovery/control to BLE/Wi-Fi/LAN transfer | handoff state machine + replay/wrong-peer tests | useful very early | Medium–High |
+| [UC-034](uc-034-raiatea-query-to-data-search-courier.md) | Raiatea Query-to-Data Search Courier | answer offline document queries without moving the full corpus/index | versioned corpus + delayed query/result courier | useful early | Medium–High |
+| [UC-035](uc-035-federated-sketch-aggregate-courier.md) | Federated Sketch / Aggregate Courier | compute useful network/sensor aggregates without forwarding every raw record | mergeable sketches + duplicate/reorder tests | useful early | Medium |
+| [UC-036](uc-036-proactive-integrity-scrub-repair-swarm.md) | Proactive Integrity Scrub and Repair Swarm | detect latent corruption/missing replicas before restore time | injected bit-rot/deletion + delayed peer repair | useful early | Medium–High |
+| [UC-037](uc-037-privacy-safe-mobile-environmental-transect.md) | Privacy-Safe Mobile Environmental Transect | gain coarse environmental spatial coverage without retaining student trajectories | synthetic coarse-cell sampling + delayed batches | useful early | Medium |
 
 ## Current top 3 next experiments for the Messina student network
 
@@ -54,35 +59,40 @@ Core rules for every use case:
 
 This still comes first because it produces the **real contact traces** needed to make later routing/content simulations less hypothetical. Controlled routes with 3+ boards can reveal contact windows, useful relays and queue opportunities without requiring continuous coverage. The privacy rule is strict: measure encounters, not student lives.
 
-### 2. UC-023 — Delay-Tolerant Private Mailbox
+### 2. UC-033 — Secure Rich-Bearer Handoff Bootstrap
 
-This is still the best immediate human-visible experiment after the observatory. Four boards are enough to create two disconnected groups plus a moving courier, and success is objectively easy to understand: one encrypted logical message leaves an outbox, survives disconnection/duplication, arrives once and eventually returns a receipt. It exercises the core store-carry-forward behavior without requiring bulk transfer or special sensors.
+This is now the most important protocol-level field experiment after contact measurement because many other use cases already assume `LoRa discovery -> BLE/Wi-Fi/LAN bulk transfer`. Two or three dual-radio endpoints are enough to test exact peer/object binding, short-lived rendezvous material, replay rejection and measured handoff time without changing the LoRa PHY.
 
-### 3. UC-024 — Content-Need Rendezvous / Interest Ferry
+### 3. UC-023 — Delay-Tolerant Private Mailbox
 
-This remains the strongest architectural follow-up because it adds the **pull side** of the P2P network. A requester can propagate a compact need without knowing which cache owns the object; any authorized holder can satisfy it later. Once this works, the same mechanism can feed Raiatea documents, map tiles, backup chunks, AI artifacts, software dependencies and trust updates while keeping exact verification separate from probabilistic discovery.
+This remains the best immediate human-visible service experiment. Four boards are enough to create two disconnected groups plus a moving courier, and success is objectively easy to understand: one encrypted logical message leaves an outbox, survives disconnection/duplication, arrives once and eventually returns a receipt.
 
 ### Strong follow-ups
 
-- **UC-028 — Offline Collaborative Notebook:** one of the strongest new classroom experiments because it makes concurrent partitioned work visible and objectively tests deterministic convergence while preserving semantic conflicts for human review.
+- **UC-024 — Content-Need Rendezvous / Interest Ferry:** the strongest architectural pull-side primitive once UC-033 gives us a measured rich-bearer handoff path.
+- **UC-034 — Raiatea Query-to-Data Search Courier:** high-value document/edge-search scenario because only the compact query/result travels by DTN while the corpus remains where it already exists.
+- **UC-036 — Proactive Integrity Scrub and Repair Swarm:** turns backup from a passive restore feature into an actively verified P2P durability experiment.
+- **UC-035 — Federated Sketch / Aggregate Courier:** compact LoRa-native analytics experiment that can reuse UC-008 data without forwarding every raw observation.
+- **UC-037 — Privacy-Safe Mobile Environmental Transect:** locally meaningful IoT/crowdsensing experiment after UC-031 calibration and strict coarse-location safeguards are in place.
+- **UC-028 — Offline Collaborative Notebook:** strong classroom experiment because concurrent partitioned work is visible and deterministic convergence is objectively testable while semantic conflicts remain for human review.
 - **UC-029 — Opportunistic Software Dependency Cache:** practical bridge between PollicinoNet, reproducible development environments, The Blob/Nix prewarming and content-addressed P2P distribution.
 - **UC-032 — Active-Learning Label Courier:** strong AI/dataset direction because it adds a human-in-the-loop label workflow distinct from model/adapter exchange.
-- **UC-030 — Privacy-Preserving Muster / Safety Check-In:** compact LoRa-native experiment for rotating IDs, freshness and store-and-forward, but only under strict anti-surveillance rules.
-- **UC-031 — Sensor Calibration and Provenance Ferry:** clean IoT/provenance experiment that can start with harmless temperature/humidity or air-quality teaching sensors.
+- **UC-030 — Privacy-Preserving Muster / Safety Check-In:** compact experiment for rotating IDs, freshness and store-and-forward, but only under strict anti-surveillance rules.
+- **UC-031 — Sensor Calibration and Provenance Ferry:** clean IoT/provenance experiment that can start with harmless temperature/humidity teaching sensors.
 - **UC-025 — Scheduled Mobility Backbone:** strong research track after UC-008 because recurring student/rail/bus/ferry-style contact windows can be compared against schedule-blind forwarding on the same measured traces.
-- **UC-019 — Offline Trust Epoch and Revocation Ferry:** remains the strongest compact security-state experiment; pair it with UC-026 later.
-- **UC-018 — Erasure-Coded Content Swarm:** remains a concrete P2P/content-distribution experiment once real contact traces exist.
+- **UC-019 — Offline Trust Epoch and Revocation Ferry:** strongest compact security-state experiment; pair it with UC-026 later.
+- **UC-018 — Erasure-Coded Content Swarm:** concrete P2P/content-distribution experiment once real contact traces exist.
 - **UC-026 — Delegated Offline Action Ticket:** excellent security/robotics experiment once trust/freshness semantics are stable; restrict hardware to harmless demo actions.
 - **UC-027 — Post-Event Vibration / Structural Log Courier:** locally meaningful Messina IoT experiment that cleanly separates compact event summaries from exact high-rate evidence.
-- **UC-022 — Multi-Witness Event Corroboration:** excellent bridge between IoT, edge AI, emergency drills and exact evidence retrieval; useful once 3+ sensor/edge nodes are available.
-- **UC-015 — Partition-Tolerant Resource Ledger:** still one of the cleanest distributed-systems experiments because payloads are tiny and convergence is objectively testable.
+- **UC-022 — Multi-Witness Event Corroboration:** strong bridge between IoT, edge AI, emergency drills and exact evidence retrieval.
+- **UC-015 — Partition-Tolerant Resource Ledger:** one of the cleanest distributed-systems experiments because payloads are tiny and convergence is objectively testable.
 - **UC-017 — Offline Map and Route Tile Ferry:** highly visible content-addressed demo with real LoRa→BLE/Wi-Fi handover.
-- **UC-020 — Trusted Time Checkpoint Ferry:** foundational for TTL, expiry, trust freshness and audit ordering, but must be kept separate from claims of precise radio synchronization.
-- **UC-014 — Opportunistic Capability and Compute Exchange:** strategically important because it turns nodes into discoverable compute/storage/service providers, not only content holders.
+- **UC-020 — Trusted Time Checkpoint Ferry:** foundational for TTL, expiry, trust freshness and audit ordering, but separate from claims of precise radio synchronization.
+- **UC-014 — Opportunistic Capability and Compute Exchange:** strategically important because nodes become discoverable compute/storage/service providers, not only content holders.
 - **UC-012 — Opportunistic Backup and Restore:** important for the P2P/content-addressed track; replica placement can eventually be tested against UC-008 mobility traces.
 - **UC-021 — Threshold-Sealed Sensitive Courier:** valuable for Raiatea/sensitive-document and privacy research after key-management/test infrastructure is mature.
-- **UC-010 — Robot Mission Mailbox:** remains one of the strongest visible classroom demonstrations of queued, delay-tolerant control that explicitly excludes safety-critical functions.
-- **UC-016 — Federated Adapter Round Courier:** a high-value AI research direction after the network simulator and artifact model are stable.
+- **UC-010 — Robot Mission Mailbox:** strong visible classroom demonstration of queued, delay-tolerant control that explicitly excludes safety-critical functions.
+- **UC-016 — Federated Adapter Round Courier:** high-value AI research direction after the network simulator and artifact model are stable.
 
 ## Immediate software-only test plan
 
@@ -115,7 +125,12 @@ The following can be implemented without any radio hardware:
 25. implement UC-030 rotating synthetic IDs, checkpoint challenges, stale/replay rejection and a log that intentionally cannot reconstruct continuous movement;
 26. implement UC-031 synthetic sensor drift, versioned calibration manifests, wrong-hardware rejection and exact calibration-evidence provenance;
 27. implement UC-032 public/synthetic active-learning requests, delayed label returns, model/schema version binding, annotator disagreement and data-poisoning negative tests;
-28. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation and label turnaround as applicable.
+28. implement UC-033 `HandoffSession` state transitions, peer/object/channel binding, one-use rendezvous, wrong-peer/replay/downgrade failure tests and rich-link retry;
+29. implement UC-034 a small versioned Raiatea-like corpus, delayed query courier, local search, exact result references, stale-index tests and selective final fetch;
+30. implement UC-035 two or three mergeable sketch types, duplicate/reorder/dropout tests, exact baseline error measurement and privacy-leakage negative tests;
+31. implement UC-036 content scrubbing with injected bit flips/deletion/stale inventory, delayed repair scheduling, multi-provider race handling and exact post-repair verification;
+32. implement UC-037 synthetic coarse-cell mobile sampling, delayed batches, missing-cell discovery, UC-031 calibration binding and deliberate route-reconstruction privacy tests;
+33. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay and coarse-cell coverage as applicable.
 
 This reuses the current architecture instead of creating a special PHY or a separate networking stack per scenario.
 
@@ -126,8 +141,13 @@ After the simulator contracts are stable:
 - repeatable 2-node and 3+ node relay measurements;
 - controlled walking/bicycle data-mule passes;
 - privacy-safe contact-window collection for UC-008;
+- a UC-033 2–3 provider experiment with real LoRa discovery, multiple visible nearby peers, exact peer/object binding and measured BLE/Wi-Fi/LAN handoff time;
 - a UC-023 four-node mailbox test with two disconnected groups, one moving courier and a delayed receipt;
 - a UC-024 4+ node cache/request experiment where the requester cannot directly contact the content holder and the final object moves over a richer bearer;
+- a UC-034 3+ node query-to-data experiment with one unreachable corpus/search node, one moving relay and later exact selected-document retrieval over UC-033;
+- a UC-035 4–6 node aggregate experiment comparing raw-event forwarding with a mergeable summary under the same controlled workload;
+- a UC-036 3+ storage-node experiment with disposable test data, deliberate corruption/deletion and measured detection-to-repair through a later peer contact;
+- a UC-037 3–6 sensor-node controlled-route experiment using coarse public test zones, calibration/reference checks and explicit geoprivacy validation;
 - a UC-028 four-node collaborative-notebook experiment with two editing islands, concurrent changes, one moving relay and measured convergence;
 - a UC-029 3+ laptop/cache experiment where LoRa discovers missing dependency closure and Wi-Fi/LAN/BLE transfers only verified missing objects;
 - a UC-030 controlled checkpoint drill with rotating synthetic identities, replay attempts and no continuous location collection;
@@ -170,6 +190,11 @@ The use cases are consistent with existing research directions without copying t
 - privacy-preserving offline nearby-device discovery and rotating/probabilistic identity techniques, relevant to UC-030 but not permission to build a tracking system;
 - distributed/reference-based calibration of low-cost sensor networks, relevant to UC-031's versioned calibration provenance;
 - active learning, selective relabeling and intermittent edge-learning workflows, relevant to UC-032's label-task courier;
+- dual-radio LoRa + BLE/Wi-Fi systems, relevant to UC-033 as evidence that scarce/rich bearer separation is a practical architecture pattern, not evidence of our handoff performance;
+- offline/on-device and collaborative edge RAG/retrieval, relevant to UC-034's query-to-data model while keeping exact result provenance separate from semantic ranking;
+- communication-efficient/verifiable federated edge analytics, relevant to UC-035's simpler deterministic sketch/aggregate experiments;
+- storage-integrity auditing and locality-aware distributed repair, relevant to UC-036's proactive scrub/repair model;
+- mobile crowdsensing geoprivacy/location masking and LoRa/Wi-Fi environmental monitoring, relevant to UC-037's coarse-zone privacy requirements;
 - multi-hop LoRa relay-placement research, useful as a reminder that relay position strongly affects delay, throughput and coverage;
 - incremental firmware-update work over LoRa/LoRaWAN, including compact binary deltas and bounded-update architectures;
 - blackout/disaster-resilient hybrid mesh work combining scarce and richer local bearers;
