@@ -1,0 +1,21 @@
+{
+  "artifact": "px11-pn-b2f-baseline",
+  "baseline_sha": "9870d9eccf1e583c4d8dd3debe8a1a63caf30575",
+  "candidate_gate_identifier": "PX11-PN-B2F",
+  "candidate_identifier_provenance": "repository_owner_prompt",
+  "authoritative_post_px10_name_found": false,
+  "px9_checkpoint_sha": "c8b8ebcec4414849fc8d72011c45771224caeb3d",
+  "px10_checkpoint_sha": "9870d9eccf1e583c4d8dd3debe8a1a63caf30575",
+  "worktree_clean_before_changes": true,
+  "declared_suite": {
+    "command": "python -m pytest tests -q",
+    "passed": 368,
+    "skipped": 5,
+    "result": "PASS"
+  },
+  "focused_px10_suite": {
+    "passed": 50,
+    "result": "PASS"
+  },
+  "compileall": "PASS"
+}
