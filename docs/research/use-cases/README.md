@@ -52,6 +52,11 @@ Core rules for every use case:
 | [UC-035](uc-035-federated-sketch-aggregate-courier.md) | Federated Sketch / Aggregate Courier | compute useful network/sensor aggregates without forwarding every raw record | mergeable sketches + duplicate/reorder tests | useful early | Medium |
 | [UC-036](uc-036-proactive-integrity-scrub-repair-swarm.md) | Proactive Integrity Scrub and Repair Swarm | detect latent corruption/missing replicas before restore time | injected bit-rot/deletion + delayed peer repair | useful early | Medium–High |
 | [UC-037](uc-037-privacy-safe-mobile-environmental-transect.md) | Privacy-Safe Mobile Environmental Transect | gain coarse environmental spatial coverage without retaining student trajectories | synthetic coarse-cell sampling + delayed batches | useful early | Medium |
+| [UC-038](uc-038-edge-model-evaluation-round.md) | Edge Model Evaluation Round | compare exact AI model/runtime performance across intermittently connected devices | pinned benchmark manifest + delayed result round | useful early | Medium–High |
+| [UC-039](uc-039-offline-vulnerability-advisory-exposure-census.md) | Offline Vulnerability Advisory and Exposure Census | propagate security knowledge and learn which offline nodes are affected | signed advisory + synthetic software inventories | useful early | Medium–High |
+| [UC-040](uc-040-mobility-aware-prefetch-replica-placement.md) | Mobility-Aware Prefetch and Replica Placement | place scarce replicas before likely future requests/contacts | contact-trace replay + placement-policy comparison | useful after UC-008 | High |
+| [UC-041](uc-041-pop-up-offline-classroom-hotspot.md) | Pop-Up Offline Classroom Hotspot | expose nearby cached knowledge as a temporary local service without Internet | local HTTP hotspot + simulated LoRa advertisement | useful early | Medium |
+| [UC-042](uc-042-physical-asset-chain-of-custody.md) | Physical Asset Chain-of-Custody Courier | preserve signed custody events while real assets move through disconnected groups | append-only custody chain + delayed events | useful early | Medium |
 
 ## Current top 3 next experiments for the Messina student network
 
@@ -69,6 +74,11 @@ This remains the best immediate human-visible service experiment. Four boards ar
 
 ### Strong follow-ups
 
+- **UC-040 — Mobility-Aware Prefetch and Replica Placement:** strongest new research follow-up to UC-008 because it turns measured student mobility into an explicit cache/replica-placement input and can be compared against simple baselines on the same trace.
+- **UC-041 — Pop-Up Offline Classroom Hotspot:** strongest new human-visible education demo after UC-033; cached Raiatea/course/reference content becomes a temporary local Wi-Fi service without Internet.
+- **UC-039 — Offline Vulnerability Advisory and Exposure Census:** compact security use case that separates `know who is affected` from the larger firmware/package remediation path.
+- **UC-038 — Edge Model Evaluation Round:** useful AI-engineering experiment because exact model/runtime/benchmark provenance can converge even when students run tests at different times and places.
+- **UC-042 — Physical Asset Chain-of-Custody Courier:** clean physical-world DTN experiment where the asset moves physically while signed custody events converge later.
 - **UC-024 — Content-Need Rendezvous / Interest Ferry:** the strongest architectural pull-side primitive once UC-033 gives us a measured rich-bearer handoff path.
 - **UC-034 — Raiatea Query-to-Data Search Courier:** high-value document/edge-search scenario because only the compact query/result travels by DTN while the corpus remains where it already exists.
 - **UC-036 — Proactive Integrity Scrub and Repair Swarm:** turns backup from a passive restore feature into an actively verified P2P durability experiment.
@@ -130,7 +140,12 @@ The following can be implemented without any radio hardware:
 30. implement UC-035 two or three mergeable sketch types, duplicate/reorder/dropout tests, exact baseline error measurement and privacy-leakage negative tests;
 31. implement UC-036 content scrubbing with injected bit flips/deletion/stale inventory, delayed repair scheduling, multi-provider race handling and exact post-repair verification;
 32. implement UC-037 synthetic coarse-cell mobile sampling, delayed batches, missing-cell discovery, UC-031 calibration binding and deliberate route-reconstruction privacy tests;
-33. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay and coarse-cell coverage as applicable.
+33. implement UC-038 a canonical benchmark round with exact model/runtime/dataset bindings, heterogeneous device profiles, stale-result rejection and delayed result convergence;
+34. implement UC-039 signed synthetic advisory revisions, exact software-inventory matching, VEX-like exposure states, forged/stale advisory negative tests and later remediation requests;
+35. implement UC-040 several replica-placement policies over identical UC-008 traces, with cache/storage budgets, demand-prediction errors, sensitive-content constraints and wasted-prefetch accounting;
+36. implement UC-041 a local HTTP classroom/content service with exact pack identity, simulated LoRa discovery, two competing hotspot versions, short-lived handoff and privacy-safe service logging;
+37. implement UC-042 append-only signed custody events, missing/out-of-order handovers, conflicting current-custodian claims and delayed evidence attachment;
+38. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability and custody-gap convergence as applicable.
 
 This reuses the current architecture instead of creating a special PHY or a separate networking stack per scenario.
 
@@ -148,6 +163,11 @@ After the simulator contracts are stable:
 - a UC-035 4–6 node aggregate experiment comparing raw-event forwarding with a mergeable summary under the same controlled workload;
 - a UC-036 3+ storage-node experiment with disposable test data, deliberate corruption/deletion and measured detection-to-repair through a later peer contact;
 - a UC-037 3–6 sensor-node controlled-route experiment using coarse public test zones, calibration/reference checks and explicit geoprivacy validation;
+- a UC-038 2+ heterogeneous compute-node benchmark round with exact model/runtime pins, repeated real measurements and LoRa-carried round/result metadata;
+- a UC-039 4+ node advisory-partition drill using harmless synthetic package versions, delayed exposure reports and one later rich-bearer remediation;
+- a UC-040 4–6 node bounded-cache experiment comparing at least two replica-placement policies on the same measured UC-008 contact traces;
+- a UC-041 1–2 hotspot/cache nodes plus 3+ client devices with real LoRa service discovery, UC-033 handoff and offline HTTP content access;
+- a UC-042 3–5 node physical handover chain using harmless tagged equipment, delayed custody events and explicit conflict/gap detection;
 - a UC-028 four-node collaborative-notebook experiment with two editing islands, concurrent changes, one moving relay and measured convergence;
 - a UC-029 3+ laptop/cache experiment where LoRa discovers missing dependency closure and Wi-Fi/LAN/BLE transfers only verified missing objects;
 - a UC-030 controlled checkpoint drill with rotating synthetic identities, replay attempts and no continuous location collection;
@@ -179,6 +199,11 @@ Measured packet loss, RSSI/SNR, airtime, latency, contact duration, energy where
 
 The use cases are consistent with existing research directions without copying their assumptions into the PollicinoNet core:
 
+- repeatable local/edge LLM benchmarking with pinned model/runtime/hardware provenance, relevant to UC-038 without treating another project's measurements as ours;
+- CSAF/VEX machine-readable vulnerability advisories and SBOM-linked exposure status, relevant to UC-039's compact advisory/control plane;
+- proactive caching and mobility/contact-aware content placement, relevant to UC-040 only after UC-008 gives us real local traces and suitable baselines;
+- offline-first education/content hotspots such as Kolibri and Kiwix, relevant to UC-041's local-service activation model without making PollicinoNet a learning platform itself;
+- event-based physical asset traceability/chain-of-custody standards such as GS1 EPCIS, relevant to UC-042 while keeping PollicinoNet's transport/event contracts smaller and delay-tolerant;
 - delay-tolerant/opportunistic networking and public-transport data mules;
 - DTN reliability work that explicitly avoids assuming simultaneous end-to-end paths, relevant to UC-023;
 - information-centric/named-data forwarding and in-network caching, relevant to UC-024's request-by-content model;
