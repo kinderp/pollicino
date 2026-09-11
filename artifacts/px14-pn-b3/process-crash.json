@@ -1,0 +1,6 @@
+{
+  "kill_mid_body": {"native_mutations": 0, "restart": "PASS"},
+  "hard_exit_after_commit": {"exit_code": 91, "durable_record_survived": true},
+  "sender_exit_before_progress_observation": "RESOLVED_BY_FRESH_RECONCILIATION",
+  "partial_message_native_mutations": 0
+}

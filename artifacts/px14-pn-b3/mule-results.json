@@ -1,0 +1,8 @@
+{
+  "query_a_c_b": "PASS",
+  "result_b_c_a": "PASS",
+  "explicit_reference_b_c_a": "PASS",
+  "mule_application_semantics": 0,
+  "mule_restart": "PASS",
+  "automatic_reference_transfer": false
+}

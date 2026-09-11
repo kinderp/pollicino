@@ -1,0 +1,8 @@
+{
+  "worker_timeout_seconds": 10.0,
+  "stalled_child_safety_timeout": "PASS",
+  "timeout_semantics": "IO_OPPORTUNITY_ENDED_NOT_RECONCILIATION_EVIDENCE",
+  "backpressure_sanity": "PASS",
+  "production_flow_control": "NOT_PROVEN",
+  "unbounded_retry": false
+}

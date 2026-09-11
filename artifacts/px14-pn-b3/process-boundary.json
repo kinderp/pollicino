@@ -1,0 +1,9 @@
+{
+  "mechanism": "binary subprocess stdin/stdout pipes",
+  "fresh_interpreters": true,
+  "shared_endpoint_objects": 0,
+  "direct_remote_store_reads": 0,
+  "parent_protocol_semantic_authority": 0,
+  "canonical_state_mismatches": 0,
+  "one_protocol_writer_per_direction": true
+}

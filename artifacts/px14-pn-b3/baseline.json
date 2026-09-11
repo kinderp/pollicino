@@ -1,0 +1,8 @@
+{
+  "baseline_sha": "d57aff74a737109e0ef3dca4fbb3b190be4aaeaa",
+  "branch": "pollicino/px13-pn-b2a-adaptive-reconciliation",
+  "clean": true,
+  "full_suite": {"passed": 506, "skipped": 5},
+  "focused_px11_px12_px13": {"passed": 138},
+  "compileall": "PASS"
+}

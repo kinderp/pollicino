@@ -1,0 +1,9 @@
+{
+  "header_bytes": 42,
+  "fields": ["magic", "version", "type", "body_length", "sha256_body_digest"],
+  "existing_envelope_sufficient": true,
+  "extra_process_io_wire_bytes": 0,
+  "clean_eof": "PASS",
+  "mid_header_eof": "FAIL_CLOSED",
+  "mid_body_eof": "FAIL_CLOSED"
+}

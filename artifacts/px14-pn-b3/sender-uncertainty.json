@@ -1,0 +1,7 @@
+{
+  "receiver_committed": true,
+  "sender_observed_confirmation": false,
+  "fresh_contact_record_commits": 0,
+  "persistent_ack_required": false,
+  "authority": "receiver durable D2/D3 state"
+}

@@ -1,0 +1,14 @@
+{
+  "accounting_model": "LOCAL_PROCESS_IO_DIAGNOSTIC_ONLY",
+  "separate_metrics": [
+    "protocol_encoded_bytes",
+    "os_write_calls",
+    "os_read_calls",
+    "stream_chunks",
+    "complete_messages_decoded",
+    "native_records_committed"
+  ],
+  "read_calls_are_protocol_messages": false,
+  "process_io_extra_wire_bytes": 0,
+  "rf_claims": false
+}

@@ -1,0 +1,11 @@
+{
+  "application_specific_process_io_branches": 0,
+  "process_specific_d4_core_branches": 0,
+  "direct_remote_store_reads": 0,
+  "persistent_process_session_state": 0,
+  "persistent_peer_progress_authorities": 0,
+  "pnf1_dependency": false,
+  "fragmentation": false,
+  "real_network_transport": false,
+  "authentication_or_encryption": false
+}

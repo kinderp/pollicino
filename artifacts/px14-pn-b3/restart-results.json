@@ -1,0 +1,8 @@
+{
+  "both_process_restart": "PASS",
+  "process_session_persistence_required": false,
+  "persistent_peer_progress_authorities": 0,
+  "queries_reopened": 105,
+  "results_reopened": 105,
+  "committed_record_retransferred_as_missing": 0
+}

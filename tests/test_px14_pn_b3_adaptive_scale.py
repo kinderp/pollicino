@@ -82,4 +82,3 @@ def test_105_queries_and_results_cross_process_path_after_restarts(tmp_path: Pat
     receiver = reopen_endpoint(receiver_root, "receiver-final")
     assert receiver.query_results.canonical_state() == source.query_results.canonical_state()
     source.close(); receiver.close()
-

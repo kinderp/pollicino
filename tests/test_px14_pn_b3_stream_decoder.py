@@ -129,4 +129,3 @@ def test_stream_message_count_is_bounded() -> None:
     reader = BoundedMessageStreamReader(max_messages=1)
     with pytest.raises(ProcessIOBoundsError):
         reader.feed(_record(1) + _record(2))
-

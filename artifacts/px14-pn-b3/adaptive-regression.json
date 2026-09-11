@@ -1,0 +1,15 @@
+{
+  "capacity": 10,
+  "catalog_size": 10000,
+  "differences": {
+    "0": "EQUAL",
+    "1": "DECODED",
+    "10": "DECODED",
+    "100": "CAPACITY_EXCEEDED_THEN_EXACT",
+    "1000": "CAPACITY_EXCEEDED_THEN_EXACT",
+    "10000": "CAPACITY_EXCEEDED_THEN_EXACT"
+  },
+  "transport_failure_used_as_capacity_evidence": false,
+  "multi_level_escalation": false,
+  "persistent_adaptive_policy_state": false
+}

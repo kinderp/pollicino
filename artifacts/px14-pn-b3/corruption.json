@@ -1,0 +1,9 @@
+{
+  "unknown_magic": "REJECTED",
+  "unknown_version": "REJECTED",
+  "unknown_type": "REJECTED",
+  "body_corruption": "REJECTED",
+  "digest_mismatch": "REJECTED",
+  "native_mutations": 0,
+  "authentication_claim": false
+}

@@ -57,4 +57,3 @@ The reader inherits the largest existing experimental B2 message bound and
 rejects an oversized declared body before buffering it. Every worker has a
 finite input limit and coordinator timeout. No TCP, UDP, radio, daemon, PNF1,
 fragmentation, authentication, encryption, or stable-wire claim enters PX14.
-

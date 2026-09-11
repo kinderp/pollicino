@@ -1,0 +1,6 @@
+{
+  "maximum_receive_buffer_bytes": 29245,
+  "declared_oversize_rejected": true,
+  "bytes_buffered_before_rejection": 42,
+  "unbounded_remote_allocation": 0
+}
