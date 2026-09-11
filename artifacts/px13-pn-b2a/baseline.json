@@ -1,0 +1,14 @@
+{
+  "artifact": "px13-pn-b2a-baseline",
+  "candidate_gate_identifier": "PX13-PN-B2A",
+  "identifier_provenance": "PX12 closure recommendation",
+  "authoritative_replacement_found": false,
+  "px12_closure_sha": "816d3c2d26df4d6115f299cbce6803b324cc1443",
+  "px12_checkpoint_local": "EXACT",
+  "px12_checkpoint_remote": "PUBLISHED_EXACT",
+  "worktree_clean": true,
+  "full_suite": "461 passed, 5 skipped",
+  "focused_px11_px12": "93 passed",
+  "compileall": "PASS",
+  "historical_document_discrepancy": "PX12 preregistration text says 128/64 bits; closed implementation is 64/32 bits"
+}
