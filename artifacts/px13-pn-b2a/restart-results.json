@@ -1,0 +1,10 @@
+{
+  "artifact": "restart-results",
+  "records": 105,
+  "partial_before_restart": true,
+  "persistent_stores_closed_and_reopened": true,
+  "fresh_selector": true,
+  "final_records": 105,
+  "persistent_escalation_state": false,
+  "result": "PASS"
+}

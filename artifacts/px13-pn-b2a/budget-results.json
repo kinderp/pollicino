@@ -1,0 +1,10 @@
+{
+  "artifact": "budget-results",
+  "cumulative_budget_wrapper": true,
+  "compact_and_exact_budget_reset": false,
+  "exact_progress_reserve_attempts": 8,
+  "control_budget_500_bytes": "compact skipped; bounded exact partial outcome",
+  "attempt_budget_8": "compact skipped; exact selected",
+  "100_records_attempt_budget_8": {"contacts":33,"committed":100,"compact_probes":0,"starved":0},
+  "hidden_retries": 0
+}

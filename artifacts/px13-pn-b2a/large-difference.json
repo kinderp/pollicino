@@ -1,0 +1,11 @@
+{
+  "artifact": "large-difference",
+  "rows": [
+    {"difference":1001,"behavior":"one probe then exact partial progress"},
+    {"difference":2000,"control_bytes":405376,"exact_bytes":385908,"ratio":1.050447},
+    {"difference":5000,"control_bytes":1017438,"exact_bytes":966636,"ratio":1.052557},
+    {"difference":10000,"control_bytes":1763556,"exact_bytes":1675708,"ratio":1.052424}
+  ],
+  "finite": true,
+  "near_ceiling_sketch_attempted": false
+}

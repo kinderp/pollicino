@@ -1,0 +1,12 @@
+{
+  "artifact": "loss-results",
+  "summary_drop": "PARTIAL_NO_ESCALATION",
+  "summary_duplicate": "IDEMPOTENT",
+  "summary_delay": "DELIVERED",
+  "summary_corruption": "ERROR_NO_ESCALATION_NO_MUTATION",
+  "request_drop": "PARTIAL_RECONTACT_PASS",
+  "reveal_drop": "PARTIAL_RECONTACT_PASS",
+  "record_drop": "PARTIAL_RECONTACT_PASS",
+  "disconnect": "FINITE_NO_ESCALATION",
+  "transport_loss_interpreted_as_capacity_failure": false
+}

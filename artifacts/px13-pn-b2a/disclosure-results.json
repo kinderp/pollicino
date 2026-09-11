@@ -1,0 +1,12 @@
+{
+  "artifact": "disclosure-results",
+  "objective": "secondary metadata disclosure reduction",
+  "ten_thousand_rows": [
+    {"difference":1,"exact_identities":2,"short_fingerprints":2},
+    {"difference":10,"exact_identities":20,"short_fingerprints":20},
+    {"difference":100,"exact_identities":616,"short_fingerprints":16},
+    {"difference":1000,"exact_identities":7962,"short_fingerprints":12}
+  ],
+  "selected_policy_large_difference_note": "exact fallback dominates; no privacy claim",
+  "privacy_preserving": false
+}

@@ -1,0 +1,10 @@
+{
+  "artifact": "mtu-pressure",
+  "px12_capacity_1000_summary_bytes": 28517,
+  "b2_ceiling_bytes": 29245,
+  "ceiling_margin_bytes": 728,
+  "selected_largest_summary_bytes": 797,
+  "selected_ceiling_margin_bytes": 28448,
+  "selected_attempted_near_ceiling_summary": false,
+  "fragmentation_added": false
+}

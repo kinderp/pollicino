@@ -1,0 +1,9 @@
+{
+  "artifact": "sender-uncertainty",
+  "receiver_commit": true,
+  "sender_observed": false,
+  "fresh_selector": true,
+  "fresh_outcome": "COMPACT_EQUAL",
+  "record_retransferred": false,
+  "persistent_ack_state": false
+}

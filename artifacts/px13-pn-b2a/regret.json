@@ -1,0 +1,14 @@
+{
+  "artifact": "regret",
+  "comparison_panel_rows": 9,
+  "selected_median_regret_ratio": 1.196875,
+  "selected_max_regret_ratio": 1.462385,
+  "registered_median_threshold": 1.5,
+  "threshold_pass": true,
+  "ten_thousand_one_missing_savings_retained_percent": 98.004,
+  "ten_thousand_ten_missing_savings_retained_percent": 100.0,
+  "large_difference_max_ratio_vs_exact_selected": 1.054454,
+  "registered_large_difference_threshold": 1.25,
+  "large_threshold_pass": true,
+  "perfect_selector_runtime_access": false
+}

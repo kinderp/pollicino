@@ -1,0 +1,25 @@
+{
+  "artifact": "capacity-ladders",
+  "representative_10000_difference_100": {
+    "exact": 27318,
+    "fixed_1": 15620,
+    "fixed_10": 16124,
+    "fixed_100": 12988,
+    "ladder_1_10_100_1000": 11678,
+    "ladder_10_1000": 36525,
+    "ladder_10_100": 11325,
+    "selected": 16124
+  },
+  "representative_10000_difference_1000": {
+    "exact": 190785,
+    "fixed_1": 198150,
+    "fixed_10": 201174,
+    "fixed_100": 223188,
+    "ladder_1_10_100_1000": 410487,
+    "ladder_10_1000": 423179,
+    "ladder_10_100": 225819,
+    "selected": 201174
+  },
+  "selected_capacity": 10,
+  "selected_max_probes_per_contact": 1
+}

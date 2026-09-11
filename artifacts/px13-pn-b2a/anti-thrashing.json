@@ -1,0 +1,9 @@
+{
+  "artifact": "anti-thrashing",
+  "default_max_probes_per_contact": 1,
+  "exact_fallback_same_contact": true,
+  "large_1000_records": {"contacts":11,"committed":1000,"contacts_without_progress":0},
+  "tiny_budget_100_records": {"attempts_per_contact":8,"contacts":33,"compact_probes":0,"committed":100},
+  "persistent_peer_or_ladder_state": false,
+  "result": "PASS"
+}

@@ -1,0 +1,13 @@
+{
+  "artifact": "policy-families",
+  "policies": [
+    {"name": "EXACT_ALWAYS", "capacities": [], "verdict": "correctness and byte baseline"},
+    {"name": "FIXED_1_THEN_EXACT", "capacities": [1], "verdict": "lowest successful probe cost but reduced decode robustness near 20 differences"},
+    {"name": "FIXED_10_THEN_EXACT", "capacities": [10], "verdict": "selected with budget reserve"},
+    {"name": "FIXED_100_THEN_EXACT", "capacities": [100], "verdict": "helps some 100-difference large-state cases but wastes bytes broadly"},
+    {"name": "CONSERVATIVE_LADDER", "capacities": [1, 10, 100, 1000], "verdict": "correct but repeated probe cost excessive"},
+    {"name": "AGGRESSIVE_LADDER", "capacities": [10, 1000], "verdict": "correct but near-ceiling sketch cost excessive"},
+    {"name": "PREREGISTERED_COST_AWARE", "capacities": [10, 100], "verdict": "rejected: 1.273518x exact at 10000 differences"},
+    {"name": "SELECTED_ONE_PROBE", "capacities": [10], "verdict": "bounded, simple, retains target savings, approximately 1.05x exact for large differences"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "artifact": "classification",
+  "gate": "PX13-PN-B2A",
+  "classification": "POLLICINO_BOUNDED_ADAPTIVE_RECONCILIATION_READY_WITH_LIMITS",
+  "confidence": "HIGH",
+  "selected_policy": "one capacity-10 compact probe then same-contact PX11 exact fallback",
+  "preregistered_two_probe_candidate": "REJECTED_THRESHOLD_FAILURE",
+  "oracle_mismatches": 0,
+  "undetected_false_negatives": 0,
+  "unbounded_escalations": 0,
+  "persistent_policy_state": false,
+  "next_experiment": "independent-process byte I/O for existing bounded messages"
+}

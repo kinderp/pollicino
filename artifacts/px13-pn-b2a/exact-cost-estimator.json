@@ -1,0 +1,11 @@
+{
+  "artifact": "exact-cost-estimator",
+  "inputs": ["local cardinality", "B2 identity page bound", "B2F descriptor page bound", "encoded message maxima"],
+  "rows": [
+    {"local_records":100,"estimate":113980,"measured_min":182,"measured_max":8859,"max_difference_overestimate_ratio":12.8660},
+    {"local_records":1000,"estimate":640390,"measured_min":1010,"measured_max":97950,"max_difference_overestimate_ratio":6.5389},
+    {"local_records":10000,"estimate":5959980,"measured_min":9380,"measured_max":1675708,"max_difference_overestimate_ratio":3.5567}
+  ],
+  "observed_underestimates": 0,
+  "decision_impact": "safe but too conservative for crossover prediction"
+}

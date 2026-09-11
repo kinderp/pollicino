@@ -1,0 +1,12 @@
+{
+  "artifact": "zero-difference",
+  "selected_control_bytes": 797,
+  "selected_rounds": 1,
+  "exact_fallback": false,
+  "exact_identities_disclosed": 0,
+  "comparisons": [
+    {"size":100,"exact_bytes":182,"adaptive_ratio":4.379121,"winner":"EXACT"},
+    {"size":1000,"exact_bytes":1010,"adaptive_ratio":0.789109,"winner":"ADAPTIVE"},
+    {"size":10000,"exact_bytes":9380,"adaptive_ratio":0.084968,"winner":"ADAPTIVE"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "artifact": "neutrality-scan",
+  "oracle_knowledge_in_selector": 0,
+  "application_specific_policy_branches": 0,
+  "direct_remote_store_reads": 0,
+  "persistent_peer_policy_state": 0,
+  "persistent_escalation_state": 0,
+  "persistent_ack_state": 0,
+  "real_transport_branches": 0,
+  "fragmentation_branches": 0
+}
