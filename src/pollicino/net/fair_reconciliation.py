@@ -52,6 +52,8 @@ from .local_persistence import PersistenceError
 from .query import (
     MAX_QUERY_ID_BYTES,
     MAX_RESULT_ID_BYTES,
+    MAX_STORED_QUERIES,
+    MAX_STORED_RESULTS,
     QueryConflictError,
     QueryRecord,
     QueryResultBoundsError,
@@ -75,7 +77,8 @@ _RECORD_COUNT = struct.Struct(">H")
 MAX_B2F_PAGE_IDENTITIES = MAX_B2_IDENTITIES_PER_MESSAGE
 MAX_B2F_PAGES = max(
     MAX_CATALOG_ITEMS,
-    10_000,
+    MAX_STORED_QUERIES,
+    MAX_STORED_RESULTS,
 ) // MAX_B2F_PAGE_IDENTITIES
 MAX_B2F_DESCRIPTORS_PER_MESSAGE = 50
 MAX_B2F_DIRECTORY_MESSAGES_PER_KIND = (
@@ -329,8 +332,23 @@ class FairEndpointReceiveResult:
     repeated_control_bytes: int = 0
 
     def __post_init__(self) -> None:
+        if not isinstance(self.outbound_messages, tuple) or any(
+            not isinstance(value, bytes) for value in self.outbound_messages
+        ):
+            raise TypeError("outbound_messages must be a tuple of bytes")
         if len(self.outbound_messages) > MAX_B2_OUTBOUND_MESSAGES:
             raise B2BoundsError("B2F endpoint response exceeds outbound bound")
+        for name in (
+            "durable_commits",
+            "already_known",
+            "pages_reached",
+            "pages_repeated",
+            "known_metadata_repeated",
+            "repeated_control_bytes",
+        ):
+            value = getattr(self, name)
+            if type(value) is not int or value < 0:
+                raise ValueError(f"{name} must be a non-negative integer")
 
 
 class FairIndependentEndpoint:
