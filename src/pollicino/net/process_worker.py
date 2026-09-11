@@ -107,21 +107,25 @@ def _consume(
             received = compact.receive_summary(encoded, selected)
             assert received.difference is not None
             status = received.difference.status
-            if received.outbound_messages:
+            if role == ROLE_INITIATOR:
+                # This is the responder's summary returned as byte-visible
+                # evidence. It must never turn a directional probe into an
+                # implicit reverse transfer.
+                if status in (
+                    CompactDecodeStatus.CAPACITY_EXCEEDED,
+                    CompactDecodeStatus.ROOT_MISMATCH,
+                ):
+                    outbound = fair.directory_messages(message.kind)
+                else:
+                    outbound = ()
+            elif received.outbound_messages:
                 outbound = received.outbound_messages
-            elif role == ROLE_RESPONDER:
+            else:
                 # Existing B2C bytes carry equality/failure evidence back to the
                 # initiator; the relay never interprets the status.
                 outbound = (
                     compact.summary_message(message.kind, message.capacity, selected),
                 )
-            elif status in (
-                CompactDecodeStatus.CAPACITY_EXCEEDED,
-                CompactDecodeStatus.ROOT_MISMATCH,
-            ):
-                outbound = fair.directory_messages(message.kind)
-            else:
-                outbound = ()
             return outbound, {
                 "compact_status": status.value,
                 "durable_commits": received.durable_commits,

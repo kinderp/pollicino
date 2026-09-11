@@ -100,6 +100,20 @@ def test_adaptive_compact_success_is_decided_inside_endpoint_workers(tmp_path: P
     receiver.close()
 
 
+def test_directional_probe_does_not_pull_receiver_only_state_back_to_source(tmp_path: Path) -> None:
+    source_root = tmp_path / "source"
+    receiver_root = tmp_path / "receiver"
+    _seed_queries(source_root, 1)
+    _seed_queries(receiver_root, 2)
+    report = run_directional_contact(source_root, receiver_root, kind=RecordKind.QUERY)
+    source = reopen_endpoint(source_root, "verify-source")
+    receiver = reopen_endpoint(receiver_root, "verify-receiver")
+    assert report.completed and report.durable_commits == 0
+    assert source.query_results.query_count == 1
+    assert receiver.query_results.query_count == 2
+    source.close(); receiver.close()
+
+
 def test_delivered_compact_failure_triggers_same_contact_exact_bytes(tmp_path: Path) -> None:
     source_root = tmp_path / "source"
     receiver_root = tmp_path / "receiver"
