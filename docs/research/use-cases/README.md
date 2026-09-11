@@ -57,6 +57,11 @@ Core rules for every use case:
 | [UC-040](uc-040-mobility-aware-prefetch-replica-placement.md) | Mobility-Aware Prefetch and Replica Placement | place scarce replicas before likely future requests/contacts | contact-trace replay + placement-policy comparison | useful after UC-008 | High |
 | [UC-041](uc-041-pop-up-offline-classroom-hotspot.md) | Pop-Up Offline Classroom Hotspot | expose nearby cached knowledge as a temporary local service without Internet | local HTTP hotspot + simulated LoRa advertisement | useful early | Medium |
 | [UC-042](uc-042-physical-asset-chain-of-custody.md) | Physical Asset Chain-of-Custody Courier | preserve signed custody events while real assets move through disconnected groups | append-only custody chain + delayed events | useful early | Medium |
+| [UC-043](uc-043-opportunistic-local-exchange-reuse-marketplace.md) | Opportunistic Local Exchange and Reuse Marketplace | match needs/offers for reusable physical goods across disconnected communities | synthetic listings + delayed match/reservation lifecycle | useful early | Medium–High |
+| [UC-044](uc-044-offline-git-repository-patch-ferry.md) | Offline Git Repository and Patch Ferry | move exact source-control history without a simultaneously reachable forge | partitioned Git repos + incremental bundle courier | useful early | Medium |
+| [UC-045](uc-045-buffer-aware-mobile-data-harvester.md) | Buffer-Aware Mobile Data Harvester | choose what to collect first during short mobile contacts | finite-contact queue-policy comparison | useful after UC-008 | High |
+| [UC-046](uc-046-raiatea-answer-capsule-edge-rag.md) | Raiatea Answer Capsule / Offline Edge RAG | return compact source-bound answers without moving corpus/model | public corpus + delayed query/answer/evidence loop | useful early | High |
+| [UC-047](uc-047-digital-to-physical-fabrication-job-courier.md) | Digital-to-Physical Fabrication Job Courier | discover/queue a safe fabrication capability and later receive a physical result | virtual machine/job queue + exact artifact manifest | useful early | Medium–High |
 
 ## Current top 3 next experiments for the Messina student network
 
@@ -74,8 +79,13 @@ This remains the best immediate human-visible service experiment. Four boards ar
 
 ### Strong follow-ups
 
-- **UC-040 — Mobility-Aware Prefetch and Replica Placement:** strongest new research follow-up to UC-008 because it turns measured student mobility into an explicit cache/replica-placement input and can be compared against simple baselines on the same trace.
-- **UC-041 — Pop-Up Offline Classroom Hotspot:** strongest new human-visible education demo after UC-033; cached Raiatea/course/reference content becomes a temporary local Wi-Fi service without Internet.
+- **UC-043 — Opportunistic Local Exchange and Reuse Marketplace:** especially strong September/student-facing scenario; use textbooks first, then repeat with calculators/components to prove the protocol is generic rather than book-specific.
+- **UC-044 — Offline Git Repository and Patch Ferry:** highly practical computing-class experiment because Git already provides exact object identity and offline bundles while PollicinoNet contributes delayed discovery/courier behavior.
+- **UC-045 — Buffer-Aware Mobile Data Harvester:** focused research follow-up to UC-005/UC-008 that asks what a moving collector should take first when the contact window is too short for the whole backlog.
+- **UC-046 — Raiatea Answer Capsule / Offline Edge RAG:** visible AI/document demo that returns a tiny source-bound explanation while preserving exact evidence retrieval and explicit abstention.
+- **UC-047 — Digital-to-Physical Fabrication Job Courier:** concrete bridge between capability discovery and a physical output, initially limited to supervised safe school-lab fabrication.
+- **UC-040 — Mobility-Aware Prefetch and Replica Placement:** strongest research follow-up to UC-008 because it turns measured student mobility into an explicit cache/replica-placement input and can be compared against simple baselines on the same trace.
+- **UC-041 — Pop-Up Offline Classroom Hotspot:** strongest human-visible education demo after UC-033; cached Raiatea/course/reference content becomes a temporary local Wi-Fi service without Internet.
 - **UC-039 — Offline Vulnerability Advisory and Exposure Census:** compact security use case that separates `know who is affected` from the larger firmware/package remediation path.
 - **UC-038 — Edge Model Evaluation Round:** useful AI-engineering experiment because exact model/runtime/benchmark provenance can converge even when students run tests at different times and places.
 - **UC-042 — Physical Asset Chain-of-Custody Courier:** clean physical-world DTN experiment where the asset moves physically while signed custody events converge later.
@@ -145,7 +155,12 @@ The following can be implemented without any radio hardware:
 35. implement UC-040 several replica-placement policies over identical UC-008 traces, with cache/storage budgets, demand-prediction errors, sensitive-content constraints and wasted-prefetch accounting;
 36. implement UC-041 a local HTTP classroom/content service with exact pack identity, simulated LoRa discovery, two competing hotspot versions, short-lived handoff and privacy-safe service logging;
 37. implement UC-042 append-only signed custody events, missing/out-of-order handovers, conflicting current-custodian claims and delayed evidence attachment;
-38. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability and custody-gap convergence as applicable.
+38. implement UC-043 generic `ExchangeNeed`/`ExchangeOffer`/`Reservation` state, stale listings, conflicting requesters, expiry, private negotiation and a completed physical-handover receipt;
+39. implement UC-044 partitioned Git histories, incremental `git bundle` creation/verification, prerequisite misses, corrupted bundle rejection and explicit divergent branches;
+40. implement UC-045 finite-contact queue scheduling with FIFO/expiry/priority/buffer-pressure baselines and resumable partial objects over identical synthetic traces;
+41. implement UC-046 a public versioned corpus + local RAG node that returns short answer capsules with exact evidence refs, explicit abstention and stale-version rejection;
+42. implement UC-047 a virtual fabrication capability/queue with exact job manifests, duplicate-execution prevention, operator approval, cancellation and physical-pickup state;
+43. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability, custody-gap convergence, exchange time-to-match, Git bytes/commit convergence, harvest deadline/drop metrics, answer/evidence bytes and fabrication-job turnaround as applicable.
 
 This reuses the current architecture instead of creating a special PHY or a separate networking stack per scenario.
 
@@ -158,6 +173,11 @@ After the simulator contracts are stable:
 - privacy-safe contact-window collection for UC-008;
 - a UC-033 2–3 provider experiment with real LoRa discovery, multiple visible nearby peers, exact peer/object binding and measured BLE/Wi-Fi/LAN handoff time;
 - a UC-023 four-node mailbox test with two disconnected groups, one moving courier and a delayed receipt;
+- a UC-043 4–6 node exchange experiment with synthetic/opt-in textbook or calculator listings, delayed matching, reservation conflict, UC-033 detail handoff and a controlled school pickup;
+- a UC-044 3–4 laptop coding experiment with partitioned Git histories, LoRa ref discovery, an incremental bundle carried over a rich bearer and explicit merge/divergence handling;
+- a UC-045 3–5 fixed-node + walking/bicycle collector experiment where contacts are deliberately too short for all backlog, comparing at least two queue policies on the same route;
+- a UC-046 3-node requester/relay/local-RAG experiment using a public teaching corpus, compact query/answer metadata and later exact evidence retrieval over UC-033;
+- a UC-047 supervised paper/3D-print job with real capability/status exchange, rich-bearer file submission, operator approval and physical pickup;
 - a UC-024 4+ node cache/request experiment where the requester cannot directly contact the content holder and the final object moves over a richer bearer;
 - a UC-034 3+ node query-to-data experiment with one unreachable corpus/search node, one moving relay and later exact selected-document retrieval over UC-033;
 - a UC-035 4–6 node aggregate experiment comparing raw-event forwarding with a mergeable summary under the same controlled workload;
@@ -199,6 +219,11 @@ Measured packet loss, RSSI/SNR, airtime, latency, contact duration, energy where
 
 The use cases are consistent with existing research directions without copying their assumptions into the PollicinoNet core:
 
+- community reuse/circular-economy platforms and reuse organisations as social infrastructure, relevant to UC-043 while keeping payments and unsafe goods outside the initial protocol;
+- Git's official offline bundle mechanism and local-first/P2P Git systems such as Radicle, relevant to UC-044 without replacing Git's object/merge semantics;
+- buffer-aware/signal-aware mobile data harvesting and Flying DTN forwarding, relevant to UC-045 but requiring PollicinoNet's own measured contact traces;
+- offline/local RAG systems with source-cited compact response modes, relevant to UC-046 while keeping semantic answers non-authoritative and evidence exact;
+- local fabrication job APIs and LAN queues such as OctoPrint/Continuous Print, relevant to UC-047 as adapters while PollicinoNet supplies delayed discovery/control;
 - repeatable local/edge LLM benchmarking with pinned model/runtime/hardware provenance, relevant to UC-038 without treating another project's measurements as ours;
 - CSAF/VEX machine-readable vulnerability advisories and SBOM-linked exposure status, relevant to UC-039's compact advisory/control plane;
 - proactive caching and mobility/contact-aware content placement, relevant to UC-040 only after UC-008 gives us real local traces and suitable baselines;
