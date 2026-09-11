@@ -101,4 +101,3 @@ def test_full_set_digest_detects_equal_cardinality_non_equal_sets() -> None:
     assert result.status is CompactDecodeStatus.DECODED
     assert len(result.source_only_fingerprints) == 1
     assert len(result.receiver_only_fingerprints) == 1
-

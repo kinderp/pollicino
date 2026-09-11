@@ -1,0 +1,13 @@
+{
+  "artifact": "complexity-accounting",
+  "hashes_per_element": 3,
+  "cells": "2 * configured_capacity + 31",
+  "encoded_bytes_per_cell": 14,
+  "max_capacity": 1000,
+  "max_cells": 2031,
+  "max_decoder_temporary_bytes": 28434,
+  "max_summary_bytes": 28517,
+  "max_inherited_b2_unit_bytes": 29245,
+  "dependencies_added": 0,
+  "production_modules_added": 1
+}

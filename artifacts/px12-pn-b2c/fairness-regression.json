@@ -1,0 +1,10 @@
+{
+  "artifact": "fairness-regression",
+  "static_records": 1000,
+  "bounded_attempts_per_contact": 50,
+  "contacts": 22,
+  "records_committed": 1000,
+  "starved_records": 0,
+  "canonical_state_equal": true,
+  "px11_fallback_fairness_retained": true
+}

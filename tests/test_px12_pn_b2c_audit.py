@@ -41,4 +41,3 @@ def test_historical_decision_documents_are_not_modified() -> None:
     root = Path(__file__).parents[1]
     assert (root / "docs/research/px11-pn-b2f-decision.md").is_file()
     assert (root / "artifacts/px11-pn-b2f/classification.json").is_file()
-

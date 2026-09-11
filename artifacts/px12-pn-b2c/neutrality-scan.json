@@ -1,0 +1,10 @@
+{
+  "artifact": "neutrality-scan",
+  "application_specific_compact_branches": 0,
+  "direct_remote_store_reads": 0,
+  "persistent_peer_progress_authorities": 0,
+  "persistent_compact_session_state": 0,
+  "real_transport_branches": 0,
+  "fragmentation_branches": 0,
+  "pnf1_dependencies": 0
+}

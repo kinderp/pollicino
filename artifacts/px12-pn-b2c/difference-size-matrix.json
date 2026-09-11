@@ -1,0 +1,10 @@
+{
+  "artifact": "difference-size-matrix",
+  "catalog_size": 10000,
+  "rows": [
+    {"missing": 1, "compact_control_bytes": 740, "px11_control_bytes": 13367, "byte_reduction_percent": 94.464, "compact_exact_identity_disclosures": 2, "px11_exact_identity_disclosures": 503, "disclosure_reduction_percent": 99.602, "contacts": 1, "correct": true},
+    {"missing": 10, "compact_control_bytes": 1532, "px11_control_bytes": 13421, "byte_reduction_percent": 88.585, "compact_exact_identity_disclosures": 20, "px11_exact_identity_disclosures": 512, "disclosure_reduction_percent": 96.094, "contacts": 1, "correct": true},
+    {"missing": 100, "compact_control_bytes": 12988, "px11_control_bytes": 27318, "byte_reduction_percent": 52.456, "compact_exact_identity_disclosures": 202, "px11_exact_identity_disclosures": 1109, "disclosure_reduction_percent": 81.785, "contacts": 2, "correct": true},
+    {"missing": 1000, "compact_control_bytes": 413452, "px11_control_bytes": 190785, "byte_reduction_percent": -116.711, "compact_exact_identity_disclosures": 2020, "px11_exact_identity_disclosures": 7895, "disclosure_reduction_percent": 74.414, "contacts": 11, "correct": true}
+  ]
+}

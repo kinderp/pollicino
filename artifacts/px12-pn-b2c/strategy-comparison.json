@@ -1,0 +1,10 @@
+{
+  "artifact": "strategy-comparison",
+  "strategies": [
+    {"name": "PX11 exact", "correct": true, "zero_overlap": "preferred", "overlap_90": "workload-dependent", "overlap_99": "loses at large state", "overlap_99_9": "loses", "disclosure": "exact identities/digests", "complexity": "existing", "verdict": "oracle and fallback"},
+    {"name": "range/prefix", "correct": true, "verdict": "not distinct from B2F enough to implement"},
+    {"name": "Bloom-like", "correct": false, "verdict": "reject standalone; false positives unsafe"},
+    {"name": "digest-bound IBLT", "correct": true, "zero_overlap": "fallback", "overlap_90": "loses when difference is large", "overlap_99": "wins at 10k/100", "overlap_99_9": "wins", "disclosure": "fewer exact identities; sketch leakage remains", "complexity": "bounded moderate", "verdict": "regime-specific"},
+    {"name": "Minisketch/BCH", "correct": null, "verdict": "not implemented; complexity/dependency not justified"}
+  ]
+}

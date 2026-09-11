@@ -1,0 +1,12 @@
+{
+  "artifact": "loss-results",
+  "summary_drop": "SAFE_RECONTACT_PASS",
+  "fingerprint_request_drop": "SAFE_RECONTACT_PASS",
+  "identity_reveal_drop": "SAFE_RECONTACT_PASS",
+  "native_request_drop": "SAFE_RECONTACT_PASS",
+  "record_drop": "SAFE_RECONTACT_PASS",
+  "duplicate": "IDEMPOTENT_PASS",
+  "disconnect": "BOUNDED_RECONTACT_PASS",
+  "deliver_uncertain": "COMMIT_THEN_FRESH_EQUALITY_PASS",
+  "false_convergence": false
+}

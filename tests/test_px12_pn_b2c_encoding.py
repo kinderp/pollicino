@@ -69,4 +69,3 @@ def test_parameter_bounds_are_enforced() -> None:
         build_summary(RecordKind.QUERY, (), MAX_COMPACT_CAPACITY + 1)
     with pytest.raises(CompactBoundsError):
         FingerprintRequestMessage(RecordKind.QUERY, ())
-

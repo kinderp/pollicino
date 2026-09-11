@@ -1,0 +1,11 @@
+{
+  "artifact": "candidate-analysis",
+  "oracle": "PX11 exact B2F",
+  "implemented": ["digest-bound IBLT"],
+  "analysis_only": ["deterministic range/prefix summaries"],
+  "rejected": {
+    "Bloom-alone": "false positives can hide lawful records without exact verification",
+    "Minisketch/BCH": "finite-field decoder or new dependency complexity not justified before IBLT evidence"
+  },
+  "third_party_dependencies_added": 0
+}

@@ -1,0 +1,10 @@
+{
+  "artifact": "restart-results",
+  "records": 105,
+  "partial_contact": true,
+  "stores_closed_and_reopened": true,
+  "fresh_compact_endpoint_each_contact": true,
+  "final_count": 105,
+  "persistent_compact_session_state": false,
+  "result": "PASS"
+}

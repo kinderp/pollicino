@@ -1,0 +1,9 @@
+{
+  "artifact": "oracle-differential",
+  "deterministic_state_pairs": 81,
+  "fixed_seeds": "0..63",
+  "oracle_missing_set_mismatches": 0,
+  "undetected_false_negatives": 0,
+  "equal_cardinality_different_state_detected": true,
+  "same_identity_conflicting_digest_detected": true
+}

@@ -1,0 +1,7 @@
+{
+  "artifact": "low-overlap",
+  "size": 10000,
+  "zero_overlap": {"difference": 10000, "capacity": 1000, "compact_status": "CAPACITY_EXCEEDED", "fallback_required": true, "compact_probe_bytes": 28517},
+  "fifty_percent_overlap": {"difference": 5000, "capacity": 1000, "compact_status": "CAPACITY_EXCEEDED", "fallback_required": true, "compact_probe_bytes": 28517},
+  "verdict": "PX11 exact preferred"
+}

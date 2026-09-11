@@ -1,0 +1,9 @@
+{
+  "artifact": "decode-failure",
+  "capacity_overflow": "DETECTED_FALLBACK_REQUIRED",
+  "root_mismatch": "DETECTED_FALLBACK_REQUIRED",
+  "corrupt_summary": "DETECTED_ERROR_NO_MUTATION",
+  "truncated_summary": "DETECTED_ERROR_NO_MUTATION",
+  "unknown_version_or_type": "DETECTED_ERROR_NO_MUTATION",
+  "false_equality": 0
+}

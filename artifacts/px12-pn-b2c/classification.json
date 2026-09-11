@@ -1,0 +1,14 @@
+{
+  "artifact": "classification",
+  "gate": "PX12-PN-B2C",
+  "classification": "POLLICINO_COMPACT_RECONCILIATION_REGIME_SPECIFIC",
+  "confidence": "HIGH",
+  "oracle_mismatches": 0,
+  "undetected_false_negatives": 0,
+  "detected_capacity_failures_in_measured_matrices": 7,
+  "exact_fallback_executions_in_focused_suite": 1,
+  "winner_small_high_overlap": "digest-bound IBLT",
+  "winner_large_difference": "PX11 exact B2F",
+  "adaptive_policy_justified": "YES_CONCEPTUALLY_SEPARATE_GATE_REQUIRED",
+  "next_experiment": "bounded adaptive reconciliation policy and escalation validation"
+}

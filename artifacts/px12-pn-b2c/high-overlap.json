@@ -1,0 +1,9 @@
+{
+  "artifact": "high-overlap",
+  "size": 10000,
+  "promoted_regime": "difference <= 100 when capacity is lawfully configured",
+  "threshold_met": true,
+  "threshold": "at least 50% control-byte or exact-identity-disclosure reduction",
+  "oracle_mismatches": 0,
+  "static_fairness_regressions": 0
+}

@@ -1,0 +1,7 @@
+{
+  "artifact": "disclosure-accounting",
+  "claim": "metadata disclosure reduction, not privacy",
+  "disclosed_types": ["cardinality", "full-set digest", "IBLT counts", "short fingerprints", "peel checksums", "requested full identities", "requested native digests"],
+  "high_overlap_reductions": {"1_missing_percent": 99.602, "10_missing_percent": 96.094, "100_missing_percent": 81.785, "1000_missing_percent": 74.414},
+  "privacy_preserving_claim": false
+}

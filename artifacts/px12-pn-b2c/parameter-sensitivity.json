@@ -1,0 +1,10 @@
+{
+  "artifact": "parameter-sensitivity",
+  "catalog_size": 1000,
+  "difference_1_control_bytes_by_capacity": {"1": 740, "10": 992, "100": 3512, "1000": 28712},
+  "difference_10_control_bytes_by_capacity": {"1": 1280, "10": 1532, "100": 4052, "1000": 29252},
+  "difference_100_status_by_capacity": {"1": "CAPACITY_EXCEEDED", "10": "CAPACITY_EXCEEDED", "100": "DECODED", "1000": "DECODED"},
+  "difference_1000_status_by_capacity": {"1": "CAPACITY_EXCEEDED", "10": "CAPACITY_EXCEEDED", "100": "CAPACITY_EXCEEDED", "1000": "DECODED"},
+  "oracle_tuning_used_for_comparison": true,
+  "deployable_selector_proven": false
+}

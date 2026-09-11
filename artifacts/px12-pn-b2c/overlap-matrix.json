@@ -1,0 +1,20 @@
+{
+  "artifact": "overlap-matrix",
+  "accounting": "model-level complete-protocol bytes",
+  "rows": [
+    {"size": 100, "overlap_percent": 0, "difference": 100, "compact_control_bytes": 12988, "px11_control_bytes": 8859, "winner": "PX11_EXACT"},
+    {"size": 100, "overlap_percent": 50, "difference": 50, "compact_control_bytes": 5052, "px11_control_bytes": 4463, "winner": "PX11_EXACT"},
+    {"size": 100, "overlap_percent": 90, "difference": 10, "compact_control_bytes": 1532, "px11_control_bytes": 4223, "winner": "COMPACT"},
+    {"size": 100, "overlap_percent": 99, "difference": 1, "compact_control_bytes": 740, "px11_control_bytes": 4169, "winner": "COMPACT"},
+    {"size": 1000, "overlap_percent": 0, "difference": 1000, "compact_control_bytes": 413452, "px11_control_bytes": 97950, "winner": "PX11_EXACT"},
+    {"size": 1000, "overlap_percent": 50, "difference": 500, "compact_control_bytes": 126652, "px11_control_bytes": 49030, "winner": "PX11_EXACT"},
+    {"size": 1000, "overlap_percent": 90, "difference": 100, "compact_control_bytes": 12988, "px11_control_bytes": 10566, "winner": "PX11_EXACT"},
+    {"size": 1000, "overlap_percent": 99, "difference": 10, "compact_control_bytes": 1532, "px11_control_bytes": 5051, "winner": "COMPACT"},
+    {"size": 1000, "overlap_percent": 99.9, "difference": 1, "compact_control_bytes": 740, "px11_control_bytes": 4997, "winner": "COMPACT"},
+    {"size": 10000, "overlap_percent": 0, "difference": 10000, "compact_decode": "CAPACITY_EXCEEDED", "winner": "PX11_EXACT_FALLBACK"},
+    {"size": 10000, "overlap_percent": 50, "difference": 5000, "compact_decode": "CAPACITY_EXCEEDED", "winner": "PX11_EXACT_FALLBACK"},
+    {"size": 10000, "overlap_percent": 90, "difference": 1000, "compact_control_bytes": 413452, "px11_control_bytes": 190785, "winner": "PX11_EXACT"},
+    {"size": 10000, "overlap_percent": 99, "difference": 100, "compact_control_bytes": 12988, "px11_control_bytes": 27318, "winner": "COMPACT"},
+    {"size": 10000, "overlap_percent": 99.9, "difference": 10, "compact_control_bytes": 1532, "px11_control_bytes": 13421, "winner": "COMPACT"}
+  ]
+}
