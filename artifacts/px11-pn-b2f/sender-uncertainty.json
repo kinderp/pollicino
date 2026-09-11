@@ -1,0 +1,12 @@
+{
+  "artifact": "sender-uncertainty",
+  "record_delivered": true,
+  "receiver_durable_commit": true,
+  "sender_observed": false,
+  "ephemeral_state_destroyed": true,
+  "fresh_contact_record_messages": 0,
+  "fresh_contact_commits": 0,
+  "already_committed_record_retransferred_as_missing": 0,
+  "persistent_ack_required": false,
+  "result": "PASS"
+}

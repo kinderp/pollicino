@@ -1,0 +1,14 @@
+{
+  "artifact": "large-catalog",
+  "largest_native_state_tested": 10000,
+  "maximum_native_pages": 100,
+  "native_page_size": 100,
+  "directory_descriptors_per_message": 50,
+  "directory_messages_for_maximum_state": 2,
+  "maximum_b2f_message_bytes": 27745,
+  "inherited_b2_message_bytes": 29245,
+  "queries": "PASS",
+  "results": {"records": 1000, "result": "PASS"},
+  "references": {"records": 10000, "missing_final": 1, "result": "PASS"},
+  "bounds_weakened": false
+}

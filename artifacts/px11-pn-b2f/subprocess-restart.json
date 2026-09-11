@@ -1,0 +1,12 @@
+{
+  "artifact": "subprocess-restart",
+  "queries": 105,
+  "results": 105,
+  "persistent_source_created_in_subprocess": true,
+  "bearer_mediated_transfer": true,
+  "persistent_receiver_verified_in_new_subprocess": true,
+  "restored_queries": 105,
+  "restored_results": 105,
+  "peer_cursor_persisted": false,
+  "result": "PASS"
+}

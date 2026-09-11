@@ -1,0 +1,19 @@
+{
+  "artifact": "cross-category-fairness",
+  "queries": 1000,
+  "results": 1000,
+  "explicitly_selected_references": 1000,
+  "contacts": 36,
+  "attempt_budget_per_contact": 100,
+  "contacts_to_first_query_progress": 1,
+  "contacts_to_first_result_progress": 1,
+  "contacts_to_first_reference_progress": 1,
+  "durable_commits": 3000,
+  "control_messages": 577,
+  "control_bytes": 702699,
+  "record_messages": 3000,
+  "record_bytes": 166000,
+  "starved_categories": [],
+  "canonical_convergence": true,
+  "automatic_reference_selection": false
+}

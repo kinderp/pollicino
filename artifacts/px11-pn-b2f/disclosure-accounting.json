@@ -1,0 +1,14 @@
+{
+  "artifact": "disclosure-accounting",
+  "accounting_model": "EXPERIMENTAL_B2F_ACCOUNTING_ONLY",
+  "records_total": 1000,
+  "overlap_matrix": [
+    {"overlap_percent": 0, "missing": 1000, "contacts": 11, "control_bytes": 97950, "record_bytes": 54000, "repeated_control_bytes": 2980, "identities_disclosed": 3815, "digests_disclosed": 2165, "requests_disclosed": 1355, "control_bytes_per_new_record": 97.95, "control_bytes_per_missing_identity": 97.95, "repeated_control_byte_ratio": 0.030424, "disclosed_identities_per_new_record": 3.815, "total_reconciliation_bytes": 151950},
+    {"overlap_percent": 50, "missing": 500, "contacts": 6, "control_bytes": 49030, "record_bytes": 27000, "repeated_control_bytes": 2340, "identities_disclosed": 1845, "digests_disclosed": 1105, "requests_disclosed": 595, "control_bytes_per_new_record": 98.06, "control_bytes_per_missing_identity": 98.06, "repeated_control_byte_ratio": 0.047726, "disclosed_identities_per_new_record": 3.69, "total_reconciliation_bytes": 76030},
+    {"overlap_percent": 90, "missing": 100, "contacts": 2, "control_bytes": 10566, "record_bytes": 5400, "repeated_control_bytes": 964, "identities_disclosed": 387, "digests_disclosed": 239, "requests_disclosed": 105, "control_bytes_per_new_record": 105.66, "control_bytes_per_missing_identity": 105.66, "repeated_control_byte_ratio": 0.091236, "disclosed_identities_per_new_record": 3.87, "total_reconciliation_bytes": 15966},
+    {"overlap_percent": 99, "missing": 10, "contacts": 1, "control_bytes": 5051, "record_bytes": 540, "repeated_control_bytes": 505, "identities_disclosed": 152, "digests_disclosed": 120, "requests_disclosed": 10, "control_bytes_per_new_record": 505.1, "control_bytes_per_missing_identity": 505.1, "repeated_control_byte_ratio": 0.09998, "disclosed_identities_per_new_record": 15.2, "total_reconciliation_bytes": 5591},
+    {"overlap_percent": 99.9, "missing": 1, "contacts": 1, "control_bytes": 4997, "record_bytes": 54, "repeated_control_bytes": 505, "identities_disclosed": 143, "digests_disclosed": 120, "requests_disclosed": 1, "control_bytes_per_new_record": 4997.0, "control_bytes_per_missing_identity": 4997.0, "repeated_control_byte_ratio": 0.101061, "disclosed_identities_per_new_record": 143.0, "total_reconciliation_bytes": 5051}
+  ],
+  "privacy_claim": "NONE",
+  "rf_airtime_claim": "NONE"
+}

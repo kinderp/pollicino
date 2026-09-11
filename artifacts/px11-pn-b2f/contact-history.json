@@ -1,0 +1,9 @@
+{
+  "artifact": "contact-history",
+  "records": 250,
+  "histories": ["many_small_clean_contacts", "fewer_large_clean_contacts", "lossy_then_clean_contacts", "restart_after_every_contact"],
+  "canonical_final_state_equal": true,
+  "record_identity_changed": false,
+  "contact_history_persisted": false,
+  "result": "PASS"
+}

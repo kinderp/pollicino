@@ -1,0 +1,19 @@
+{
+  "artifact": "classification",
+  "gate": "PX11-PN-B2F",
+  "classification": "POLLICINO_FAIR_PAGED_RECONCILIATION_READY_WITH_LIMITS",
+  "confidence": "HIGH",
+  "baseline_suite": "368 passed, 5 skipped",
+  "final_suite": "414 passed, 5 skipped",
+  "focused_px11_suite": "46 passed",
+  "compileall": "PASS",
+  "px9_checkpoint_remote_sha": "c8b8ebcec4414849fc8d72011c45771224caeb3d",
+  "px10_checkpoint_remote_sha": "9870d9eccf1e583c4d8dd3debe8a1a63caf30575",
+  "static_finite_fairness": "PASS",
+  "starved_eligible_records": 0,
+  "starved_direction": null,
+  "persistent_peer_progress_required": false,
+  "continuous_churn_fairness": "UNPROVEN",
+  "dominant_measured_limit": "EXACT_RECONCILIATION_DISCLOSURE_AND_CONTROL_COST",
+  "next_experiment": "COMPACT_EXACT_OR_PROBABILISTIC_RECONCILIATION_DISCLOSURE_EFFICIENCY_GATE"
+}

@@ -1,0 +1,16 @@
+{
+  "artifact": "mule-results",
+  "query_records": 250,
+  "result_records": 250,
+  "selected_references": 150,
+  "path": ["A_TO_C", "C_RESTART", "C_TO_B", "B_TO_C", "C_RESTART", "C_TO_A"],
+  "metadata_loss": true,
+  "disconnect": true,
+  "sender_uncertainty": true,
+  "late_pages_crossed_mule": true,
+  "mule_application_semantics": false,
+  "query_convergence": true,
+  "result_convergence": true,
+  "reference_convergence": true,
+  "result": "PASS"
+}

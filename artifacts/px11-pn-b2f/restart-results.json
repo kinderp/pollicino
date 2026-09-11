@@ -1,0 +1,12 @@
+{
+  "artifact": "restart-results",
+  "records": 250,
+  "attempt_budget_per_contact": 25,
+  "contacts": 13,
+  "bearer_attempts": 315,
+  "restart_after_every_contact": true,
+  "endpoint_objects_recreated": true,
+  "canonical_convergence": true,
+  "peer_progress_files": 0,
+  "result": "PASS"
+}

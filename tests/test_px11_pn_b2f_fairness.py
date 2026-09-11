@@ -73,6 +73,30 @@ def test_single_lexicographically_final_identity_is_not_starved_at_10k() -> None
     assert receiver.query_results.get_query(records[-1].query_id) == records[-1]
 
 
+def test_maximum_state_late_item_needs_bounded_eight_attempt_chain() -> None:
+    sender = fair_memory_endpoint("sender")
+    receiver = fair_memory_endpoint("receiver")
+    records = tuple(query(index) for index in range(10_000))
+    sender.query_results.add_queries(records)
+    receiver.query_results.add_queries(records[:-1])
+    too_small = run_fair_contact(
+        _fresh_endpoint(sender, "sender"),
+        _fresh_endpoint(receiver, "receiver"),
+        bearer=ScriptedEncodedMessageLink(),
+        budget=B2ContactBudget(max_bearer_attempts=7),
+    )
+    assert too_small.durable_commits == 0
+    assert too_small.outcome is B2ContactOutcome.BUDGET_EXHAUSTED
+    enough = run_fair_contact(
+        _fresh_endpoint(sender, "sender"),
+        _fresh_endpoint(receiver, "receiver"),
+        bearer=ScriptedEncodedMessageLink(),
+        budget=B2ContactBudget(max_bearer_attempts=8),
+    )
+    assert enough.durable_commits == 1
+    assert receiver.query_results.query_count == 10_000
+
+
 def test_late_missing_suffix_at_catalog_maximum_eventually_converges() -> None:
     sender = fair_memory_endpoint("sender")
     receiver = fair_memory_endpoint("receiver")

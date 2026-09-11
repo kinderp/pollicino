@@ -1,0 +1,12 @@
+{
+  "artifact": "control-record-fairness",
+  "single_lane_chain": ["DIRECTORY", "PAGE_REQUEST", "ADVERTISEMENT", "REQUEST", "RECORD"],
+  "four_attempt_budget": {"durable_commits": 0, "outcome": "BUDGET_EXHAUSTED"},
+  "five_attempt_budget": {"durable_commits": 1, "outcome": "NO_MORE_PLANNED_WORK"},
+  "smallest_useful_single_lane_attempt_budget": 5,
+  "maximum_state_late_item_with_reverse_lane_attempt_budget": 8,
+  "three_category_one_direction_first_commit_all_categories_budget": 16,
+  "six_lane_first_commit_all_lanes_budget": 32,
+  "automatic_retry": false,
+  "bounded_termination": true
+}

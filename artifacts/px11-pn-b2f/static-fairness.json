@@ -1,0 +1,14 @@
+{
+  "artifact": "static-fairness",
+  "model": "durable-state-derived-divergent-pages",
+  "contact_state_destroyed_between_contacts": true,
+  "scales": [
+    {"records": 100, "attempt_budget": 25, "contacts": 5, "committed": 100, "starved": 0},
+    {"records": 101, "attempt_budget": 25, "contacts": 6, "committed": 101, "starved": 0},
+    {"records": 1000, "attempt_budget": 25, "contacts": 50, "committed": 1000, "starved": 0},
+    {"records": 10000, "attempt_budget": 100, "contacts": 109, "committed": 10000, "starved": 0}
+  ],
+  "static_finite_fairness": "PASS",
+  "starved_eligible_records": 0,
+  "persistent_peer_cursor_required": false
+}

@@ -1,0 +1,32 @@
+{
+  "artifact": "late-page",
+  "px10_prefix_negative_control": {
+    "records": 10000,
+    "receiver_known": 9999,
+    "fresh_contacts": 3,
+    "commits": 0,
+    "result": "PREFIX_STARVATION_REPRODUCED"
+  },
+  "b2f_single_final_item": {
+    "records": 10000,
+    "receiver_known": 9999,
+    "contacts": 1,
+    "commits": 1,
+    "pages_reached": 200,
+    "pages_repeated": 199,
+    "starved": 0,
+    "result": "PASS"
+  },
+  "b2f_late_suffix": {
+    "records": 10000,
+    "receiver_known": 9000,
+    "missing": 1000,
+    "contacts": 11,
+    "bearer_attempts": 1095,
+    "commits": 1000,
+    "control_bytes": 190785,
+    "record_bytes": 54000,
+    "starved": 0,
+    "result": "PASS"
+  }
+}

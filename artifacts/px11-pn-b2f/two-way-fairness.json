@@ -1,0 +1,18 @@
+{
+  "artifact": "two-way-fairness",
+  "missing_left_to_right": 1000,
+  "missing_right_to_left": 1000,
+  "attempt_budget_per_contact": 100,
+  "contacts": 23,
+  "bearer_attempts": 2245,
+  "commits_left_to_right": 1000,
+  "commits_right_to_left": 1000,
+  "contacts_without_left_to_right_progress": 0,
+  "contacts_without_right_to_left_progress": 0,
+  "control_messages": 245,
+  "control_bytes": 410449,
+  "record_messages": 2000,
+  "record_bytes": 108000,
+  "starved_direction": null,
+  "canonical_convergence": true
+}

@@ -1,0 +1,15 @@
+{
+  "artifact": "loss-fairness",
+  "records": 1000,
+  "contacts": 15,
+  "bearer_attempts": 1087,
+  "drops": 5,
+  "duplicates": 1,
+  "sender_uncertain_events": 1,
+  "record_messages": 1001,
+  "durable_commits": 1000,
+  "starved": 0,
+  "converged": true,
+  "impairments": ["ADVERTISEMENT_DROP", "PAGE_REQUEST_DROP", "ADVERTISEMENT_PAGE_DROP", "MISSING_ID_REQUEST_DROP", "RECORD_DROP", "DUPLICATE", "DELIVER_UNCERTAIN", "DISCONNECT", "DELAY_DELIVER"],
+  "permanent_loss": {"bounded": true, "false_convergence": false, "receiver_mutations": 0}
+}

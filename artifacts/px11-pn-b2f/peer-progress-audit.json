@@ -1,0 +1,13 @@
+{
+  "artifact": "peer-progress-audit",
+  "production_path": "src/pollicino/net/fair_reconciliation.py",
+  "direct_remote_store_reads": 0,
+  "persistent_peer_progress_authorities": 0,
+  "persistent_ack_state": false,
+  "persistent_session_state": false,
+  "persistent_cursor_state": false,
+  "persistent_custody_state": false,
+  "ephemeral_lane_queues": true,
+  "resume_authority": "NATIVE_D2_D3_DURABLE_STATE",
+  "result": "PASS"
+}

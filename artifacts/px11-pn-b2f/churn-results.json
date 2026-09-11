@@ -1,0 +1,10 @@
+{
+  "artifact": "churn-results",
+  "bounded_prefix_churn_contacts": 20,
+  "new_low_sorting_identity_per_contact": 1,
+  "post_churn_static_convergence": true,
+  "state_corruption": false,
+  "static_finite_fairness": "PASS",
+  "continuous_infinite_churn_fairness": "UNPROVEN",
+  "classification": "H_CONTINUOUS_CHURN_LIMIT"
+}

@@ -1,0 +1,12 @@
+{
+  "artifact": "neutrality-scan",
+  "application_specific_b2_branches": 0,
+  "direct_remote_store_reads": 0,
+  "persistent_peer_progress_authorities": 0,
+  "concrete_bearer_d4_branches": 0,
+  "pnf1_dependency": false,
+  "fragmentation": false,
+  "real_transport": false,
+  "application_terms_scanned": ["FARO", "DNA", "DELIVERY", "CONTENT"],
+  "result": "PASS"
+}
