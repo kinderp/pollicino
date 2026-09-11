@@ -1,0 +1,11 @@
+{
+  "artifact": "px12-pn-b2c-baseline",
+  "baseline_sha": "945039462d851f9773e4d9678cdc37b7e7b4f908",
+  "candidate_gate_identifier": "PX12-PN-B2C",
+  "identifier_provenance": "PX11 closure recommendation",
+  "authoritative_replacement_found": false,
+  "worktree_clean": true,
+  "declared_suite": "414 passed, 5 skipped",
+  "focused_px11": "46 passed",
+  "compileall": "PASS"
+}
