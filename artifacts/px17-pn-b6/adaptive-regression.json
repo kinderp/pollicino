@@ -1,0 +1,23 @@
+{
+  "bounded_large_failure_probes": [
+    1000,
+    10000
+  ],
+  "compact_equality": [
+    0
+  ],
+  "compact_interruption": "TRANSPORT_FAILURE_NOT_CAPACITY_EVIDENCE",
+  "compact_success": [
+    1,
+    10,
+    20
+  ],
+  "delivered_capacity_failure_and_exact_fallback": [
+    100
+  ],
+  "exact_fallback_interruption": "COMPLETE_COMMITS_ONLY",
+  "large_probe_message_horizon": 20,
+  "oracle_mismatches": 0,
+  "px16_artifact_discrepancy": "PX16_JSON_LABELS_20_AS_CAPACITY_FAILURE_BUT_EXECUTABLE_DECODED_REGISTERED_SET",
+  "undetected_false_negatives": 0
+}

@@ -1,0 +1,11 @@
+{
+  "active_collision": "FAIL_CLOSED",
+  "half_close": "SUPPORTED_NOT_REQUIRED",
+  "lifecycle": "BIND_LISTEN_ACCEPT_ONE_BOUNDED_CONTACT_CLOSE",
+  "missing_listener": "FINITE_CONNECTION_FAILURE",
+  "mode": "0600",
+  "normal_cleanup": "PASS",
+  "owned_stale_recovery": "PASS",
+  "persistent_connection_authority": false,
+  "unowned_path_removed": false
+}

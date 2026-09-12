@@ -1,0 +1,7 @@
+{
+  "both_processes": "PASS",
+  "durable_state_only": true,
+  "fresh_listener_and_connection": true,
+  "persistent_stream_progress_required": false,
+  "persistent_stream_session_required": false
+}

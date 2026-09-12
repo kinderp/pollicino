@@ -1,0 +1,8 @@
+{
+  "blocked_sender": "FINITE_TIMEOUT",
+  "classification": "L.BACKPRESSURE_LIMIT",
+  "large_state_short_horizon": "BOUNDED_WRITE_TIMEOUT_OR_BROKEN_PIPE",
+  "semantic_inference": false,
+  "slow_reader": "PASS",
+  "user_space_queue": 0
+}

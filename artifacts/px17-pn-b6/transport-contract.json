@@ -1,0 +1,19 @@
+{
+  "adapter": "UnixStreamAdapter",
+  "address": "FILESYSTEM_PATH",
+  "api": [
+    "connect",
+    "listener.accept",
+    "send_frame",
+    "receive_frame",
+    "close"
+  ],
+  "connection_oriented": true,
+  "family": "AF_UNIX",
+  "frame_payload": "COMPLETE_EXPERIMENTAL_B4_FRAME",
+  "max_frame_bytes": 4096,
+  "ordered": true,
+  "send_success_means_commit": false,
+  "timeout_semantics": "CURRENT_TRANSPORT_OPPORTUNITY_ENDED_ONLY",
+  "type": "SOCK_STREAM"
+}

@@ -1,0 +1,8 @@
+{
+  "deadline": "FINITE_PER_FRAME",
+  "failure_poisoned_write_side": true,
+  "model": "BOUNDED_SAME_OPPORTUNITY_COMPLETION",
+  "one_byte_write_calls": "PASS",
+  "protocol_retransmission": false,
+  "unwritten_suffix_silently_dropped": false
+}

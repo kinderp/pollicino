@@ -1,0 +1,7 @@
+{
+  "fresh_c_processes": true,
+  "mule_application_semantics": 0,
+  "multi_frame_b4_payload": true,
+  "query_a_c_b": "PASS",
+  "result_b_c_a": "PASS"
+}

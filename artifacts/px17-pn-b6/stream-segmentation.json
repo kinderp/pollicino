@@ -1,0 +1,11 @@
+{
+  "concatenated_frames": "PASS",
+  "fixed_seed": 20260912,
+  "many_complete_plus_partial_final": "COMPLETE_EMITTED_PARTIAL_REJECTED",
+  "one_byte_reads": "PASS",
+  "one_byte_writes": "PASS",
+  "partial_header": "WAIT_OR_FAIL_ON_EOF",
+  "partial_payload": "WAIT_OR_FAIL_ON_EOF",
+  "random_segmentation": "PASS",
+  "segmentation_mismatches": 0
+}

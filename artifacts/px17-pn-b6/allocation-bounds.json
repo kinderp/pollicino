@@ -1,0 +1,8 @@
+{
+  "declared_oversize": "REJECTED_AFTER_52_BYTE_HEADER",
+  "maximum_b4_frame_bytes": 4096,
+  "maximum_default_buffer_bytes": 8192,
+  "maximum_read_bytes": 4096,
+  "pending_frame_queue": "BOUNDED_BY_ONE_RECV_PLUS_ONE_FRAME",
+  "unbounded_remote_allocation": 0
+}

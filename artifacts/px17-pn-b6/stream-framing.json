@@ -1,0 +1,10 @@
+{
+  "additional_framing_bytes": 0,
+  "b4_header_bytes": 52,
+  "delimiter": "B4_FIXED_HEADER_PLUS_PAYLOAD_LENGTH",
+  "existing_b4_fields_sufficient": true,
+  "maximum_default_adapter_buffer_bytes": 8192,
+  "maximum_frame_bytes": 4096,
+  "outer_magic": false,
+  "resynchronization_scan": false
+}

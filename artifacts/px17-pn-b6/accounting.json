@@ -1,0 +1,40 @@
+{
+  "capacity_10": {
+    "frames_by_ceiling": {
+      "1024": 1,
+      "128": 11,
+      "1500": 1,
+      "256": 4,
+      "4096": 1,
+      "512": 2,
+      "53": 797,
+      "64": 67
+    },
+    "message_bytes": 797
+  },
+  "initiator": {
+    "b4_bytes": 3458,
+    "b4_frames": 28,
+    "os_reads": 5,
+    "os_writes": 28,
+    "stream_bytes": 3458
+  },
+  "maximum_message": {
+    "b4_frames": 385,
+    "ceiling": 128,
+    "message_bytes": 29245
+  },
+  "responder": {
+    "b4_bytes": 438,
+    "b4_frames": 4,
+    "os_reads": 29,
+    "os_writes": 4,
+    "stream_bytes": 438
+  },
+  "sample": "10_QUERY_CAPACITY_10_MTU_128",
+  "socket_buffers": {
+    "receive": 8192,
+    "send": 8192
+  },
+  "stream_extra_wire_bytes": 0
+}

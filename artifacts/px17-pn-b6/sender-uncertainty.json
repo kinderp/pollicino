@@ -1,0 +1,7 @@
+{
+  "complete_local_write_is_commit": false,
+  "fresh_contact_skips_durable_record": "PASS",
+  "persistent_ack": 0,
+  "persistent_retry": 0,
+  "receiver_commit_sender_exit": "PASS"
+}

@@ -1,0 +1,7 @@
+{
+  "partial_stream_state_persisted": false,
+  "receiver_after_commit": "DURABLE",
+  "receiver_before_apply": "NO_MUTATION",
+  "sender_after_complete_record_write": "RECEIVER_COMMIT_RECONCILED",
+  "sender_mid_frame": "INCOMPLETE_FRAME_DISCARDED"
+}

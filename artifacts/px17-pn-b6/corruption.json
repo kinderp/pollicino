@@ -1,0 +1,8 @@
+{
+  "deleted_byte": "FAIL_CLOSED_DESYNCHRONIZED_OPPORTUNITY",
+  "header_corruption": "REJECTED",
+  "invalid_magic": "FAIL_CONNECTION_NO_SCAN",
+  "native_mutations": 0,
+  "payload_corruption": "CRC_REJECTED",
+  "repeated_receive_after_error": "IMMEDIATE_TERMINAL_FAILURE"
+}

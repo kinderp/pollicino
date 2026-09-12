@@ -1,0 +1,23 @@
+{
+  "classification": "POLLICINO_UNIX_STREAM_TRANSPORT_READY_WITH_LIMITS",
+  "compileall": "PASS",
+  "confidence": "HIGH",
+  "failures": [
+    "A.TEST_HARNESS_ERROR:macOS Unix pathname too long",
+    "A.TEST_HARNESS_ERROR:stale-worker PYTHONPATH missing",
+    "A.TEST_HARNESS_ERROR:20-difference capacity-failure assumption corrected to executable behavior",
+    "A.TEST_HARNESS_ERROR:one-contact convergence assumed despite finite shared message budget",
+    "L.BACKPRESSURE_LIMIT:short receive horizon can close while peer has an outbound batch"
+  ],
+  "focused": {
+    "passed": 59
+  },
+  "full": {
+    "passed": 763,
+    "skipped": 5
+  },
+  "gate": "PX17-PN-B6",
+  "identifier_status": "REPOSITORY_OWNER_CANDIDATE_FROM_PX16_CLOSURE_RECOMMENDATION",
+  "implementation_sha": "f9d1c02fa20ae759dadf94bd1d1610d1ba026f5b",
+  "next": "one bounded loopback IP transport experiment comparing UDP and TCP adapters under the same B4 contract"
+}

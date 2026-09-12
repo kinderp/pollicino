@@ -1,0 +1,16 @@
+{
+  "b4_family_specific_branches": 0,
+  "canonical_mismatches": 0,
+  "common_minimal_contract": [
+    "max_frame_bytes",
+    "send_frame",
+    "receive_frame",
+    "close"
+  ],
+  "families": [
+    "AF_UNIX/SOCK_DGRAM",
+    "AF_UNIX/SOCK_STREAM"
+  ],
+  "generic_capability_contract_justified": "MINIMAL_INTERFACE_YES_CAPABILITY_DESCRIPTOR_NOT_YET_NEEDED",
+  "same_b4_fragmentation": true
+}
