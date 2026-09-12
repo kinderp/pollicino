@@ -14,7 +14,7 @@ from test_px15_pn_b4_fragment_codec import MTUS, messages
 
 
 @pytest.mark.parametrize("mtu", MTUS)
-@pytest.mark.parametrize("message_index", range(5))
+@pytest.mark.parametrize("message_index", range(6))
 def test_mtu_size_matrix_roundtrips(mtu: int, message_index: int) -> None:
     encoded = messages()[message_index]
     accounting = fragmentation_accounting(encoded, max_frame_bytes=mtu)

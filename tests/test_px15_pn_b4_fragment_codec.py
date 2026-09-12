@@ -36,11 +36,11 @@ from px10_support import memory_endpoint, query
 MTUS = (64, 128, 256, 512, 1024, 1500, 4096)
 
 
-def compact_summary() -> bytes:
+def compact_summary(capacity: int = 10) -> bytes:
     endpoint = memory_endpoint("compact")
     endpoint.query_results.add_query(query(1))
     return CompactIndependentEndpoint(endpoint.catalog, endpoint.query_results).summary_message(
-        RecordKind.QUERY, 10
+        RecordKind.QUERY, capacity
     )
 
 
@@ -59,6 +59,7 @@ def messages() -> tuple[bytes, ...]:
     return (
         encode_message(ReferenceSelectionMessage((b"key",))),
         compact_summary(),
+        compact_summary(1000),
         encode_message(RecordMessage(RecordKind.QUERY, QueryRecord(b"q", bytes(4096)))),
         encode_message(RecordMessage(RecordKind.REFERENCE, BoundedReference(b"k", bytes(4096)))),
         maximum_message(),
@@ -94,6 +95,7 @@ def test_capacity_10_compact_probe_is_797_bytes() -> None:
         mtu: len(fragment_message(encoded, max_frame_bytes=mtu)) for mtu in MTUS
     }
     assert counts == {64: 67, 128: 11, 256: 4, 512: 2, 1024: 1, 1500: 1, 4096: 1}
+    assert len(compact_summary(1000)) == 28_517
 
 
 def _query_with_encoded_size(size: int) -> bytes:

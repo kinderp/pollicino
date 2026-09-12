@@ -43,12 +43,12 @@ def write(name: str, value: object) -> None:
     (OUT / name).write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
 
 
-def compact_summary() -> bytes:
+def compact_summary(capacity: int = 10) -> bytes:
     catalog = BoundedReferenceCatalog()
     queries = QueryResultStore()
     queries.add_query(QueryRecord(b"q", b"opaque"))
     return CompactIndependentEndpoint(catalog, queries).summary_message(
-        RecordKind.QUERY, 10
+        RecordKind.QUERY, capacity
     )
 
 
@@ -67,6 +67,7 @@ def messages() -> dict[str, bytes]:
     return {
         "small": encode_message(ReferenceSelectionMessage((b"key",))),
         "capacity_10_compact": compact_summary(),
+        "capacity_1000_compact": compact_summary(1000),
         "about_4k": encode_message(
             RecordMessage(RecordKind.QUERY, QueryRecord(b"q", bytes(4096)))
         ),
@@ -151,7 +152,7 @@ def main() -> None:
             "one_fragment_boundary": "PASS",
             "one_byte_above_boundary": "PASS",
             "maximum_message": "PASS",
-            "deterministic_randomized_cases": "PASS",
+            "deterministic_randomized_cases": {"count": 100, "seed": 1500042, "result": "PASS"},
         },
     )
     write(
@@ -270,6 +271,7 @@ def main() -> None:
             "fragment_envelope_bytes_separate": True,
             "os_write_calls_are_protocol_messages": False,
             "capacity_10": [row for row in matrix if row["message"] == "capacity_10_compact"],
+            "capacity_1000": [row for row in matrix if row["message"] == "capacity_1000_compact"],
             "maximum_message": [row for row in matrix if row["message"] == "maximum"],
         },
     )
@@ -308,8 +310,8 @@ def main() -> None:
             "classification": "POLLICINO_BOUNDED_FRAGMENTATION_READY_WITH_LIMITS",
             "confidence": "HIGH",
             "implementation_sha": IMPLEMENTATION_SHA,
-            "focused_tests": {"passed": 95},
-            "final_full_suite": {"passed": 659, "skipped": 5},
+            "focused_tests": {"passed": 103},
+            "final_full_suite": {"passed": 667, "skipped": 5},
             "compileall": "PASS",
             "fragment_roundtrip_mismatches": 0,
             "partial_fragment_native_mutations": 0,

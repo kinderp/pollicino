@@ -4,6 +4,7 @@ import random
 
 import pytest
 
+from pollicino.net.endpoint import RecordKind, RecordMessage, encode_message
 from pollicino.net.fragmentation import (
     ConflictingFragmentError,
     CrossMessageFragmentError,
@@ -13,6 +14,7 @@ from pollicino.net.fragmentation import (
     FragmentFrame,
     fragment_message,
 )
+from pollicino.net.query import QueryRecord
 from px15_support import compact_summary
 
 
@@ -129,3 +131,34 @@ def test_discard_removes_all_ephemeral_progress() -> None:
     assert receiver.incomplete
     receiver.discard()
     assert not receiver.incomplete and receiver.buffered_bytes == 0
+
+
+def test_fixed_seed_random_sizes_mtu_duplicates_reordering_and_loss() -> None:
+    randomizer = random.Random(1_500_042)
+    mtus = (64, 128, 256, 512, 1024, 1500, 4096)
+    for case in range(100):
+        payload = bytes(
+            randomizer.randrange(256)
+            for _ in range(randomizer.randrange(1, 4097))
+        )
+        encoded = encode_message(
+            RecordMessage(
+                RecordKind.QUERY,
+                QueryRecord(case.to_bytes(2, "big"), payload),
+            )
+        )
+        mtu = randomizer.choice(mtus)
+        frames = list(fragment_message(encoded, max_frame_bytes=mtu))
+        randomizer.shuffle(frames)
+        frames.insert(
+            randomizer.randrange(len(frames) + 1), randomizer.choice(frames)
+        )
+        _receiver, completed = _reassemble(frames, mtu)
+        assert completed == [encoded]
+        unique = {frame.index: frame for frame in frames}
+        if len(unique) > 1:
+            missing = randomizer.choice(tuple(unique))
+            receiver, incomplete = _reassemble(
+                (frame for frame in unique.values() if frame.index != missing), mtu
+            )
+            assert incomplete == [] and receiver.incomplete

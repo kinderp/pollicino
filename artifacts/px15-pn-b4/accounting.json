@@ -78,6 +78,85 @@
       "total_fragment_bytes": 849
     }
   ],
+  "capacity_1000": [
+    {
+      "fragment_count": 2377,
+      "message": "capacity_1000_compact",
+      "message_bytes": 28517,
+      "mtu": 64,
+      "overhead_bytes": 123604,
+      "overhead_percent": 433.44,
+      "payload_per_fragment": 12,
+      "roundtrip": "PASS",
+      "total_fragment_bytes": 152121
+    },
+    {
+      "fragment_count": 376,
+      "message": "capacity_1000_compact",
+      "message_bytes": 28517,
+      "mtu": 128,
+      "overhead_bytes": 19552,
+      "overhead_percent": 68.563,
+      "payload_per_fragment": 76,
+      "roundtrip": "PASS",
+      "total_fragment_bytes": 48069
+    },
+    {
+      "fragment_count": 140,
+      "message": "capacity_1000_compact",
+      "message_bytes": 28517,
+      "mtu": 256,
+      "overhead_bytes": 7280,
+      "overhead_percent": 25.529,
+      "payload_per_fragment": 204,
+      "roundtrip": "PASS",
+      "total_fragment_bytes": 35797
+    },
+    {
+      "fragment_count": 62,
+      "message": "capacity_1000_compact",
+      "message_bytes": 28517,
+      "mtu": 512,
+      "overhead_bytes": 3224,
+      "overhead_percent": 11.306,
+      "payload_per_fragment": 460,
+      "roundtrip": "PASS",
+      "total_fragment_bytes": 31741
+    },
+    {
+      "fragment_count": 30,
+      "message": "capacity_1000_compact",
+      "message_bytes": 28517,
+      "mtu": 1024,
+      "overhead_bytes": 1560,
+      "overhead_percent": 5.47,
+      "payload_per_fragment": 972,
+      "roundtrip": "PASS",
+      "total_fragment_bytes": 30077
+    },
+    {
+      "fragment_count": 20,
+      "message": "capacity_1000_compact",
+      "message_bytes": 28517,
+      "mtu": 1500,
+      "overhead_bytes": 1040,
+      "overhead_percent": 3.647,
+      "payload_per_fragment": 1448,
+      "roundtrip": "PASS",
+      "total_fragment_bytes": 29557
+    },
+    {
+      "fragment_count": 8,
+      "message": "capacity_1000_compact",
+      "message_bytes": 28517,
+      "mtu": 4096,
+      "overhead_bytes": 416,
+      "overhead_percent": 1.459,
+      "payload_per_fragment": 4044,
+      "roundtrip": "PASS",
+      "total_fragment_bytes": 28933
+    }
+  ],
   "fragment_envelope_bytes_separate": true,
   "fragment_payload_bytes_separate": true,
   "logical_protocol_bytes_separate": true,

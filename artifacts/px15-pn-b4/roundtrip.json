@@ -1,8 +1,12 @@
 {
-  "deterministic_randomized_cases": "PASS",
+  "deterministic_randomized_cases": {
+    "count": 100,
+    "result": "PASS",
+    "seed": 1500042
+  },
   "maximum_message": "PASS",
   "one_byte_above_boundary": "PASS",
   "one_fragment_boundary": "PASS",
-  "registered_mtu_message_pairs": 35,
+  "registered_mtu_message_pairs": 42,
   "roundtrip_mismatches": 0
 }

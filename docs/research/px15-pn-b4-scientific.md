@@ -18,8 +18,8 @@ corruption, and process restart did not produce partial native state. Durable
 D2/D3 state remained the only persistent progress authority.
 
 Baseline validation was 564 passed, 5 skipped; focused inherited PX11-PX14 was
-196 passed; compileall passed. The implementation closure ran 659 passed, 5
-skipped and the PX15-focused suite ran 95 passed.
+196 passed; compileall passed. The implementation closure ran 667 passed, 5
+skipped and the PX15-focused suite ran 103 passed.
 
 ## Selected model
 
@@ -44,6 +44,7 @@ registered small units. `link.py` remained byte-for-byte unchanged.
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | small control | 49 | 5 | 1 | 1 | 1 | 1 | 1 | 1 |
 | capacity-10 compact | 797 | 67 | 11 | 4 | 2 | 1 | 1 | 1 |
+| capacity-1000 compact | 28,517 | 2,377 | 376 | 140 | 62 | 30 | 20 | 8 |
 | max query | 4,146 | 346 | 55 | 21 | 10 | 5 | 3 | 2 |
 | ~16 KiB advertisement | 16,105 | 1,343 | 212 | 79 | 36 | 17 | 12 | 4 |
 | maximum B2 message | 29,245 | 2,438 | 385 | 144 | 64 | 31 | 21 | 8 |
@@ -107,4 +108,3 @@ New measured limits are the 52-byte frame header and its severe tiny-MTU
 overhead, minimum MTU 53, maximum 2,438 fragments/message, one incomplete
 message per direction, configured rather than negotiated MTU, whole-message
 resend on later contacts, and no multiplexing or fragment recovery.
-
