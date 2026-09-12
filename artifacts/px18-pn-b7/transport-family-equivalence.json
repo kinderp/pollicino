@@ -1,0 +1,11 @@
+{
+  "canonical_mismatches": 0,
+  "common_contract": ["max_frame_bytes", "send_frame", "receive_frame", "close"],
+  "contract_status": "GENERIC_TRANSPORT_ADAPTER_CONTRACT_READY",
+  "transports": {
+    "AF_UNIX_SOCK_DGRAM": {"message_boundary": true, "connection_oriented": false, "extra_framing": 0},
+    "AF_UNIX_SOCK_STREAM": {"message_boundary": false, "connection_oriented": true, "extra_framing": 0},
+    "AF_INET_SOCK_DGRAM": {"message_boundary": true, "connection_oriented": false, "extra_framing": 0}
+  },
+  "upper_layer_changes_for_udp": 0
+}

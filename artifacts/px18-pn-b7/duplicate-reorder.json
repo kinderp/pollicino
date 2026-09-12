@@ -1,0 +1,7 @@
+{
+  "corruption": "B4_FAIL_CLOSED",
+  "delay": "PASS_WITHIN_BOUNDED_OPPORTUNITY",
+  "duplicate": "PASS_IDEMPOTENT_B4_REASSEMBLY",
+  "native_duplicate_commits": 0,
+  "reorder": "PASS_UNORDERED_B4_REASSEMBLY"
+}

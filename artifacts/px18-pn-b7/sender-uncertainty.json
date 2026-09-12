@@ -1,0 +1,7 @@
+{
+  "send_success_equals_commit": false,
+  "unused_port_first_send": "LOCAL_SUCCESS_OBSERVED",
+  "unused_port_later_receive": "ECONNREFUSED_ERRNO_61_OBSERVED_ON_TEST_PLATFORM",
+  "correctness_depends_on_icmp": false,
+  "resolution_authority": "RECEIVER_DURABLE_STATE_ON_FRESH_RECONCILIATION"
+}

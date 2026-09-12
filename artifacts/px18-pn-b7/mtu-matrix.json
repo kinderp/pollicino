@@ -1,0 +1,9 @@
+{
+  "capacity_10_message_bytes": 797,
+  "capacity_10_frames": {"53": 797, "64": 67, "128": 11, "256": 4, "512": 2, "1024": 1, "1500": 1, "4096": 1},
+  "ceilings_tested": [53, 64, 128, 256, 512, 1024, 1500, 4096],
+  "datagram_mapping_mismatches": 0,
+  "maximum_message": {"bytes": 29245, "ceiling": 128, "datagrams": 385, "roundtrip": "PASS"},
+  "physical_path_mtu_claim": false,
+  "roundtrip_failures": 0
+}

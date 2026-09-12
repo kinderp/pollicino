@@ -1,0 +1,8 @@
+{
+  "application_semantic_branches": 0,
+  "fragmented_messages": true,
+  "mule_restart": true,
+  "query_forward": "PASS",
+  "result_return": "PASS",
+  "semantic_blindness": "PASS"
+}

@@ -1,0 +1,9 @@
+{
+  "canonical_mismatches": 0,
+  "durable_commits": 10,
+  "endpoint_processes": 2,
+  "process_ids_distinct": true,
+  "receiver_queries": 10,
+  "shared_endpoint_objects": 0,
+  "transport": "AF_INET/SOCK_DGRAM/127.0.0.1"
+}

@@ -1,0 +1,13 @@
+{
+  "application_specific_udp_branches": 0,
+  "direct_remote_store_reads": 0,
+  "dns": 0,
+  "nat_traversal": 0,
+  "persistent_fragment_state": 0,
+  "persistent_udp_ack_state": 0,
+  "persistent_udp_session_state": 0,
+  "routing_or_discovery": 0,
+  "udp_specific_b2_family_branches": 0,
+  "udp_specific_b4_branches": 0,
+  "udp_specific_d4_branches": 0
+}

@@ -1,0 +1,9 @@
+{
+  "direct_state_digest": "bae1e54ec9a499bc611906ea0bbdb1dad25320b826bc983e2bb99c975be5cc48",
+  "pass_relay_state_digest": "bae1e54ec9a499bc611906ea0bbdb1dad25320b826bc983e2bb99c975be5cc48",
+  "relay_application_semantics": 0,
+  "relay_b2_semantics": 0,
+  "relay_datagrams_forwarded": 32,
+  "relay_processes": 1,
+  "result": "PASS"
+}

@@ -1,0 +1,7 @@
+{
+  "both_processes_restarted": true,
+  "eventual_convergence": true,
+  "persistent_fragment_state": 0,
+  "persistent_udp_session_state": 0,
+  "persistent_udp_progress_state": 0
+}

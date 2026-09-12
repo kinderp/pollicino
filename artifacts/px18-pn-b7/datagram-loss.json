@@ -1,0 +1,8 @@
+{
+  "compact_loss_capacity_failure_inferred": false,
+  "exact_fallback_loss_partial_native_mutations": 0,
+  "false_convergence": 0,
+  "permanent_loss": "FINITE_NON_CONVERGENCE",
+  "retransmission": false,
+  "whole_datagram_loss": "INCOMPLETE_B4_NO_NATIVE_MUTATION"
+}

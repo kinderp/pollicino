@@ -1,0 +1,7 @@
+{
+  "receiver_before_commit": "ZERO_MUTATION_AND_FRESH_RECOVERY",
+  "receiver_after_commit": "DURABLE_PROGRESS_PRESERVED",
+  "sender_after_initial_send": "NO_DELIVERY_INFERENCE_AND_FRESH_RECOVERY",
+  "sender_after_response_send": "RECEIVER_DURABLE_STATE_RESOLVED_UNCERTAINTY",
+  "transport_ack_state": 0
+}

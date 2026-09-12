@@ -1,0 +1,8 @@
+{
+  "authentication": false,
+  "connected_udp": true,
+  "foreign_datagram_native_mutations": 0,
+  "foreign_datagram_result": "KERNEL_FILTERED_RECEIVE_TIMEOUT",
+  "source_tuple_is_identity": false,
+  "unexpected_source_native_mutations": 0
+}

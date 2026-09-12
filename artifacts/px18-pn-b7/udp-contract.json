@@ -1,0 +1,16 @@
+{
+  "adapter": "UDPAdapter",
+  "api": ["max_frame_bytes", "send_frame", "receive_frame", "close"],
+  "connected_udp": true,
+  "connection_is_session_authority": false,
+  "extra_framing_bytes": 0,
+  "family": "AF_INET",
+  "frame_payload": "COMPLETE_EXPERIMENTAL_B4_FRAME",
+  "frames_per_datagram": 1,
+  "datagrams_per_frame": 1,
+  "host_scope": "NUMERIC_IPV4_LOOPBACK_ONLY",
+  "max_frame_bytes": 4096,
+  "min_frame_bytes": 53,
+  "send_success_means_commit": false,
+  "type": "SOCK_DGRAM"
+}

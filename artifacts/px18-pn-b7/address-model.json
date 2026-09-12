@@ -1,0 +1,14 @@
+{
+  "address": ["127.0.0.1", "EXPLICIT_PORT"],
+  "address_is_identity": false,
+  "bind_port_zero_used_by_harness": true,
+  "connected_udp_reason": "configured contact peer and kernel source filtering with no reliability semantics",
+  "dns": false,
+  "ipv4": true,
+  "ipv6": false,
+  "multicast": false,
+  "nat_traversal": false,
+  "peer_discovery": false,
+  "routing": false,
+  "source_filtering_is_authentication": false
+}

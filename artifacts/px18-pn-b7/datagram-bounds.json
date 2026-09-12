@@ -1,0 +1,12 @@
+{
+  "empty": "REJECTED_BEFORE_B4",
+  "exact_ceiling": "PASS",
+  "incoming_oversize": "REJECTED_AT_CEILING_PLUS_ONE",
+  "maximum_configured_frame": 4096,
+  "minimum_configured_frame": 53,
+  "outgoing_oversize": "REJECTED_BEFORE_SEND",
+  "receive_strategy": "recv(configured_ceiling + 1)",
+  "short_datagrams": "OPAQUE_RECEIVE_THEN_B4_REJECTION",
+  "silent_truncations_accepted": 0,
+  "unbounded_remote_allocation": 0
+}

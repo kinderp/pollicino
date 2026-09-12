@@ -1,0 +1,12 @@
+{
+  "clean_10_query_contact": {
+    "b2_message_bytes": 2232,
+    "b4_frame_bytes": 3896,
+    "datagrams": 32,
+    "native_commits": 10,
+    "udp_payload_bytes": 3896
+  },
+  "datagrams_equal_frames": true,
+  "pollicino_udp_adapter_extra_bytes": 0,
+  "udp_payload_equals_b4_frame_bytes": true
+}

@@ -1,0 +1,9 @@
+{
+  "attempt_bound": 2000,
+  "datagrams_accepted": 2000,
+  "observed_platform_result": "ALL_BOUNDED_SEND_ATTEMPTS_ACCEPTED_WITHOUT_RECEIVER_DRAIN",
+  "protocol_inference": false,
+  "send_buffer_observed": 9216,
+  "receive_buffer_configured_and_observed": 1024,
+  "unbounded_user_queue": false
+}
