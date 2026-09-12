@@ -1,0 +1,6 @@
+{
+  "fresh_contact_skip": "PASS",
+  "persistent_ack": 0,
+  "receiver_commit_sender_uncertain": "PASS",
+  "send_success_is_commit": false
+}

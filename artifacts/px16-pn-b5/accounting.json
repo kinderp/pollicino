@@ -1,0 +1,10 @@
+{
+  "b2_bytes": "SEPARATE",
+  "b4_frame_bytes": "SEPARATE",
+  "datagrams_received": "RECORDED",
+  "datagrams_sent": "RECORDED",
+  "drops_duplicates_reorders": "RELAY_RECORDED",
+  "native_commits": "WORKER_RECORDED",
+  "valid_received_equals_frames": true,
+  "valid_sent_equals_frames": true
+}

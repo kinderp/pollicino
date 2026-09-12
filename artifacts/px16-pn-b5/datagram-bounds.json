@@ -1,0 +1,13 @@
+{
+  "empty": "REJECTED",
+  "exact_ceiling": "PASS",
+  "incoming_oversize": "REJECTED",
+  "maximum": 4096,
+  "minimum": 53,
+  "mtu_mismatch": "SAFE_REJECTION",
+  "negotiation": false,
+  "outgoing_oversize": "LOCAL_REJECTION",
+  "receive_strategy": "CEILING_PLUS_ONE",
+  "short": "B4_REJECTED",
+  "silent_truncations": 0
+}

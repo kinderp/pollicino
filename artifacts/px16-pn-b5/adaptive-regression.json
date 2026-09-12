@@ -1,0 +1,16 @@
+{
+  "capacity_failure_and_exact": [
+    20
+  ],
+  "compact_success": [
+    0,
+    1,
+    10
+  ],
+  "inherited_scale": [
+    100,
+    1000
+  ],
+  "oracle_mismatches": 0,
+  "undetected_false_negatives": 0
+}

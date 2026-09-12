@@ -1,0 +1,10 @@
+{
+  "adaptive_fallback": "PASS",
+  "canonical_mismatches": 0,
+  "compact": "PASS",
+  "direct_remote_store_reads": 0,
+  "exact": "PASS",
+  "independent_processes": 2,
+  "query": "PASS",
+  "shared_endpoint_objects": 0
+}

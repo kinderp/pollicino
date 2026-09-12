@@ -1,0 +1,5 @@
+{
+  "both_processes": "PASS",
+  "persistent_transport_session_required": false,
+  "socket_paths": "RECREATED"
+}

@@ -1,0 +1,10 @@
+{
+  "application_specific_transport_branches": 0,
+  "authentication": 0,
+  "concrete_transport_b4_branches": 0,
+  "discovery": 0,
+  "retries": 0,
+  "routing": 0,
+  "unix_specific_b2_family_branches": 0,
+  "unix_specific_d4_branches": 0
+}

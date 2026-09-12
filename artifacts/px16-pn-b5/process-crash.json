@@ -1,0 +1,6 @@
+{
+  "peer_exit_before_send": "TRANSPORT_FAILURE",
+  "receiver_after_commit": "DURABLE",
+  "receiver_before_apply": "NO_MUTATION",
+  "sender_after_send": "RECONCILE_DURABLE_TRUTH"
+}

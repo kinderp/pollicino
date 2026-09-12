@@ -1,0 +1,15 @@
+{
+  "address": "FILESYSTEM_PATH",
+  "api": [
+    "send_frame",
+    "receive_frame"
+  ],
+  "b4_frames_per_datagram": 1,
+  "datagrams_per_b4_frame": 1,
+  "extra_framing_bytes": 0,
+  "family": "AF_UNIX",
+  "send_success_means_commit": false,
+  "timeout_semantics": "OPPORTUNITY_ENDED_ONLY",
+  "type": "SOCK_DGRAM",
+  "user_space_queue": 0
+}

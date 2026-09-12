@@ -1,0 +1,52 @@
+{
+  "maximum_message": {
+    "bytes": 29245,
+    "datagrams": 385,
+    "mtu": 128,
+    "roundtrip": "PASS"
+  },
+  "message": "PX13_CAPACITY_10_COMPACT",
+  "message_bytes": 797,
+  "rows": [
+    {
+      "datagrams": 797,
+      "mtu": 53,
+      "roundtrip": "PASS"
+    },
+    {
+      "datagrams": 67,
+      "mtu": 64,
+      "roundtrip": "PASS"
+    },
+    {
+      "datagrams": 11,
+      "mtu": 128,
+      "roundtrip": "PASS"
+    },
+    {
+      "datagrams": 4,
+      "mtu": 256,
+      "roundtrip": "PASS"
+    },
+    {
+      "datagrams": 2,
+      "mtu": 512,
+      "roundtrip": "PASS"
+    },
+    {
+      "datagrams": 1,
+      "mtu": 1024,
+      "roundtrip": "PASS"
+    },
+    {
+      "datagrams": 1,
+      "mtu": 1500,
+      "roundtrip": "PASS"
+    },
+    {
+      "datagrams": 1,
+      "mtu": 4096,
+      "roundtrip": "PASS"
+    }
+  ]
+}

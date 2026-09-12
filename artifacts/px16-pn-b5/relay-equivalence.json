@@ -1,0 +1,6 @@
+{
+  "application_semantics": 0,
+  "kernel_hops": 2,
+  "pass_matches_direct": true,
+  "relay_processes": 1
+}

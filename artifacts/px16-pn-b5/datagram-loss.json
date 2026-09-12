@@ -1,0 +1,7 @@
+{
+  "compact_drop": "TRANSPORT_FAILURE_NO_CAPACITY_FALLBACK",
+  "exact_fallback_drop": "ONLY_COMPLETE_COMMITS_SURVIVE",
+  "false_convergence": 0,
+  "permanent": "FINITE_NON_CONVERGED",
+  "whole_drop": "INCOMPLETE_NO_MUTATION"
+}

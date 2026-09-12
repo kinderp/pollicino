@@ -1,0 +1,9 @@
+{
+  "active_collision": "FAIL_CLOSED",
+  "mode": "0600",
+  "normal_cleanup": "PASS",
+  "owned_stale_recovery": "PASS",
+  "pathname_is_identity": false,
+  "restart_rebind": "PASS",
+  "unowned_path_removed": false
+}

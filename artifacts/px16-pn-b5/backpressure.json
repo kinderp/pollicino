@@ -1,0 +1,12 @@
+{
+  "datagram_bytes": 128,
+  "errno": 55,
+  "fresh_contact_progress": "PASS",
+  "outcome": "ENOBUFS",
+  "platform": "macOS Darwin",
+  "retry": false,
+  "so_rcvbuf": 4096,
+  "so_sndbuf": 2048,
+  "successes_before_pressure": 26,
+  "user_queue": 0
+}

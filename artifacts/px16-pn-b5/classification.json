@@ -1,0 +1,22 @@
+{
+  "classification": "POLLICINO_UNIX_DATAGRAM_TRANSPORT_READY_WITH_LIMITS",
+  "compileall": "PASS",
+  "confidence": "HIGH",
+  "failures": [
+    "A.TEST_HARNESS_ERROR:sandbox AF_UNIX restriction",
+    "A.TEST_HARNESS_ERROR:attempt budget fixture",
+    "K.BACKPRESSURE_LIMIT:macOS ENOBUFS after 26 queued datagrams",
+    "A.TEST_HARNESS_ERROR:relay destination exit handling"
+  ],
+  "focused": {
+    "passed": 37
+  },
+  "full": {
+    "passed": 704,
+    "skipped": 5
+  },
+  "gate": "PX16-PN-B5",
+  "identifier_status": "REPOSITORY_OWNER_CANDIDATE_FROM_PX15",
+  "implementation_sha": "e8c02ac5c09ef10909e5a3ffd39963be91f49ddd",
+  "next": "bounded Unix-domain SOCK_STREAM adapter using existing B4 length fields"
+}
