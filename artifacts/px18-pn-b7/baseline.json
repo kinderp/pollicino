@@ -1,0 +1,22 @@
+{
+  "branch": "pollicino/px18-pn-b7-udp-loopback",
+  "clean": true,
+  "compileall": "PASS",
+  "focused_px15_px16_px17": {
+    "passed": 199
+  },
+  "full": {
+    "passed": 763,
+    "skipped": 5
+  },
+  "identifier_provenance": "REPOSITORY_OWNER_CANDIDATE_FROM_PX17_CLOSURE_RECOMMENDATION",
+  "px16_checkpoint": {
+    "local": "21f8f64f630f743ed5e31dcba90732b543f3b82b",
+    "remote": "21f8f64f630f743ed5e31dcba90732b543f3b82b"
+  },
+  "px17_checkpoint": {
+    "local": "6d6235f233ff74801704358454a66c1cad90d1f7",
+    "remote": "6d6235f233ff74801704358454a66c1cad90d1f7"
+  },
+  "sha": "6d6235f233ff74801704358454a66c1cad90d1f7"
+}
