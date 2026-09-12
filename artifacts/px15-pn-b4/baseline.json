@@ -1,0 +1,22 @@
+{
+  "baseline_sha": "73c72d55d9775029cdc1824b04fea8e5e53367d2",
+  "branch": "pollicino/px14-pn-b3-independent-process-io",
+  "clean": true,
+  "compileall": "PASS",
+  "focused_px11_px12_px13_px14": {
+    "passed": 196
+  },
+  "full_suite": {
+    "passed": 564,
+    "skipped": 5
+  },
+  "px13_checkpoint": {
+    "local": "d57aff74a737109e0ef3dca4fbb3b190be4aaeaa",
+    "remote": "d57aff74a737109e0ef3dca4fbb3b190be4aaeaa"
+  },
+  "px14_checkpoint": {
+    "local": "73c72d55d9775029cdc1824b04fea8e5e53367d2",
+    "remote": "73c72d55d9775029cdc1824b04fea8e5e53367d2"
+  },
+  "remote_main_observed": "b934a268d010bd4fdde1c2c78a2d347947806c66"
+}

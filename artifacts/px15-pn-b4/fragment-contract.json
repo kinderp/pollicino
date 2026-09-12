@@ -1,0 +1,24 @@
+{
+  "authentication": false,
+  "complete_message_integrity": "INHERITED_B2_SHA256",
+  "encoding": "pollicino.experimental-b4-fragment.v1",
+  "fields": [
+    "magic",
+    "version",
+    "type",
+    "message_sha256",
+    "total_length",
+    "index",
+    "count",
+    "payload_length",
+    "payload_crc32"
+  ],
+  "fragment_is_progress": false,
+  "fragment_local_integrity": "CRC32",
+  "header_bytes": 52,
+  "maximum_message_bytes": 29245,
+  "maximum_mtu": 4096,
+  "minimum_mtu": 53,
+  "ordering": "UNORDERED_SAFE",
+  "stable_wire_protocol": false
+}

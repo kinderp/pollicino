@@ -1,0 +1,7 @@
+{
+  "receiver_after_commit": "DURABLE_COMMIT_PRESERVED",
+  "receiver_after_reassembly_before_apply": "NO_MUTATION",
+  "receiver_mid_reassembly": "NO_MUTATION",
+  "sender_after_receiver_commit": "RESOLVED_BY_FRESH_RECONCILIATION",
+  "sender_mid_fragmentation": "WHOLE_MESSAGE_LOSS"
+}

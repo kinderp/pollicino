@@ -1,0 +1,8 @@
+{
+  "conflicting_duplicate": "FAIL_CLOSED",
+  "cross_message_contamination": 0,
+  "delayed_post_completion_duplicate": "IDEMPOTENT",
+  "identical_duplicate": "IDEMPOTENT",
+  "reverse_order": "PASS",
+  "seeded_random_order": "PASS"
+}

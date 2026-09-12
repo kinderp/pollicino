@@ -1,0 +1,11 @@
+{
+  "ack_retry_required": false,
+  "future_adapter_possible": true,
+  "link_py_changed": false,
+  "promotion_to_stable_protocol_justified": false,
+  "pure_codec_callable_without_transmit_exact": true,
+  "safe_b2_allocation_bound_present": false,
+  "transmit_exact_entered_b4": false,
+  "unordered_duplicate_safe_batch_reassembly": true,
+  "wholesale_reuse": "REJECTED"
+}

@@ -1,0 +1,11 @@
+{
+  "complete_message_digest_mismatch": "REJECTED",
+  "impossible_index_count_shape": "REJECTED",
+  "native_mutations": 0,
+  "payload_crc_mismatch": "REJECTED",
+  "truncated_header": "REJECTED",
+  "truncated_payload": "REJECTED",
+  "unknown_magic": "REJECTED",
+  "unknown_type": "REJECTED",
+  "unknown_version": "REJECTED"
+}

@@ -1,0 +1,10 @@
+{
+  "compact_probe_loss": "TRANSPORT_FAILURE_NO_FALLBACK",
+  "exact_fallback_loss": "ONLY_EARLIER_COMPLETE_COMMITS_SURVIVE",
+  "false_convergence": 0,
+  "final": "INCOMPLETE_NO_MUTATION",
+  "first": "INCOMPLETE_NO_MUTATION",
+  "middle": "INCOMPLETE_NO_MUTATION",
+  "multiple": "INCOMPLETE_NO_MUTATION",
+  "permanent_loss": "FINITE_NON_CONVERGED"
+}

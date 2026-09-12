@@ -1,0 +1,7 @@
+{
+  "both_process_restart": "PASS",
+  "fresh_contact_authority": "DURABLE_D2_D3_STATE",
+  "persistent_fragment_ack_state": 0,
+  "persistent_fragment_cursor_state": 0,
+  "persistent_reassembly_state_required": false
+}

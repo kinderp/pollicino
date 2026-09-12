@@ -1,0 +1,10 @@
+{
+  "application_specific_fragmentation_branches": 0,
+  "authentication_or_encryption": 0,
+  "concrete_bearer_fragmentation_branches": 0,
+  "direct_remote_store_reads": 0,
+  "fragmentation_specific_d4_core_branches": 0,
+  "pnf1_dependency": 0,
+  "real_transport": 0,
+  "relay_application_semantics": 0
+}

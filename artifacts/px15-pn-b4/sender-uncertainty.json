@@ -1,0 +1,5 @@
+{
+  "already_committed_retransferred_as_missing": 0,
+  "persistent_ack_required": false,
+  "receiver_commit_then_sender_uncertainty": "PASS"
+}

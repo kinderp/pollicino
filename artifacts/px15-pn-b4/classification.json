@@ -1,0 +1,39 @@
+{
+  "classification": "POLLICINO_BOUNDED_FRAGMENTATION_READY_WITH_LIMITS",
+  "compileall": "PASS",
+  "confidence": "HIGH",
+  "false_reassembly": 0,
+  "final_full_suite": {
+    "passed": 659,
+    "skipped": 5
+  },
+  "focused_tests": {
+    "passed": 95
+  },
+  "fragment_roundtrip_mismatches": 0,
+  "gate": "PX15-PN-B4",
+  "identifier_status": "REPOSITORY_OWNER_CANDIDATE_FROM_PX14_RECOMMENDATION",
+  "implementation_sha": "b0d3302edde427ccb91e0efa64a9bb4c5ea160b3",
+  "next_experiment": "first real local transport adapter with both ordered-stream and datagram fault surfaces, keeping B4 experimental",
+  "oracle_mismatches": 0,
+  "partial_fragment_native_mutations": 0,
+  "repaired_failures": [
+    {
+      "case": "post-completion delayed duplicate initially opened a new incomplete message",
+      "class": "C.REASSEMBLY_IMPLEMENTATION_ERROR",
+      "repair": "bounded contact-local last-completed identity suppresses duplicates"
+    },
+    {
+      "case": "partial-reassembly fixture initially used a one-fragment record",
+      "class": "A.TEST_HARNESS_ERROR",
+      "repair": "registered a genuinely multi-fragment MTU"
+    },
+    {
+      "case": "relay decoded corrupted fragments before receiver validation",
+      "class": "D.FRAGMENT_ACCOUNTING_ERROR",
+      "repair": "relay forwards malformed bytes and accounts envelope bytes structurally"
+    }
+  ],
+  "starved_eligible_records": 0,
+  "undetected_false_negatives": 0
+}

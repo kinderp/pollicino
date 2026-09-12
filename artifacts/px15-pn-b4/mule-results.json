@@ -1,0 +1,8 @@
+{
+  "explicit_reference": "PASS",
+  "mule_application_semantics": 0,
+  "processes": "INDEPENDENT_FRESH_WORKERS",
+  "query_forward": "PASS",
+  "result_reverse": "PASS",
+  "unselected_reference_transferred": false
+}

@@ -1,0 +1,11 @@
+{
+  "maximum_fragment_bytes_per_contact": 40960000,
+  "maximum_fragment_metadata_entries": 2438,
+  "maximum_fragments_per_contact": 10000,
+  "maximum_fragments_per_message": 2438,
+  "maximum_message_bytes": 29245,
+  "maximum_reassembly_bytes": 29245,
+  "oversized_total_rejected_after_header": true,
+  "simultaneous_incomplete_messages": 1,
+  "unbounded_remote_allocation": 0
+}

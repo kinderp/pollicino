@@ -1,0 +1,14 @@
+{
+  "capacity_10_bytes": 797,
+  "catalog_scale": 1000,
+  "differences": {
+    "0": "EQUAL",
+    "1": "DECODED",
+    "10": "DECODED",
+    "100": "CAPACITY_EXCEEDED_THEN_EXACT",
+    "1000": "CAPACITY_EXCEEDED_THEN_EXACT"
+  },
+  "oracle_mismatches": 0,
+  "transport_loss_is_capacity_evidence": false,
+  "undetected_false_negatives": 0
+}
