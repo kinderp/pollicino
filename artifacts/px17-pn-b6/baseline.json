@@ -1,0 +1,22 @@
+{
+  "branch": "pollicino/px17-pn-b6-unix-stream",
+  "clean": true,
+  "compileall": "PASS",
+  "focused_px14_px15_px16": {
+    "passed": 198
+  },
+  "full": {
+    "passed": 704,
+    "skipped": 5
+  },
+  "identifier_provenance": "REPOSITORY_OWNER_CANDIDATE_FROM_PX16_CLOSURE_RECOMMENDATION",
+  "px15_checkpoint": {
+    "local": "82ba2e70fe1262f2eac47ab656cd45a304a58a0c",
+    "remote": "82ba2e70fe1262f2eac47ab656cd45a304a58a0c"
+  },
+  "px16_checkpoint": {
+    "local": "21f8f64f630f743ed5e31dcba90732b543f3b82b",
+    "remote": "21f8f64f630f743ed5e31dcba90732b543f3b82b"
+  },
+  "sha": "21f8f64f630f743ed5e31dcba90732b543f3b82b"
+}
