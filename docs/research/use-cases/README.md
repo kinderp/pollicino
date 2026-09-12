@@ -62,6 +62,11 @@ Core rules for every use case:
 | [UC-045](uc-045-buffer-aware-mobile-data-harvester.md) | Buffer-Aware Mobile Data Harvester | choose what to collect first during short mobile contacts | finite-contact queue-policy comparison | useful after UC-008 | High |
 | [UC-046](uc-046-raiatea-answer-capsule-edge-rag.md) | Raiatea Answer Capsule / Offline Edge RAG | return compact source-bound answers without moving corpus/model | public corpus + delayed query/answer/evidence loop | useful early | High |
 | [UC-047](uc-047-digital-to-physical-fabrication-job-courier.md) | Digital-to-Physical Fabrication Job Courier | discover/queue a safe fabrication capability and later receive a physical result | virtual machine/job queue + exact artifact manifest | useful early | Medium–High |
+| [UC-048](uc-048-offline-verifiable-credential-entitlement-ferry.md) | Offline Verifiable Credential and Entitlement Ferry | verify a narrow entitlement while issuer/verifier are disconnected | synthetic credentials + stale/revoked status tests | useful early | Medium–High |
+| [UC-049](uc-049-dynamic-route-condition-access-map.md) | Dynamic Route Condition and Access Map | propagate fresh/conflicting passability state over an offline base map | synthetic route graph + delayed signed observations | useful early | Medium–High |
+| [UC-050](uc-050-pseudonymous-lost-found-encounter-trail.md) | Pseudonymous Lost-and-Found Encounter Trail | recover a tagged object without keeping continuous people/object tracks | synthetic rotating-tag encounters + delayed lost query | useful early | Medium |
+| [UC-051](uc-051-delay-tolerant-anonymous-classroom-ballot.md) | Delay-Tolerant Anonymous Classroom Survey / Ballot | converge a low-stakes private poll across disconnected groups | synthetic eligibility + encrypted delayed ballots | later | High |
+| [UC-052](uc-052-islanded-microgrid-energy-budget-coordination.md) | Islanded Microgrid Energy Budget and Flexible-Load Coordination | coordinate harmless flexible loads under intermittent energy/connectivity | discrete-time energy/load simulator | later | High |
 
 ## Current top 3 next experiments for the Messina student network
 
@@ -79,6 +84,11 @@ This remains the best immediate human-visible service experiment. Four boards ar
 
 ### Strong follow-ups
 
+- **UC-049 — Dynamic Route Condition and Access Map:** strongest new emergency/mapping teaching scenario because it adds fresh/conflicting access state on top of UC-017 without pretending the prototype is an authoritative evacuation router.
+- **UC-050 — Pseudonymous Lost-and-Found Encounter Trail:** strongest new student-facing DNATrace-style experiment; BLE encounters plus delayed LoRa query/result flow can be demonstrated with a harmless tagged school object and explicit anti-tracking rules.
+- **UC-048 — Offline Verifiable Credential and Entitlement Ferry:** strong security primitive for later services because it separates narrow offline authorization from reusable credentials and composes directly with UC-019/020.
+- **UC-051 — Delay-Tolerant Anonymous Classroom Survey / Ballot:** compact cryptography/distributed-systems teaching case, deliberately limited to harmless synthetic polls and not election-grade claims.
+- **UC-052 — Islanded Microgrid Energy Budget and Flexible-Load Coordination:** useful rural/IoT research direction, but only after a software simulator and then a low-voltage bench; local safety bounds remain non-networked.
 - **UC-043 — Opportunistic Local Exchange and Reuse Marketplace:** especially strong September/student-facing scenario; use textbooks first, then repeat with calculators/components to prove the protocol is generic rather than book-specific.
 - **UC-044 — Offline Git Repository and Patch Ferry:** highly practical computing-class experiment because Git already provides exact object identity and offline bundles while PollicinoNet contributes delayed discovery/courier behavior.
 - **UC-045 — Buffer-Aware Mobile Data Harvester:** focused research follow-up to UC-005/UC-008 that asks what a moving collector should take first when the contact window is too short for the whole backlog.
@@ -160,7 +170,12 @@ The following can be implemented without any radio hardware:
 40. implement UC-045 finite-contact queue scheduling with FIFO/expiry/priority/buffer-pressure baselines and resumable partial objects over identical synthetic traces;
 41. implement UC-046 a public versioned corpus + local RAG node that returns short answer capsules with exact evidence refs, explicit abstention and stale-version rejection;
 42. implement UC-047 a virtual fabrication capability/queue with exact job manifests, duplicate-execution prevention, operator approval, cancellation and physical-pickup state;
-43. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability, custody-gap convergence, exchange time-to-match, Git bytes/commit convergence, harvest deadline/drop metrics, answer/evidence bytes and fabrication-job turnaround as applicable.
+43. implement UC-048 synthetic issuer/holder/verifier credentials, offline verification, verifier-bound replay tests, revocation freshness states and minimal-claim presentations;
+44. implement UC-049 a synthetic route graph with signed condition observations, TTL/freshness, conflicts, reopening updates, multi-witness corroboration and evidence-by-hash;
+45. implement UC-050 rotating synthetic object tags, delayed lost-item queries, privacy-limited match disclosure, replay/fabricated-sighting negative tests and short retention;
+46. implement UC-051 a harmless synthetic poll with one-use eligibility tokens, encrypted ballot envelopes, duplicate/late rejection and exact accepted-set convergence;
+47. implement UC-052 a discrete-time low-voltage microgrid simulator with battery/production traces, local hard bounds, delayed energy summaries and at least three flexible-load policies;
+48. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability, custody-gap convergence, exchange time-to-match, Git bytes/commit convergence, harvest deadline/drop metrics, answer/evidence bytes, fabrication-job turnaround, credential-status freshness, route-condition convergence, lost-query match delay, accepted-ballot convergence and flexible-load completion as applicable.
 
 This reuses the current architecture instead of creating a special PHY or a separate networking stack per scenario.
 
@@ -178,6 +193,11 @@ After the simulator contracts are stable:
 - a UC-045 3–5 fixed-node + walking/bicycle collector experiment where contacts are deliberately too short for all backlog, comparing at least two queue policies on the same route;
 - a UC-046 3-node requester/relay/local-RAG experiment using a public teaching corpus, compact query/answer metadata and later exact evidence retrieval over UC-033;
 - a UC-047 supervised paper/3D-print job with real capability/status exchange, rich-bearer file submission, operator approval and physical pickup;
+- a UC-048 3–4 node synthetic credential drill with a disconnected verifier, relay-carried trust/status update, local BLE/NFC/Wi-Fi presentation and replay/revocation negative cases;
+- a UC-049 4+ node campus/corridor access-map drill with synthetic closures/reopenings, moving relays, conflicting observations and optional later photo retrieval;
+- a UC-050 4–6 node lost-and-found drill with a harmless tagged school object, rotating BLE IDs, delayed lost-item query and measured query-to-match behavior;
+- a UC-051 5+ node harmless classroom poll split across two disconnected groups, one moving courier, duplicate/late ballots and final accepted-set convergence;
+- a UC-052 low-voltage DC bench experiment only after simulation, using harmless LEDs/fans/USB loads, 3–5 LoRa nodes and scripted energy/load profiles; never mains or safety-critical loads;
 - a UC-024 4+ node cache/request experiment where the requester cannot directly contact the content holder and the final object moves over a richer bearer;
 - a UC-034 3+ node query-to-data experiment with one unreachable corpus/search node, one moving relay and later exact selected-document retrieval over UC-033;
 - a UC-035 4–6 node aggregate experiment comparing raw-event forwarding with a mergeable summary under the same controlled workload;
@@ -219,6 +239,11 @@ Measured packet loss, RSSI/SNR, airtime, latency, contact duration, energy where
 
 The use cases are consistent with existing research directions without copying their assumptions into the PollicinoNet core:
 
+- W3C Verifiable Credentials 2.0, JOSE/COSE and compact credential status mechanisms, relevant to UC-048 while keeping the first profile synthetic and much smaller than a full identity ecosystem;
+- 2026 humanitarian/open-mapping activations that emphasize damaged roads/infrastructure and changing access conditions, relevant to UC-049 without making PollicinoNet an authoritative emergency map;
+- opportunistic BLE crowds/phone readers used by modern asset-tracking systems, relevant to UC-050 while PollicinoNet deliberately minimizes trajectory and identity retention;
+- privacy-preserving/verifiable voting systems using anonymous eligibility and threshold cryptography, relevant to UC-051 as research signal only, not election-grade validation;
+- 2026 LPWAN/LoRaMESH energy-management and demand-response research, relevant to UC-052 while restricting PollicinoNet experiments to simulation and low-voltage harmless loads;
 - community reuse/circular-economy platforms and reuse organisations as social infrastructure, relevant to UC-043 while keeping payments and unsafe goods outside the initial protocol;
 - Git's official offline bundle mechanism and local-first/P2P Git systems such as Radicle, relevant to UC-044 without replacing Git's object/merge semantics;
 - buffer-aware/signal-aware mobile data harvesting and Flying DTN forwarding, relevant to UC-045 but requiring PollicinoNet's own measured contact traces;
