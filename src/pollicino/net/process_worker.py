@@ -26,6 +26,11 @@ from .fair_reconciliation import (
 from .persistent_catalog import PersistentBoundedReferenceCatalog
 from .persistent_query import PersistentQueryResultStore
 from .process_io import read_bounded_messages
+from .fragmentation import (
+    MAX_FRAGMENTS_PER_CONTACT,
+    fragment_message,
+    read_fragmented_messages,
+)
 
 
 ROLE_RESPONDER = "RESPONDER"
@@ -44,17 +49,33 @@ def _selected(values: Sequence[str]) -> tuple[bytes, ...]:
     return tuple(bytes.fromhex(value) for value in values)
 
 
-def _write_protocol(messages: Sequence[bytes], chunk_size: int) -> tuple[int, int]:
+def _write_protocol(
+    messages: Sequence[bytes], chunk_size: int, fragment_mtu: int | None
+) -> tuple[int, int, int, int, int]:
     writes = 0
-    octets = 0
+    wire_octets = 0
+    logical_octets = sum(map(len, messages))
+    fragment_count = 0
+    fragment_overhead = 0
     for message in messages:
-        for offset in range(0, len(message), chunk_size):
-            block = message[offset : offset + chunk_size]
-            sys.stdout.buffer.write(block)
-            sys.stdout.buffer.flush()
-            writes += 1
-            octets += len(block)
-    return writes, octets
+        units = (
+            tuple(frame.encode() for frame in fragment_message(message, max_frame_bytes=fragment_mtu))
+            if fragment_mtu is not None
+            else (message,)
+        )
+        fragment_count += len(units) if fragment_mtu is not None else 0
+        if fragment_count > MAX_FRAGMENTS_PER_CONTACT:
+            raise ValueError("fragment output exceeds contact bound")
+        if fragment_mtu is not None:
+            fragment_overhead += sum(len(unit) for unit in units) - len(message)
+        for unit in units:
+            for offset in range(0, len(unit), chunk_size):
+                block = unit[offset : offset + chunk_size]
+                sys.stdout.buffer.write(block)
+                sys.stdout.buffer.flush()
+                writes += 1
+                wire_octets += len(block)
+    return writes, logical_octets, wire_octets, fragment_count, fragment_overhead
 
 
 def _open(root: Path):
@@ -165,6 +186,8 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-attempts", type=int, default=100)
     parser.add_argument("--diagnostic", action="store_true")
     parser.add_argument("--crash-after-commit", action="store_true")
+    parser.add_argument("--crash-after-reassembly", action="store_true")
+    parser.add_argument("--fragment-mtu", type=int)
     return parser
 
 
@@ -207,9 +230,22 @@ def main(argv: Sequence[str] | None = None) -> int:
             outbound = (encode_fair_message(ReferenceDirectoryRequestMessage()),)
             accounting = None
         else:
-            incoming, accounting = read_bounded_messages(
-                sys.stdin.buffer, read_size=args.read_size
-            )
+            if args.fragment_mtu is None:
+                incoming, accounting = read_bounded_messages(
+                    sys.stdin.buffer, read_size=args.read_size
+                )
+                fragment_reads = fragment_frames = None
+            else:
+                incoming, fragment_reads, fragment_frames = read_fragmented_messages(
+                    sys.stdin.buffer,
+                    max_frame_bytes=args.fragment_mtu,
+                    read_size=args.read_size,
+                )
+                accounting = None
+            if args.crash_after_reassembly and incoming:
+                # Complete B4 message exists only in volatile memory; native
+                # endpoint validation/apply has not yet been invoked.
+                __import__("os")._exit(92)
             responses: list[bytes] = []
             commits = 0
             statuses: list[str] = []
@@ -232,13 +268,18 @@ def main(argv: Sequence[str] | None = None) -> int:
                 # Deterministic PX14 fault point: native persistence has already
                 # committed, while no response or diagnostic can reach the peer.
                 __import__("os")._exit(91)
-        writes, octets = _write_protocol(outbound, args.write_chunk_size)
+        writes, logical_octets, wire_octets, fragment_count, fragment_overhead = _write_protocol(
+            outbound, args.write_chunk_size, args.fragment_mtu
+        )
         diagnostics.update(
             {
                 "process_id": __import__("os").getpid(),
                 "protocol_messages_out": len(outbound),
-                "protocol_bytes_out": octets,
+                "protocol_bytes_out": logical_octets,
+                "os_bytes_out": wire_octets,
                 "os_write_calls": writes,
+                "fragment_frames_out": fragment_count,
+                "fragment_overhead_bytes_out": fragment_overhead,
             }
         )
         if accounting is not None:
@@ -249,6 +290,15 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "protocol_messages_in": accounting.complete_messages,
                     "protocol_bytes_in": accounting.encoded_bytes,
                     "maximum_buffer_bytes": accounting.maximum_buffer_bytes,
+                }
+            )
+        elif args.operation == "consume":
+            diagnostics.update(
+                {
+                    "os_read_calls": fragment_reads,
+                    "fragment_frames_in": fragment_frames,
+                    "protocol_messages_in": len(incoming),
+                    "protocol_bytes_in": sum(map(len, incoming)),
                 }
             )
         if args.diagnostic:
