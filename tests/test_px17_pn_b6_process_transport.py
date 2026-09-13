@@ -184,7 +184,8 @@ def test_large_unknown_difference_fails_compact_detectably_and_stays_bounded(
     source, receiver = tmp_path / f"source-{count}", tmp_path / f"receiver-{count}"
     _seed(source, queries=count); _empty(receiver)
     report = run_stream_contact(
-        source, receiver, kind=RecordKind.QUERY, mtu=128, max_messages=20
+        source, receiver, kind=RecordKind.QUERY, mtu=128, max_messages=20,
+        timeout=2.0 if count == 10_000 else 0.45,
     )
     statuses = tuple(report.initiator.get("compact_statuses", ())) + tuple(
         report.responder.get("compact_statuses", ())

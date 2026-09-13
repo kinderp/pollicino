@@ -43,6 +43,7 @@ def run_stream_contact(
     mtu: int = 128,
     exact: bool = False,
     max_messages: int = 100,
+    timeout: float = 0.45,
     read_size: int | None = None,
     write_chunk: int | None = None,
     initiator_extra: Sequence[str] = (),
@@ -56,7 +57,7 @@ def run_stream_contact(
         listener_path = Path(raw) / "contact.sock"
         common = [
             "--listener", str(listener_path), "--mtu", str(mtu),
-            "--timeout", "0.45", "--max-messages", str(max_messages),
+            "--timeout", str(timeout), "--max-messages", str(max_messages),
         ]
         if read_size is not None:
             common.extend(("--read-size", str(read_size)))

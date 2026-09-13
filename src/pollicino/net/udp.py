@@ -51,8 +51,8 @@ def _address(value: UDPAddress, *, allow_zero_port: bool) -> UDPAddress:
         parsed = ipaddress.IPv4Address(host)
     except ipaddress.AddressValueError as error:
         raise UDPAddressError("UDP host must be numeric IPv4") from error
-    if str(parsed) != UDP_LOOPBACK_ADDRESS:
-        raise UDPAddressError("PX18 permits only IPv4 127.0.0.1 loopback")
+    if parsed.is_unspecified or parsed.is_multicast or parsed.is_reserved:
+        raise UDPAddressError("UDP host must be a numeric unicast IPv4 address")
     minimum = 0 if allow_zero_port else 1
     if type(port) is not int or not minimum <= port <= 65535:
         raise UDPAddressError("UDP port is outside bounds")
@@ -60,7 +60,7 @@ def _address(value: UDPAddress, *, allow_zero_port: bool) -> UDPAddress:
 
 
 class UDPAdapter:
-    """Connected IPv4-loopback adapter: one complete B4 frame per datagram."""
+    """Connected IPv4 adapter: one complete B4 frame per datagram."""
 
     def __init__(
         self,

@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import socket
+import subprocess
 import sys
 
 from .adaptive_reconciliation import AdaptiveIndependentEndpoint
@@ -34,7 +37,39 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--crash-after-commit", action="store_true")
     parser.add_argument("--crash-after-send-batch", type=int)
     parser.add_argument("--crash-after-initial-send", action="store_true")
+    parser.add_argument("--evidence", type=Path)
+    parser.add_argument("--run-id")
+    parser.add_argument("--scenario")
+    parser.add_argument("--host-role", choices=("A", "B"))
+    parser.add_argument("--interface")
+    parser.add_argument("--interface-mtu", type=int)
+    parser.add_argument("--expected-sha")
+    parser.add_argument("--require-clean", action="store_true")
     return parser
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _git_state() -> tuple[str, bool]:
+    repository = Path(__file__).resolve().parents[3]
+    sha = subprocess.run(
+        ("git", "rev-parse", "HEAD"), cwd=repository,
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    status = subprocess.run(
+        ("git", "status", "--porcelain=v1"), cwd=repository,
+        check=True, capture_output=True, text=True,
+    ).stdout
+    return sha, not bool(status)
+
+
+def _write_evidence(path: Path, value: dict[str, object]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("x", encoding="utf-8") as stream:
+        json.dump(value, stream, indent=2, sort_keys=True)
+        stream.write("\n")
 
 
 def _send(adapter: UDPAdapter, messages: tuple[bytes, ...], mtu: int) -> tuple[int, int, int]:
@@ -51,16 +86,41 @@ def _send(adapter: UDPAdapter, messages: tuple[bytes, ...], mtu: int) -> tuple[i
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.evidence is not None and not all(
+        (args.run_id, args.scenario, args.host_role, args.interface, args.interface_mtu)
+    ):
+        raise SystemExit(
+            "--evidence requires --run-id, --scenario, --host-role, "
+            "--interface and --interface-mtu"
+        )
     catalog = query_results = adapter = None
+    started = _utc_now()
     diagnostics: dict[str, object] = {
         "role": args.role,
-        "transport": "AF_INET/SOCK_DGRAM/127.0.0.1",
+        "transport": "AF_INET/SOCK_DGRAM/NUMERIC_IPV4",
         "root_scope": "LOCAL_ONLY",
         "shared_endpoint_objects": 0,
     }
     compact_statuses: list[str] = []
     messages_in = commits = response_batches = 0
     try:
+        commit_sha, worktree_clean = _git_state()
+        diagnostics.update({
+            "commit_sha": commit_sha,
+            "worktree_clean": worktree_clean,
+            "run_id": args.run_id,
+            "scenario": args.scenario,
+            "host_role": args.host_role,
+            "interface": args.interface,
+            "interface_mtu": args.interface_mtu,
+            "b4_ceiling": args.mtu,
+            "root": str(args.root),
+            "started_at": started,
+        })
+        if args.expected_sha and commit_sha != args.expected_sha:
+            raise RuntimeError("worker commit does not match --expected-sha")
+        if args.require_clean and not worktree_clean:
+            raise RuntimeError("scientific worker requires a clean worktree")
         catalog, query_results = _open(args.root)
         compact = CompactIndependentEndpoint(catalog, query_results)
         fair = FairIndependentEndpoint(catalog, query_results)
@@ -73,6 +133,17 @@ def main(argv: list[str] | None = None) -> int:
             active_socket=active,
         )
         reassembler = EphemeralFragmentReassembler(max_frame_bytes=args.mtu)
+        print(json.dumps({
+            "event": "READY",
+            "commit_sha": commit_sha,
+            "role": args.role,
+            "host_role": args.host_role,
+            "local_address": adapter.local_address,
+            "peer_address": adapter.peer_address,
+            "b4_ceiling": args.mtu,
+            "root": str(args.root),
+            "worktree_clean": worktree_clean,
+        }, sort_keys=True), file=sys.stderr, flush=True)
         selected = _selected(args.selected)
         sent_frames = sent_bytes = sent_message_bytes = 0
         first_compact = True
@@ -95,7 +166,7 @@ def main(argv: list[str] | None = None) -> int:
             count, octets, message_octets = _send(adapter, outbound, args.mtu)
             sent_frames += count; sent_bytes += octets; sent_message_bytes += message_octets
             if args.crash_after_initial_send:
-                __import__("os")._exit(96)
+                os._exit(96)
         while messages_in < args.max_messages:
             try:
                 encoded_frame = adapter.receive_frame()
@@ -106,7 +177,7 @@ def main(argv: list[str] | None = None) -> int:
             if result.complete_message is None:
                 continue
             if args.crash_after_reassembly:
-                __import__("os")._exit(93)
+                os._exit(93)
             messages_in += 1
             role = ROLE_GENERIC
             if first_compact and result.complete_message[:4] == B2C_MAGIC:
@@ -123,16 +194,16 @@ def main(argv: list[str] | None = None) -> int:
             if "compact_status" in local:
                 compact_statuses.append(str(local["compact_status"]))
             if args.crash_after_commit and commits:
-                __import__("os")._exit(94)
+                os._exit(94)
             count, octets, message_octets = _send(adapter, responses, args.mtu)
             sent_frames += count; sent_bytes += octets; sent_message_bytes += message_octets
             if responses:
                 response_batches += 1
                 if args.crash_after_send_batch == response_batches:
-                    __import__("os")._exit(95)
+                    os._exit(95)
         accounting = adapter.accounting
         diagnostics.update({
-            "process_id": __import__("os").getpid(),
+            "process_id": os.getpid(),
             "local_address": adapter.local_address,
             "peer_address": adapter.peer_address,
             "protocol_messages_in": messages_in,
@@ -148,7 +219,16 @@ def main(argv: list[str] | None = None) -> int:
             "udp_payload_bytes_received": accounting.received_bytes,
             "receive_timeouts": accounting.receive_timeouts,
             "socket_buffers": adapter.socket_buffers,
+            "catalog_state_digest": catalog.state_digest.hex(),
+            "query_result_state_digest": query_results.state_digest.hex(),
+            "catalog_records": len(catalog),
+            "query_records": query_results.query_count,
+            "result_records": query_results.result_count,
+            "ended_at": _utc_now(),
+            "exit_outcome": "SUCCESS",
         })
+        if args.evidence is not None:
+            _write_evidence(args.evidence, diagnostics)
         print(json.dumps(diagnostics, sort_keys=True), file=sys.stderr)
         return 0
     except Exception as error:
@@ -158,7 +238,11 @@ def main(argv: list[str] | None = None) -> int:
             "compact_statuses": compact_statuses,
             "protocol_messages_in": messages_in,
             "native_commits": commits,
+            "ended_at": _utc_now(),
+            "exit_outcome": "FAILURE",
         })
+        if args.evidence is not None and not args.evidence.exists():
+            _write_evidence(args.evidence, diagnostics)
         print(json.dumps(diagnostics, sort_keys=True), file=sys.stderr)
         return 2
     finally:
