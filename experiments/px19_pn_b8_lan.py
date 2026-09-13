@@ -10,11 +10,11 @@ import platform
 import re
 import subprocess
 import sys
+from typing import TYPE_CHECKING
 
-from pollicino.net.catalog import BoundedReference
-from pollicino.net.persistent_catalog import PersistentBoundedReferenceCatalog
-from pollicino.net.persistent_query import PersistentQueryResultStore
-from pollicino.net.query import QueryRecord, ResultRecord
+if TYPE_CHECKING:
+    from pollicino.net.persistent_catalog import PersistentBoundedReferenceCatalog
+    from pollicino.net.persistent_query import PersistentQueryResultStore
 
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -126,7 +126,15 @@ def environment(args: argparse.Namespace) -> int:
     return 0
 
 
-def _open_root(root: Path) -> tuple[PersistentBoundedReferenceCatalog, PersistentQueryResultStore]:
+def _open_root(
+    root: Path,
+) -> tuple["PersistentBoundedReferenceCatalog", "PersistentQueryResultStore"]:
+    # Environment and route collection must remain usable on a host that has
+    # exposed an inherited persistence-platform incompatibility. Endpoint state
+    # modules are imported only by commands that actually open a durable root.
+    from pollicino.net.persistent_catalog import PersistentBoundedReferenceCatalog
+    from pollicino.net.persistent_query import PersistentQueryResultStore
+
     return (
         PersistentBoundedReferenceCatalog(root / "catalog"),
         PersistentQueryResultStore(root / "query-result"),
@@ -134,6 +142,9 @@ def _open_root(root: Path) -> tuple[PersistentBoundedReferenceCatalog, Persisten
 
 
 def prepare(args: argparse.Namespace) -> int:
+    from pollicino.net.catalog import BoundedReference
+    from pollicino.net.query import QueryRecord, ResultRecord
+
     if any(type(value) is not int or not 0 <= value <= 10_000 for value in (
         args.queries, args.results, args.references,
     )):
@@ -173,8 +184,8 @@ def prepare(args: argparse.Namespace) -> int:
 
 def _state(
     root: Path,
-    catalog: PersistentBoundedReferenceCatalog,
-    query_results: PersistentQueryResultStore,
+    catalog: "PersistentBoundedReferenceCatalog",
+    query_results: "PersistentQueryResultStore",
 ) -> dict[str, object]:
     return {
         "root": str(root),
