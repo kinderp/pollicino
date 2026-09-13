@@ -126,5 +126,51 @@ outcomes and oracle gaps. Holdout labels cannot change the threshold or policy.
 
 ## Status
 
-Preregistered; development threshold candidates have not yet been evaluated.
+Development selection complete and policy frozen for fresh-holdout
+preregistration. Fresh holdout content has not been accessed.
+
+## Development selection
+
+The frozen P13 and P14 development baselines reproduced exactly before any
+P15 candidate was scored. P13 reproduced at 4.43658447265625 bpb and
+0.4376220703125 actual neural evaluations per byte on the four inherited
+validation streams. P14 reproduced at 4.404296875 bpb and
+0.44097900390625, with its required policy digest and exact
+`unique_count_16 <= 12` rule.
+
+All six preregistered P15 thresholds were then evaluated on all twelve
+already-consumed P12/P13 development streams (96 blocks) through the real
+encoder and decoder. Every candidate had zero search/codec route mismatches,
+zero budget violations, and a maximum per-stream actual neural-evaluation
+fraction of 0.4990234375. The preregistered objective selected:
+
+```text
+if unique_count_32 <= 20 and complete-block budget permits:
+    neural
+else:
+    cheap
+```
+
+It achieved 4.613993326822917 mean development bpb and 0.4591878255208333
+mean actual neural evaluations per byte. The next payloads were 4.6161499023
+for thresholds 22 and 24, 4.6197306315 for 26, 4.6200154622 for 28, and
+4.6299641927 for 30. All thresholds spent the complete 50% admitted-byte cap.
+
+The development evidence is already cautionary: frozen P14 achieved
+4.567362467447917 bpb over the same twelve streams. P15 also had lower
+horizon-matched fixed-budget route accuracy (54.17% versus 58.33%) and higher
+mean oracle regret (326.42 versus 280.08 independently coded block bits). This
+does not alter the preregistered fresh-holdout protocol or the selected rule.
+
+Activation instrumentation found zero neural evaluations before either
+decision. The inherited specialist performs counted state synchronization on
+first use: P14 had 15 catch-up evaluations before its first current-byte output
+and P15 had 31. Thus the extra context is not hidden or free. The first
+neural-coded byte moves from ordinal 17 to 33, leaving 480 rather than 496
+neural-coded bytes in a full admitted block. Holding a block route fixed, the
+32-byte horizon cost 26.3229166667 more payload bits per independently coded
+development block on average.
+
+The frozen policy digest is
+`ee0aa7a13a0b24f7b3c978ee40e25a05376e734206e3cdf9df1d30c3ac39b28e`.
 

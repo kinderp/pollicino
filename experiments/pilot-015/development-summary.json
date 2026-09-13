@@ -1,0 +1,133 @@
+{
+  "activation_accounting": {
+    "pilot014": {
+      "cheap_coded_bytes_before_activation": 16,
+      "first_neural_coded_byte_ordinal": 17,
+      "first_neural_coded_byte_zero_based": 16,
+      "model_evaluations_after_first_specialist_output": 16,
+      "model_evaluations_before_admission": 0,
+      "post_decision_catchup_evaluations_before_current_output": 15,
+      "probe_bytes": 16,
+      "remaining_neural_coded_bytes_full_block": 496
+    },
+    "pilot015": {
+      "cheap_coded_bytes_before_activation": 32,
+      "first_neural_coded_byte_ordinal": 33,
+      "first_neural_coded_byte_zero_based": 32,
+      "model_evaluations_after_first_specialist_output": 32,
+      "model_evaluations_before_admission": 0,
+      "post_decision_catchup_evaluations_before_current_output": 31,
+      "probe_bytes": 32,
+      "remaining_neural_coded_bytes_full_block": 480
+    }
+  },
+  "candidate_rows_digest": "e11140799ed36f2a1388a554729a09579f9f7c18329f393acabbdc6eebc235e6",
+  "development_block_count": 96,
+  "development_reproduction_digest": "8cc7e182099032dc0729a5ec072bf59b757dbe851bc8a45587dfdad229127921",
+  "development_source": "already-consumed PILOT-012/PILOT-013 mixed streams",
+  "development_streams": [
+    "p12-mix-a",
+    "p12-mix-b",
+    "p12-mix-c",
+    "p12-mix-d",
+    "p12-mix-e",
+    "p12-mix-f",
+    "p13-mix-a",
+    "p13-mix-b",
+    "p13-mix-c",
+    "p13-mix-d",
+    "p13-mix-e",
+    "p13-mix-f"
+  ],
+  "experiment_id": "pilot-015-longer-cheap-horizon",
+  "mean_forced_horizon32_minus_horizon16_bits_per_block": 26.322916666666668,
+  "new_holdout_sources_opened": false,
+  "p14_all_stream_mean_model_eval_fraction": 0.4557088216145833,
+  "p14_all_stream_mean_payload_bpb": 4.567362467447917,
+  "p14_mean_fixed_budget_route_accuracy": 0.5833333333333334,
+  "p14_mean_oracle_regret_bits": 280.0833333333333,
+  "p15_mean_fixed_budget_route_accuracy": 0.5416666666666666,
+  "p15_mean_oracle_regret_bits": 326.4166666666667,
+  "predecessor_reproduction": {
+    "p13_mean_bpb": 4.43658447265625,
+    "p13_mean_eval": 0.4376220703125,
+    "p13_rule": "88 <= ceil(probe codelength bits) <= 128",
+    "p14_mean_bpb": 4.404296875,
+    "p14_mean_eval": 0.44097900390625,
+    "p14_policy_digest": "02cb5a4fd9fb2d3695af55a874aff6ad2a4b49599af9d396878ef7cde116aa85",
+    "p14_rule": "unique_count_16 <= 12",
+    "streams": [
+      "p12-mix-e",
+      "p12-mix-f",
+      "p13-mix-e",
+      "p13-mix-f"
+    ]
+  },
+  "search_codec_decision_mismatches": 0,
+  "selected_metrics": {
+    "admitted_blocks": 48,
+    "budget_violations": 0,
+    "max_model_eval_fraction": 0.4990234375,
+    "mean_admitted_byte_fraction": 0.5,
+    "mean_model_eval_fraction": 0.4591878255208333,
+    "mean_payload_bpb": 4.613993326822917,
+    "search_codec_decision_mismatches": 0,
+    "threshold": 20
+  },
+  "selected_threshold": 20,
+  "selection_objective": [
+    "lower mean real range-coded payload bpb",
+    "lower mean actual neural evaluation fraction",
+    "lower threshold"
+  ],
+  "source_manifest": [
+    {
+      "bytes": 12473,
+      "git_blob_sha1": "c5d9ae2d0d5d040708f097fbf6450b86eef334dd",
+      "name": "cpython-json-decoder",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "9f02654649816145bc76f8c210a5fe3ba1de142d4d97a1c93105732e747c285b",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.11.15/Lib/json/decoder.py"
+    },
+    {
+      "bytes": 315588,
+      "git_blob_sha1": "802551e0009bf1ef66191441a802633bb57543bc",
+      "name": "linux-sched-core",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "3e50073f3f629ba54fc642115b3eb14d88fb1376e020d0a80731a2cf4832e8f6",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/v6.6/kernel/sched/core.c"
+    },
+    {
+      "bytes": 123776,
+      "git_blob_sha1": "23a603a83dd7135077fa1363ceb8255ff345ac06",
+      "name": "go-http-server",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "76d8e0af65d217dca82ab20ac928a816977b3989ad9239915045dbbb14c37fe2",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.22.12/src/net/http/server.go"
+    },
+    {
+      "bytes": 59194,
+      "git_blob_sha1": "ebccdb28256314e7cd8ac8d7e3dec670286022d2",
+      "name": "node-cjs-loader",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "78b6ef5eded5a401b2879cea866582e6ef59895e760decf618d6eaa5459c5c02",
+      "url": "https://raw.githubusercontent.com/nodejs/node/v20.19.1/lib/internal/modules/cjs/loader.js"
+    }
+  ],
+  "threshold_candidates": [
+    20,
+    22,
+    24,
+    26,
+    28,
+    30
+  ]
+}
