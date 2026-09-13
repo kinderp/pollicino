@@ -1,0 +1,15 @@
+{
+  "b4_changed_target": false,
+  "b4_ceilings": [128, 512, 1024, 1200],
+  "contact_idle_timeout_seconds": 2.0,
+  "explicit_numeric_ipv4": true,
+  "implementation_process_timeout_seconds": 20,
+  "near_path_ceiling": "TO_BE_FROZEN_AFTER_TWO_HOST_ROUTE_EVIDENCE_BEFORE_FINAL_CONTACTS",
+  "no_discovery": true,
+  "no_reliability": true,
+  "no_security": true,
+  "path_mtu_policy": "DIAGNOSTIC_ONLY_OR_INCONCLUSIVE",
+  "physical_hosts_required": 2,
+  "primary_hypothesis": "UNCHANGED_UDP_B4_CROSSES_TWO_PHYSICAL_HOST_IPV4_LAN",
+  "udp_model": "CONNECTED_AF_INET_SOCK_DGRAM"
+}

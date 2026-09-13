@@ -1,0 +1,19 @@
+{
+  "branch": "pollicino/px19-pn-b8-real-lan",
+  "clean_before_changes": true,
+  "compileall": "PASS",
+  "focused_px15_px18": {
+    "passed": 252
+  },
+  "full": {
+    "failed": 1,
+    "failure": "PX17 10000-record subprocess startup horizon ended before compact status",
+    "passed": 815,
+    "skipped": 5
+  },
+  "identifier_provenance": "REPOSITORY_OWNER_CANDIDATE_FROM_PX18_CLOSURE_RECOMMENDATION",
+  "px18_checkpoint_local": "845f5b0e6d61d484f8fd057b8687e8579fb74557",
+  "px18_checkpoint_remote": "845f5b0e6d61d484f8fd057b8687e8579fb74557",
+  "remote_main_before": "d82d0744f7abc8b6dfab2bfc7037c9bd56c1deb5",
+  "sha": "845f5b0e6d61d484f8fd057b8687e8579fb74557"
+}
