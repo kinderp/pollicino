@@ -1,0 +1,79 @@
+{
+  "experiment_id": "pilot-014-rich-cheap-admission",
+  "frozen_policy_digest": "02cb5a4fd9fb2d3695af55a874aff6ad2a4b49599af9d396878ef7cde116aa85",
+  "generated_components": {
+    "compressed_seed": 4405,
+    "dna_seed": 4402,
+    "json_seed": 4401,
+    "random64_seed": 4403,
+    "random256_seed": 4404,
+    "repeat_ascii": "rich-cheap-admission-"
+  },
+  "name": "PILOT-014 Rust/SQLite mixed-domain mechanism holdout",
+  "recipes": {
+    "fresh-a": [
+      ["rust", 823],
+      ["random256", 491],
+      ["sqlite", 1087],
+      ["repeat", 407],
+      ["json", -1]
+    ],
+    "fresh-b": [
+      ["sqlite", 743],
+      ["dna", 919],
+      ["rust", 983],
+      ["compressed", -1]
+    ],
+    "fresh-c": [
+      ["english", 701],
+      ["rust", 953],
+      ["random64", 529],
+      ["sqlite", -1]
+    ],
+    "fresh-d": [
+      ["json", 881],
+      ["sqlite", 827],
+      ["repeat", 359],
+      ["compressed", 697],
+      ["rust", -1]
+    ],
+    "fresh-e": [
+      ["random256", 473],
+      ["sqlite", 1187],
+      ["dna", 757],
+      ["rust", -1]
+    ],
+    "fresh-f": [
+      ["rust", 467],
+      ["repeat", 611],
+      ["sqlite", 449],
+      ["random256", 721],
+      ["json", -1]
+    ]
+  },
+  "selection_basis": "Before content access, select one stable Rust standard-library implementation file and one stable SQLite parser/structured-data implementation file from immutable release tags. These projects and paths do not appear in PILOT-001 through PILOT-013 provenance. Selection is based on fresh language/project domains and sufficient metadata-reported size, not measured compressibility.",
+  "source_aliases": {
+    "rust": "rust-std-io",
+    "sqlite": "sqlite-json-parser"
+  },
+  "sources": [
+    {
+      "expected_bytes": 107137,
+      "git_blob_sha1": "97b72f9664bb9c4e008d55bffb5203b68f34c478",
+      "name": "rust-std-io",
+      "path": "library/std/src/io/mod.rs",
+      "repository": "rust-lang/rust",
+      "revision": "1.80.0",
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.80.0/library/std/src/io/mod.rs"
+    },
+    {
+      "expected_bytes": 167009,
+      "git_blob_sha1": "4db468c92d3afc2491b90e4db67833a4a318be00",
+      "name": "sqlite-json-parser",
+      "path": "src/json.c",
+      "repository": "sqlite/sqlite",
+      "revision": "version-3.46.0",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.46.0/src/json.c"
+    }
+  ]
+}
