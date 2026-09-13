@@ -1,0 +1,233 @@
+{
+  "experiment_id": "pilot-014-rich-cheap-admission",
+  "preregistration_digest": "3acab5dd2509a09e2642ac0e7f6d7180c903f5e2150771c7f115d3f544d80a4d",
+  "selection_basis": "Before content access, select one stable Rust standard-library implementation file and one stable SQLite parser/structured-data implementation file from immutable release tags. These projects and paths do not appear in PILOT-001 through PILOT-013 provenance. Selection is based on fresh language/project domains and sufficient metadata-reported size, not measured compressibility.",
+  "sources": [
+    {
+      "bytes": 107137,
+      "git_blob_sha1": "97b72f9664bb9c4e008d55bffb5203b68f34c478",
+      "name": "rust-std-io",
+      "path": "library/std/src/io/mod.rs",
+      "repository": "rust-lang/rust",
+      "revision": "1.80.0",
+      "sha256": "f453efe14ba96607176652dd12edfbe89aadfe7ec613099ad31f3b6aefa4d350",
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.80.0/library/std/src/io/mod.rs"
+    },
+    {
+      "bytes": 167009,
+      "git_blob_sha1": "4db468c92d3afc2491b90e4db67833a4a318be00",
+      "name": "sqlite-json-parser",
+      "path": "src/json.c",
+      "repository": "sqlite/sqlite",
+      "revision": "version-3.46.0",
+      "sha256": "3b863585dfc49a9631b8f189e05e92a2a83be2fa653bb86e7284bf998bdfe86c",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.46.0/src/json.c"
+    }
+  ],
+  "streams": [
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 823,
+          "component": "rust",
+          "end": 823,
+          "start": 0
+        },
+        {
+          "bytes": 491,
+          "component": "random256",
+          "end": 1314,
+          "start": 823
+        },
+        {
+          "bytes": 1087,
+          "component": "sqlite",
+          "end": 2401,
+          "start": 1314
+        },
+        {
+          "bytes": 407,
+          "component": "repeat",
+          "end": 2808,
+          "start": 2401
+        },
+        {
+          "bytes": 1288,
+          "component": "json",
+          "end": 4096,
+          "start": 2808
+        }
+      ],
+      "sha256": "42544238d2f64bc7960034d19b0cbd2cd1ce24d62543efba10df22fc67692a5b",
+      "stream": "fresh-a"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 743,
+          "component": "sqlite",
+          "end": 743,
+          "start": 0
+        },
+        {
+          "bytes": 919,
+          "component": "dna",
+          "end": 1662,
+          "start": 743
+        },
+        {
+          "bytes": 983,
+          "component": "rust",
+          "end": 2645,
+          "start": 1662
+        },
+        {
+          "bytes": 1451,
+          "component": "compressed",
+          "end": 4096,
+          "start": 2645
+        }
+      ],
+      "sha256": "db1544f9326e3cb655e24af714e6e2f37f8539ad99b078cd293146c317f169a7",
+      "stream": "fresh-b"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 701,
+          "component": "english",
+          "end": 701,
+          "start": 0
+        },
+        {
+          "bytes": 953,
+          "component": "rust",
+          "end": 1654,
+          "start": 701
+        },
+        {
+          "bytes": 529,
+          "component": "random64",
+          "end": 2183,
+          "start": 1654
+        },
+        {
+          "bytes": 1913,
+          "component": "sqlite",
+          "end": 4096,
+          "start": 2183
+        }
+      ],
+      "sha256": "82c0e891ff56598d62643aa49c2fba2549e480b2733157246ca5f3a553129a46",
+      "stream": "fresh-c"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 881,
+          "component": "json",
+          "end": 881,
+          "start": 0
+        },
+        {
+          "bytes": 827,
+          "component": "sqlite",
+          "end": 1708,
+          "start": 881
+        },
+        {
+          "bytes": 359,
+          "component": "repeat",
+          "end": 2067,
+          "start": 1708
+        },
+        {
+          "bytes": 697,
+          "component": "compressed",
+          "end": 2764,
+          "start": 2067
+        },
+        {
+          "bytes": 1332,
+          "component": "rust",
+          "end": 4096,
+          "start": 2764
+        }
+      ],
+      "sha256": "df083e0347c588ee49be2a5ea0a5d0534ef43081fd81a81049da52163d09c24b",
+      "stream": "fresh-d"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 473,
+          "component": "random256",
+          "end": 473,
+          "start": 0
+        },
+        {
+          "bytes": 1187,
+          "component": "sqlite",
+          "end": 1660,
+          "start": 473
+        },
+        {
+          "bytes": 757,
+          "component": "dna",
+          "end": 2417,
+          "start": 1660
+        },
+        {
+          "bytes": 1679,
+          "component": "rust",
+          "end": 4096,
+          "start": 2417
+        }
+      ],
+      "sha256": "8b9f14e7befacc3bd080d2ea2a36474e57b766b2116d95db544abbd192bf6692",
+      "stream": "fresh-e"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 467,
+          "component": "rust",
+          "end": 467,
+          "start": 0
+        },
+        {
+          "bytes": 611,
+          "component": "repeat",
+          "end": 1078,
+          "start": 467
+        },
+        {
+          "bytes": 449,
+          "component": "sqlite",
+          "end": 1527,
+          "start": 1078
+        },
+        {
+          "bytes": 721,
+          "component": "random256",
+          "end": 2248,
+          "start": 1527
+        },
+        {
+          "bytes": 1848,
+          "component": "json",
+          "end": 4096,
+          "start": 2248
+        }
+      ],
+      "sha256": "c8ef444e660b5093cfc29b5af41210c0075879aa26345b7cc8496f8aeef8ca8f",
+      "stream": "fresh-f"
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "ablation": [
+    {
+      "ablation": "all_features",
+      "feature_count": 1,
+      "features": "unique_count",
+      "fit_payload_bpb": 4.650726318359375,
+      "validation_model_eval_fraction": 0.44097900390625,
+      "validation_payload_bpb": 4.40618896484375
+    },
+    {
+      "ablation": "minus_histogram",
+      "feature_count": 0,
+      "features": "",
+      "fit_payload_bpb": 4.884979248046875,
+      "validation_model_eval_fraction": 0.0,
+      "validation_payload_bpb": 4.599365234375
+    }
+  ],
+  "candidate_feature_sets": {
+    "all12": [
+      "probe_code_bits_ceil",
+      "unique_count",
+      "max_hist_count",
+      "transition_count",
+      "distinct_transition_count",
+      "longest_run",
+      "surprise_sum_ceil",
+      "surprise_max_ceil",
+      "surprise_range_ceil",
+      "surprise_variance_proxy",
+      "surprise_early_minus_late",
+      "very_surprising_count"
+    ],
+    "compact6": [
+      "probe_code_bits_ceil",
+      "unique_count",
+      "max_hist_count",
+      "transition_count",
+      "longest_run",
+      "surprise_max_ceil"
+    ]
+  },
+  "candidate_selector_families": [
+    "decision-tree-depth-2-or-3",
+    "quantized-linear-scale-256"
+  ],
+  "development_block_count": 96,
+  "development_reproduction_digest": "9ca016c09a8a912c05b35f9766f9e9e18990f6b7fdec19e653760152229deab3",
+  "development_rows_digest": "12d28165acdf58e4270f399fe91a79881b473232a2f0bd0bfa9575ff7541e6ad",
+  "experiment_id": "pilot-014-rich-cheap-admission",
+  "feature_diagnostics": {
+    "distinct_transition_count": {
+      "max": 15,
+      "mean": 13.864583333333334,
+      "min": 7,
+      "pearson_correlation_with_hybrid_saving_bits": -0.11245679754056581
+    },
+    "longest_run": {
+      "max": 10,
+      "mean": 1.8125,
+      "min": 1,
+      "pearson_correlation_with_hybrid_saving_bits": 0.25466195657947666
+    },
+    "max_hist_count": {
+      "max": 10,
+      "mean": 3.03125,
+      "min": 1,
+      "pearson_correlation_with_hybrid_saving_bits": 0.20501945843598254
+    },
+    "probe_code_bits_ceil": {
+      "max": 131,
+      "mean": 122.5,
+      "min": 74,
+      "pearson_correlation_with_hybrid_saving_bits": -0.13732018058224596
+    },
+    "surprise_early_minus_late": {
+      "max": 20,
+      "mean": 1.6458333333333333,
+      "min": -33,
+      "pearson_correlation_with_hybrid_saving_bits": 0.009219240962017443
+    },
+    "surprise_max_ceil": {
+      "max": 10,
+      "mean": 9.03125,
+      "min": 9,
+      "pearson_correlation_with_hybrid_saving_bits": 0.039906055048050774
+    },
+    "surprise_range_ceil": {
+      "max": 9,
+      "mean": 2.6458333333333335,
+      "min": 1,
+      "pearson_correlation_with_hybrid_saving_bits": 0.25909705570125663
+    },
+    "surprise_sum_ceil": {
+      "max": 143,
+      "mean": 134.91666666666666,
+      "min": 81,
+      "pearson_correlation_with_hybrid_saving_bits": -0.17878633941562044
+    },
+    "surprise_variance_proxy": {
+      "max": 3791,
+      "mean": 351.9166666666667,
+      "min": 15,
+      "pearson_correlation_with_hybrid_saving_bits": 0.13556418950564728
+    },
+    "transition_count": {
+      "max": 15,
+      "mean": 13.96875,
+      "min": 6,
+      "pearson_correlation_with_hybrid_saving_bits": -0.21317414230486983
+    },
+    "unique_count": {
+      "max": 16,
+      "mean": 11.71875,
+      "min": 4,
+      "pearson_correlation_with_hybrid_saving_bits": -0.2645996279276411
+    },
+    "very_surprising_count": {
+      "max": 15,
+      "mean": 11.354166666666666,
+      "min": 3,
+      "pearson_correlation_with_hybrid_saving_bits": -0.25410617697019267
+    }
+  },
+  "feature_version": "rich-cheap-v1",
+  "fit_streams": [
+    "p12-mix-a",
+    "p12-mix-b",
+    "p12-mix-c",
+    "p12-mix-d",
+    "p13-mix-a",
+    "p13-mix-b",
+    "p13-mix-c",
+    "p13-mix-d"
+  ],
+  "float_vs_deployed_route_mismatches": 0,
+  "new_holdout_sources_opened": false,
+  "p13_validation_actual_mean_model_eval_fraction": 0.4376220703125,
+  "p13_validation_actual_mean_payload_bpb": 4.43658447265625,
+  "p13_validation_simulated": {
+    "admitted_blocks": 16,
+    "simulated_model_eval_fraction": 0.4376220703125,
+    "simulated_payload_bpb": 4.4384765625
+  },
+  "search_codec_decision_mismatches": 0,
+  "selected_candidate_feature_set": [
+    "probe_code_bits_ceil",
+    "unique_count",
+    "max_hist_count",
+    "transition_count",
+    "distinct_transition_count",
+    "longest_run",
+    "surprise_sum_ceil",
+    "surprise_max_ceil",
+    "surprise_range_ceil",
+    "surprise_variance_proxy",
+    "surprise_early_minus_late",
+    "very_surprising_count"
+  ],
+  "selected_candidate_id": "tree-all12-d2-l8",
+  "selected_features": [
+    "unique_count"
+  ],
+  "selected_rule": {
+    "nodes": [
+      {
+        "feature": "unique_count",
+        "greater": 2,
+        "less_equal": 1,
+        "threshold": 12
+      },
+      {
+        "value": 1
+      },
+      {
+        "value": 0
+      }
+    ],
+    "threshold": 1,
+    "type": "decision-tree"
+  },
+  "selection_complexity_tolerance_bpb": 0.01,
+  "source": "already-consumed PILOT-012 and PILOT-013 mixed streams",
+  "source_manifest": [
+    {
+      "bytes": 12473,
+      "git_blob_sha1": "c5d9ae2d0d5d040708f097fbf6450b86eef334dd",
+      "name": "cpython-json-decoder",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "9f02654649816145bc76f8c210a5fe3ba1de142d4d97a1c93105732e747c285b",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.11.15/Lib/json/decoder.py"
+    },
+    {
+      "bytes": 315588,
+      "git_blob_sha1": "802551e0009bf1ef66191441a802633bb57543bc",
+      "name": "linux-sched-core",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "3e50073f3f629ba54fc642115b3eb14d88fb1376e020d0a80731a2cf4832e8f6",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/v6.6/kernel/sched/core.c"
+    },
+    {
+      "bytes": 123776,
+      "git_blob_sha1": "23a603a83dd7135077fa1363ceb8255ff345ac06",
+      "name": "go-http-server",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "76d8e0af65d217dca82ab20ac928a816977b3989ad9239915045dbbb14c37fe2",
+      "url": "https://raw.githubusercontent.com/golang/go/go1.22.12/src/net/http/server.go"
+    },
+    {
+      "bytes": 59194,
+      "git_blob_sha1": "ebccdb28256314e7cd8ac8d7e3dec670286022d2",
+      "name": "node-cjs-loader",
+      "path": null,
+      "repository": null,
+      "revision": null,
+      "sha256": "78b6ef5eded5a401b2879cea866582e6ef59895e760decf618d6eaa5459c5c02",
+      "url": "https://raw.githubusercontent.com/nodejs/node/v20.19.1/lib/internal/modules/cjs/loader.js"
+    }
+  ],
+  "validation_actual_max_model_eval_fraction": 0.4990234375,
+  "validation_actual_mean_model_eval_fraction": 0.44097900390625,
+  "validation_actual_mean_payload_bpb": 4.404296875,
+  "validation_streams": [
+    "p12-mix-e",
+    "p12-mix-f",
+    "p13-mix-e",
+    "p13-mix-f"
+  ]
+}

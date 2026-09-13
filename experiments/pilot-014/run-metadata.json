@@ -1,0 +1,47 @@
+{
+  "artifact": {
+    "digest": "sha256:e8cd32c7524f0fe6a2f4483c1428300cd52d883db69b261376737f45cb586cc5",
+    "digest_definition": "SHA-256 over sorted filename, NUL, and each file SHA-256 for results/holdout/blocks/manifest",
+    "id": "local-a0c9eba0f9aa-02cb5a4fd9fb",
+    "name": "pilot-014-results"
+  },
+  "checkpoint": {
+    "artifact_id": 9243314314,
+    "artifact_sha256": "72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5",
+    "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "checkpoint_bytes": 600933,
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7"
+  },
+  "device": "cpu",
+  "exact_command": "GITHUB_TOKEN=\"$(gh auth token)\" .venv/bin/python experiments/pilot-014/run_frozen.py",
+  "execution_kind": "local-scientific-run",
+  "experiment_id": "pilot-014-rich-cheap-admission",
+  "frozen_policy_digest": "02cb5a4fd9fb2d3695af55a874aff6ad2a4b49599af9d396878ef7cde116aa85",
+  "git_sha": "a0c9eba0f9aa2cf6bdc77c39a66b6d7f6afebf52",
+  "holdout_manifest_digest": "10b83b1eceda76549e4866e1dd61ae9ca9911ef26a59740fc3bc7609a634a0ee",
+  "holdout_preregistration_digest": "3acab5dd2509a09e2642ac0e7f6d7180c903f5e2150771c7f115d3f544d80a4d",
+  "numpy": "2.5.3",
+  "platform": "macOS-15.7.9-arm64-arm-64bit-Mach-O",
+  "python": "3.14.2 (main, Dec  5 2025, 16:49:16) [Clang 17.0.0 (clang-1700.4.4.1)]",
+  "random_seeds": {
+    "compressed_seed": 4405,
+    "dna_seed": 4402,
+    "json_seed": 4401,
+    "random256_seed": 4404,
+    "random64_seed": 4403,
+    "repeat_ascii": "rich-cheap-admission-"
+  },
+  "tests": {
+    "baseline_routing_codec": "26 passed",
+    "final_top_level_suite": "99 passed",
+    "final_top_level_suite_command": ".venv/bin/python -m pytest tests -q",
+    "full_root_pytest_note": "not a valid aggregate target: it collects standalone course lesson suites that require per-lesson working directories",
+    "relevant_compileall": "passed",
+    "relevant_compileall_command": ".venv/bin/python -m compileall -q src tests experiments/pilot-014"
+  },
+  "torch": "2.14.0",
+  "torch_deterministic_algorithms": true,
+  "torch_num_threads": 1,
+  "workflow_run_id": null,
+  "zstandard": "0.25.0"
+}
