@@ -160,7 +160,7 @@ def current_git_sha() -> str:
 def csvout(path: Path, rows: list[dict]) -> None:
     fields = sorted({key for row in rows for key in row})
     with path.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -1646,7 +1646,7 @@ def run_holdout(
             "reporting_only_rerun_after_first_frozen_measurement": {
                 "class": "TEST_HARNESS_ERROR",
                 "first_artifact_digest": "sha256:da8838b724b96eefd4618ee1b7984a779bb2035a34ed78cc8e0d52dfc3ac4ab4",
-                "repair": "add omitted PILOT-013 retained-gain and explicit oracle/admission aggregate fields",
+                "repair": "add omitted PILOT-013 retained-gain and explicit oracle/admission aggregate fields; canonicalize generated CSV line endings to LF",
                 "policy_changed": False,
                 "required_full_development_reproduction": True,
             },
