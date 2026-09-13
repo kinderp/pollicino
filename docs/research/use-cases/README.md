@@ -67,6 +67,11 @@ Core rules for every use case:
 | [UC-050](uc-050-pseudonymous-lost-found-encounter-trail.md) | Pseudonymous Lost-and-Found Encounter Trail | recover a tagged object without keeping continuous people/object tracks | synthetic rotating-tag encounters + delayed lost query | useful early | Medium |
 | [UC-051](uc-051-delay-tolerant-anonymous-classroom-ballot.md) | Delay-Tolerant Anonymous Classroom Survey / Ballot | converge a low-stakes private poll across disconnected groups | synthetic eligibility + encrypted delayed ballots | later | High |
 | [UC-052](uc-052-islanded-microgrid-energy-budget-coordination.md) | Islanded Microgrid Energy Budget and Flexible-Load Coordination | coordinate harmless flexible loads under intermittent energy/connectivity | discrete-time energy/load simulator | later | High |
+| [UC-053](uc-053-delay-tolerant-sensor-tasking-sampling-campaign.md) | Delay-Tolerant Sensor Tasking and Sampling Campaign | ask disconnected sensors to run bounded new observations/campaigns | signed campaign + deterministic sensor emulator | useful early | Medium–High |
+| [UC-054](uc-054-offline-assignment-submission-feedback-courier.md) | Offline Assignment Submission and Feedback Courier | preserve exact submission/receipt/feedback state across partitions | synthetic classroom + delayed artifact/receipt | useful early | Medium |
+| [UC-055](uc-055-opportunistic-transit-disruption-arrival-relay.md) | Opportunistic Transit Disruption and Arrival Relay | propagate fresh trip/delay/service status without continuous connectivity | synthetic timetable + expiring observations | useful after UC-008 | Medium–High |
+| [UC-056](uc-056-consent-bound-data-donation-dataset-provenance.md) | Consent-Bound Data Donation and Dataset Provenance Courier | keep purpose/consent/provenance attached to delayed data contributions | synthetic grants + delayed ingest/withdrawal | later | High |
+| [UC-057](uc-057-model-to-data-edge-inference-courier.md) | Model-to-Data Edge Inference Courier | run bounded analysis where private/raw data already resides | tiny public dataset + approved local inference | useful early | High |
 
 ## Current top 3 next experiments for the Messina student network
 
@@ -84,8 +89,13 @@ This remains the best immediate human-visible service experiment. Four boards ar
 
 ### Strong follow-ups
 
-- **UC-049 — Dynamic Route Condition and Access Map:** strongest new emergency/mapping teaching scenario because it adds fresh/conflicting access state on top of UC-017 without pretending the prototype is an authoritative evacuation router.
-- **UC-050 — Pseudonymous Lost-and-Found Encounter Trail:** strongest new student-facing DNATrace-style experiment; BLE encounters plus delayed LoRa query/result flow can be demonstrated with a harmless tagged school object and explicit anti-tracking rules.
+- **UC-053 — Delay-Tolerant Sensor Tasking and Sampling Campaign:** strongest new IoT protocol experiment because it adds the missing request direction to UC-003: a compact bounded observation campaign travels out, then exact results come back later.
+- **UC-054 — Offline Assignment Submission and Feedback Courier:** strongest new school-facing service because students can understand exact version, receipt and feedback semantics immediately, while files stay on rich bearers.
+- **UC-055 — Opportunistic Transit Disruption and Arrival Relay:** particularly well matched to the Messina–Villafranca–Rometta–Spadafora–Milazzo corridor; test first with synthetic delays and strict expiry before any public-service claim.
+- **UC-057 — Model-to-Data Edge Inference Courier:** strong privacy/AI architecture because approved analysis moves toward the data and only a constrained output returns; distinct from training and generic compute exchange.
+- **UC-056 — Consent-Bound Data Donation and Dataset Provenance Courier:** important governance follow-up for citizen-science/AI datasets, but keep early experiments synthetic because delayed consent/withdrawal semantics are subtle.
+- **UC-049 — Dynamic Route Condition and Access Map:** strongest emergency/mapping teaching scenario because it adds fresh/conflicting access state on top of UC-017 without pretending the prototype is an authoritative evacuation router.
+- **UC-050 — Pseudonymous Lost-and-Found Encounter Trail:** strong student-facing DNATrace-style experiment; BLE encounters plus delayed LoRa query/result flow can be demonstrated with a harmless tagged school object and explicit anti-tracking rules.
 - **UC-048 — Offline Verifiable Credential and Entitlement Ferry:** strong security primitive for later services because it separates narrow offline authorization from reusable credentials and composes directly with UC-019/020.
 - **UC-051 — Delay-Tolerant Anonymous Classroom Survey / Ballot:** compact cryptography/distributed-systems teaching case, deliberately limited to harmless synthetic polls and not election-grade claims.
 - **UC-052 — Islanded Microgrid Energy Budget and Flexible-Load Coordination:** useful rural/IoT research direction, but only after a software simulator and then a low-voltage bench; local safety bounds remain non-networked.
@@ -175,7 +185,12 @@ The following can be implemented without any radio hardware:
 45. implement UC-050 rotating synthetic object tags, delayed lost-item queries, privacy-limited match disclosure, replay/fabricated-sighting negative tests and short retention;
 46. implement UC-051 a harmless synthetic poll with one-use eligibility tokens, encrypted ballot envelopes, duplicate/late rejection and exact accepted-set convergence;
 47. implement UC-052 a discrete-time low-voltage microgrid simulator with battery/production traces, local hard bounds, delayed energy summaries and at least three flexible-load policies;
-48. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability, custody-gap convergence, exchange time-to-match, Git bytes/commit convergence, harvest deadline/drop metrics, answer/evidence bytes, fabrication-job turnaround, credential-status freshness, route-condition convergence, lost-query match delay, accepted-ballot convergence and flexible-load completion as applicable.
+48. implement UC-053 canonical bounded `SamplingCampaign` state with idempotent delayed execution, cancellation, expiry, local sample-rate ceilings and exact result correlation;
+49. implement UC-054 immutable `SubmissionEnvelope`/receipt/feedback bindings, multiple drafts, delayed deadline states and rich-bearer artifact transfer;
+50. implement UC-055 synthetic timetable/trip observations with strict TTL, `unknown` freshness, conflicting source classes and status propagation over UC-008/UC-025 traces;
+51. implement UC-056 synthetic `DonationGrant` + `DataContribution` lifecycle, purpose mismatch, delayed withdrawal, quarantine and derivative-dataset provenance;
+52. implement UC-057 an allow-listed `InferenceRequest` with exact model/input binding, constrained output schema, model-cache misses and disclosure negative tests;
+53. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability, custody-gap convergence, exchange time-to-match, Git bytes/commit convergence, harvest deadline/drop metrics, answer/evidence bytes, fabrication-job turnaround, credential-status freshness, route-condition convergence, lost-query match delay, accepted-ballot convergence, flexible-load completion, campaign task/result delay, assignment receipt/feedback delay, transit-status age, consent-status exposure window and model-to-data job turnaround as applicable.
 
 This reuses the current architecture instead of creating a special PHY or a separate networking stack per scenario.
 
@@ -188,6 +203,11 @@ After the simulator contracts are stable:
 - privacy-safe contact-window collection for UC-008;
 - a UC-033 2–3 provider experiment with real LoRa discovery, multiple visible nearby peers, exact peer/object binding and measured BLE/Wi-Fi/LAN handoff time;
 - a UC-023 four-node mailbox test with two disconnected groups, one moving courier and a delayed receipt;
+- a UC-053 3–5 node sensor-tasking drill with at least two harmless sensors, delayed campaign delivery, idempotent execution and later exact batch retrieval;
+- a UC-054 4+ node classroom drill with an exact PDF/code submission, delayed receipt, teacher feedback and one real UC-033 artifact handoff;
+- a UC-055 4–6 node synthetic transit-status route with expiring delay/cancellation updates, moving student relays and measured status age before any real-service observation;
+- a UC-056 4+ node synthetic/opt-in harmless data-donation drill where a grant/status update deliberately races the payload before ingest;
+- a UC-057 3–4 node requester/relay/edge-data experiment using public/synthetic data, one small local model and measured request/result/model-handoff behavior;
 - a UC-043 4–6 node exchange experiment with synthetic/opt-in textbook or calculator listings, delayed matching, reservation conflict, UC-033 detail handoff and a controlled school pickup;
 - a UC-044 3–4 laptop coding experiment with partitioned Git histories, LoRa ref discovery, an incremental bundle carried over a rich bearer and explicit merge/divergence handling;
 - a UC-045 3–5 fixed-node + walking/bicycle collector experiment where contacts are deliberately too short for all backlog, comparing at least two queue policies on the same route;
@@ -239,6 +259,11 @@ Measured packet loss, RSSI/SNR, airtime, latency, contact duration, energy where
 
 The use cases are consistent with existing research directions without copying their assumptions into the PollicinoNet core:
 
+- OGC SensorThings Sensing/Tasking and Tasking Core, relevant to UC-053's bounded request-driven observations while PollicinoNet adds disruption tolerance rather than assuming a live Web API;
+- offline assignment/submission and grading workflows in learning platforms such as Moodle, relevant to UC-054 without making PollicinoNet an LMS;
+- GTFS-Realtime Trip Updates and Service Alerts, relevant to UC-055's exact trip/stop/freshness semantics; current RFI disruption notices on the Messina–Palermo corridor are useful local test inputs, not evidence of PollicinoNet performance;
+- EU Data Governance Act/data-altruism and citizen-science ownership models such as SensorThings STAplus, relevant to UC-056's purpose/consent/provenance separation;
+- analysis-to-data/federated analytics systems such as DataSHIELD, relevant to UC-057's constrained model-to-data inference principle while the first PollicinoNet tests remain public/synthetic;
 - W3C Verifiable Credentials 2.0, JOSE/COSE and compact credential status mechanisms, relevant to UC-048 while keeping the first profile synthetic and much smaller than a full identity ecosystem;
 - 2026 humanitarian/open-mapping activations that emphasize damaged roads/infrastructure and changing access conditions, relevant to UC-049 without making PollicinoNet an authoritative emergency map;
 - opportunistic BLE crowds/phone readers used by modern asset-tracking systems, relevant to UC-050 while PollicinoNet deliberately minimizes trajectory and identity retention;
