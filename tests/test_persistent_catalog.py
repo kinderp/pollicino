@@ -39,6 +39,7 @@ from pollicino.net.persistent_catalog import (
     _encode_snapshot,
     persist_reconcile_and_pull,
 )
+from pollicino.net.local_filesystem import CAPABILITIES
 
 
 def entry(index: int, size: int = 16) -> BoundedReference:
@@ -107,8 +108,9 @@ def test_02_first_insert_is_durable_and_permissions_are_conservative(tmp_path: P
         assert catalog.generation == 1
         assert catalog.last_persistence_status is PersistenceStatus.PERSIST_COMMITTED
     path = generation_path(root, 1)
-    assert stat.S_IMODE(path.stat().st_mode) == 0o600
-    assert stat.S_IMODE(root.stat().st_mode) == 0o700
+    if CAPABILITIES.posix_modes:
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+        assert stat.S_IMODE(root.stat().st_mode) == 0o700
 
 
 def test_03_clean_restart_restores_exact_native_state(tmp_path: Path) -> None:
@@ -408,7 +410,11 @@ def test_37_stale_lock_file_is_not_a_stale_lock(tmp_path: Path) -> None:
 
 
 def test_38_symlink_directory_is_rejected(tmp_path: Path) -> None:
-    target = tmp_path / "target"; target.mkdir(); link = tmp_path / "link"; link.symlink_to(target)
+    target = tmp_path / "target"; target.mkdir(); link = tmp_path / "link"
+    try:
+        link.symlink_to(target)
+    except OSError as exc:
+        pytest.skip(f"native symlink creation unavailable: {exc}")
     with pytest.raises(PersistenceIOError): PersistentBoundedReferenceCatalog(link)
 
 
@@ -423,7 +429,10 @@ def test_40_missing_parent_fails_explicitly(tmp_path: Path) -> None:
 
 def test_41_snapshot_symlink_is_rejected(tmp_path: Path) -> None:
     root = tmp_path / "node"; root.mkdir(); target = tmp_path / "other"; target.write_bytes(b"x")
-    (root / "catalog.1.snapshot").symlink_to(target)
+    try:
+        (root / "catalog.1.snapshot").symlink_to(target)
+    except OSError as exc:
+        pytest.skip(f"native symlink creation unavailable: {exc}")
     with pytest.raises(PersistenceIOError): PersistentBoundedReferenceCatalog(root)
 
 

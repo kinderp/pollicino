@@ -1,13 +1,22 @@
 from __future__ import annotations
 
 from enum import Enum
-import fcntl
 import hashlib
 import os
 from pathlib import Path
 import struct
 import tempfile
 from typing import Callable, Generic, TypeVar
+
+from pollicino.net.local_filesystem import (
+    LockUnavailableError,
+    acquire_exclusive_lock,
+    release_lock,
+    replace_file,
+    restrict_directory_permissions,
+    restrict_file_permissions,
+    sync_directory,
+)
 
 
 PERSISTENCE_GENERATIONS = 2
@@ -144,7 +153,7 @@ def _write_all(fd: int, data: bytes | memoryview) -> None:
 
 
 class DualGenerationSnapshotStore(Generic[ValueT]):
-    """POSIX single-writer durable storage for one bounded validated payload."""
+    """Cross-platform single-writer storage for one bounded validated payload."""
 
     def __init__(
         self,
@@ -229,7 +238,7 @@ class DualGenerationSnapshotStore(Generic[ValueT]):
             if self._directory.exists() and not self._directory.is_dir():
                 raise PersistenceIOError("persistence path must be a directory")
             self._directory.mkdir(mode=0o700, parents=False, exist_ok=True)
-            os.chmod(self._directory, 0o700)
+            restrict_directory_permissions(self._directory)
         except PersistenceError:
             raise
         except OSError as exc:
@@ -248,10 +257,10 @@ class DualGenerationSnapshotStore(Generic[ValueT]):
             flags |= os.O_NOFOLLOW
         try:
             fd = os.open(path, flags, 0o600)
-            os.fchmod(fd, 0o600)
+            restrict_file_permissions(fd)
             try:
-                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            except BlockingIOError as exc:
+                acquire_exclusive_lock(fd)
+            except LockUnavailableError as exc:
                 os.close(fd)
                 raise ConcurrentWriterError("another writer owns this store directory") from exc
         except PersistenceError:
@@ -334,7 +343,7 @@ class DualGenerationSnapshotStore(Generic[ValueT]):
             )
             temporary = Path(raw_path)
             try:
-                os.fchmod(fd, 0o600)
+                restrict_file_permissions(fd)
                 midpoint = max(1, len(encoded) // 2)
                 _write_all(fd, encoded[:midpoint])
                 self._inject(FaultStage.DURING_WRITE)
@@ -344,15 +353,11 @@ class DualGenerationSnapshotStore(Generic[ValueT]):
             finally:
                 os.close(fd)
             self._inject(FaultStage.AFTER_FILE_FSYNC_BEFORE_REPLACE)
-            os.replace(temporary, target)
+            replace_file(temporary, target)
             temporary = None
             replaced = True
             self._inject(FaultStage.AFTER_REPLACE_BEFORE_DIRECTORY_FSYNC)
-            directory_fd = os.open(self._directory, os.O_RDONLY)
-            try:
-                os.fsync(directory_fd)
-            finally:
-                os.close(directory_fd)
+            sync_directory(self._directory)
             self._inject(FaultStage.AFTER_DIRECTORY_FSYNC_BEFORE_MEMORY_SWAP)
             self._generation = generation
             self._payload = payload
@@ -380,7 +385,7 @@ class DualGenerationSnapshotStore(Generic[ValueT]):
         self._closed = True
         if fd is not None:
             try:
-                fcntl.flock(fd, fcntl.LOCK_UN)
+                release_lock(fd)
             finally:
                 os.close(fd)
 
