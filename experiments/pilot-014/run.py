@@ -1382,6 +1382,11 @@ def holdout_stream_metrics(
         if available_gain > 0
         else 0.0
     )
+    p13_retained_gain = (
+        (cheap["payload_bpb"] - p13["payload_bpb"]) / available_gain
+        if available_gain > 0
+        else 0.0
+    )
     diagnostics = []
     for block in block_rows:
         index = int(block["block_index"])
@@ -1410,14 +1415,17 @@ def holdout_stream_metrics(
         "p13_bpb": p13["payload_bpb"],
         "p13_model_eval_fraction": p13["model_eval_fraction"],
         "p13_admitted_blocks": p13["admitted_blocks"],
+        "p13_retained_gain_fraction": p13_retained_gain,
         "p14_bpb": p14["payload_bpb"],
         "p14_model_eval_fraction": p14["model_eval_fraction"],
         "p14_admitted_blocks": p14["admitted_blocks"],
+        "p14_rejected_blocks": len(block_rows) - p14["admitted_blocks"],
         "p14_admitted_byte_fraction": p14["admitted_byte_fraction"],
         "p14_retained_gain_fraction": retained_gain,
         "p14_minus_p13_bpb": p14["payload_bpb"] - p13["payload_bpb"],
         "oracle50_blocksum_bpb": oracle_bits / len(data),
         "oracle50_model_eval_fraction": oracle_evaluations / len(data),
+        "oracle50_admitted_blocks": len(oracle_selected),
         "p14_blocksum_bpb": p14_blocksum_bits / len(data),
         "p14_oracle_regret_bits": p14_blocksum_bits - oracle_bits,
         "route_correct_blocks": route_correct,
@@ -1437,6 +1445,9 @@ def aggregate_holdout(rows: list[dict]) -> dict:
         "mean_neural_reset_bpb": mean(row["neural_reset_bpb"] for row in rows),
         "mean_p12_max_bpb": mean(row["p12_max_bpb"] for row in rows),
         "mean_p13_bpb": mean(row["p13_bpb"] for row in rows),
+        "mean_p13_retained_gain_fraction": mean(
+            row["p13_retained_gain_fraction"] for row in rows
+        ),
         "mean_p14_bpb": mean(row["p14_bpb"] for row in rows),
         "mean_zlib_bpb": mean(row["zlib_bpb"] for row in rows),
         "mean_zstd19_bpb": mean(row["zstd19_bpb"] for row in rows),
@@ -1446,6 +1457,10 @@ def aggregate_holdout(rows: list[dict]) -> dict:
         "min_p14_model_eval_fraction": min(row["p14_model_eval_fraction"] for row in rows),
         "mean_p14_admitted_byte_fraction": mean(row["p14_admitted_byte_fraction"] for row in rows),
         "mean_p14_retained_gain_fraction": mean(row["p14_retained_gain_fraction"] for row in rows),
+        "mean_p14_retained_gain_improvement_over_p13": mean(
+            row["p14_retained_gain_fraction"] - row["p13_retained_gain_fraction"]
+            for row in rows
+        ),
         "mean_p14_minus_p13_bpb": mean(row["p14_minus_p13_bpb"] for row in rows),
         "p14_beats_p13_streams": sum(row["p14_bpb"] < row["p13_bpb"] for row in rows),
         "p14_loses_to_p13_streams": sum(row["p14_bpb"] > row["p13_bpb"] for row in rows),
@@ -1453,6 +1468,13 @@ def aggregate_holdout(rows: list[dict]) -> dict:
         "p14_beats_cheap_streams": sum(row["p14_bpb"] < row["cheap_reset_bpb"] for row in rows),
         "mean_route_accuracy": mean(row["route_accuracy"] for row in rows),
         "mean_oracle_regret_bits": mean(row["p14_oracle_regret_bits"] for row in rows),
+        "mean_p14_to_oracle_blocksum_gap_bpb": mean(
+            row["p14_blocksum_bpb"] - row["oracle50_blocksum_bpb"] for row in rows
+        ),
+        "total_p14_admitted_blocks": sum(row["p14_admitted_blocks"] for row in rows),
+        "total_p14_rejected_blocks": sum(row["p14_rejected_blocks"] for row in rows),
+        "total_oracle50_admitted_blocks": sum(row["oracle50_admitted_blocks"] for row in rows),
+        "total_route_correct_blocks": sum(row["route_correct_blocks"] for row in rows),
         "total_false_neural_admissions": sum(row["false_neural"] for row in rows),
         "total_missed_neural_opportunities": sum(row["false_cheap"] for row in rows),
         "total_false_neural_lost_bits": sum(row["false_neural_lost_bits"] for row in rows),
@@ -1608,6 +1630,7 @@ def run_holdout(
             "primary_compute_metric": "actual uncached PyTorch model forward evaluations / source bytes",
             "search_and_codec_helper": "rich_cheap_admission_decision",
             "holdout_policy_retuning": 0,
+            "policy_modifications_after_holdout_access": 0,
             "codec_core_changed": False,
             "checkpoint_assumption": "shared, but not free; checkpoint/model cost is separate from payload bpb",
             "primary_retained_gain_threshold": RETAINED_GAIN_SUCCESS,
@@ -1620,6 +1643,13 @@ def run_holdout(
                     "detail": "local Python initially lacked pytest and NumPy; declared dependencies were installed before development selection",
                 }
             ],
+            "reporting_only_rerun_after_first_frozen_measurement": {
+                "class": "TEST_HARNESS_ERROR",
+                "first_artifact_digest": "sha256:da8838b724b96eefd4618ee1b7984a779bb2035a34ed78cc8e0d52dfc3ac4ab4",
+                "repair": "add omitted PILOT-013 retained-gain and explicit oracle/admission aggregate fields",
+                "policy_changed": False,
+                "required_full_development_reproduction": True,
+            },
             "scientific_run_failures": [],
         },
         "limits": [
