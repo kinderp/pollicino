@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -17,6 +18,7 @@ def load_runner():
     spec = importlib.util.spec_from_file_location("pilot014_frozen_runner", RUN)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
 
