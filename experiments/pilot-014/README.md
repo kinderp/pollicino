@@ -90,7 +90,8 @@ else:
 It is a one-split, three-node integer tree with threshold 1 and leaf values 1
 (admit) and 0 (reject). Although the candidate search used rich features, the
 complexity rule reduced the deployed signal to one histogram feature. Runtime
-feature cost is 16 bounded histogram updates plus one comparison, with at most
+feature cost is 16 bounded histogram updates plus two integer comparisons (tree
+split and admission threshold), with at most
 16 histogram entries; it performs no surprise calculation, bigint codelength
 product, transition tracking, floating-point operation, or neural call. It
 transmits zero bytes and adds no route side stream.
