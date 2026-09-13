@@ -1,0 +1,29 @@
+{
+  "gate": "PX20-PN-D2RP",
+  "identifier_provenance": "Provisional identifier derived from the PX19 closure recommendation; no authoritative replacement found after fetching all remote refs on 2026-09-13.",
+  "hypothesis": "The unchanged bounded dual-generation persistence format can use isolated POSIX and Windows locking/durability primitives while preserving single-writer, recovery and fail-stop semantics.",
+  "mandatory_native_platforms": [
+    "linux",
+    "macos",
+    "windows"
+  ],
+  "success_invariants": {
+    "APPLICATION_SPECIFIC_PERSISTENCE_BRANCHES": 0,
+    "COMMITTED_STATE_REOPEN_MISMATCHES": 0,
+    "CRASH_LOCK_RELEASE_FAILURES": 0,
+    "MEMORY_PUBLISHED_BEFORE_DURABILITY_BOUNDARY": 0,
+    "PERSISTENCE_FORMAT_CHANGED": false,
+    "PERSISTENCE_VERSION_CHANGED": false,
+    "PERSISTENT_PEER_PROGRESS_AUTHORITIES": 0,
+    "RECOVERY_SELECTION_MISMATCHES": 0,
+    "SINGLE_WRITER_VIOLATIONS": 0,
+    "STALE_LOCK_FALSE_POSITIVES": 0,
+    "TRANSPORT_SPECIFIC_PERSISTENCE_BRANCHES": 0,
+    "UNBOUNDED_PERSISTENCE_ALLOCATION": 0,
+    "WINDOWS_FCNTL_IMPORTS": 0
+  },
+  "windows_native_evidence_required": true,
+  "linux_native_evidence_required": true,
+  "macos_native_evidence_required": true,
+  "px19_status_preserved": "PX19_REAL_LAN_EVIDENCE_PENDING"
+}

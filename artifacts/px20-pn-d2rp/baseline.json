@@ -1,0 +1,19 @@
+{
+  "baseline_sha": "7021e05d5c9862ca01b15aaa830db67c5f6b5b7c",
+  "branch": "pollicino/px20-pn-d2rp-cross-platform-persistence",
+  "compileall": "PASS",
+  "focused": {
+    "passed": 100,
+    "skipped": 1
+  },
+  "full_suite": {
+    "passed": 822,
+    "skipped": 5
+  },
+  "platform": {
+    "architecture": "arm64",
+    "os": "macOS",
+    "python": "3.14.2"
+  },
+  "worktree_clean_before_preregistration": true
+}
