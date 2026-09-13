@@ -1,0 +1,5 @@
+{
+  "equality": "NOT_RUN_PLATFORM_PORTABILITY_BLOCK",
+  "small_difference": "NOT_RUN_PLATFORM_PORTABILITY_BLOCK",
+  "unchanged_px12_local_regression": "PASS"
+}

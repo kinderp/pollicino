@@ -1,0 +1,5 @@
+{
+  "persistent_ack_state_added": false,
+  "real_lan_commit_uncertainty": "NOT_RUN_PLATFORM_PORTABILITY_BLOCK",
+  "send_success_is_delivery": false
+}

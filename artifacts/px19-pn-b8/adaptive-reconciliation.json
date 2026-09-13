@@ -1,0 +1,5 @@
+{
+  "capacity_failure_exact_fallback": "NOT_RUN_PLATFORM_PORTABILITY_BLOCK",
+  "differences_registered": [0, 1, 10, 100, 1000],
+  "unchanged_px13_local_regression": "PASS"
+}

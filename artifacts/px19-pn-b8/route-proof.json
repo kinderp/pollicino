@@ -1,0 +1,18 @@
+{
+  "host_a": {
+    "interface": "en0",
+    "interface_mtu": 1500,
+    "method": "route -n get 192.168.1.51",
+    "non_loopback": true
+  },
+  "host_b": {
+    "interface": "Wi-Fi",
+    "interface_mtu": 1500,
+    "method": "operator Find-NetRoute verification",
+    "non_loopback": true,
+    "route_print_filter_result": "NO_ROW"
+  },
+  "overlay_or_vpn": false,
+  "same_subnet": true,
+  "two_physical_hosts": true
+}

@@ -1,0 +1,5 @@
+{
+  "receiver_before_commit": "NOT_RUN_PLATFORM_PORTABILITY_BLOCK",
+  "receiver_after_commit": "NOT_RUN_PLATFORM_PORTABILITY_BLOCK",
+  "sender_after_send": "NOT_RUN_PLATFORM_PORTABILITY_BLOCK"
+}

@@ -1,0 +1,15 @@
+{
+  "application_specific_lan_branches": 0,
+  "b2_family_changed": false,
+  "b4_changed": false,
+  "d2_d3_d4_changed": false,
+  "direct_remote_store_reads": 0,
+  "discovery_or_routing": 0,
+  "lan_specific_upper_protocol_branches": 0,
+  "persistent_ack_state": 0,
+  "persistent_fragment_state": 0,
+  "persistent_lan_session_state": 0,
+  "udp_specific_b2_branches": 0,
+  "udp_specific_b4_branches": 0,
+  "udp_specific_d4_branches": 0
+}

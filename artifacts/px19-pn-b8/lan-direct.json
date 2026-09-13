@@ -1,0 +1,7 @@
+{
+  "attempted": false,
+  "blocker": "HOST_B_ENDPOINT_IMPORT_REQUIRES_POSIX_FCNTL",
+  "canonical_mismatches": null,
+  "classification": "M.PLATFORM_PORTABILITY_LIMIT",
+  "result": "NOT_RUN"
+}

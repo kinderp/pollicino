@@ -1,0 +1,11 @@
+{
+  "affected_host": "B",
+  "current_implementation_sha": "5f59eb99c734d265a30fa23c2fd8ecc9d2151656",
+  "error": "ModuleNotFoundError: No module named 'fcntl'",
+  "import": "src/pollicino/net/local_persistence.py",
+  "initial_observation_sha": "5b65a9fc7d7d2930aff0ec128cb7e96287ffecb9",
+  "persistence_files_changed_between_shas": false,
+  "repair_in_px19": false,
+  "superseded_sha_reason": "environment collector eager-imported persistence; fixed by lazy imports",
+  "taxonomy": "M.PLATFORM_PORTABILITY_LIMIT"
+}

@@ -1,0 +1,19 @@
+{
+  "architecture": "arm64",
+  "commit_sha": "5f59eb99c734d265a30fa23c2fd8ecc9d2151656",
+  "interface": "en0",
+  "interface_medium": "Wi-Fi",
+  "interface_mtu": 1500,
+  "local_ipv4": "192.168.1.50",
+  "loopback_interface_used": false,
+  "os": "macOS-15.7.9-arm64-arm-64bit-Mach-O",
+  "overlay_or_vpn_used": false,
+  "peer_ipv4": "192.168.1.51",
+  "physical_host_attestation": true,
+  "python": "3.14.2",
+  "recorded_at": "2026-09-13T05:15:55.305463+00:00",
+  "role": "A",
+  "route_diagnostic": "route to 192.168.1.51 via en0, host route, MTU 1500",
+  "route_method": "route -n get",
+  "worktree_clean": true
+}

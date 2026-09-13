@@ -1,0 +1,8 @@
+{
+  "host_a_interface_mtu": 1500,
+  "host_b_interface_mtu": 1500,
+  "interface_mtu_equals_path_mtu_claim": false,
+  "path_mtu_boundary": "INCONCLUSIVE",
+  "pmtu_protocol_added": false,
+  "safe_near_path_b4_ceiling": null
+}

@@ -1,0 +1,20 @@
+{
+  "architecture": "AMD64",
+  "commit_sha": "5f59eb99c734d265a30fa23c2fd8ecc9d2151656",
+  "evidence_source": "HOST_B_OPERATOR_OUTPUT",
+  "interface": "Wi-Fi",
+  "interface_medium": "Wi-Fi",
+  "interface_mtu": 1500,
+  "local_ipv4": "192.168.1.51",
+  "loopback_interface_used": false,
+  "os": "Windows-10-10.0.26200-SP0",
+  "overlay_or_vpn_used": false,
+  "peer_ipv4": "192.168.1.50",
+  "physical_host_attestation": true,
+  "python": "3.10.7",
+  "recorded_at": "2026-09-13T05:13:54.219443+00:00",
+  "role": "B",
+  "route_diagnostic": "route print filter returned no row; operator separately verified direct 192.168.1.0/24 Wi-Fi route with Find-NetRoute; hardware addresses redacted",
+  "route_method": "operator-declared plus Find-NetRoute",
+  "worktree_clean": true
+}

@@ -1,0 +1,14 @@
+{
+  "accounting": {
+    "datagrams_sent": 1,
+    "payload_bytes_sent": 128,
+    "receive_timeouts": 1
+  },
+  "implementation_sha": "5f59eb99c734d265a30fa23c2fd8ecc9d2151656",
+  "local": "192.168.1.50",
+  "peer": "192.168.1.51:45999",
+  "receive": "UDPTimeout",
+  "send": "LOCAL_SUCCESS",
+  "transport_path": "HOST_A_NON_LOOPBACK_INTERFACE",
+  "delivery_inferred": false
+}

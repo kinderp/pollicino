@@ -1,0 +1,7 @@
+{
+  "clean_two_host_contacts": 0,
+  "host_a_missing_peer_b4_bytes": 128,
+  "host_a_missing_peer_datagrams": 1,
+  "observed_network_loss": null,
+  "reason": "NO_CROSS_HOST_ENDPOINT_CONTACT"
+}

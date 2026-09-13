@@ -1,0 +1,21 @@
+{
+  "checkpoint_created": false,
+  "classification": "PX19_REAL_LAN_EVIDENCE_PENDING",
+  "confidence": "HIGH",
+  "failures": [
+    "A.TEST_HARNESS_ERROR:environment command eagerly imported POSIX persistence on Host B; repaired with lazy imports and superseding implementation SHA",
+    "A.TEST_HARNESS_ERROR:inherited PX17 10000-record baseline startup horizon failed once; finite case-specific timeout repair passed full regression",
+    "A.TEST_HARNESS_ERROR:first missing-peer diagnostic used invalid B2 bytes; rerun with a valid B4 frame",
+    "M.PLATFORM_PORTABILITY_LIMIT:Host B Windows cannot import inherited fcntl-based durable persistence",
+    "H.PATH_MTU_EVIDENCE_LIMIT:no cross-host endpoint contact or clean end-to-end PMTU diagnostic was possible"
+  ],
+  "final_full": {"passed": 822, "skipped": 5},
+  "focused_px19": {"passed": 6},
+  "focused_px18_px19": {"passed": 59},
+  "gate": "PX19-PN-B8",
+  "implementation_sha": "5f59eb99c734d265a30fa23c2fd8ecc9d2151656",
+  "preregistration_sha": "0b0cf2d52b351f6732737139255bb4d90ad9ff91",
+  "ready_claim": false,
+  "two_host_environment_evidence": true,
+  "two_host_pollicino_contact_evidence": false
+}
