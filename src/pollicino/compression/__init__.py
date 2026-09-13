@@ -2,8 +2,19 @@
 
 from .adaptive import AdaptiveNGramCDFProvider, NeuralPriorAdaptiveCDFProvider, adaptive_fingerprint
 from .admission_routing import (
+    AdmissionBudgetState,
+    CheapAdmissionDecisionTree,
+    CheapAdmissionFeatures,
     CheapCodelengthAdmissionBlockCDFProvider,
+    DecisionTreeNode,
+    QuantizedLinearAdmissionRule,
+    RichCheapAdmissionBlockCDFProvider,
+    admission_rule_from_dict,
     cheap_codelength_admission_fingerprint,
+    extract_cheap_admission_features,
+    integer_admission_rule_feature_names,
+    rich_cheap_admission_decision,
+    rich_cheap_admission_fingerprint,
 )
 from .bit_credit_routing import BitCreditSpecialistRouterCDFProvider, bit_credit_router_fingerprint
 from .block_routing import BlockLocalBitCreditRouterCDFProvider, BlockResetCDFProvider, block_local_router_fingerprint
@@ -23,8 +34,19 @@ __all__ = [
     "AdaptiveNGramCDFProvider",
     "NeuralPriorAdaptiveCDFProvider",
     "adaptive_fingerprint",
+    "AdmissionBudgetState",
+    "CheapAdmissionDecisionTree",
+    "CheapAdmissionFeatures",
     "CheapCodelengthAdmissionBlockCDFProvider",
+    "DecisionTreeNode",
+    "QuantizedLinearAdmissionRule",
+    "RichCheapAdmissionBlockCDFProvider",
+    "admission_rule_from_dict",
     "cheap_codelength_admission_fingerprint",
+    "extract_cheap_admission_features",
+    "integer_admission_rule_feature_names",
+    "rich_cheap_admission_decision",
+    "rich_cheap_admission_fingerprint",
     "BitCreditSpecialistRouterCDFProvider",
     "bit_credit_router_fingerprint",
     "BlockLocalBitCreditRouterCDFProvider",
