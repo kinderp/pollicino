@@ -1,0 +1,54 @@
+{
+  "architecture": {
+    "block_bytes": 512,
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+    "codec_changed": false,
+    "hard_max_actual_neural_eval_fraction_per_stream": 0.5,
+    "max_admitted_bytes_per_4096_stream": 2048,
+    "neural_model_changed": false,
+    "neural_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "pilot014_probe_bytes": 16,
+    "pilot015_probe_bytes": 32,
+    "range_coder_changed": false,
+    "selector_side_bits": 0
+  },
+  "base_sha": "91276bcdf9211a70605e11ee61fb713b16924f2b",
+  "development": {
+    "candidate_thresholds": [20, 22, 24, 26, 28, 30],
+    "candidate_grid_may_expand": false,
+    "data": "already-consumed PILOT-012 and PILOT-013 development streams only",
+    "primary_objective": "lower mean real range-coded payload bpb, subject to the hard per-stream actual neural-evaluation budget",
+    "required_predecessor_policy_digest": "02cb5a4fd9fb2d3695af55a874aff6ad2a4b49599af9d396878ef7cde116aa85",
+    "required_predecessor_rule": "unique_count_16 <= 12",
+    "tie_break": [
+      "lower mean real payload bpb",
+      "lower mean actual neural evaluation fraction",
+      "lower threshold"
+    ]
+  },
+  "experiment_id": "pilot-015-longer-cheap-horizon",
+  "feature": {
+    "definition": "number of distinct byte values among the first 32 already-consumed bytes of the current 512-byte block",
+    "name": "unique_count_32",
+    "runtime_integer_only": true
+  },
+  "fresh_holdout": {
+    "policy_retuning_allowed": false,
+    "source_content_access_before_frozen_policy": false,
+    "stream_bytes": 4096,
+    "stream_count": 6,
+    "transitions_not_all_block_aligned": true
+  },
+  "hypotheses": {
+    "primary": "mean retained cheap-reset to neural-reset gain >= 0.50 and mean PILOT-015 payload bpb below PILOT-014 on the same fresh holdout",
+    "secondary": "longer cheap-only evidence outweighs delayed neural activation without more selector complexity or neural compute",
+    "secondary_stream_wins": "PILOT-015 beats PILOT-014 on at least four of six fresh streams"
+  },
+  "pilot_version": "PILOT-015",
+  "selector": {
+    "decision": "admit iff unique_count_32 <= T and the causal complete-block budget permits",
+    "family": "one-split deterministic integer decision tree",
+    "feature_count": 1,
+    "neural_evaluations_before_admission": 0
+  }
+}
