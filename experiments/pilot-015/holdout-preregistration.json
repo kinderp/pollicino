@@ -1,0 +1,86 @@
+{
+  "content_access_before_preregistration": false,
+  "frozen_policy_digest": "ee0aa7a13a0b24f7b3c978ee40e25a05376e734206e3cdf9df1d30c3ac39b28e",
+  "generated_components": {
+    "compressed_seed": 5515,
+    "dna_seed": 5512,
+    "json_seed": 5511,
+    "random256_seed": 5514,
+    "random64_seed": 5513,
+    "repeat_ascii": "longer-cheap-horizon-"
+  },
+  "name": "pilot-015-fresh-mixed-domain-holdout",
+  "pilot": "PIL-015_LONGER_HORIZON_HOLDOUT_v1",
+  "policy_modifications_after_holdout_access_allowed": false,
+  "recipes": {
+    "fresh-a": [
+      ["llvm", 823],
+      ["random256", 463],
+      ["postgres", 1117],
+      ["repeat", 397],
+      ["json", -1]
+    ],
+    "fresh-b": [
+      ["postgres", 739],
+      ["dna", 919],
+      ["llvm", 1013],
+      ["compressed", -1]
+    ],
+    "fresh-c": [
+      ["english", 673],
+      ["llvm", 953],
+      ["random64", 563],
+      ["postgres", -1]
+    ],
+    "fresh-d": [
+      ["json", 881],
+      ["postgres", 829],
+      ["repeat", 359],
+      ["compressed", 709],
+      ["llvm", -1]
+    ],
+    "fresh-e": [
+      ["random256", 503],
+      ["postgres", 1163],
+      ["dna", 757],
+      ["llvm", -1]
+    ],
+    "fresh-f": [
+      ["llvm", 467],
+      ["repeat", 599],
+      ["postgres", 449],
+      ["random256", 727],
+      ["json", -1]
+    ]
+  },
+  "selection_basis": "Before content access, choose two mature independent projects at immutable releases and source files from parser/structured-data implementation domains not used by PILOT-001 through PILOT-014. Paths were chosen by domain role, not observed compressibility. GitHub commit/tree metadata supplied immutable commit, blob and size identities without reading blob content.",
+  "source_aliases": {
+    "llvm": "llvm-clang-parse-stmt",
+    "postgres": "postgres-jsonfuncs"
+  },
+  "sources": [
+    {
+      "expected_bytes": 99531,
+      "git_blob_sha1": "d0ff33bd1379ab727bdf712ad2ebee58f64f9149",
+      "name": "llvm-clang-parse-stmt",
+      "path": "clang/lib/Parse/ParseStmt.cpp",
+      "repository": "llvm/llvm-project",
+      "revision": "llvmorg-18.1.8",
+      "revision_commit": "3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff",
+      "url": "https://raw.githubusercontent.com/llvm/llvm-project/3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff/clang/lib/Parse/ParseStmt.cpp"
+    },
+    {
+      "expected_bytes": 150652,
+      "git_blob_sha1": "70cb922e6b7aa45629483bb64d3380d07a1e81a0",
+      "name": "postgres-jsonfuncs",
+      "path": "src/backend/utils/adt/jsonfuncs.c",
+      "repository": "postgres/postgres",
+      "revision": "REL_16_4",
+      "revision_commit": "2caa85f4aae689e6f6721d7363b4c66a2a6417d6",
+      "url": "https://raw.githubusercontent.com/postgres/postgres/2caa85f4aae689e6f6721d7363b4c66a2a6417d6/src/backend/utils/adt/jsonfuncs.c"
+    }
+  ],
+  "stream_bytes": 4096,
+  "stream_count": 6,
+  "transitions_deliberately_not_all_512_aligned": true
+}

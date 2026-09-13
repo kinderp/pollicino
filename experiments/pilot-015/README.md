@@ -174,3 +174,21 @@ development block on average.
 The frozen policy digest is
 `ee0aa7a13a0b24f7b3c978ee40e25a05376e734206e3cdf9df1d30c3ac39b28e`.
 
+## Fresh-holdout preregistration
+
+After the policy freeze and before file-content access, the following two
+sources were selected by project maturity and parser/structured-data domain,
+not by measured compressibility:
+
+- LLVM 18.1.8 (`3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff`),
+  `clang/lib/Parse/ParseStmt.cpp`, expected 99,531 bytes and Git blob
+  `d0ff33bd1379ab727bdf712ad2ebee58f64f9149`;
+- PostgreSQL 16.4 (`2caa85f4aae689e6f6721d7363b4c66a2a6417d6`),
+  `src/backend/utils/adt/jsonfuncs.c`, expected 150,652 bytes and Git blob
+  `70cb922e6b7aa45629483bb64d3380d07a1e81a0`.
+
+GitHub commit and tree metadata supplied these identities without reading the
+blob contents. `holdout-preregistration.json` freezes the identities, new
+deterministic generation seeds, and six 4096-byte recipes whose segment
+boundaries are deliberately not all divisible by 512. Content download and
+SHA-256 measurement may occur only through the frozen firewall.
