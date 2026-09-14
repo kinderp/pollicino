@@ -192,3 +192,15 @@ blob contents. `holdout-preregistration.json` freezes the identities, new
 deterministic generation seeds, and six 4096-byte recipes whose segment
 boundaries are deliberately not all divisible by 512. Content download and
 SHA-256 measurement may occur only through the frozen firewall.
+
+The first firewall invocation was stopped before per-stream holdout metrics
+because its regenerated policy document incorrectly used the later run HEAD as
+`source_commit`, producing a different full document digest even though the
+frozen selector and development reproduction matched. This was classified
+`A. TEST_HARNESS_ERROR`. The repair pins the already-frozen implementation SHA
+in regenerated policy documents and adds an explicit full policy-digest
+equality assertion. `frozen-policy.json`, its selector, threshold, budget,
+horizon, model and development metrics remain byte-for-byte unchanged. Fresh
+source blobs had been verified and block diagnostics had begun, but no holdout
+stream metrics or labels were produced; the repaired firewall must reproduce
+all frozen development evidence before restarting the scientific run.

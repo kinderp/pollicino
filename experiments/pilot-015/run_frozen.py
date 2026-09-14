@@ -65,6 +65,8 @@ def main() -> None:
         != policy_document["policy"]["selector"]
     ):
         raise RuntimeError("development no longer selects the frozen threshold")
+    if development["recommended_policy"]["policy_digest"] != policy_document["policy_digest"]:
+        raise RuntimeError("regenerated policy digest differs from frozen policy digest")
     print(
         "POLICY_FROZEN_VERIFIED",
         json.dumps(
@@ -94,4 +96,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

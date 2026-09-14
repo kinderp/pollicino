@@ -35,6 +35,7 @@ from pollicino.compression.codec import decode_pol
 EXPERIMENT_ID = "pilot-015-longer-cheap-horizon"
 PILOT014_FINAL_SHA = "91276bcdf9211a70605e11ee61fb713b16924f2b"
 PILOT014_POLICY_DIGEST = "02cb5a4fd9fb2d3695af55a874aff6ad2a4b49599af9d396878ef7cde116aa85"
+FROZEN_IMPLEMENTATION_SHA = "e1c392527aaf3535bc2578b43d878291d6e78482"
 MODEL_FINGERPRINT = "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117"
 CHECKPOINT_SHA256 = "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7"
 STREAM_BYTES = 4096
@@ -611,7 +612,7 @@ def run_development(*, write_outputs: bool = True) -> dict:
         "pilot_version": "PILOT-015",
         "experiment_id": EXPERIMENT_ID,
         "predecessor_sha": PILOT014_FINAL_SHA,
-        "source_commit": current_git_sha(),
+        "source_commit": FROZEN_IMPLEMENTATION_SHA,
         "policy": {
             "block_bytes": BLOCK_BYTES,
             "probe_bytes": P15_PROBE_BYTES,
@@ -1168,4 +1169,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
