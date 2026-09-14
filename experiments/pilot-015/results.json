@@ -1,0 +1,292 @@
+{
+  "activation_accounting": {
+    "pilot014": {
+      "cheap_coded_bytes_before_activation": 16,
+      "first_neural_coded_byte_ordinal": 17,
+      "first_neural_coded_byte_zero_based": 16,
+      "model_evaluations_after_first_specialist_output": 16,
+      "model_evaluations_before_admission": 0,
+      "post_decision_catchup_evaluations_before_current_output": 15,
+      "probe_bytes": 16,
+      "remaining_neural_coded_bytes_full_block": 496
+    },
+    "pilot015": {
+      "cheap_coded_bytes_before_activation": 32,
+      "first_neural_coded_byte_ordinal": 33,
+      "first_neural_coded_byte_zero_based": 32,
+      "model_evaluations_after_first_specialist_output": 32,
+      "model_evaluations_before_admission": 0,
+      "post_decision_catchup_evaluations_before_current_output": 31,
+      "probe_bytes": 32,
+      "remaining_neural_coded_bytes_full_block": 480
+    }
+  },
+  "development": {
+    "reproduction": {
+      "activation_accounting": {
+        "pilot014": {
+          "cheap_coded_bytes_before_activation": 16,
+          "first_neural_coded_byte_ordinal": 17,
+          "first_neural_coded_byte_zero_based": 16,
+          "model_evaluations_after_first_specialist_output": 16,
+          "model_evaluations_before_admission": 0,
+          "post_decision_catchup_evaluations_before_current_output": 15,
+          "probe_bytes": 16,
+          "remaining_neural_coded_bytes_full_block": 496
+        },
+        "pilot015": {
+          "cheap_coded_bytes_before_activation": 32,
+          "first_neural_coded_byte_ordinal": 33,
+          "first_neural_coded_byte_zero_based": 32,
+          "model_evaluations_after_first_specialist_output": 32,
+          "model_evaluations_before_admission": 0,
+          "post_decision_catchup_evaluations_before_current_output": 31,
+          "probe_bytes": 32,
+          "remaining_neural_coded_bytes_full_block": 480
+        }
+      },
+      "candidate_rows_digest": "e11140799ed36f2a1388a554729a09579f9f7c18329f393acabbdc6eebc235e6",
+      "development_block_count": 96,
+      "development_streams": [
+        "p12-mix-a",
+        "p12-mix-b",
+        "p12-mix-c",
+        "p12-mix-d",
+        "p12-mix-e",
+        "p12-mix-f",
+        "p13-mix-a",
+        "p13-mix-b",
+        "p13-mix-c",
+        "p13-mix-d",
+        "p13-mix-e",
+        "p13-mix-f"
+      ],
+      "predecessor_reproduction": {
+        "p13_mean_bpb": 4.43658447265625,
+        "p13_mean_eval": 0.4376220703125,
+        "p13_rule": "88 <= ceil(probe codelength bits) <= 128",
+        "p14_mean_bpb": 4.404296875,
+        "p14_mean_eval": 0.44097900390625,
+        "p14_policy_digest": "02cb5a4fd9fb2d3695af55a874aff6ad2a4b49599af9d396878ef7cde116aa85",
+        "p14_rule": "unique_count_16 <= 12",
+        "streams": [
+          "p12-mix-e",
+          "p12-mix-f",
+          "p13-mix-e",
+          "p13-mix-f"
+        ]
+      },
+      "search_codec_decision_mismatches": 0,
+      "selected_metrics": {
+        "admitted_blocks": 48,
+        "budget_violations": 0,
+        "max_model_eval_fraction": 0.4990234375,
+        "mean_admitted_byte_fraction": 0.5,
+        "mean_model_eval_fraction": 0.4591878255208333,
+        "mean_payload_bpb": 4.613993326822917,
+        "search_codec_decision_mismatches": 0,
+        "threshold": 20
+      },
+      "selected_threshold": 20
+    },
+    "reproduction_digest": "8cc7e182099032dc0729a5ec072bf59b757dbe851bc8a45587dfdad229127921",
+    "selected_metrics": {
+      "admitted_blocks": 48,
+      "budget_violations": 0,
+      "max_model_eval_fraction": 0.4990234375,
+      "mean_admitted_byte_fraction": 0.5,
+      "mean_model_eval_fraction": 0.4591878255208333,
+      "mean_payload_bpb": 4.613993326822917,
+      "search_codec_decision_mismatches": 0,
+      "threshold": 20
+    },
+    "selection_objective": [
+      "lower mean real range-coded payload bpb",
+      "lower mean actual neural evaluation fraction",
+      "lower threshold"
+    ],
+    "threshold_candidates": [
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ]
+  },
+  "experiment_id": "pilot-015-longer-cheap-horizon",
+  "failure_taxonomy": {
+    "repaired_before_scientific_run": [
+      {
+        "class": "A. TEST_HARNESS_ERROR",
+        "detail": "two synthetic focused-test fixtures used an unintended 21st distinct byte and a 30-byte fingerprint; corrected before development scoring",
+        "policy_changed": false
+      },
+      {
+        "class": "A. TEST_HARNESS_ERROR",
+        "detail": "first firewall invocation regenerated a policy document with the later run HEAD as source_commit; stopped before per-stream metrics and pinned the frozen implementation SHA",
+        "fresh_blobs_opened": true,
+        "full_development_reproduced_before_restart": true,
+        "holdout_metrics_produced": false,
+        "policy_changed": false
+      }
+    ],
+    "scientific_run_failures": []
+  },
+  "feature_cost": {
+    "additional_bytes_transmitted": 0,
+    "extra_histogram_updates_vs_pilot014_per_block": 16,
+    "histogram_entries_max": 32,
+    "histogram_updates_per_block": 32,
+    "integer_budget_comparisons": 1,
+    "integer_split_comparisons": 1,
+    "neural_calls_during_feature_extraction": 0,
+    "relative_cost": "bounded O(32) integer/container work versus up to 511 counted neural forwards per admitted full block",
+    "unique_count_extractions": 1
+  },
+  "frozen_policy_digest": "ee0aa7a13a0b24f7b3c978ee40e25a05376e734206e3cdf9df1d30c3ac39b28e",
+  "holdout": {
+    "aggregate": {
+      "budget_violations": 0,
+      "exact_roundtrip_failures": 0,
+      "max_p15_model_eval_fraction": 0.496337890625,
+      "mean_cheap_reset_bpb": 4.674763997395833,
+      "mean_horizon32_gain_vs16_bpb": -0.0003662109375,
+      "mean_neural_reset_bpb": 4.356119791666667,
+      "mean_oracle16_blocksum_bpb": 4.479207356770833,
+      "mean_oracle32_blocksum_bpb": 4.501546223958333,
+      "mean_p12_max_bpb": 4.4105224609375,
+      "mean_p13_bpb": 4.544392903645833,
+      "mean_p14_bpb": 4.537882486979167,
+      "mean_p14_oracle_regret_bits": 248.16666666666666,
+      "mean_p14_retained_gain_fraction": 0.46077495682276015,
+      "mean_p14_route_accuracy": 0.5,
+      "mean_p14_to_oracle16_gap_bpb": 0.060587565104166664,
+      "mean_p15_admitted_byte_fraction": 0.5,
+      "mean_p15_bpb": 4.538248697916667,
+      "mean_p15_model_eval_fraction": 0.4430338541666667,
+      "mean_p15_oracle_regret_bits": 158.16666666666666,
+      "mean_p15_retained_gain_fraction": 0.46222462450965734,
+      "mean_p15_route_accuracy": 0.5416666666666666,
+      "mean_p15_to_oracle32_gap_bpb": 0.038614908854166664,
+      "mean_payload_beats_p14": false,
+      "mean_retained_gain_improvement_vs_p14": 0.0014496676868971843,
+      "mean_zlib_bpb": 3.8955078125,
+      "mean_zstd19_bpb": 3.7815755208333335,
+      "min_p15_model_eval_fraction": 0.376708984375,
+      "p15_beats_p14_streams": 1,
+      "p15_loses_to_p14_streams": 5,
+      "p15_ties_p14_streams": 0,
+      "primary_success": false,
+      "retained_gain_threshold_passed": false,
+      "scientific_classification": "PILOT015_ADMISSION_DELAY_NEGATES_SIGNAL_GAIN",
+      "search_codec_decision_mismatches": 0,
+      "secondary_four_of_six_passed": false,
+      "sha256_mismatches": 0,
+      "total_p15_false_neural": 3,
+      "total_p15_false_neural_lost_bits": 101,
+      "total_p15_missed_beneficial_lost_bits": 2285,
+      "total_p15_missed_beneficial_neural": 21,
+      "total_p15_selected_blocks_horizon_delay_bits": 355
+    },
+    "name": "pilot-015-fresh-mixed-domain-holdout",
+    "sources": [
+      {
+        "bytes": 99531,
+        "git_blob_sha1": "d0ff33bd1379ab727bdf712ad2ebee58f64f9149",
+        "name": "llvm-clang-parse-stmt",
+        "path": "clang/lib/Parse/ParseStmt.cpp",
+        "repository": "llvm/llvm-project",
+        "revision": "llvmorg-18.1.8",
+        "sha256": "ff2a485068513bf5ade332860f8b5362b2ed4777dd4edf9b2c6a3cb64b32f1a8",
+        "url": "https://raw.githubusercontent.com/llvm/llvm-project/3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff/clang/lib/Parse/ParseStmt.cpp"
+      },
+      {
+        "bytes": 150652,
+        "git_blob_sha1": "70cb922e6b7aa45629483bb64d3380d07a1e81a0",
+        "name": "postgres-jsonfuncs",
+        "path": "src/backend/utils/adt/jsonfuncs.c",
+        "repository": "postgres/postgres",
+        "revision": "REL_16_4",
+        "sha256": "d36a4e15730cd6afd2eac6e636ecdeb72755dfdd1d3b864b02c8f6a2dc480eda",
+        "url": "https://raw.githubusercontent.com/postgres/postgres/2caa85f4aae689e6f6721d7363b4c66a2a6417d6/src/backend/utils/adt/jsonfuncs.c"
+      }
+    ],
+    "streams": [
+      "fresh-a",
+      "fresh-b",
+      "fresh-c",
+      "fresh-d",
+      "fresh-e",
+      "fresh-f"
+    ]
+  },
+  "holdout_preregistration_digest": "2e5238431c71de82d9cdc276d58ee987f2ef9b5862af6aaa0b8ccf3ee06b0dbb",
+  "limitations": [
+    "Six deterministic mixed streams form a mechanism holdout, not a population sample.",
+    "The horizon-matched fixed-budget oracles are non-causal and use independently coded block payloads.",
+    "The shared neural checkpoint cost is separate from payload bpb and is not free.",
+    "Python container overhead is implementation-dependent although logical feature state is bounded."
+  ],
+  "policy": {
+    "block_bytes": 512,
+    "cheap_provider_fingerprint": "bc59acb5e6f64f93e62775e8f65ea5f9b041f0a5c0498216b8004510d2983e0a",
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7",
+    "codec_identity": "POL1 shared-provider range coder, unchanged",
+    "feature_definition": "number of distinct byte values among the first 32 already-consumed bytes of the current 512-byte block",
+    "feature_name": "unique_count_32",
+    "max_actual_neural_eval_fraction": 0.5,
+    "max_admitted_bytes": 2048,
+    "model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "neural_evaluations_before_admission": 0,
+    "neural_gate_fingerprint": "34c41b3af254f0165cef52d31b8514dd13fb619f275c6f2686b9982d02d0e5d3",
+    "probe_bytes": 32,
+    "selector": {
+      "nodes": [
+        {
+          "feature": "unique_count",
+          "greater": 2,
+          "less_equal": 1,
+          "threshold": 20
+        },
+        {
+          "value": 1
+        },
+        {
+          "value": 0
+        }
+      ],
+      "threshold": 1,
+      "type": "decision-tree"
+    },
+    "selector_side_bits": 0
+  },
+  "predecessor": {
+    "pilot013_remains_valid": true,
+    "pilot014_final_sha": "91276bcdf9211a70605e11ee61fb713b16924f2b",
+    "pilot014_policy_digest": "02cb5a4fd9fb2d3695af55a874aff6ad2a4b49599af9d396878ef7cde116aa85",
+    "pilot014_remains_valid": true
+  },
+  "protocol": {
+    "block_bytes": 512,
+    "block_size_changed": false,
+    "cheap_model_changed": false,
+    "future_byte_reads_before_admission": 0,
+    "hard_max_actual_neural_eval_fraction": 0.5,
+    "hard_max_admitted_bytes": 2048,
+    "holdout_policy_retuning": 0,
+    "harness_repairs_after_holdout_access_before_metrics": 1,
+    "neural_evaluations_before_admission": 0,
+    "neural_model_changed": false,
+    "pilot014_probe_bytes": 16,
+    "pilot015_probe_bytes": 32,
+    "policy_modifications_after_holdout_access": 0,
+    "primary_compute_metric": "actual uncached PyTorch model forward evaluations / source bytes",
+    "range_coder_changed": false,
+    "search_and_codec_helper": "rich_cheap_admission_decision",
+    "selector_complexity_changed_vs_pilot014": false,
+    "selector_side_bits": 0
+  },
+  "question": "Does exactly 32 cheap-only bytes improve same-budget admission over the frozen 16-byte selector?",
+  "run_source_commit": "1fbb02192324d59f2ca278411ae78828b37b1b5e"
+}

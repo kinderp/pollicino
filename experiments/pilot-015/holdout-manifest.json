@@ -1,0 +1,233 @@
+{
+  "experiment_id": "pilot-015-longer-cheap-horizon",
+  "preregistration_digest": "2e5238431c71de82d9cdc276d58ee987f2ef9b5862af6aaa0b8ccf3ee06b0dbb",
+  "selection_basis": "Before content access, choose two mature independent projects at immutable releases and source files from parser/structured-data implementation domains not used by PILOT-001 through PILOT-014. Paths were chosen by domain role, not observed compressibility. GitHub commit/tree metadata supplied immutable commit, blob and size identities without reading blob content.",
+  "sources": [
+    {
+      "bytes": 99531,
+      "git_blob_sha1": "d0ff33bd1379ab727bdf712ad2ebee58f64f9149",
+      "name": "llvm-clang-parse-stmt",
+      "path": "clang/lib/Parse/ParseStmt.cpp",
+      "repository": "llvm/llvm-project",
+      "revision": "llvmorg-18.1.8",
+      "sha256": "ff2a485068513bf5ade332860f8b5362b2ed4777dd4edf9b2c6a3cb64b32f1a8",
+      "url": "https://raw.githubusercontent.com/llvm/llvm-project/3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff/clang/lib/Parse/ParseStmt.cpp"
+    },
+    {
+      "bytes": 150652,
+      "git_blob_sha1": "70cb922e6b7aa45629483bb64d3380d07a1e81a0",
+      "name": "postgres-jsonfuncs",
+      "path": "src/backend/utils/adt/jsonfuncs.c",
+      "repository": "postgres/postgres",
+      "revision": "REL_16_4",
+      "sha256": "d36a4e15730cd6afd2eac6e636ecdeb72755dfdd1d3b864b02c8f6a2dc480eda",
+      "url": "https://raw.githubusercontent.com/postgres/postgres/2caa85f4aae689e6f6721d7363b4c66a2a6417d6/src/backend/utils/adt/jsonfuncs.c"
+    }
+  ],
+  "streams": [
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 823,
+          "component": "llvm",
+          "end": 823,
+          "start": 0
+        },
+        {
+          "bytes": 463,
+          "component": "random256",
+          "end": 1286,
+          "start": 823
+        },
+        {
+          "bytes": 1117,
+          "component": "postgres",
+          "end": 2403,
+          "start": 1286
+        },
+        {
+          "bytes": 397,
+          "component": "repeat",
+          "end": 2800,
+          "start": 2403
+        },
+        {
+          "bytes": 1296,
+          "component": "json",
+          "end": 4096,
+          "start": 2800
+        }
+      ],
+      "sha256": "76d17472a284e0714b44402f2553c18c72dee3170699360105d31dc55b9b56cf",
+      "stream": "fresh-a"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 739,
+          "component": "postgres",
+          "end": 739,
+          "start": 0
+        },
+        {
+          "bytes": 919,
+          "component": "dna",
+          "end": 1658,
+          "start": 739
+        },
+        {
+          "bytes": 1013,
+          "component": "llvm",
+          "end": 2671,
+          "start": 1658
+        },
+        {
+          "bytes": 1425,
+          "component": "compressed",
+          "end": 4096,
+          "start": 2671
+        }
+      ],
+      "sha256": "ce5844dd55cfc9102892e34dcacd6759fa3ee592322e8e9992daf4e672fd0f4a",
+      "stream": "fresh-b"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 673,
+          "component": "english",
+          "end": 673,
+          "start": 0
+        },
+        {
+          "bytes": 953,
+          "component": "llvm",
+          "end": 1626,
+          "start": 673
+        },
+        {
+          "bytes": 563,
+          "component": "random64",
+          "end": 2189,
+          "start": 1626
+        },
+        {
+          "bytes": 1907,
+          "component": "postgres",
+          "end": 4096,
+          "start": 2189
+        }
+      ],
+      "sha256": "e3d58a39d6c076b19eaf73ecfa03fb2b9129bd9074e16c8dc38aaaec863347a1",
+      "stream": "fresh-c"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 881,
+          "component": "json",
+          "end": 881,
+          "start": 0
+        },
+        {
+          "bytes": 829,
+          "component": "postgres",
+          "end": 1710,
+          "start": 881
+        },
+        {
+          "bytes": 359,
+          "component": "repeat",
+          "end": 2069,
+          "start": 1710
+        },
+        {
+          "bytes": 709,
+          "component": "compressed",
+          "end": 2778,
+          "start": 2069
+        },
+        {
+          "bytes": 1318,
+          "component": "llvm",
+          "end": 4096,
+          "start": 2778
+        }
+      ],
+      "sha256": "d99ef50742d896711b4e6862a7f1b5851e674ae995d34db6801bd2e44093ea6b",
+      "stream": "fresh-d"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 503,
+          "component": "random256",
+          "end": 503,
+          "start": 0
+        },
+        {
+          "bytes": 1163,
+          "component": "postgres",
+          "end": 1666,
+          "start": 503
+        },
+        {
+          "bytes": 757,
+          "component": "dna",
+          "end": 2423,
+          "start": 1666
+        },
+        {
+          "bytes": 1673,
+          "component": "llvm",
+          "end": 4096,
+          "start": 2423
+        }
+      ],
+      "sha256": "051912842730dc99174b6ba9ddcd56af73edfc0eb402c602e50316f88ac12bbe",
+      "stream": "fresh-e"
+    },
+    {
+      "bytes": 4096,
+      "segments": [
+        {
+          "bytes": 467,
+          "component": "llvm",
+          "end": 467,
+          "start": 0
+        },
+        {
+          "bytes": 599,
+          "component": "repeat",
+          "end": 1066,
+          "start": 467
+        },
+        {
+          "bytes": 449,
+          "component": "postgres",
+          "end": 1515,
+          "start": 1066
+        },
+        {
+          "bytes": 727,
+          "component": "random256",
+          "end": 2242,
+          "start": 1515
+        },
+        {
+          "bytes": 1854,
+          "component": "json",
+          "end": 4096,
+          "start": 2242
+        }
+      ],
+      "sha256": "5641e7b4f73c20933db1704c27041a840d56395f46e67fde46d236e673fc7584",
+      "stream": "fresh-f"
+    }
+  ]
+}

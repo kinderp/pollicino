@@ -1,0 +1,39 @@
+{
+  "artifact": {
+    "digest": "sha256:b1d7256bf491fe0d77f0acafb61ebbd5e396bdebbcc08aac9a759c313ff43877",
+    "id": "local-1fbb02192324-ee0aa7a13a0b",
+    "name": "pilot-015-results"
+  },
+  "checkpoint": {
+    "artifact_id": 9243314314,
+    "artifact_sha256": "72a2f5c06088401f64d06f2aaead014a55015715b5dc1abb1b787567750d11b5",
+    "canonical_model_fingerprint": "354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117",
+    "checkpoint_bytes": 600933,
+    "checkpoint_sha256": "713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7"
+  },
+  "device": "cpu",
+  "exact_command": "GITHUB_TOKEN=\"$(gh auth token)\" /Users/antoniocaristia/dev/pollicino-pilot014/.venv/bin/python experiments/pilot-015/run_frozen.py",
+  "execution_kind": "local-scientific-run",
+  "experiment_id": "pilot-015-longer-cheap-horizon",
+  "frozen_policy_digest": "ee0aa7a13a0b24f7b3c978ee40e25a05376e734206e3cdf9df1d30c3ac39b28e",
+  "git_sha": "1fbb02192324d59f2ca278411ae78828b37b1b5e",
+  "holdout_manifest_digest": "f27acf12c2ecb439059afe66628306a31060cb8eb28a74553885b648cebb36db",
+  "holdout_preregistration_digest": "2e5238431c71de82d9cdc276d58ee987f2ef9b5862af6aaa0b8ccf3ee06b0dbb",
+  "numpy": "2.5.3",
+  "platform": "macOS-15.7.9-arm64-arm-64bit-Mach-O",
+  "python": "3.14.2 (main, Dec  5 2025, 16:49:16) [Clang 17.0.0 (clang-1700.4.4.1)]",
+  "random_seeds": {
+    "compressed_seed": 5515,
+    "dna_seed": 5512,
+    "json_seed": 5511,
+    "random256_seed": 5514,
+    "random64_seed": 5513,
+    "repeat_ascii": "longer-cheap-horizon-"
+  },
+  "tests": "104 passed with pytest tests; compileall src tests experiments/pilot-015 passed",
+  "torch": "2.14.0",
+  "torch_deterministic_algorithms": true,
+  "torch_num_threads": 1,
+  "workflow_run_id": null,
+  "zstandard": "0.25.0"
+}

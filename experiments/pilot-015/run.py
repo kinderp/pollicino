@@ -1065,7 +1065,7 @@ def run_holdout(
             "additional_bytes_transmitted": 0,
             "neural_calls_during_feature_extraction": 0,
             "extra_histogram_updates_vs_pilot014_per_block": 16,
-            "relative_cost": "bounded O(32) integer/container work versus 511 counted neural forwards per admitted full block",
+            "relative_cost": "bounded O(32) integer/container work versus up to 511 counted neural forwards per admitted full block",
         },
         "protocol": {
             "block_bytes": BLOCK_BYTES,
@@ -1080,6 +1080,7 @@ def run_holdout(
             "search_and_codec_helper": "rich_cheap_admission_decision",
             "holdout_policy_retuning": 0,
             "policy_modifications_after_holdout_access": 0,
+            "harness_repairs_after_holdout_access_before_metrics": 1,
             "neural_model_changed": False,
             "cheap_model_changed": False,
             "range_coder_changed": False,
@@ -1087,7 +1088,21 @@ def run_holdout(
             "selector_complexity_changed_vs_pilot014": False,
         },
         "failure_taxonomy": {
-            "repaired_before_scientific_run": [],
+            "repaired_before_scientific_run": [
+                {
+                    "class": "A. TEST_HARNESS_ERROR",
+                    "detail": "two synthetic focused-test fixtures used an unintended 21st distinct byte and a 30-byte fingerprint; corrected before development scoring",
+                    "policy_changed": False,
+                },
+                {
+                    "class": "A. TEST_HARNESS_ERROR",
+                    "detail": "first firewall invocation regenerated a policy document with the later run HEAD as source_commit; stopped before per-stream metrics and pinned the frozen implementation SHA",
+                    "fresh_blobs_opened": True,
+                    "holdout_metrics_produced": False,
+                    "policy_changed": False,
+                    "full_development_reproduced_before_restart": True,
+                },
+            ],
             "scientific_run_failures": [],
         },
         "limitations": [
