@@ -72,6 +72,11 @@ Core rules for every use case:
 | [UC-055](uc-055-opportunistic-transit-disruption-arrival-relay.md) | Opportunistic Transit Disruption and Arrival Relay | propagate fresh trip/delay/service status without continuous connectivity | synthetic timetable + expiring observations | useful after UC-008 | Medium–High |
 | [UC-056](uc-056-consent-bound-data-donation-dataset-provenance.md) | Consent-Bound Data Donation and Dataset Provenance Courier | keep purpose/consent/provenance attached to delayed data contributions | synthetic grants + delayed ingest/withdrawal | later | High |
 | [UC-057](uc-057-model-to-data-edge-inference-courier.md) | Model-to-Data Edge Inference Courier | run bounded analysis where private/raw data already resides | tiny public dataset + approved local inference | useful early | High |
+| [UC-058](uc-058-floating-local-service-state-handoff.md) | Floating Local Service and State Handoff | keep a small local service available as hosts move between disconnected groups | simulated service handoff + exact checkpoint identity | useful early | High |
+| [UC-059](uc-059-mutual-aid-skill-service-rendezvous.md) | Mutual-Aid Skill and Service Rendezvous | match human skills/help needs without a permanently reachable directory | synthetic needs/offers + delayed private rendezvous | useful early | Medium–High |
+| [UC-060](uc-060-visual-survey-imagery-evidence-ferry.md) | Visual Survey and Imagery Evidence Ferry | announce useful visual evidence now and retrieve large imagery later | open/synthetic imagery + summary/evidence split | useful early | Medium–High |
+| [UC-061](uc-061-named-computation-result-cache.md) | Named Computation and Result Cache | reuse exact deterministic results instead of recomputing across sparse edge nodes | exact computation keys + distributed cache simulator | useful early | High |
+| [UC-062](uc-062-offline-diagnostics-crash-capsule.md) | Offline Diagnostics and Crash Capsule | debug distributed nodes without continuous telemetry/backhaul | injected harmless faults + compact crash/evidence state | useful very early | Medium–High |
 
 ## Current top 3 next experiments for the Messina student network
 
@@ -89,6 +94,11 @@ This remains the best immediate human-visible service experiment. Four boards ar
 
 ### Strong follow-ups
 
+- **UC-062 — Offline Diagnostics and Crash Capsule:** strongest immediate operational follow-up because it helps maintain the real distributed teaching network itself; compact fault summaries can arrive before full logs/core dumps.
+- **UC-058 — Floating Local Service and State Handoff:** strongest new architecture experiment because it asks whether a useful local service can migrate between student-carried hosts with exact state/lease semantics rather than merely copying content.
+- **UC-060 — Visual Survey and Imagery Evidence Ferry:** strong mapping/emergency/field-observation scenario that cleanly separates tiny survey availability from large exact imagery and can start with ordinary phones before any drone is involved.
+- **UC-061 — Named Computation and Result Cache:** strong edge-compute follow-up that turns exact deterministic results into reusable cached objects and measures avoided work rather than assuming recomputation is cheap.
+- **UC-059 — Mutual-Aid Skill and Service Rendezvous:** human/community counterpart to UC-043; useful for low-risk supervised skills/help matching while keeping direct identity/contact details off broadcast LoRa.
 - **UC-053 — Delay-Tolerant Sensor Tasking and Sampling Campaign:** strongest new IoT protocol experiment because it adds the missing request direction to UC-003: a compact bounded observation campaign travels out, then exact results come back later.
 - **UC-054 — Offline Assignment Submission and Feedback Courier:** strongest new school-facing service because students can understand exact version, receipt and feedback semantics immediately, while files stay on rich bearers.
 - **UC-055 — Opportunistic Transit Disruption and Arrival Relay:** particularly well matched to the Messina–Villafranca–Rometta–Spadafora–Milazzo corridor; test first with synthetic delays and strict expiry before any public-service claim.
@@ -190,7 +200,12 @@ The following can be implemented without any radio hardware:
 50. implement UC-055 synthetic timetable/trip observations with strict TTL, `unknown` freshness, conflicting source classes and status propagation over UC-008/UC-025 traces;
 51. implement UC-056 synthetic `DonationGrant` + `DataContribution` lifecycle, purpose mismatch, delayed withdrawal, quarantine and derivative-dataset provenance;
 52. implement UC-057 an allow-listed `InferenceRequest` with exact model/input binding, constrained output schema, model-cache misses and disclosure negative tests;
-53. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability, custody-gap convergence, exchange time-to-match, Git bytes/commit convergence, harvest deadline/drop metrics, answer/evidence bytes, fabrication-job turnaround, credential-status freshness, route-condition convergence, lost-query match delay, accepted-ballot convergence, flexible-load completion, campaign task/result delay, assignment receipt/feedback delay, transit-status age, consent-status exposure window and model-to-data job turnaround as applicable.
+53. implement UC-058 service-placement and handoff state with exact image/config/checkpoint identity, interrupted transfer, lease/split-brain negative tests and mobility-aware host selection;
+54. implement UC-059 synthetic `HelpNeed`/`SkillOffer` matching with availability expiry, private rendezvous tokens, duplicate/cancellation handling and optional credential references;
+55. implement UC-060 `VisualSurveyManifest` summary-first/evidence-later flow with exact image hashes, missing/corrupt evidence, review state and selective evidence retrieval;
+56. implement UC-061 canonical `ComputationKey`, result cache discovery, concurrent-request collapse, stale-runtime/model misses, corruption rejection and exact result reuse;
+57. implement UC-062 persistent diagnostic capsules, injected harmless crash/reset/storage-pressure cases, exact dump/log references, retention limits and build/symbol mismatch rejection;
+58. record TRC, delivery delay, cache hit ratio, duplicate overhead, age-of-information, completed-object rate, convergence delay, stale-work rate, trust-epoch propagation, reconstruction success, mailbox delivery/receipt delay, time-to-provider, missed-contact penalty, operation-backlog convergence, dependency bytes avoided, check-in reconciliation delay, calibration-version propagation, label turnaround, handoff setup time, query turnaround, sketch bytes/error, corruption-detection/repair delay, coarse-cell coverage, benchmark-round turnaround, advisory exposure coverage, prefetch hit/waste ratio, hotspot service availability, custody-gap convergence, exchange time-to-match, Git bytes/commit convergence, harvest deadline/drop metrics, answer/evidence bytes, fabrication-job turnaround, credential-status freshness, route-condition convergence, lost-query match delay, accepted-ballot convergence, flexible-load completion, campaign task/result delay, assignment receipt/feedback delay, transit-status age, consent-status exposure window, model-to-data job turnaround, service-handoff downtime, skill/help time-to-match, visual-evidence retrieval delay, avoided-computation count and fault-to-evidence delay as applicable.
 
 This reuses the current architecture instead of creating a special PHY or a separate networking stack per scenario.
 
@@ -203,6 +218,11 @@ After the simulator contracts are stable:
 - privacy-safe contact-window collection for UC-008;
 - a UC-033 2–3 provider experiment with real LoRa discovery, multiple visible nearby peers, exact peer/object binding and measured BLE/Wi-Fi/LAN handoff time;
 - a UC-023 four-node mailbox test with two disconnected groups, one moving courier and a delayed receipt;
+- a UC-058 3–4 node floating-service drill with two real laptop/Raspberry Pi hosts, one exact state/image transfer, an interrupted handoff and measured downtime;
+- a UC-059 4–6 node supervised skill/help-matching drill using harmless synthetic profiles, one moving relay and an optional private BLE/Wi-Fi rendezvous;
+- a UC-060 3–5 node visual-survey drill with staged non-sensitive photos, LoRa summary delivery and later exact image-batch retrieval over a richer bearer; use a drone only much later with permissions;
+- a UC-061 3–4 node repeated deterministic-computation experiment with one result-cache carrier and measured cache-hit versus recompute cost on the same workload;
+- a UC-062 3–5 development-board diagnostic drill with harmless injected resets/asserts, LoRa crash capsules and later exact coredump/log retrieval;
 - a UC-053 3–5 node sensor-tasking drill with at least two harmless sensors, delayed campaign delivery, idempotent execution and later exact batch retrieval;
 - a UC-054 4+ node classroom drill with an exact PDF/code submission, delayed receipt, teacher feedback and one real UC-033 artifact handoff;
 - a UC-055 4–6 node synthetic transit-status route with expiring delay/cancellation updates, moving student relays and measured status age before any real-service observation;
@@ -259,6 +279,11 @@ Measured packet loss, RSSI/SNR, airtime, latency, contact duration, energy where
 
 The use cases are consistent with existing research directions without copying their assumptions into the PollicinoNet core:
 
+- 2026 distributed/asynchronous edge service placement and energy-aware floating-service/cooperative-caching work, relevant to UC-058 while PollicinoNet must measure its own service downtime, transfer cost and contact behavior;
+- current mutual-aid platforms that match local requests, offers, skills and services, relevant to UC-059's human-rendezvous primitive while PollicinoNet adds intermittent connectivity and strict metadata minimization;
+- OpenDroneMap plus 2026 humanitarian post-event drone-imagery workflows, relevant to UC-060's summary-first/exact-evidence transport without importing any operational damage-assessment claim;
+- exact action/result caches such as Bazel remote caching plus current edge service/inference caching research, relevant to UC-061's computation-as-cacheable-result model;
+- embedded RTOS coredump systems such as Zephyr's stored/offline coredump support, relevant to UC-062's compact fault announcement and delayed exact evidence retrieval;
 - OGC SensorThings Sensing/Tasking and Tasking Core, relevant to UC-053's bounded request-driven observations while PollicinoNet adds disruption tolerance rather than assuming a live Web API;
 - offline assignment/submission and grading workflows in learning platforms such as Moodle, relevant to UC-054 without making PollicinoNet an LMS;
 - GTFS-Realtime Trip Updates and Service Alerts, relevant to UC-055's exact trip/stop/freshness semantics; current RFI disruption notices on the Messina–Palermo corridor are useful local test inputs, not evidence of PollicinoNet performance;
