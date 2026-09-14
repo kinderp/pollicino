@@ -126,8 +126,8 @@ outcomes and oracle gaps. Holdout labels cannot change the threshold or policy.
 
 ## Status
 
-Development selection complete and policy frozen for fresh-holdout
-preregistration. Fresh holdout content has not been accessed.
+Closed. The primary hypothesis failed. Classification:
+`PILOT015_ADMISSION_DELAY_NEGATES_SIGNAL_GAIN`.
 
 ## Development selection
 
@@ -204,3 +204,160 @@ horizon, model and development metrics remain byte-for-byte unchanged. Fresh
 source blobs had been verified and block diagnostics had begun, but no holdout
 stream metrics or labels were produced; the repaired firewall must reproduce
 all frozen development evidence before restarting the scientific run.
+
+The corrected firewall reproduced the complete development record and both
+policy digests exactly before restarting. Both fresh sources then matched the
+registered identities:
+
+- LLVM: 99,531 bytes, blob
+  `d0ff33bd1379ab727bdf712ad2ebee58f64f9149`, SHA-256
+  `ff2a485068513bf5ade332860f8b5362b2ed4777dd4edf9b2c6a3cb64b32f1a8`;
+- PostgreSQL: 150,652 bytes, blob
+  `70cb922e6b7aa45629483bb64d3380d07a1e81a0`, SHA-256
+  `d36a4e15730cd6afd2eac6e636ecdeb72755dfdd1d3b864b02c8f6a2dc480eda`.
+
+## Final result
+
+All numbers below are rerun on the same PILOT-015 fresh holdout. Payload bpb
+excludes the separately accounted shared model/checkpoint description cost.
+
+| Method | Mean payload bpb | Mean actual neural eval fraction |
+|---|---:|---:|
+| cheap reset / always cheap | 4.674764 | 0 |
+| neural reset | 4.356120 | 0.928019 |
+| PILOT-012 max | 4.410522 | 0.724976 |
+| PILOT-013 band | 4.544393 | 0.447388 |
+| PILOT-014 `unique_count_16 <= 12` | 4.537882 | 0.437378 |
+| **PILOT-015 `unique_count_32 <= 20`** | **4.538249** | **0.443034** |
+| diagnostic 16-byte 50% oracle (block sum) | 4.479207 | horizon-matched |
+| diagnostic 32-byte 50% oracle (block sum) | 4.501546 | horizon-matched |
+| zlib-9 | 3.895508 | n/a |
+| zstd-19 | 3.781576 | n/a |
+
+PILOT-015 retained 46.222462% of the mean per-stream cheap-to-neural gain,
+below the frozen 50% threshold. P14 retained 46.077496% on the same holdout.
+Despite that small retained-gain improvement, P15 was 0.000366 bpb worse than
+P14 in real whole-stream payload: one stream won, five lost and none tied. The
+secondary four-of-six criterion also failed.
+
+| Stream | P14 bpb | P15 bpb | P14−P15 bpb | P15 eval fraction | P15 retained | P15 route accuracy | P15 oracle regret bits | selected-route delay bits |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| fresh-a | 4.291748 | 4.295410 | -0.003662 | 0.435791 | 42.30% | 50% | 142 | 16 |
+| fresh-b | 5.100586 | 5.103027 | -0.002441 | 0.477783 | 79.98% | 75% | 10 | 10 |
+| fresh-c | 4.741211 | 4.766846 | -0.025635 | 0.444824 | 29.04% | 50% | 418 | 206 |
+| fresh-d | 4.604980 | 4.559814 | +0.045166 | 0.426758 | 43.25% | 50% | 83 | 60 |
+| fresh-e | 4.313477 | 4.318359 | -0.004883 | 0.496338 | 45.52% | 50% | 117 | 20 |
+| fresh-f | 4.175293 | 4.186035 | -0.010742 | 0.376709 | 37.26% | 50% | 179 | 43 |
+
+Every P15 stream admitted exactly four of eight blocks, so the admitted-byte
+fraction was exactly 0.50. Actual uncached PyTorch forward evaluations averaged
+0.443034 per source byte and reached at most 0.496338; there were zero budget
+violations. P15 performed 10,888 actual forwards across the six streams versus
+10,749 for P14. This small content-dependent increase is reported explicitly;
+the same hard ceiling and admitted-byte cap were preserved.
+
+## Selection quality, oracle gap and delay
+
+Against each horizon's same-budget hindsight oracle, P15 matched 26/48 routes
+(54.17%) versus P14's 24/48 (50%). P15's mean fixed-budget oracle regret fell
+to 158.17 bits from P14's 248.17 bits. Its horizon-matched block-sum oracle gap
+was 0.038615 bpb, versus P14's 0.060588 bpb. Thus the longer horizon did improve
+the route signal on this registered holdout.
+
+That signal improvement did not improve real payload. P15 made 21 true-neural,
+three false-neural, three true-cheap and 21 missed-beneficial decisions under
+the individual-benefit confusion definition. False admissions lost 101 bits
+and missed opportunities represented 2,285 bits. P14 made 21 true-neural,
+three false-neural, two true-cheap and 22 misses, losing 85 and 3,119 bits in
+those categories. Classification counts alone therefore understate the P15
+signal gain.
+
+The decisive cost was later activation. Each 4096-byte stream performs 128
+additional cheap observations (16 extra bytes across eight blocks). An admitted
+full block exposes 480 rather than 496 bytes to neural coding. The frozen
+selected P15 routes cost 355 bits in the forced same-route 32-versus-16 horizon
+diagnostic. Better route allocation recovered 346 of those bits, leaving real
+payload nine bits worse across all six streams (1.5 bits per stream). This is a
+measured counterfactual block diagnostic, not a claim that all delay effects
+can be perfectly decomposed in the stateful whole-stream codec.
+
+The 32-byte oracle itself is 0.022339 bpb worse than the 16-byte oracle, further
+showing that the later coding point weakens even hindsight-limited potential.
+PILOT-015 also remains clearly worse than zlib-9 and zstd-19.
+
+## Correctness, cost and reproducibility
+
+The selector performs 32 bounded histogram updates, stores at most 32 observed
+byte keys, extracts one count, makes one integer split comparison and one
+budget comparison. This is bounded O(32) integer/container work versus up to
+511 actual neural forwards for a full admitted block. It adds zero bytes, calls
+no neural model during feature extraction and uses the same
+`rich_cheap_admission_decision` helper in search, encode and decode.
+
+There were zero search/codec route mismatches, future-byte reads, neural
+evaluations before admission, side bits, budget violations, roundtrip failures
+and SHA-256 mismatches. The first specialist output triggers 31 honestly
+counted catch-up evaluations for P15 versus 15 for P14; no catch-up work is
+hidden. The neural model, checkpoint, cheap predictor, range coder, block size
+and selector complexity were unchanged. No `src/` production file, PollicinoNet
+file or course file changed. PILOT-013 and PILOT-014 remain valid unchanged.
+
+The scientific execution used commit
+`1fbb02192324d59f2ca278411ae78828b37b1b5e`, Python 3.14.2, PyTorch 2.14.0,
+NumPy 2.5.3, zstandard 0.25.0, deterministic CPU execution and one Torch
+thread. The model fingerprint is
+`354daf36f94207a6ff2aa0b9c91b1849c8fe47758fad07cb819bc57edd823117`;
+checkpoint SHA-256 is
+`713aebe2b3bac94931060ff4fa09b3174b033d44913d43354f27ec2a568f7ff7`.
+The frozen policy digest is `ee0aa7a13a0b24f7b3c978ee40e25a05376e734206e3cdf9df1d30c3ac39b28e`,
+the holdout preregistration digest is
+`2e5238431c71de82d9cdc276d58ee987f2ef9b5862af6aaa0b8ccf3ee06b0dbb`,
+the holdout manifest digest is
+`f27acf12c2ecb439059afe66628306a31060cb8eb28a74553885b648cebb36db`,
+and the final result bundle digest is
+`b1d7256bf491fe0d77f0acafb61ebbd5e396bdebbcc08aac9a759c313ff43877`.
+No CI workflow was used; the artifact ID is
+`local-1fbb02192324-ee0aa7a13a0b`.
+
+Repository-appropriate validation passed 104 tests before the run and again
+at closure; `python -m compileall src tests experiments/pilot-015` passed.
+Reproduce with:
+
+```bash
+GITHUB_TOKEN="$(gh auth token)" \
+  /Users/antoniocaristia/dev/pollicino-pilot014/.venv/bin/python \
+  experiments/pilot-015/run_frozen.py
+```
+
+Two failures occurred and both were classified `A. TEST_HARNESS_ERROR`: the
+synthetic focused-test fixture errors repaired before development, and the
+dynamic source-commit policy-digest error stopped after source verification
+but before holdout metrics. Neither changed the scientific policy. The latter
+forced a complete frozen-development reproduction before the successful run.
+No B–L failure was observed during the successful scientific execution; the
+negative outcome itself is the preregistered admission-delay finding.
+
+## Interpretation, limitations and next question
+
+On this small deterministic mixed-domain mechanism holdout, 32 bytes carried a
+somewhat better cheap-only admission signal, but observing them delayed neural
+coding enough to erase that value. This is not evidence about all source code,
+universal compression, or general superiority to classical codecs. The
+horizon-matched oracles use independently coded block payloads and are
+diagnostic; model description length remains separate from payload.
+
+Confidence is high in the deterministic mechanism result and low in any broad
+generalization beyond the registered streams. Increasing the threshold grid,
+adding features, enlarging the model or raising the neural budget would not
+answer this experiment and was not done.
+
+The smallest justified PILOT-016 question is whether the same one-split
+selector can gain a 32-byte causal evidence window without delaying activation:
+at byte 16, compute one `unique_count` over the 16 immediately preceding bytes
+plus the first 16 current-block bytes, while keeping the model, block, selector
+complexity and 50% budget fixed. This tests cross-block cheap evidence rather
+than rescuing PILOT-015 with a longer current-block probe.
+
+`COURSE_UPDATE_RECOMMENDED: YES`, after closure: add the distinction between
+better route classification and better coded payload, including admission
+latency and honestly counted state catch-up. No course file was modified.
