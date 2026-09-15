@@ -1,0 +1,100 @@
+# PollicinoNet use-case catalog
+
+Current compact index of the concrete PollicinoNet use cases. The detailed per-use-case files are authoritative for scenario, privacy/security and validation constraints.
+
+Core rules remain unchanged:
+
+- do not modify the frozen LoRa PHY as part of use-case work;
+- keep `DISCOVERY`, `EXACT` and `SEMANTIC` as information contracts, not radio technologies;
+- prefer LoRa for compact discovery/control and richer bearers for bulk data;
+- do not claim physical range, reliability, airtime, energy or coverage results without real measurements;
+- treat emergency/safety scenarios as controlled experiments until independently validated;
+- protect identity, location, content metadata and authorization at the application layer.
+
+Last synchronized: **2026-09-15**.
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-001](uc-001-student-knowledge-ferry.md) | Student Knowledge Ferry | move knowledge between disconnected school/home/town islands |
+| [UC-002](uc-002-signed-community-bulletin.md) | Signed Community Bulletin / civil-protection drill | resilient small authoritative messages |
+| [UC-003](uc-003-rural-sensor-courier.md) | Rural Sensor Courier | collect sensor data without permanent backhaul |
+| [UC-004](uc-004-offline-ai-artifact-distribution.md) | Offline AI Artifact Distribution | move models/datasets across intermittent links |
+| [UC-005](uc-005-mobile-gateway-uav-vehicle.md) | Mobile Gateway / UAV / vehicle | use moving nodes when fixed nodes have no end-to-end path |
+| [UC-006](uc-006-raiatea-document-capsules.md) | Raiatea Document Capsules | exact versioned document distribution |
+| [UC-007](uc-007-edge-ai-event-scout.md) | Edge AI Event Scout | send interesting events rather than raw streams |
+| [UC-008](uc-008-network-observatory-contact-graph.md) | Privacy-Preserving Network Observatory | learn real contact opportunities and relay value |
+| [UC-009](uc-009-signed-firmware-config-ferry.md) | Signed Firmware and Configuration Ferry | maintain isolated sensors/robots safely |
+| [UC-010](uc-010-robot-mission-mailbox.md) | Robot Mission Mailbox | asynchronous jobs for intermittently connected robots |
+| [UC-011](uc-011-dnatrace-encounter-capsules.md) | DNATrace Encounter Capsules | pseudonymous offline discovery with later consent |
+| [UC-012](uc-012-opportunistic-backup-restore.md) | Opportunistic Backup and Restore | exact P2P recovery across intermittent nodes |
+| [UC-013](uc-013-field-report-evidence-capsules.md) | Field Report and Evidence Capsules | return signed observations/evidence from disconnected teams |
+| [UC-014](uc-014-opportunistic-capability-compute-exchange.md) | Opportunistic Capability and Compute Exchange | discover/use compute, storage and connectivity across partitions |
+| [UC-015](uc-015-partition-tolerant-resource-ledger.md) | Partition-Tolerant Resource Ledger | reconcile inventory, requests and reservations offline |
+| [UC-016](uc-016-federated-adapter-round-courier.md) | Federated Adapter Round Courier | coordinate AI updates across intermittent clients |
+| [UC-017](uc-017-offline-map-tile-ferry.md) | Offline Map and Route Tile Ferry | keep useful map subsets available without Internet |
+| [UC-018](uc-018-erasure-coded-content-swarm.md) | Erasure-Coded Content Swarm | reconstruct content from partial carriers |
+| [UC-019](uc-019-offline-trust-revocation-ferry.md) | Offline Trust Epoch and Revocation Ferry | propagate revocation/key-rotation state |
+| [UC-020](uc-020-trusted-time-checkpoint-ferry.md) | Trusted Time Checkpoint Ferry | carry freshness/expiry evidence without permanent time service |
+| [UC-021](uc-021-threshold-sealed-sensitive-courier.md) | Threshold-Sealed Sensitive Courier | transport sensitive content without giving carriers plaintext authority |
+| [UC-022](uc-022-multi-witness-event-corroboration.md) | Multi-Witness Event Corroboration | corroborate noisy sensor/edge claims |
+| [UC-023](uc-023-delay-tolerant-private-mailbox.md) | Delay-Tolerant Private Mailbox | private asynchronous messaging across disconnected groups |
+| [UC-024](uc-024-content-need-rendezvous.md) | Content-Need Rendezvous / Interest Ferry | request content without knowing its current holder |
+| [UC-025](uc-025-scheduled-mobility-backbone.md) | Scheduled Mobility Backbone | exploit recurring contact opportunities |
+| [UC-026](uc-026-delegated-offline-action-ticket.md) | Delegated Offline Action Ticket | authorize one narrow offline action |
+| [UC-027](uc-027-post-event-vibration-log-courier.md) | Post-Event Vibration / Structural Log Courier | announce events now and retrieve high-rate evidence later |
+| [UC-028](uc-028-offline-collaborative-notebook.md) | Offline Collaborative Notebook | converge concurrent human edits after partitions |
+| [UC-029](uc-029-opportunistic-software-dependency-cache.md) | Opportunistic Software Dependency Cache | reconstruct dev environments from nearby caches |
+| [UC-030](uc-030-privacy-preserving-muster-checkin.md) | Privacy-Preserving Muster / Safety Check-In | delayed checkpoint presence without continuous tracking |
+| [UC-031](uc-031-sensor-calibration-provenance-ferry.md) | Sensor Calibration and Provenance Ferry | keep calibration/evidence bound to sensor measurements |
+| [UC-032](uc-032-active-learning-label-courier.md) | Active-Learning Label Courier | spend annotation/network effort on informative samples |
+| [UC-033](uc-033-secure-rich-bearer-handoff-bootstrap.md) | Secure Rich-Bearer Handoff Bootstrap | securely switch from LoRa discovery to BLE/Wi-Fi/LAN transfer |
+| [UC-034](uc-034-raiatea-query-to-data-search-courier.md) | Raiatea Query-to-Data Search Courier | move queries to corpora instead of moving whole corpora |
+| [UC-035](uc-035-federated-sketch-aggregate-courier.md) | Federated Sketch / Aggregate Courier | compute useful aggregates without forwarding every raw record |
+| [UC-036](uc-036-proactive-integrity-scrub-repair-swarm.md) | Proactive Integrity Scrub and Repair Swarm | find and repair latent corruption before restore time |
+| [UC-037](uc-037-privacy-safe-mobile-environmental-transect.md) | Privacy-Safe Mobile Environmental Transect | gain coarse spatial sensor coverage without retaining trajectories |
+| [UC-038](uc-038-edge-model-evaluation-round.md) | Edge Model Evaluation Round | compare exact model/runtime behavior across intermittent devices |
+| [UC-039](uc-039-offline-vulnerability-advisory-exposure-census.md) | Offline Vulnerability Advisory and Exposure Census | propagate advisories and learn which offline nodes are affected |
+| [UC-040](uc-040-mobility-aware-prefetch-replica-placement.md) | Mobility-Aware Prefetch and Replica Placement | place replicas before likely future demand/contacts |
+| [UC-041](uc-041-pop-up-offline-classroom-hotspot.md) | Pop-Up Offline Classroom Hotspot | expose nearby cached knowledge as a temporary local service |
+| [UC-042](uc-042-physical-asset-chain-of-custody.md) | Physical Asset Chain-of-Custody Courier | preserve signed custody events while assets move physically |
+| [UC-043](uc-043-opportunistic-local-exchange-reuse-marketplace.md) | Opportunistic Local Exchange and Reuse Marketplace | match needs/offers for reusable physical goods |
+| [UC-044](uc-044-offline-git-repository-patch-ferry.md) | Offline Git Repository and Patch Ferry | move exact source-control history without a live forge |
+| [UC-045](uc-045-buffer-aware-mobile-data-harvester.md) | Buffer-Aware Mobile Data Harvester | choose what to collect first during short contacts |
+| [UC-046](uc-046-raiatea-answer-capsule-edge-rag.md) | Raiatea Answer Capsule / Offline Edge RAG | return compact source-bound answers with exact evidence refs |
+| [UC-047](uc-047-digital-to-physical-fabrication-job-courier.md) | Digital-to-Physical Fabrication Job Courier | discover/queue safe fabrication and later receive physical output |
+| [UC-048](uc-048-offline-verifiable-credential-entitlement-ferry.md) | Offline Verifiable Credential and Entitlement Ferry | verify narrow entitlements while disconnected |
+| [UC-049](uc-049-dynamic-route-condition-access-map.md) | Dynamic Route Condition and Access Map | propagate fresh/conflicting passability state |
+| [UC-050](uc-050-pseudonymous-lost-found-encounter-trail.md) | Pseudonymous Lost-and-Found Encounter Trail | recover tagged objects without continuous tracking |
+| [UC-051](uc-051-delay-tolerant-anonymous-classroom-ballot.md) | Delay-Tolerant Anonymous Classroom Survey / Ballot | converge a low-stakes private poll across partitions |
+| [UC-052](uc-052-islanded-microgrid-energy-budget-coordination.md) | Islanded Microgrid Energy Budget and Flexible-Load Coordination | coordinate harmless flexible loads under intermittent energy/connectivity |
+| [UC-053](uc-053-delay-tolerant-sensor-tasking-sampling-campaign.md) | Delay-Tolerant Sensor Tasking and Sampling Campaign | send bounded observation requests to disconnected sensors |
+| [UC-054](uc-054-offline-assignment-submission-feedback-courier.md) | Offline Assignment Submission and Feedback Courier | preserve submission/receipt/feedback state across partitions |
+| [UC-055](uc-055-opportunistic-transit-disruption-arrival-relay.md) | Opportunistic Transit Disruption and Arrival Relay | propagate fresh transit status without continuous connectivity |
+| [UC-056](uc-056-consent-bound-data-donation-dataset-provenance.md) | Consent-Bound Data Donation and Dataset Provenance Courier | keep consent/purpose/provenance attached to delayed contributions |
+| [UC-057](uc-057-model-to-data-edge-inference-courier.md) | Model-to-Data Edge Inference Courier | move approved analysis toward private/local data |
+| [UC-058](uc-058-floating-local-service-state-handoff.md) | Floating Local Service and State Handoff | migrate a small local service and exact state between hosts |
+| [UC-059](uc-059-mutual-aid-skill-service-rendezvous.md) | Mutual-Aid Skill and Service Rendezvous | match human skills/help needs without a permanent directory |
+| [UC-060](uc-060-visual-survey-imagery-evidence-ferry.md) | Visual Survey and Imagery Evidence Ferry | announce visual evidence now and retrieve large imagery later |
+| [UC-061](uc-061-named-computation-result-cache.md) | Named Computation and Result Cache | reuse exact deterministic results across sparse edge nodes |
+| [UC-062](uc-062-offline-diagnostics-crash-capsule.md) | Offline Diagnostics and Crash Capsule | debug distributed nodes without continuous telemetry |
+| [UC-063](uc-063-spectrum-occupancy-interference-survey-ferry.md) | Spectrum Occupancy and Interference Survey Ferry | collect delay-tolerant RF-environment observations separate from contact traces |
+| [UC-064](uc-064-offline-transparency-gossip-equivocation-detection.md) | Offline Transparency Gossip and Equivocation Detection | detect inconsistent signed histories through delayed checkpoint gossip |
+| [UC-065](uc-065-federated-multi-corpus-search-rank-merge-courier.md) | Federated Multi-Corpus Search and Rank-Merge Courier | query multiple disconnected corpora and merge provenance-preserving results |
+| [UC-066](uc-066-pseudonymous-separated-group-reunification-drill.md) | Pseudonymous Separated-Group Reunification Drill | reconcile synthetic separated-group status with strict privacy |
+| [UC-067](uc-067-signed-offline-service-name-directory-ferry.md) | Signed Offline Service Name Directory Ferry | map stable service names to exact authenticated identities while disconnected |
+
+## Current field priority
+
+The first three physical experiments remain:
+
+1. **UC-008 — Privacy-Preserving Network Observatory:** collect real contact opportunities before tuning routing around imagined mobility.
+2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
+3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
+
+Strong additions from UC-063–067:
+
+- **UC-063** should run early beside UC-008 because it records the RF environment without confusing it with a contact/range map.
+- **UC-064** is the strongest new security primitive: tiny checkpoints make fork/equivocation detection practical over scarce links.
+- **UC-065** is the strongest new Raiatea use case: knowledge can remain split across independent nodes while queries/results move.
+- **UC-067** is foundational once named services proliferate because applications should not hard-code raw node/key IDs.
+- **UC-066** is valuable for civil-protection/privacy teaching, but must remain synthetic and supervised until independently reviewed.
