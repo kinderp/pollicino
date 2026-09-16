@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-15**.
+Last synchronized: **2026-09-16**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -82,6 +82,11 @@ Last synchronized: **2026-09-15**.
 | [UC-065](uc-065-federated-multi-corpus-search-rank-merge-courier.md) | Federated Multi-Corpus Search and Rank-Merge Courier | query multiple disconnected corpora and merge provenance-preserving results |
 | [UC-066](uc-066-pseudonymous-separated-group-reunification-drill.md) | Pseudonymous Separated-Group Reunification Drill | reconcile synthetic separated-group status with strict privacy |
 | [UC-067](uc-067-signed-offline-service-name-directory-ferry.md) | Signed Offline Service Name Directory Ferry | map stable service names to exact authenticated identities while disconnected |
+| [UC-068](uc-068-offline-device-enrollment-identity-bootstrap.md) | Offline Device Enrollment and Identity Bootstrap | securely introduce/reset student boards without a live registrar path |
+| [UC-069](uc-069-staged-firmware-rollout-health-evidence-ferry.md) | Staged Firmware Rollout and Health-Evidence Ferry | phase updates, collect health evidence and propagate pause/abort state |
+| [UC-070](uc-070-physical-energy-mule-charging-rendezvous.md) | Physical Energy Mule and Charging Rendezvous | coordinate safe low-voltage energy delivery by human/vehicle carriers |
+| [UC-071](uc-071-multi-party-quorum-approval-courier.md) | Multi-Party Quorum Approval Courier | collect M-of-N or ordered approvals for one exact offline action |
+| [UC-072](uc-072-edge-model-drift-distribution-shift-scout.md) | Edge Model Drift and Distribution-Shift Scout | ferry compact drift warnings before requesting raw evidence |
 
 ## Current field priority
 
@@ -91,10 +96,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-063–067:
+Strong additions from UC-068–072:
 
-- **UC-063** should run early beside UC-008 because it records the RF environment without confusing it with a contact/range map.
-- **UC-064** is the strongest new security primitive: tiny checkpoints make fork/equivocation detection practical over scarce links.
-- **UC-065** is the strongest new Raiatea use case: knowledge can remain split across independent nodes while queries/results move.
-- **UC-067** is foundational once named services proliferate because applications should not hard-code raw node/key IDs.
-- **UC-066** is valuable for civil-protection/privacy teaching, but must remain synthetic and supervised until independently reviewed.
+- **UC-068 — Offline Device Enrollment and Identity Bootstrap:** strongest immediate infrastructure addition because a real student network needs a safe way to introduce, replace and factory-reset boards without one shared secret.
+- **UC-069 — Staged Firmware Rollout and Health-Evidence Ferry:** strongest operational follow-up after UC-009/UC-062 because signed firmware can still be buggy; phase state and health evidence remain compact enough for sparse control links.
+- **UC-072 — Edge Model Drift and Distribution-Shift Scout:** strongest new AI experiment because nodes can report compact local change before exporting raw evidence or deciding to retrain.
+- **UC-071 — Multi-Party Quorum Approval Courier:** valuable security primitive for actions that deliberately require two or more independent roles even when approvals arrive at different times.
+- **UC-070 — Physical Energy Mule and Charging Rendezvous:** distinctive rural/field experiment where PollicinoNet coordinates demand while certified low-voltage energy stores move physically.
