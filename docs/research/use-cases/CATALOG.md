@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-16**.
+Last synchronized: **2026-09-17**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -87,6 +87,11 @@ Last synchronized: **2026-09-16**.
 | [UC-070](uc-070-physical-energy-mule-charging-rendezvous.md) | Physical Energy Mule and Charging Rendezvous | coordinate safe low-voltage energy delivery by human/vehicle carriers |
 | [UC-071](uc-071-multi-party-quorum-approval-courier.md) | Multi-Party Quorum Approval Courier | collect M-of-N or ordered approvals for one exact offline action |
 | [UC-072](uc-072-edge-model-drift-distribution-shift-scout.md) | Edge Model Drift and Distribution-Shift Scout | ferry compact drift warnings before requesting raw evidence |
+| [UC-073](uc-073-demand-aware-mobile-courier-route-planner.md) | Demand-Aware Mobile Courier Route Planner | choose the next useful checkpoint from current needs, backlog and expected contacts |
+| [UC-074](uc-074-adaptive-sensor-duty-cycle-sampling-policy-ferry.md) | Adaptive Sensor Duty-Cycle and Sampling Policy Ferry | adapt safe sensing profiles as energy, backlog and signal dynamics change |
+| [UC-075](uc-075-offline-multi-robot-task-auction-mission-handoff.md) | Offline Multi-Robot Task Auction and Mission Handoff | allocate tasks among intermittent workers and re-auction failed assignments |
+| [UC-076](uc-076-artifact-usage-policy-license-envelope-ferry.md) | Artifact Usage-Policy and License Envelope Ferry | bind exact cached artifacts to versioned usage-policy decisions |
+| [UC-077](uc-077-deletion-tombstone-retention-expiry-ferry.md) | Deletion Tombstone and Retention-Expiry Ferry | propagate deletion/expiry so stale replicas cannot resurrect old content |
 
 ## Current field priority
 
@@ -96,10 +101,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-068–072:
+Strong additions from UC-073–077:
 
-- **UC-068 — Offline Device Enrollment and Identity Bootstrap:** strongest immediate infrastructure addition because a real student network needs a safe way to introduce, replace and factory-reset boards without one shared secret.
-- **UC-069 — Staged Firmware Rollout and Health-Evidence Ferry:** strongest operational follow-up after UC-009/UC-062 because signed firmware can still be buggy; phase state and health evidence remain compact enough for sparse control links.
-- **UC-072 — Edge Model Drift and Distribution-Shift Scout:** strongest new AI experiment because nodes can report compact local change before exporting raw evidence or deciding to retrain.
-- **UC-071 — Multi-Party Quorum Approval Courier:** valuable security primitive for actions that deliberately require two or more independent roles even when approvals arrive at different times.
-- **UC-070 — Physical Energy Mule and Charging Rendezvous:** distinctive rural/field experiment where PollicinoNet coordinates demand while certified low-voltage energy stores move physically.
+- **UC-073 — Demand-Aware Mobile Courier Route Planner:** strongest new field experiment once UC-008 traces exist because it turns current backlog/needs into an explicit decision about where a walking courier should go next; UC-045 then decides what to transfer during the chosen contact.
+- **UC-077 — Deletion Tombstone and Retention-Expiry Ferry:** strongest new P2P correctness primitive because opportunistic replication also needs a safe way to stop stale replicas from resurrecting superseded/deleted content.
+- **UC-075 — Offline Multi-Robot Task Auction and Mission Handoff:** strongest robotics follow-up because task allocation, delayed bids and re-auction can be tested first with stationary worker boards before using real robots.
+- **UC-074 — Adaptive Sensor Duty-Cycle and Sampling Policy Ferry:** useful IoT follow-up to UC-053 because it studies long-lived safe sensing-policy changes under battery/backlog/network pressure rather than one bounded campaign.
+- **UC-076 — Artifact Usage-Policy and License Envelope Ferry:** important governance layer for Raiatea, software and AI artifact caches; possession of bytes becomes explicitly separate from authorization/policy to use them.
