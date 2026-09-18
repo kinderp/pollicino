@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-17**.
+Last synchronized: **2026-09-18**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -92,6 +92,11 @@ Last synchronized: **2026-09-17**.
 | [UC-075](uc-075-offline-multi-robot-task-auction-mission-handoff.md) | Offline Multi-Robot Task Auction and Mission Handoff | allocate tasks among intermittent workers and re-auction failed assignments |
 | [UC-076](uc-076-artifact-usage-policy-license-envelope-ferry.md) | Artifact Usage-Policy and License Envelope Ferry | bind exact cached artifacts to versioned usage-policy decisions |
 | [UC-077](uc-077-deletion-tombstone-retention-expiry-ferry.md) | Deletion Tombstone and Retention-Expiry Ferry | propagate deletion/expiry so stale replicas cannot resurrect old content |
+| [UC-078](uc-078-deadline-aware-opportunistic-edge-task-offloading.md) | Deadline-Aware Opportunistic Edge Task Offloading | choose local execution versus delayed edge offload under deadline/contact uncertainty |
+| [UC-079](uc-079-intermittent-computation-checkpoint-resume-courier.md) | Intermittent Computation Checkpoint and Resume Courier | preserve in-progress compute across reboot, power loss and delayed migration |
+| [UC-080](uc-080-condition-bound-physical-asset-history-courier.md) | Condition-Bound Physical Asset History Courier | keep temperature/humidity/shock evidence attached to a moving asset across partitions |
+| [UC-081](uc-081-offline-distributed-ci-test-farm-courier.md) | Offline Distributed CI / Test Farm Courier | run exact commit/test jobs on intermittently connected heterogeneous workers |
+| [UC-082](uc-082-threshold-guardian-offline-identity-recovery.md) | Threshold Guardian Offline Identity Recovery | recover a lost device identity through delayed M-of-N guardian approvals and explicit old-key revocation |
 
 ## Current field priority
 
@@ -101,10 +106,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-073–077:
+Strong additions from UC-078–082:
 
-- **UC-073 — Demand-Aware Mobile Courier Route Planner:** strongest new field experiment once UC-008 traces exist because it turns current backlog/needs into an explicit decision about where a walking courier should go next; UC-045 then decides what to transfer during the chosen contact.
-- **UC-077 — Deletion Tombstone and Retention-Expiry Ferry:** strongest new P2P correctness primitive because opportunistic replication also needs a safe way to stop stale replicas from resurrecting superseded/deleted content.
-- **UC-075 — Offline Multi-Robot Task Auction and Mission Handoff:** strongest robotics follow-up because task allocation, delayed bids and re-auction can be tested first with stationary worker boards before using real robots.
-- **UC-074 — Adaptive Sensor Duty-Cycle and Sampling Policy Ferry:** useful IoT follow-up to UC-053 because it studies long-lived safe sensing-policy changes under battery/backlog/network pressure rather than one bounded campaign.
-- **UC-076 — Artifact Usage-Policy and License Envelope Ferry:** important governance layer for Raiatea, software and AI artifact caches; possession of bytes becomes explicitly separate from authorization/policy to use them.
+- **UC-081 — Offline Distributed CI / Test Farm Courier:** strongest immediate teaching/service follow-up because it composes Git ferry, compute discovery and result evidence into a workflow students can run on existing laptops before specialized hardware exists.
+- **UC-078 — Deadline-Aware Opportunistic Edge Task Offloading:** strongest new edge/IoT experiment because it asks when waiting for an intermittent edge path is better than local execution, and can reuse measured UC-008 contacts.
+- **UC-080 — Condition-Bound Physical Asset History Courier:** strongest new physical-world experiment because a harmless moving box plus temperature/humidity sensor exercises custody, sensing, evidence gaps and store-and-forward together.
+- **UC-079 — Intermittent Computation Checkpoint and Resume Courier:** useful resilience primitive for long jobs on rebooting/power-limited edge nodes, especially after UC-062 diagnostics is in place.
+- **UC-082 — Threshold Guardian Offline Identity Recovery:** important trust-resilience follow-up to UC-068/UC-019/UC-071, but should remain synthetic until the recovery lifecycle and revocation semantics have been heavily tested.
