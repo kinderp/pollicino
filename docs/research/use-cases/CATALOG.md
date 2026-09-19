@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-18**.
+Last synchronized: **2026-09-19**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -97,6 +97,11 @@ Last synchronized: **2026-09-18**.
 | [UC-080](uc-080-condition-bound-physical-asset-history-courier.md) | Condition-Bound Physical Asset History Courier | keep temperature/humidity/shock evidence attached to a moving asset across partitions |
 | [UC-081](uc-081-offline-distributed-ci-test-farm-courier.md) | Offline Distributed CI / Test Farm Courier | run exact commit/test jobs on intermittently connected heterogeneous workers |
 | [UC-082](uc-082-threshold-guardian-offline-identity-recovery.md) | Threshold Guardian Offline Identity Recovery | recover a lost device identity through delayed M-of-N guardian approvals and explicit old-key revocation |
+| [UC-083](uc-083-delay-tolerant-topic-subscription-change-notification-ferry.md) | Delay-Tolerant Topic Subscription and Change-Notification Ferry | deliver future topic updates across partitions without a permanent broker |
+| [UC-084](uc-084-multi-robot-map-fragment-pose-graph-ferry.md) | Multi-Robot Map Fragment and Pose-Graph Ferry | discover and selectively exchange exact mapping fragments across intermittent robot contacts |
+| [UC-085](uc-085-compatible-ai-model-variant-negotiation-distribution.md) | Compatible AI Model Variant Negotiation and Distribution | resolve a capability request to one exact runnable model variant under device/policy constraints |
+| [UC-086](uc-086-delay-tolerant-multi-sensor-event-localization.md) | Delay-Tolerant Multi-Sensor Event Localization | combine delayed sensor observations to estimate a coarse event origin with explicit uncertainty |
+| [UC-087](uc-087-offline-device-attestation-evidence-ferry.md) | Offline Device Attestation Evidence Ferry | carry measured-state evidence/results between attesters, verifiers and relying parties while disconnected |
 
 ## Current field priority
 
@@ -106,10 +111,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-078–082:
+Strong additions from UC-083–087:
 
-- **UC-081 — Offline Distributed CI / Test Farm Courier:** strongest immediate teaching/service follow-up because it composes Git ferry, compute discovery and result evidence into a workflow students can run on existing laptops before specialized hardware exists.
-- **UC-078 — Deadline-Aware Opportunistic Edge Task Offloading:** strongest new edge/IoT experiment because it asks when waiting for an intermittent edge path is better than local execution, and can reuse measured UC-008 contacts.
-- **UC-080 — Condition-Bound Physical Asset History Courier:** strongest new physical-world experiment because a harmless moving box plus temperature/humidity sensor exercises custody, sensing, evidence gaps and store-and-forward together.
-- **UC-079 — Intermittent Computation Checkpoint and Resume Courier:** useful resilience primitive for long jobs on rebooting/power-limited edge nodes, especially after UC-062 diagnostics is in place.
-- **UC-082 — Threshold Guardian Offline Identity Recovery:** important trust-resilience follow-up to UC-068/UC-019/UC-071, but should remain synthetic until the recovery lifecycle and revocation semantics have been heavily tested.
+- **UC-083 — Delay-Tolerant Topic Subscription and Change-Notification Ferry:** strongest immediate network-service experiment because it adds bounded standing interests and can be tested with course-pack/software/map updates using the same student relays as UC-023.
+- **UC-087 — Offline Device Attestation Evidence Ferry:** strongest trust follow-up once boards are distributed because identity, firmware rollout and diagnostics still do not prove the actual measured runtime state.
+- **UC-084 — Multi-Robot Map Fragment and Pose-Graph Ferry:** strongest robotics follow-up because it composes UC-075 task allocation with selective exact map exchange over a rich bearer after LoRa discovery.
+- **UC-085 — Compatible AI Model Variant Negotiation and Distribution:** useful AI/content follow-up because heterogeneous devices need capability-level selection before UC-004 can move an exact artifact.
+- **UC-086 — Delay-Tolerant Multi-Sensor Event Localization:** useful sensor/research experiment after UC-020/UC-031 because it makes timing, calibration and uncertainty first-class instead of pretending delayed observations imply precise localization.
