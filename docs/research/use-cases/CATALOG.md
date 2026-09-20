@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-19**.
+Last synchronized: **2026-09-20**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -102,6 +102,11 @@ Last synchronized: **2026-09-19**.
 | [UC-085](uc-085-compatible-ai-model-variant-negotiation-distribution.md) | Compatible AI Model Variant Negotiation and Distribution | resolve a capability request to one exact runnable model variant under device/policy constraints |
 | [UC-086](uc-086-delay-tolerant-multi-sensor-event-localization.md) | Delay-Tolerant Multi-Sensor Event Localization | combine delayed sensor observations to estimate a coarse event origin with explicit uncertainty |
 | [UC-087](uc-087-offline-device-attestation-evidence-ferry.md) | Offline Device Attestation Evidence Ferry | carry measured-state evidence/results between attesters, verifiers and relying parties while disconnected |
+| [UC-088](uc-088-delay-tolerant-web-api-fetch-courier.md) | Delay-Tolerant Web / API Fetch Courier | let an offline node request one bounded public Internet resource through a later gateway contact |
+| [UC-089](uc-089-stateful-alarm-acknowledgement-escalation-courier.md) | Stateful Alarm Acknowledgement and Escalation Courier | preserve exact alarm/ack/clear/escalation state across partitions |
+| [UC-090](uc-090-privacy-preserving-after-the-fact-witness-discovery.md) | Privacy-Preserving After-the-Fact Witness Discovery | move a bounded post-event query to private local histories and return only opt-in matches |
+| [UC-091](uc-091-backup-retrievability-audit-challenge-courier.md) | Backup Retrievability Audit Challenge Courier | audit exact remote backup replicas with delayed compact challenge/response evidence |
+| [UC-092](uc-092-opportunistic-internet-reachability-backhaul-observatory.md) | Opportunistic Internet Reachability and Backhaul Observatory | measure Internet/partial reachability from many intermittent vantage points and ferry summaries independently |
 
 ## Current field priority
 
@@ -111,10 +116,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-083–087:
+Strong additions from UC-088–092:
 
-- **UC-083 — Delay-Tolerant Topic Subscription and Change-Notification Ferry:** strongest immediate network-service experiment because it adds bounded standing interests and can be tested with course-pack/software/map updates using the same student relays as UC-023.
-- **UC-087 — Offline Device Attestation Evidence Ferry:** strongest trust follow-up once boards are distributed because identity, firmware rollout and diagnostics still do not prove the actual measured runtime state.
-- **UC-084 — Multi-Robot Map Fragment and Pose-Graph Ferry:** strongest robotics follow-up because it composes UC-075 task allocation with selective exact map exchange over a rich bearer after LoRa discovery.
-- **UC-085 — Compatible AI Model Variant Negotiation and Distribution:** useful AI/content follow-up because heterogeneous devices need capability-level selection before UC-004 can move an exact artifact.
-- **UC-086 — Delay-Tolerant Multi-Sensor Event Localization:** useful sensor/research experiment after UC-020/UC-031 because it makes timing, calibration and uncertainty first-class instead of pretending delayed observations imply precise localization.
+- **UC-092 — Opportunistic Internet Reachability and Backhaul Observatory:** strongest immediate field experiment because it can run on the same distributed student nodes as UC-008 while measuring a different resource: Internet/backhaul reachability and partial connectivity.
+- **UC-088 — Delay-Tolerant Web / API Fetch Courier:** strongest user-visible connectivity follow-up because a disconnected requester can cause one safe bounded Internet fetch later, proving that PollicinoNet can bridge disconnected IP islands without pretending to be a transparent tunnel.
+- **UC-089 — Stateful Alarm Acknowledgement and Escalation Courier:** strongest IoT/control follow-up because it forces exact event binding, stale-ack rejection and lifecycle convergence under delay/reordering.
+- **UC-090 — Privacy-Preserving After-the-Fact Witness Discovery:** promising DNATrace/privacy experiment because it moves a bounded query to private local histories instead of centralizing all traces.
+- **UC-091 — Backup Retrievability Audit Challenge Courier:** promising storage follow-up because it turns backup health into an ongoing delayed audit workflow rather than discovering failure only during restore.
