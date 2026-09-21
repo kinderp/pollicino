@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-20**.
+Last synchronized: **2026-09-21**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -107,6 +107,11 @@ Last synchronized: **2026-09-20**.
 | [UC-090](uc-090-privacy-preserving-after-the-fact-witness-discovery.md) | Privacy-Preserving After-the-Fact Witness Discovery | move a bounded post-event query to private local histories and return only opt-in matches |
 | [UC-091](uc-091-backup-retrievability-audit-challenge-courier.md) | Backup Retrievability Audit Challenge Courier | audit exact remote backup replicas with delayed compact challenge/response evidence |
 | [UC-092](uc-092-opportunistic-internet-reachability-backhaul-observatory.md) | Opportunistic Internet Reachability and Backhaul Observatory | measure Internet/partial reachability from many intermittent vantage points and ferry summaries independently |
+| [UC-093](uc-093-causal-event-timeline-reconstruction-ferry.md) | Causal Event Timeline Reconstruction Ferry | reconstruct happened-before/concurrent relationships from delayed distributed event fragments |
+| [UC-094](uc-094-historical-sensor-query-to-data-courier.md) | Historical Sensor Query-to-Data Courier | move bounded historical queries to sensor archives instead of centralizing raw time series |
+| [UC-095](uc-095-volunteer-relay-budget-fair-share-courier.md) | Volunteer Relay Budget and Fair-Share Courier | honor volunteer storage/energy/privacy budgets while preventing persistent flow starvation |
+| [UC-096](uc-096-independent-reproducible-build-attestation-courier.md) | Independent Reproducible Build Attestation Courier | compare independently rebuilt exact artifacts through delayed provenance/digest evidence |
+| [UC-097](uc-097-distributed-experiment-campaign-evidence-pack-courier.md) | Distributed Experiment Campaign and Evidence-Pack Courier | coordinate exact physical experiments and preserve result/evidence provenance across disconnected nodes |
 
 ## Current field priority
 
@@ -116,10 +121,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-088–092:
+Strong additions from UC-093–097:
 
-- **UC-092 — Opportunistic Internet Reachability and Backhaul Observatory:** strongest immediate field experiment because it can run on the same distributed student nodes as UC-008 while measuring a different resource: Internet/backhaul reachability and partial connectivity.
-- **UC-088 — Delay-Tolerant Web / API Fetch Courier:** strongest user-visible connectivity follow-up because a disconnected requester can cause one safe bounded Internet fetch later, proving that PollicinoNet can bridge disconnected IP islands without pretending to be a transparent tunnel.
-- **UC-089 — Stateful Alarm Acknowledgement and Escalation Courier:** strongest IoT/control follow-up because it forces exact event binding, stale-ack rejection and lifecycle convergence under delay/reordering.
-- **UC-090 — Privacy-Preserving After-the-Fact Witness Discovery:** promising DNATrace/privacy experiment because it moves a bounded query to private local histories instead of centralizing all traces.
-- **UC-091 — Backup Retrievability Audit Challenge Courier:** promising storage follow-up because it turns backup health into an ongoing delayed audit workflow rather than discovering failure only during restore.
+- **UC-097 — Distributed Experiment Campaign and Evidence-Pack Courier:** strongest operational addition because it can become the reproducible orchestration/evidence layer used to run future physical PollicinoNet campaigns across many student nodes.
+- **UC-095 — Volunteer Relay Budget and Fair-Share Courier:** strongest real-deployment addition because student-owned relays need explicit local storage/traffic/privacy budgets before the network can scale responsibly.
+- **UC-093 — Causal Event Timeline Reconstruction Ferry:** strongest distributed-systems experiment because it reconstructs proven event order without assuming synchronized clocks and composes with diagnostics, robots and sensor evidence.
+- **UC-094 — Historical Sensor Query-to-Data Courier:** promising IoT/data-minimization follow-up because precise questions travel to stored time series and only compact answers/evidence return.
+- **UC-096 — Independent Reproducible Build Attestation Courier:** promising software-supply-chain experiment because exact build requests and compact independent attestations fit the DTN model while source/artifacts move over rich bearers.
