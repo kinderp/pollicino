@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-21**.
+Last synchronized: **2026-09-22**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -112,6 +112,11 @@ Last synchronized: **2026-09-21**.
 | [UC-095](uc-095-volunteer-relay-budget-fair-share-courier.md) | Volunteer Relay Budget and Fair-Share Courier | honor volunteer storage/energy/privacy budgets while preventing persistent flow starvation |
 | [UC-096](uc-096-independent-reproducible-build-attestation-courier.md) | Independent Reproducible Build Attestation Courier | compare independently rebuilt exact artifacts through delayed provenance/digest evidence |
 | [UC-097](uc-097-distributed-experiment-campaign-evidence-pack-courier.md) | Distributed Experiment Campaign and Evidence-Pack Courier | coordinate exact physical experiments and preserve result/evidence provenance across disconnected nodes |
+| [UC-098](uc-098-delivery-provenance-relay-contribution-receipts.md) | Delivery Provenance and Relay-Contribution Receipts | record bounded bundle-progress evidence and actual relay contribution without turning it into student tracking |
+| [UC-099](uc-099-raiatea-offline-document-ingestion-derived-artifact-courier.md) | Raiatea Offline Document Ingestion and Derived-Artifact Courier | derive OCR/chunks/embeddings/index artifacts across intermittent workers with exact source lineage |
+| [UC-100](uc-100-privacy-preserving-demand-sketch-cache-rebalancing.md) | Privacy-Preserving Demand Sketch and Cache Rebalancing | exchange compact demand summaries to improve replica/eviction choices without central request histories |
+| [UC-101](uc-101-distributed-ai-disagreement-scout-adjudication-courier.md) | Distributed AI Disagreement Scout and Adjudication Courier | use compact multi-model disagreement to select which samples need richer evidence or review |
+| [UC-102](uc-102-opportunistic-groupcast-coverage-anti-entropy-campaign.md) | Opportunistic Groupcast Coverage and Anti-Entropy Campaign | spread one exact signed object to many intermittent nodes with bounded duplicates and explicit coverage evidence |
 
 ## Current field priority
 
@@ -121,10 +126,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-093–097:
+Strong additions from UC-098–102:
 
-- **UC-097 — Distributed Experiment Campaign and Evidence-Pack Courier:** strongest operational addition because it can become the reproducible orchestration/evidence layer used to run future physical PollicinoNet campaigns across many student nodes.
-- **UC-095 — Volunteer Relay Budget and Fair-Share Courier:** strongest real-deployment addition because student-owned relays need explicit local storage/traffic/privacy budgets before the network can scale responsibly.
-- **UC-093 — Causal Event Timeline Reconstruction Ferry:** strongest distributed-systems experiment because it reconstructs proven event order without assuming synchronized clocks and composes with diagnostics, robots and sensor evidence.
-- **UC-094 — Historical Sensor Query-to-Data Courier:** promising IoT/data-minimization follow-up because precise questions travel to stored time series and only compact answers/evidence return.
-- **UC-096 — Independent Reproducible Build Attestation Courier:** promising software-supply-chain experiment because exact build requests and compact independent attestations fit the DTN model while source/artifacts move over rich bearers.
+- **UC-102 — Opportunistic Groupcast Coverage and Anti-Entropy Campaign:** strongest immediate multi-node field experiment because it exercises real many-recipient store-and-forward dissemination, duplicate suppression and coverage accounting on the student mobility graph.
+- **UC-098 — Delivery Provenance and Relay-Contribution Receipts:** strongest observability addition because it separates contact opportunities from actual useful forwarding and can validate route/fairness policies with bounded evidence.
+- **UC-099 — Raiatea Offline Document Ingestion and Derived-Artifact Courier:** strongest Raiatea/edge workflow addition because it turns scattered devices into a provenance-preserving ingestion pipeline rather than merely distributing finished documents.
+- **UC-100 — Privacy-Preserving Demand Sketch and Cache Rebalancing:** strong P2P follow-up because it supplies demand signals for UC-040 without centralizing per-user request histories.
+- **UC-101 — Distributed AI Disagreement Scout and Adjudication Courier:** strong edge-AI follow-up because small opinions can move first and selectively trigger richer evidence transfer while explicitly guarding against correlated agreement.
