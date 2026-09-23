@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-22**.
+Last synchronized: **2026-09-23**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -117,6 +117,11 @@ Last synchronized: **2026-09-22**.
 | [UC-100](uc-100-privacy-preserving-demand-sketch-cache-rebalancing.md) | Privacy-Preserving Demand Sketch and Cache Rebalancing | exchange compact demand summaries to improve replica/eviction choices without central request histories |
 | [UC-101](uc-101-distributed-ai-disagreement-scout-adjudication-courier.md) | Distributed AI Disagreement Scout and Adjudication Courier | use compact multi-model disagreement to select which samples need richer evidence or review |
 | [UC-102](uc-102-opportunistic-groupcast-coverage-anti-entropy-campaign.md) | Opportunistic Groupcast Coverage and Anti-Entropy Campaign | spread one exact signed object to many intermittent nodes with bounded duplicates and explicit coverage evidence |
+| [UC-103](uc-103-adaptive-temporary-relay-placement-coverage-gap-trial-planner.md) | Adaptive Temporary Relay Placement and Coverage-Gap Trial Planner | rank safe temporary relay checkpoints from measured evidence, then validate them physically |
+| [UC-104](uc-104-exact-version-delta-artifact-ferry.md) | Exact Version-Delta Artifact Ferry | move a verified delta when the receiver already has the exact base artifact |
+| [UC-105](uc-105-offline-threat-indicator-match-incident-triage-courier.md) | Offline Threat-Indicator Match and Incident-Triage Courier | send defensive indicators to local logs and return bounded triage before richer evidence |
+| [UC-106](uc-106-signed-multilingual-emergency-bulletin-derivation-ferry.md) | Signed Multilingual Emergency Bulletin Derivation Ferry | preserve one authoritative bulletin while ferrying provenance-bound translations and accessible derivatives |
+| [UC-107](uc-107-freshness-aware-offline-cache-revalidation-ferry.md) | Freshness-Aware Offline Cache Revalidation Ferry | make stale/fresh/unknown cache state explicit and revalidate compactly before retransferring content |
 
 ## Current field priority
 
@@ -126,10 +131,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-098–102:
+Strong additions from UC-103–107:
 
-- **UC-102 — Opportunistic Groupcast Coverage and Anti-Entropy Campaign:** strongest immediate multi-node field experiment because it exercises real many-recipient store-and-forward dissemination, duplicate suppression and coverage accounting on the student mobility graph.
-- **UC-098 — Delivery Provenance and Relay-Contribution Receipts:** strongest observability addition because it separates contact opportunities from actual useful forwarding and can validate route/fairness policies with bounded evidence.
-- **UC-099 — Raiatea Offline Document Ingestion and Derived-Artifact Courier:** strongest Raiatea/edge workflow addition because it turns scattered devices into a provenance-preserving ingestion pipeline rather than merely distributing finished documents.
-- **UC-100 — Privacy-Preserving Demand Sketch and Cache Rebalancing:** strong P2P follow-up because it supplies demand signals for UC-040 without centralizing per-user request histories.
-- **UC-101 — Distributed AI Disagreement Scout and Adjudication Courier:** strong edge-AI follow-up because small opinions can move first and selectively trigger richer evidence transfer while explicitly guarding against correlated agreement.
+- **UC-103 — Adaptive Temporary Relay Placement and Coverage-Gap Trial Planner:** strongest new field-planning case because it closes the loop from UC-008/098 measurements to a reversible relay trial without pretending that simulated coverage is measured coverage.
+- **UC-107 — Freshness-Aware Offline Cache Revalidation Ferry:** strongest cross-cutting protocol addition because Raiatea, course packs, API fetches, maps and policy documents all need an explicit answer to `available != necessarily current`.
+- **UC-104 — Exact Version-Delta Artifact Ferry:** strongest bandwidth/contact-efficiency case because repeated large model/map/document versions can reuse an exact local base and fall back safely when delta transfer is not worthwhile.
+- **UC-106 — Signed Multilingual Emergency Bulletin Derivation Ferry:** strong emergency/Raiatea/edge-AI case because translated or simplified messages stay visibly derived from one exact authoritative source and cannot silently replace it.
+- **UC-105 — Offline Threat-Indicator Match and Incident-Triage Courier:** strong security follow-up because compact defensive indicators can travel to disconnected logs while detailed telemetry remains local unless a bounded match justifies evidence retrieval.
