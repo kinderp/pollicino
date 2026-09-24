@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-23**.
+Last synchronized: **2026-09-24**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -122,6 +122,11 @@ Last synchronized: **2026-09-23**.
 | [UC-105](uc-105-offline-threat-indicator-match-incident-triage-courier.md) | Offline Threat-Indicator Match and Incident-Triage Courier | send defensive indicators to local logs and return bounded triage before richer evidence |
 | [UC-106](uc-106-signed-multilingual-emergency-bulletin-derivation-ferry.md) | Signed Multilingual Emergency Bulletin Derivation Ferry | preserve one authoritative bulletin while ferrying provenance-bound translations and accessible derivatives |
 | [UC-107](uc-107-freshness-aware-offline-cache-revalidation-ferry.md) | Freshness-Aware Offline Cache Revalidation Ferry | make stale/fresh/unknown cache state explicit and revalidate compactly before retransferring content |
+| [UC-108](uc-108-queue-pressure-backpressure-admission-control-courier.md) | Queue-Pressure Backpressure and Admission-Control Courier | propagate coarse downstream pressure so upstream nodes can defer, refuse or reroute before buffers overflow |
+| [UC-109](uc-109-durability-aware-replica-retirement-safe-cache-gc.md) | Durability-Aware Replica Retirement and Safe Cache GC | reclaim cache space without silently retiring the last useful valid replicas or shard set |
+| [UC-110](uc-110-near-duplicate-visual-evidence-dataset-representative-ferry.md) | Near-Duplicate Visual Evidence and Dataset Representative Ferry | exchange compact similarity evidence so large media/dataset transfers can prioritize representatives without losing exact provenance |
+| [UC-111](uc-111-privacy-gated-local-redaction-egress-courier.md) | Privacy-Gated Local Redaction and Egress Courier | create a policy-bound reduced-disclosure derivative locally before data reaches Internet/cloud gateways |
+| [UC-112](uc-112-cross-contact-resumable-large-object-transfer.md) | Cross-Contact Resumable Large-Object Transfer | persist verified partial progress so one exact object can complete across repeated interrupted rich-bearer encounters |
 
 ## Current field priority
 
@@ -131,10 +136,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-103–107:
+Strong additions from UC-108–112:
 
-- **UC-103 — Adaptive Temporary Relay Placement and Coverage-Gap Trial Planner:** strongest new field-planning case because it closes the loop from UC-008/098 measurements to a reversible relay trial without pretending that simulated coverage is measured coverage.
-- **UC-107 — Freshness-Aware Offline Cache Revalidation Ferry:** strongest cross-cutting protocol addition because Raiatea, course packs, API fetches, maps and policy documents all need an explicit answer to `available != necessarily current`.
-- **UC-104 — Exact Version-Delta Artifact Ferry:** strongest bandwidth/contact-efficiency case because repeated large model/map/document versions can reuse an exact local base and fall back safely when delta transfer is not worthwhile.
-- **UC-106 — Signed Multilingual Emergency Bulletin Derivation Ferry:** strong emergency/Raiatea/edge-AI case because translated or simplified messages stay visibly derived from one exact authoritative source and cannot silently replace it.
-- **UC-105 — Offline Threat-Indicator Match and Incident-Triage Courier:** strong security follow-up because compact defensive indicators can travel to disconnected logs while detailed telemetry remains local unless a bounded match justifies evidence retrieval.
+- **UC-108 — Queue-Pressure Backpressure and Admission-Control Courier:** strongest new core-network case because a real student mesh needs an explicit way to say `defer/refuse` before constrained relays overflow, while preserving UC-095 volunteer budgets.
+- **UC-112 — Cross-Contact Resumable Large-Object Transfer:** strongest transport follow-up because models, maps, backups and evidence frequently outlive one BLE/Wi-Fi contact and should make monotonic verified progress across repeated encounters.
+- **UC-109 — Durability-Aware Replica Retirement and Safe Cache GC:** strongest storage/durability addition because caches must eventually reclaim space without silently deleting the last useful copies under stale inventory knowledge.
+- **UC-111 — Privacy-Gated Local Redaction and Egress Courier:** strong Raiatea/AI/privacy bridge because disconnected time can be used to remove unnecessary personal data locally before an Internet/cloud gateway ever sees the payload.
+- **UC-110 — Near-Duplicate Visual Evidence and Dataset Representative Ferry:** strong visual/AI-dataset efficiency case because perceptual similarity can prioritize representative transfers while exact hashes and provenance remain authoritative.
