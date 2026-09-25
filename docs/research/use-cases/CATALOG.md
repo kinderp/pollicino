@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-24**.
+Last synchronized: **2026-09-25**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -126,7 +126,7 @@ Last synchronized: **2026-09-24**.
 | [UC-109](uc-109-durability-aware-replica-retirement-safe-cache-gc.md) | Durability-Aware Replica Retirement and Safe Cache GC | reclaim cache space without silently retiring the last useful valid replicas or shard set |
 | [UC-110](uc-110-near-duplicate-visual-evidence-dataset-representative-ferry.md) | Near-Duplicate Visual Evidence and Dataset Representative Ferry | exchange compact similarity evidence so large media/dataset transfers can prioritize representatives without losing exact provenance |
 | [UC-111](uc-111-privacy-gated-local-redaction-egress-courier.md) | Privacy-Gated Local Redaction and Egress Courier | create a policy-bound reduced-disclosure derivative locally before data reaches Internet/cloud gateways |
-| [UC-112](uc-112-cross-contact-resumable-large-object-transfer.md) | Cross-Contact Resumable Large-Object Transfer | persist verified partial progress so one exact object can complete across repeated interrupted rich-bearer encounters |
+| [UC-112](uc-112-cross-contact-resumable-large-object-transfer.md) | Cross-Contact Resumable Large-Object Transfer | persist verified partial progress so one exact object can complete across repeated interrupted rich-bearer encounters |\n| [UC-113](uc-113-sensor-maintenance-ticket-repair-evidence-courier.md) | Sensor Maintenance Ticket and Repair-Evidence Courier | carry fault tickets to maintainers and return exact repair/inspection state across intermittent links |\n| [UC-114](uc-114-privacy-preserving-dataset-overlap-contamination-audit.md) | Privacy-Preserving Dataset Overlap and Contamination Audit | compare distributed train/eval/benchmark corpora with compact fingerprints before revealing full data |\n| [UC-115](uc-115-raiatea-schema-ontology-mapping-courier.md) | Raiatea Schema and Ontology Mapping Courier | exchange versioned mappings so disconnected corpora can interpret equivalent metadata consistently |\n| [UC-116](uc-116-citizen-science-observation-verification-courier.md) | Citizen-Science Observation Verification Courier | ferry compact field claims first and request rich evidence only for uncertain or interesting observations |\n| [UC-117](uc-117-offline-data-quality-rule-validation-report-ferry.md) | Offline Data-Quality Rule and Validation-Report Ferry | move exact validation rules to local data and return compact quality evidence instead of centralizing raw records |
 
 ## Current field priority
 
@@ -136,10 +136,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-108–112:
+Strong additions from UC-113–117:
 
-- **UC-108 — Queue-Pressure Backpressure and Admission-Control Courier:** strongest new core-network case because a real student mesh needs an explicit way to say `defer/refuse` before constrained relays overflow, while preserving UC-095 volunteer budgets.
-- **UC-112 — Cross-Contact Resumable Large-Object Transfer:** strongest transport follow-up because models, maps, backups and evidence frequently outlive one BLE/Wi-Fi contact and should make monotonic verified progress across repeated encounters.
-- **UC-109 — Durability-Aware Replica Retirement and Safe Cache GC:** strongest storage/durability addition because caches must eventually reclaim space without silently deleting the last useful copies under stale inventory knowledge.
-- **UC-111 — Privacy-Gated Local Redaction and Egress Courier:** strong Raiatea/AI/privacy bridge because disconnected time can be used to remove unnecessary personal data locally before an Internet/cloud gateway ever sees the payload.
-- **UC-110 — Near-Duplicate Visual Evidence and Dataset Representative Ferry:** strong visual/AI-dataset efficiency case because perceptual similarity can prioritize representative transfers while exact hashes and provenance remain authoritative.
+- **UC-114 — Privacy-Preserving Dataset Overlap and Contamination Audit:** strongest new AI/data case because benchmark hygiene can be tested without first centralizing every dataset.
+- **UC-113 — Sensor Maintenance Ticket and Repair-Evidence Courier:** strongest immediately testable IoT case because it maps naturally onto real sensor maintenance with tiny control messages.
+- **UC-117 — Offline Data-Quality Rule and Validation-Report Ferry:** strongest reusable data-plane addition because validation can happen near sensors/documents while only compact reports move through the mesh.
+- **UC-115 — Raiatea Schema and Ontology Mapping Courier:** strong Raiatea interoperability case for disconnected corpora with different metadata conventions.
+- **UC-116 — Citizen-Science Observation Verification Courier:** strong education/edge-AI case because uncertain claims can trigger selective rich-evidence transfer and later review.
