@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-25**.
+Last synchronized: **2026-09-26**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -132,6 +132,11 @@ Last synchronized: **2026-09-25**.
 | [UC-115](uc-115-raiatea-schema-ontology-mapping-courier.md) | Raiatea Schema and Ontology Mapping Courier | exchange versioned mappings so disconnected corpora can interpret equivalent metadata consistently |
 | [UC-116](uc-116-citizen-science-observation-verification-courier.md) | Citizen-Science Observation Verification Courier | ferry compact field claims first and request rich evidence only for uncertain or interesting observations |
 | [UC-117](uc-117-offline-data-quality-rule-validation-report-ferry.md) | Offline Data-Quality Rule and Validation-Report Ferry | move exact validation rules to local data and return compact quality evidence instead of centralizing raw records |
+| [UC-118](uc-118-delay-tolerant-digital-twin-state-reconciliation.md) | Delay-Tolerant Digital Twin State Reconciliation | keep physical-device state useful under partitions by making version, freshness and uncertainty explicit |
+| [UC-119](uc-119-offline-media-provenance-content-credentials-courier.md) | Offline Media Provenance / Content Credentials Courier | carry verifiable provenance/derivation metadata separately from large media assets |
+| [UC-120](uc-120-derived-artifact-invalidation-recompute-courier.md) | Derived-Artifact Invalidation and Recompute Courier | propagate dependency-aware stale state so Raiatea/AI derivatives are recomputed from exact current inputs |
+| [UC-121](uc-121-offline-structured-form-case-file-reconciliation.md) | Offline Structured Form and Case-File Reconciliation Courier | merge concurrent field-level offline records while preserving explicit conflicts and provenance |
+| [UC-122](uc-122-offline-collaborative-geospatial-feature-editing.md) | Offline Collaborative Geospatial Feature Editing and Conflict Merge | reconcile concurrent vector-map edits without losing geometry validity, provenance or unresolved conflicts |
 
 ## Current field priority
 
@@ -141,10 +146,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-113–117:
+Strong additions from UC-118–122:
 
-- **UC-114 — Privacy-Preserving Dataset Overlap and Contamination Audit:** strongest new AI/data case because benchmark hygiene can be tested without first centralizing every dataset.
-- **UC-113 — Sensor Maintenance Ticket and Repair-Evidence Courier:** strongest immediately testable IoT case because it maps naturally onto real sensor maintenance with tiny control messages.
-- **UC-117 — Offline Data-Quality Rule and Validation-Report Ferry:** strongest reusable data-plane addition because validation can happen near sensors/documents while only compact reports move through the mesh.
-- **UC-115 — Raiatea Schema and Ontology Mapping Courier:** strong Raiatea interoperability case for disconnected corpora with different metadata conventions.
-- **UC-116 — Citizen-Science Observation Verification Courier:** strong education/edge-AI case because uncertain claims can trigger selective rich-evidence transfer and later review.
+- **UC-118 — Delay-Tolerant Digital Twin State Reconciliation:** strongest new physical IoT/robotics bridge because the student mesh can carry compact state versions while the twin exposes age and uncertainty instead of pretending stale state is current.
+- **UC-120 — Derived-Artifact Invalidation and Recompute Courier:** strongest Raiatea/AI correctness addition because source changes can mark dependent OCR/chunks/embeddings/index artifacts stale before bulky replacements arrive.
+- **UC-119 — Offline Media Provenance / Content Credentials Courier:** strongest evidence/media addition because cryptographic provenance can travel separately from photos/audio/video and remain distinct from heuristic AI detection.
+- **UC-122 — Offline Collaborative Geospatial Feature Editing and Conflict Merge:** strong emergency/map teaching case because groups can edit synthetic vector features while disconnected and reconcile them through student relays.
+- **UC-121 — Offline Structured Form and Case-File Reconciliation Courier:** strong offline-first operations case because field-level conflicts can be surfaced instead of silently discarded by last-write-wins.
