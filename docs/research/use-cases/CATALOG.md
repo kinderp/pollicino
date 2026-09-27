@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-26**.
+Last synchronized: **2026-09-27**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -137,6 +137,11 @@ Last synchronized: **2026-09-26**.
 | [UC-120](uc-120-derived-artifact-invalidation-recompute-courier.md) | Derived-Artifact Invalidation and Recompute Courier | propagate dependency-aware stale state so Raiatea/AI derivatives are recomputed from exact current inputs |
 | [UC-121](uc-121-offline-structured-form-case-file-reconciliation.md) | Offline Structured Form and Case-File Reconciliation Courier | merge concurrent field-level offline records while preserving explicit conflicts and provenance |
 | [UC-122](uc-122-offline-collaborative-geospatial-feature-editing.md) | Offline Collaborative Geospatial Feature Editing and Conflict Merge | reconcile concurrent vector-map edits without losing geometry validity, provenance or unresolved conflicts |
+| [UC-123](uc-123-opportunistic-clock-offset-drift-calibration-ferry.md) | Opportunistic Clock Offset/Drift Calibration Ferry | carry relative clock offset/drift quality so delayed traces can preserve explicit timing uncertainty |
+| [UC-124](uc-124-contact-aware-multi-bearer-transfer-policy-courier.md) | Contact-Aware Multi-Bearer Transfer Policy Courier | choose LoRa/BLE/Wi-Fi/Internet/physical carry per transfer using size, contact and resource constraints |
+| [UC-125](uc-125-delay-tolerant-cross-sensor-correlation-join-query.md) | Delay-Tolerant Cross-Sensor Correlation and Join Query | join bounded candidates from multiple disconnected sensor archives before fetching raw evidence |
+| [UC-126](uc-126-distributed-dataset-snapshot-watermark-barrier-courier.md) | Distributed Dataset Snapshot and Watermark Barrier Courier | seal a reproducible multi-source dataset cut from explicit local snapshots/watermarks |
+| [UC-127](uc-127-edge-ai-inference-replay-provenance-capsule.md) | Edge AI Inference Replay and Provenance Capsule | bind an AI output to exact model/input/runtime metadata and later test whether it can be replayed |
 
 ## Current field priority
 
@@ -146,10 +151,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-118–122:
+Strong additions from UC-123–127:
 
-- **UC-118 — Delay-Tolerant Digital Twin State Reconciliation:** strongest new physical IoT/robotics bridge because the student mesh can carry compact state versions while the twin exposes age and uncertainty instead of pretending stale state is current.
-- **UC-120 — Derived-Artifact Invalidation and Recompute Courier:** strongest Raiatea/AI correctness addition because source changes can mark dependent OCR/chunks/embeddings/index artifacts stale before bulky replacements arrive.
-- **UC-119 — Offline Media Provenance / Content Credentials Courier:** strongest evidence/media addition because cryptographic provenance can travel separately from photos/audio/video and remain distinct from heuristic AI detection.
-- **UC-122 — Offline Collaborative Geospatial Feature Editing and Conflict Merge:** strong emergency/map teaching case because groups can edit synthetic vector features while disconnected and reconcile them through student relays.
-- **UC-121 — Offline Structured Form and Case-File Reconciliation Courier:** strong offline-first operations case because field-level conflicts can be surfaced instead of silently discarded by last-write-wins.
+- **UC-123 — Opportunistic Clock Offset/Drift Calibration Ferry:** strongest new field-infrastructure case because UC-008, UC-086, UC-093 and later sensor joins all become safer when clock error is measured and uncertainty remains explicit.
+- **UC-124 — Contact-Aware Multi-Bearer Transfer Policy Courier:** strongest new networking case because the real student network will routinely have LoRa, BLE, Wi-Fi, Internet and physical carry available with different setup costs and contact windows.
+- **UC-126 — Distributed Dataset Snapshot and Watermark Barrier Courier:** strongest AI/Raiatea reproducibility addition because a multi-source dataset must pin the exact local cuts that compose it instead of silently mixing "latest" copies.
+- **UC-125 — Delay-Tolerant Cross-Sensor Correlation and Join Query:** strong IoT analytics case because multiple offline archives can answer one bounded question without centralizing every raw time series.
+- **UC-127 — Edge AI Inference Replay and Provenance Capsule:** strong edge-AI evidence case because an output can travel first while exact model/input/runtime identity remains available for later replay or mismatch detection.
