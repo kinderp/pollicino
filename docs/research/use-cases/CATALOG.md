@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-27**.
+Last synchronized: **2026-09-28**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -142,6 +142,11 @@ Last synchronized: **2026-09-27**.
 | [UC-125](uc-125-delay-tolerant-cross-sensor-correlation-join-query.md) | Delay-Tolerant Cross-Sensor Correlation and Join Query | join bounded candidates from multiple disconnected sensor archives before fetching raw evidence |
 | [UC-126](uc-126-distributed-dataset-snapshot-watermark-barrier-courier.md) | Distributed Dataset Snapshot and Watermark Barrier Courier | seal a reproducible multi-source dataset cut from explicit local snapshots/watermarks |
 | [UC-127](uc-127-edge-ai-inference-replay-provenance-capsule.md) | Edge AI Inference Replay and Provenance Capsule | bind an AI output to exact model/input/runtime metadata and later test whether it can be replayed |
+| [UC-128](uc-128-future-contact-capacity-reservation-transfer-appointment-courier.md) | Future Contact Capacity Reservation and Transfer-Appointment Courier | reserve bounded capacity on expected future contacts before scarce rich-bearer windows begin |
+| [UC-129](uc-129-intermittent-edge-workflow-dag-service-chain-courier.md) | Intermittent Edge Workflow DAG and Service-Chain Courier | execute dependency-aware multi-stage workflows across intermittently connected heterogeneous workers |
+| [UC-130](uc-130-cross-artifact-content-defined-chunk-deduplication-ferry.md) | Cross-Artifact Content-Defined Chunk Deduplication Ferry | reuse identical chunks across cached artifacts so rich-bearer contacts move only missing content |
+| [UC-131](uc-131-time-series-gap-detection-missing-interval-repair-courier.md) | Time-Series Gap Detection and Missing-Interval Repair Courier | detect sensor-history gaps and recover exact delayed blocks before any explicit imputation |
+| [UC-132](uc-132-authoritative-emergency-alert-update-cancel-supersession-courier.md) | Authoritative Emergency Alert Update/Cancel Supersession Courier | converge on correct alert/update/cancel state despite delayed and reordered drill messages |
 
 ## Current field priority
 
@@ -151,10 +156,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-123–127:
+Strong additions from UC-128–132:
 
-- **UC-123 — Opportunistic Clock Offset/Drift Calibration Ferry:** strongest new field-infrastructure case because UC-008, UC-086, UC-093 and later sensor joins all become safer when clock error is measured and uncertainty remains explicit.
-- **UC-124 — Contact-Aware Multi-Bearer Transfer Policy Courier:** strongest new networking case because the real student network will routinely have LoRa, BLE, Wi-Fi, Internet and physical carry available with different setup costs and contact windows.
-- **UC-126 — Distributed Dataset Snapshot and Watermark Barrier Courier:** strongest AI/Raiatea reproducibility addition because a multi-source dataset must pin the exact local cuts that compose it instead of silently mixing "latest" copies.
-- **UC-125 — Delay-Tolerant Cross-Sensor Correlation and Join Query:** strong IoT analytics case because multiple offline archives can answer one bounded question without centralizing every raw time series.
-- **UC-127 — Edge AI Inference Replay and Provenance Capsule:** strong edge-AI evidence case because an output can travel first while exact model/input/runtime identity remains available for later replay or mismatch detection.
+- **UC-132 — Authoritative Emergency Alert Update/Cancel Supersession Courier:** strongest new field drill because stale store-and-forward delivery must not resurrect an alert after an authoritative update or cancellation.
+- **UC-130 — Cross-Artifact Content-Defined Chunk Deduplication Ferry:** strongest new bulk-data case because models, datasets, backups and course packs can reuse verified chunks across artifacts before scarce Wi-Fi/BLE contacts.
+- **UC-128 — Future Contact Capacity Reservation and Transfer-Appointment Courier:** strongest new mobility/scheduling case because recurring student contacts can be planned before a short rich-bearer window starts, while missed contacts remain safe failures.
+- **UC-131 — Time-Series Gap Detection and Missing-Interval Repair Courier:** strong IoT/data-quality case because delayed exact copies should be recovered before statistical imputation is considered.
+- **UC-129 — Intermittent Edge Workflow DAG and Service-Chain Courier:** strong Raiatea/edge-AI compute case because multi-stage dependency graphs can progress across heterogeneous workers without a permanently reachable orchestrator.
