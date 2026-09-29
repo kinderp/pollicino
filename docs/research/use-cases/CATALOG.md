@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-28**.
+Last synchronized: **2026-09-29**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -147,6 +147,12 @@ Last synchronized: **2026-09-28**.
 | [UC-130](uc-130-cross-artifact-content-defined-chunk-deduplication-ferry.md) | Cross-Artifact Content-Defined Chunk Deduplication Ferry | reuse identical chunks across cached artifacts so rich-bearer contacts move only missing content |
 | [UC-131](uc-131-time-series-gap-detection-missing-interval-repair-courier.md) | Time-Series Gap Detection and Missing-Interval Repair Courier | detect sensor-history gaps and recover exact delayed blocks before any explicit imputation |
 | [UC-132](uc-132-authoritative-emergency-alert-update-cancel-supersession-courier.md) | Authoritative Emergency Alert Update/Cancel Supersession Courier | converge on correct alert/update/cancel state despite delayed and reordered drill messages |
+
+| [UC-133](uc-133-fenced-control-lease-monotonic-command-epoch-courier.md) | Fenced Control Lease and Monotonic Command-Epoch Courier | reject stale commands after a newer control epoch has taken ownership |
+| [UC-134](uc-134-policy-constrained-relay-eligibility-sensitive-path-courier.md) | Policy-Constrained Relay Eligibility and Sensitive-Path Courier | use only relay classes allowed to carry an exact object |
+| [UC-135](uc-135-offline-schema-migration-mixed-version-compatibility-courier.md) | Offline Schema Migration and Mixed-Version Compatibility Courier | evolve one data contract while mixed disconnected versions coexist |
+| [UC-136](uc-136-raiatea-citation-graph-resolution-missing-reference-courier.md) | Raiatea Citation-Graph Resolution and Missing-Reference Courier | ferry unresolved citation jobs and return provenance-bound reference metadata |
+| [UC-137](uc-137-privacy-preserving-relay-budget-voucher-admission-courier.md) | Privacy-Preserving Relay Budget Voucher and Admission Courier | bound admitted traffic without requiring stable identity in relay logs |
 
 ## Current field priority
 
