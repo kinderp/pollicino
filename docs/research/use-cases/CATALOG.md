@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-29**.
+Last synchronized: **2026-09-30**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -153,6 +153,11 @@ Last synchronized: **2026-09-29**.
 | [UC-135](uc-135-offline-schema-migration-mixed-version-compatibility-courier.md) | Offline Schema Migration and Mixed-Version Compatibility Courier | evolve one data contract while mixed disconnected versions coexist |
 | [UC-136](uc-136-raiatea-citation-graph-resolution-missing-reference-courier.md) | Raiatea Citation-Graph Resolution and Missing-Reference Courier | ferry unresolved citation jobs and return provenance-bound reference metadata |
 | [UC-137](uc-137-privacy-preserving-relay-budget-voucher-admission-courier.md) | Privacy-Preserving Relay Budget Voucher and Admission Courier | bound admitted traffic without requiring stable identity in relay logs |
+| [UC-138](uc-138-dead-letter-nondelivery-resolution-courier.md) | Dead-Letter and Non-Delivery Resolution Courier | turn undeliverable work into explicit bounded failure/retry/salvage state |
+| [UC-139](uc-139-deletion-convergence-residual-copy-audit-courier.md) | Deletion-Convergence and Residual-Copy Audit Courier | distinguish observed deletion convergence from unknown replicas and physical sanitization |
+| [UC-140](uc-140-delayed-ground-truth-edge-calibration-feedback-courier.md) | Delayed Ground-Truth and Edge-Calibration Feedback Courier | bind later labels/outcomes to exact edge inferences and measure calibration under partitions |
+| [UC-141](uc-141-progressive-representation-graceful-degradation-content-ferry.md) | Progressive Representation and Graceful-Degradation Content Ferry | deliver a complete useful low-fidelity derivative first and upgrade it over later contacts |
+| [UC-142](uc-142-place-bound-checkpoint-mailbox-geocast-courier.md) | Place-Bound Checkpoint Mailbox / Stored-Geocast Courier | deliver bounded content to authenticated public checkpoints without tracking personal routes |
 
 ## Current field priority
 
@@ -162,10 +167,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-128–132:
+Strong additions from UC-138–142:
 
-- **UC-132 — Authoritative Emergency Alert Update/Cancel Supersession Courier:** strongest new field drill because stale store-and-forward delivery must not resurrect an alert after an authoritative update or cancellation.
-- **UC-130 — Cross-Artifact Content-Defined Chunk Deduplication Ferry:** strongest new bulk-data case because models, datasets, backups and course packs can reuse verified chunks across artifacts before scarce Wi-Fi/BLE contacts.
-- **UC-128 — Future Contact Capacity Reservation and Transfer-Appointment Courier:** strongest new mobility/scheduling case because recurring student contacts can be planned before a short rich-bearer window starts, while missed contacts remain safe failures.
-- **UC-131 — Time-Series Gap Detection and Missing-Interval Repair Courier:** strong IoT/data-quality case because delayed exact copies should be recovered before statistical imputation is considered.
-- **UC-129 — Intermittent Edge Workflow DAG and Service-Chain Courier:** strong Raiatea/edge-AI compute case because multi-stage dependency graphs can progress across heterogeneous workers without a permanently reachable orchestrator.
+- **UC-142 — Place-Bound Checkpoint Mailbox / Stored-Geocast Courier:** strongest new field/mobility case because real public/school checkpoints let us test human-carried store-and-forward without needing continuous student route tracking.
+- **UC-138 — Dead-Letter and Non-Delivery Resolution Courier:** strongest new reliability case because expiry, no-route, policy blocks and unavailable endpoints become explicit lifecycle outcomes instead of indefinite hidden retries.
+- **UC-140 — Delayed Ground-Truth and Edge-Calibration Feedback Courier:** strongest new edge-AI case because physical partitions naturally create delayed labels and give us a measurable prediction-to-ground-truth feedback loop.
+- **UC-141 — Progressive Representation and Graceful-Degradation Content Ferry:** strong Raiatea/content-delivery case because short contacts can deliver an independently useful representation before the full source is available.
+- **UC-139 — Deletion-Convergence and Residual-Copy Audit Courier:** strong storage/privacy case because it makes UNKNOWN replicas explicit and keeps protocol deletion separate from claims of physical sanitization.
