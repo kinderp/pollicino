@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-09-30**.
+Last synchronized: **2026-10-01**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -158,6 +158,11 @@ Last synchronized: **2026-09-30**.
 | [UC-140](uc-140-delayed-ground-truth-edge-calibration-feedback-courier.md) | Delayed Ground-Truth and Edge-Calibration Feedback Courier | bind later labels/outcomes to exact edge inferences and measure calibration under partitions |
 | [UC-141](uc-141-progressive-representation-graceful-degradation-content-ferry.md) | Progressive Representation and Graceful-Degradation Content Ferry | deliver a complete useful low-fidelity derivative first and upgrade it over later contacts |
 | [UC-142](uc-142-place-bound-checkpoint-mailbox-geocast-courier.md) | Place-Bound Checkpoint Mailbox / Stored-Geocast Courier | deliver bounded content to authenticated public checkpoints without tracking personal routes |
+| [UC-143](uc-143-partition-aware-liveness-failure-suspicion-courier.md) | Partition-Aware Liveness and Failure-Suspicion Courier | distinguish normal disconnection from evidence that a node/service may actually be unavailable |
+| [UC-144](uc-144-catchment-rise-rate-alert-evidence-ferry.md) | Catchment Rise-Rate Alert and Evidence Ferry | move compact environmental rise-rate events first and retrieve richer evidence later |
+| [UC-145](uc-145-late-ai-training-contribution-handling.md) | Late AI Training Contribution Handling | keep delayed learning contributions tied to the exact model state that produced them |
+| [UC-146](uc-146-rural-irrigation-need-water-budget-courier.md) | Rural Irrigation Need and Water-Budget Courier | reconcile rural sensor needs and shared water-budget state without permanent Internet |
+| [UC-147](uc-147-raiatea-evidence-gap-followup-courier.md) | Raiatea Evidence-Gap Follow-Up Courier | make missing evidence in provisional offline answers an explicit later follow-up |
 
 ## Current field priority
 
@@ -167,10 +172,10 @@ The first three physical experiments remain:
 2. **UC-033 — Secure Rich-Bearer Handoff Bootstrap:** validate the recurring `LoRa discovery/control -> BLE/Wi-Fi/LAN bulk` transition.
 3. **UC-023 — Delay-Tolerant Private Mailbox:** demonstrate a complete human-visible store-and-forward service.
 
-Strong additions from UC-138–142:
+Strong additions from UC-143–147:
 
-- **UC-142 — Place-Bound Checkpoint Mailbox / Stored-Geocast Courier:** strongest new field/mobility case because real public/school checkpoints let us test human-carried store-and-forward without needing continuous student route tracking.
-- **UC-138 — Dead-Letter and Non-Delivery Resolution Courier:** strongest new reliability case because expiry, no-route, policy blocks and unavailable endpoints become explicit lifecycle outcomes instead of indefinite hidden retries.
-- **UC-140 — Delayed Ground-Truth and Edge-Calibration Feedback Courier:** strongest new edge-AI case because physical partitions naturally create delayed labels and give us a measurable prediction-to-ground-truth feedback loop.
-- **UC-141 — Progressive Representation and Graceful-Degradation Content Ferry:** strong Raiatea/content-delivery case because short contacts can deliver an independently useful representation before the full source is available.
-- **UC-139 — Deletion-Convergence and Residual-Copy Audit Courier:** strong storage/privacy case because it makes UNKNOWN replicas explicit and keeps protocol deletion separate from claims of physical sanitization.
+- **UC-143 — Partition-Aware Liveness and Failure-Suspicion Courier:** strongest new core-network case because a real student DTN must distinguish ordinary absence from evidence of service/node failure before triggering reassignment or maintenance.
+- **UC-144 — Catchment Rise-Rate Alert and Evidence Ferry:** strongest new field/emergency drill because it provides an easy sensor-to-relay-to-evidence experiment without pretending to be a certified warning system.
+- **UC-145 — Late AI Training Contribution Handling:** strongest new AI case because intermittent clients naturally return contributions computed from older model states.
+- **UC-146 — Rural Irrigation Need and Water-Budget Courier:** strong rural IoT case because it combines disconnected sensing, shared resource state and later reconciliation in a tangible classroom experiment.
+- **UC-147 — Raiatea Evidence-Gap Follow-Up Courier:** strong knowledge-plane case because a provisional offline answer can admit missing evidence and improve later instead of silently appearing complete.
