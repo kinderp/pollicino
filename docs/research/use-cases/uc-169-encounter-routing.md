@@ -1,0 +1,3 @@
+# UC-169 — Privacy-Bounded Encounter Routing
+
+Problem: choose better relays from repeated contacts without a central mobility graph. Actors: student relays, source, public checkpoint. Bearers: LoRa for coarse decaying routing scores; BLE/Wi-Fi/physical carry for bulk. Software: compare direct, epidemic, first-contact and PRoPHET-like routing on contact traces. Hardware: 8–15 boards on repeated public/school routes. Privacy: coarse destination classes, local score calculation, bounded retention, no home or trajectory logs. Difficulty: high. Distinct from UC-008 because this makes decentralized forwarding decisions rather than only observing contacts.
