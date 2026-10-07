@@ -25,7 +25,7 @@ This cumulative addendum indexes use cases added after UC-147. Core constraints 
 | [UC-166](uc-166-opportunistic-colocation-sensor-cross-calibration-courier.md) | Opportunistic Co-Location Sensor Cross-Calibration | create calibration evidence during brief reference co-location |
 | [UC-167](uc-167-one-way-no-return-path-bundle-drop-courier.md) | One-Way / No-Return-Path Bundle Drop Courier | exploit outbound-only contacts and return receipts later |
 
-| [UC-168](uc-168-responsibility-handoff-courier-v2.md) | Responsibility-Handoff Courier | explicit temporary storage/retry responsibility between holders |
+| [UC-168](uc-168-explicit-custody-commitment-responsibility-handoff-courier.md) | Responsibility-Handoff Courier | explicit temporary storage/retry responsibility between holders |
 | [UC-169](uc-169-privacy-bounded-encounter-probability-routing-courier.md) | Privacy-Bounded Encounter-Probability Routing | decentralized forwarding from coarse encounter history |
 | [UC-170](uc-170-offline-security-algorithm-migration-courier.md) | Offline Security-Algorithm Migration | staged security-profile migration across mixed offline devices |
 | [UC-171](uc-171-coastal-water-quality-cross-validation-courier.md) | Coastal Water-Quality Cross-Validation | reconcile field sensing with delayed reference evidence |
