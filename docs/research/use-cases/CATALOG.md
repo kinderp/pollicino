@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-01**.
+Last synchronized: **2026-10-07**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -163,6 +163,38 @@ Last synchronized: **2026-10-01**.
 | [UC-145](uc-145-late-ai-training-contribution-handling.md) | Late AI Training Contribution Handling | keep delayed learning contributions tied to the exact model state that produced them |
 | [UC-146](uc-146-rural-irrigation-need-water-budget-courier.md) | Rural Irrigation Need and Water-Budget Courier | reconcile rural sensor needs and shared water-budget state without permanent Internet |
 | [UC-147](uc-147-raiatea-evidence-gap-followup-courier.md) | Raiatea Evidence-Gap Follow-Up Courier | make missing evidence in provisional offline answers an explicit later follow-up |
+
+
+| [UC-148](uc-148-offline-federated-unlearning-contribution-withdrawal-courier.md) | Offline Federated Unlearning and Contribution-Withdrawal Courier | withdraw delayed learning contributions with explicit verification state |
+| [UC-149](uc-149-raiatea-source-status-answer-reassessment-courier.md) | Raiatea Source-Status and Answer-Reassessment Courier | reassess cached answers when source status changes |
+| [UC-150](uc-150-distributed-visual-survey-mosaic-courier.md) | Distributed Visual Survey Mosaic Courier | repair distributed survey coverage gaps with delayed imagery |
+| [UC-151](uc-151-physical-storage-bundle-session.md) | Physical-Storage Bundle Session | treat managed portable storage as an explicit high-capacity bearer |
+| [UC-152](uc-152-privacy-aware-cache-inventory-set-reconciliation-courier.md) | Privacy-Aware Cache Inventory and Set-Reconciliation Courier | discover only cache differences without exposing full inventories |
+| [UC-153](uc-153-goal-oriented-freshness-aoi-sensor-update-courier.md) | Goal-Oriented Freshness / AoI-Aware Sensor Update Courier | prioritize useful fresh state over stale queued samples |
+| [UC-154](uc-154-uncertainty-gated-edge-ai-escalation-expert-return-courier.md) | Uncertainty-Gated Edge AI Escalation and Expert-Return Courier | escalate only uncertain local inference cases |
+| [UC-155](uc-155-raiatea-vector-index-shard-merge-compaction-courier.md) | Raiatea Vector-Index Shard Merge and Compaction Courier | consolidate compatible disconnected vector-index shards |
+| [UC-156](uc-156-offline-secure-group-membership-rekey-epoch-courier.md) | Offline Secure Group Membership and Rekey-Epoch Courier | converge secure group membership epochs across partitions |
+| [UC-157](uc-157-intermittent-teacher-student-knowledge-distillation-courier.md) | Intermittent Teacher–Student Knowledge Distillation Courier | ferry compact teacher guidance to smaller edge models |
+| [UC-158](uc-158-multi-sensor-slope-instability-precursor-evidence-courier.md) | Multi-Sensor Slope-Instability Precursor and Evidence Courier | carry compact multi-sensor trends before richer evidence |
+| [UC-159](uc-159-priority-preemption-resumable-bulk-interruption-courier.md) | Priority Preemption and Resumable Bulk-Interruption Courier | interrupt bulk for urgent traffic without losing progress |
+| [UC-160](uc-160-intermittent-ai-model-canary-rollout-rollback-courier.md) | Intermittent AI Model Canary Rollout and Rollback Courier | stage model rollout and propagate promote/pause/rollback state |
+| [UC-161](uc-161-modality-aware-federated-update-heterogeneous-sensor-courier.md) | Modality-Aware Federated Update Courier | bind learning updates to heterogeneous sensor modalities |
+| [UC-162](uc-162-selective-restore-dependency-closure-recovery-plan-courier.md) | Selective Restore Dependency-Closure and Recovery-Plan Courier | restore only required dependency closure from distributed backup |
+| [UC-163](uc-163-failure-domain-aware-replica-placement-correlated-loss-repair-courier.md) | Failure-Domain-Aware Replica Placement | spread replicas across coarse operational domains |
+| [UC-164](uc-164-intermittent-split-inference-activation-courier.md) | Intermittent Split-Inference Activation Courier | ferry intermediate AI activations between compute tiers |
+| [UC-165](uc-165-prepositioned-sealed-release-package-courier.md) | Prepositioned Sealed-Release Package Courier | stage encrypted bulk early and release later |
+| [UC-166](uc-166-opportunistic-colocation-sensor-cross-calibration-courier.md) | Opportunistic Co-Location Sensor Cross-Calibration | create calibration evidence during brief reference co-location |
+| [UC-167](uc-167-one-way-no-return-path-bundle-drop-courier.md) | One-Way / No-Return-Path Bundle Drop Courier | exploit outbound-only contacts and return receipts later |
+| [UC-168](uc-168-explicit-custody-commitment-responsibility-handoff-courier.md) | Explicit Custody Commitment and Responsibility-Handoff Courier | transfer bounded storage/retry responsibility |
+| [UC-169](uc-169-privacy-bounded-encounter-probability-routing-courier.md) | Privacy-Bounded Encounter-Probability Routing | use coarse encounter history for decentralized forwarding |
+| [UC-170](uc-170-offline-security-algorithm-migration-courier.md) | Offline Security-Algorithm Migration | migrate security profiles across mixed offline devices |
+| [UC-171](uc-171-coastal-water-quality-cross-validation-courier.md) | Coastal Water-Quality Cross-Validation Courier | reconcile field sensing with delayed reference evidence |
+| [UC-172](uc-172-event-log-snapshot-compaction-courier.md) | Event-Log Snapshot and Compaction Courier | bound long offline histories with snapshot plus tail |
+| [UC-173](uc-173-privacy-bounded-temporal-reachability-contact-path-query.md) | Privacy-Bounded Temporal Reachability and Contact-Path Query | answer post-hoc path questions without centralizing full encounter logs |
+| [UC-174](uc-174-application-layer-energy-aware-rendezvous-window-courier.md) | Application-Layer Energy-Aware Rendezvous Window Courier | expose coarse service windows for energy-constrained relays |
+| [UC-175](uc-175-idempotent-side-effect-command-duplicate-suppression-courier.md) | Idempotent Side-Effect Command and Duplicate-Suppression Courier | make retries and multi-path duplicates safe for bounded actions |
+| [UC-176](uc-176-event-triggered-cooperative-burst-capture-courier.md) | Event-Triggered Cooperative Burst-Capture Courier | trigger short multi-sensor high-rate evidence capture only when needed |
+| [UC-177](uc-177-delay-tolerant-differential-privacy-budget-query-admission-courier.md) | Delay-Tolerant Differential-Privacy Budget and Query-Admission Courier | reconcile privacy-loss/query-budget admission across partitions |
 
 ## Current field priority
 
