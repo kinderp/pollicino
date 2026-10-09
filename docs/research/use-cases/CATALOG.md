@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-07**.
+Last synchronized: **2026-10-09**.
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -196,6 +196,17 @@ Last synchronized: **2026-10-07**.
 | [UC-176](uc-176-event-triggered-cooperative-burst-capture-courier.md) | Event-Triggered Cooperative Burst-Capture Courier | trigger short multi-sensor high-rate evidence capture only when needed |
 | [UC-177](uc-177-delay-tolerant-differential-privacy-budget-query-admission-courier.md) | Delay-Tolerant Differential-Privacy Budget and Query-Admission Courier | reconcile privacy-loss/query-budget admission across partitions |
 
+| [UC-178](uc-178-observation-denominator-missing-log-audit-courier.md) | Experiment Evidence Completeness and Denominator Audit | account for missing logs and avoid biased reliability denominators |
+| [UC-179](uc-179-limited-redundant-relay-delivery.md) | Limited Redundant Delivery | compare bounded diverse relay copies with simpler forwarding |
+| [UC-180](uc-180-offline-package-validation.md) | Offline Package Validation | defer use until exact artifact authorization is validated |
+| [UC-181](uc-181-minimal-reproducer-cross-site-debug-courier.md) | Minimal Reproducer and Cross-Site Debug Courier | ferry minimal runnable failure reproducers across disconnected labs |
+| [UC-182](uc-182-blind-holdout-commit-reveal-edge-ai-evaluation-courier.md) | Blind-Holdout Commit–Reveal Edge-AI Evaluation Courier | bind offline benchmark predictions before answer disclosure |
+| [UC-183](uc-183-paired-shadow-routing-field-trial-courier.md) | Paired Shadow-Routing and Field-Trial Evidence Courier | separate fair physical routing trials from simulated shadow estimates |
+| [UC-184](uc-184-last-state-rescue-before-brownout-courier.md) | Last-State Rescue Before Brownout Courier | preserve critical sensor state before power failure |
+| [UC-185](uc-185-survey-effort-and-negative-observation-courier.md) | Survey Effort and Negative-Observation Courier | distinguish valid non-detection from missing or invalid observations |
+| [UC-186](uc-186-raiatea-claim-contradiction-adjudication-courier.md) | Raiatea Claim-Level Contradiction and Adjudication Courier | challenge conflicting source-grounded claims across disconnected corpora |
+| [UC-187](uc-187-cross-school-reproducible-science-round-courier.md) | Cross-School Reproducible Science Round Courier | repeat exact school science protocols with audited measurement provenance |
+
 ## Current field priority
 
 The first three physical experiments remain:
@@ -211,3 +222,13 @@ Strong additions from UC-143–147:
 - **UC-145 — Late AI Training Contribution Handling:** strongest new AI case because intermittent clients naturally return contributions computed from older model states.
 - **UC-146 — Rural Irrigation Need and Water-Budget Courier:** strong rural IoT case because it combines disconnected sensing, shared resource state and later reconciliation in a tangible classroom experiment.
 - **UC-147 — Raiatea Evidence-Gap Follow-Up Courier:** strong knowledge-plane case because a provisional offline answer can admit missing evidence and improve later instead of silently appearing complete.
+
+## Additions 2026-10-09 — evidence-first field work
+
+- **UC-183:** paired routing policy trials with a strict boundary between field delivery and counterfactual shadow predictions.
+- **UC-184:** controlled rescue of critical sensor state before a battery-induced shutdown.
+- **UC-185:** evidence of a real negative observation, rather than a missing sample or broken instrument.
+- **UC-186:** explicit adjudication of contradictory Raiatea source claims without silent override.
+- **UC-187:** reproducible interdisciplinary school science rounds with protocol hashes and measured deviations.
+
+See [2026-10-09 index](INDEX-2026-10-09.md) for software and physical test priorities. Radio PHY remains frozen; physical performance requires real measurement.
