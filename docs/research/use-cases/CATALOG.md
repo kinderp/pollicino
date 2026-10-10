@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-09**.
+Last synchronized: **2026-10-10** (partial update; UC-190 and UC-191 pending).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -232,3 +232,9 @@ Strong additions from UC-143–147:
 - **UC-187:** reproducible interdisciplinary school science rounds with protocol hashes and measured deviations.
 
 See [2026-10-09 index](INDEX-2026-10-09.md) for software and physical test priorities. Radio PHY remains frozen; physical performance requires real measurement.
+
+| [UC-188](uc-188-contact-serviceability-payload-feasibility-courier.md) | Contact Serviceability and Payload-Feasibility Courier | distinguish contact opportunity from completion of an exact sized payload |
+| [UC-189](uc-189-passive-metadata-exposure-audit-courier.md) | Passive Metadata Exposure and Linkability Audit Courier | audit residual metadata linkability on synthetic, consented traces |
+| [UC-192](uc-192-raiatea-accessible-learning-pack-derivation-ferry.md) | Raiatea Accessible Learning-Pack Derivation and Review Ferry | ferry teacher-reviewed accessibility derivatives bound to an exact source |
+
+**2026-10-10 note:** UC-190 and UC-191 have not been published on this branch; IDs are intentionally left absent rather than linked to nonexistent documents. This is a partial daily update.
