@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-10** (partial update; UC-190 and UC-191 pending).
+Last synchronized: **2026-10-13** (UC-001–UC-200 contiguous; four 11 October unpublished drafts recovered).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -208,9 +208,18 @@ Last synchronized: **2026-10-10** (partial update; UC-190 and UC-191 pending).
 | [UC-187](uc-187-cross-school-reproducible-science-round-courier.md) | Cross-School Reproducible Science Round Courier | repeat exact school science protocols with audited measurement provenance |
 | [UC-188](uc-188-contact-serviceability-payload-feasibility-courier.md) | Contact Serviceability and Payload-Feasibility Courier | distinguish contact opportunity from completion of an exact sized payload |
 | [UC-189](uc-189-passive-metadata-exposure-audit-courier.md) | Passive Metadata Exposure and Linkability Audit Courier | audit residual metadata linkability on synthetic, consented traces |
+| [UC-190](uc-190-heterogeneous-mesh-application-gateway-courier.md) | Heterogeneous Mesh Application Gateway | bridge authorized objects across different protocol and trust domains without PHY changes |
+| [UC-191](uc-191-rural-water-balance-meter-reconciliation.md) | Rural Water-Balance Discrepancy Reconciliation | align asynchronous flow readings before interpreting apparent water loss |
 | [UC-192](uc-192-raiatea-accessible-learning-pack-derivation-ferry.md) | Raiatea Accessible Learning-Pack Derivation and Review Ferry | ferry teacher-reviewed accessibility derivatives bound to an exact source |
+| [UC-193](uc-193-in-transit-edge-compute-courier.md) | In-Transit Edge Compute Courier | use consented physical travel time for bounded verifiable computation |
+| [UC-194](uc-194-scarce-asset-tentative-reservation-courier.md) | Scarce Asset Tentative Reservation Courier | reconcile competing offline item requests without false exclusive promises |
+| [UC-195](uc-195-cross-hop-latency-budget-attribution-courier.md) | Cross-Hop Delay Budget Attribution Courier | attribute contact waiting, negotiation, transfer and verification with timing uncertainty |
+| [UC-196](uc-196-mirrored-receiver-reception-diversity-audit.md) | Mirrored Receiver Reception Diversity Audit | audit one controlled transmission across independently observing receivers |
+| [UC-197](uc-197-peloritani-fire-weather-observation-ferry.md) | Peloritani Fire-Weather Observation Ferry | carry quality-reviewed microclimate readings for supervised educational analysis |
+| [UC-198](uc-198-expiring-offline-actuation-intent-safe-default.md) | Expiring Offline Actuation Intent with Safe Default | reject authentic but stale commands at a local fail-safe actuator |
+| [UC-199](uc-199-edge-representation-privacy-leakage-audit-courier.md) | Edge-AI Representation Privacy-Leakage Audit Courier | test what synthetic intermediate ML features disclose across islands |
+| [UC-200](uc-200-controlled-emergency-drill-after-action-courier.md) | Controlled Emergency Drill Inject and After-Action Courier | reconstruct exercise-only notices, decisions and evidence after disconnection |
 
-**Catalog note (2026-10-10):** UC-190 and UC-191 are not published on this branch; numbering is intentionally non-contiguous in this partial update.
 
 ## Current field priority
 
