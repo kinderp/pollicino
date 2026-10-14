@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-13** (UC-001–UC-200 contiguous; four 11 October unpublished drafts recovered).
+Last synchronized: **2026-10-14** (UC-001–UC-205 contiguous; proposals UC-201–205 added).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -220,6 +220,16 @@ Last synchronized: **2026-10-13** (UC-001–UC-200 contiguous; four 11 October u
 | [UC-199](uc-199-edge-representation-privacy-leakage-audit-courier.md) | Edge-AI Representation Privacy-Leakage Audit Courier | test what synthetic intermediate ML features disclose across islands |
 | [UC-200](uc-200-controlled-emergency-drill-after-action-courier.md) | Controlled Emergency Drill Inject and After-Action Courier | reconstruct exercise-only notices, decisions and evidence after disconnection |
 
+
+## Additions 2026-10-14 — student-network deployability and cross-bearer validation
+
+| [UC-201](uc-201-graceful-relay-retirement-queue-handoff.md) | Graceful Student-Relay Retirement and Orphan-Queue Recovery | retire a volunteer node without silently abandoning accepted bundles or retaining private data |
+| [UC-202](uc-202-controlled-selective-forwarding-drop-audit.md) | Controlled Selective-Forwarding and Queue-Loss Audit | distinguish forwarding faults from ordinary contact loss using injected failures and evidence, not suspicion of students |
+| [UC-203](uc-203-offline-optical-qr-bearer-fallback.md) | Screen-to-Camera / Printed-QR Offline Bearer Fallback | carry tiny signed control objects when radio, Wi-Fi and Internet are unavailable or disallowed |
+| [UC-204](uc-204-physical-sample-digital-evidence-reconciliation.md) | Physical Sample and Digital Sensor-Evidence Join | reconcile carried laboratory samples with delayed sensor records without inventing scientific conclusions |
+| [UC-205](uc-205-offline-ai-dataset-permission-intersection.md) | Offline AI Dataset License and Consent Intersection Gate | block unauthorized recombination of datasets despite delayed permissions and revocations |
+
+See [2026-10-14 index](INDEX-2026-10-14.md) for novelty checks, software tests, field design and privacy constraints. No PHY changes or physical performance claims.
 
 ## Current field priority
 
