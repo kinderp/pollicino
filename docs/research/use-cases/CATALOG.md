@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-14** (UC-001–UC-205 contiguous; proposals UC-201–205 added).
+Last synchronized: **2026-10-16** (UC-001–UC-215 contiguous; proposals UC-206–215 added).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -256,3 +256,20 @@ Strong additions from UC-143–147:
 - **UC-187:** reproducible interdisciplinary school science rounds with protocol hashes and measured deviations.
 
 See [2026-10-09 index](INDEX-2026-10-09.md) for software and physical test priorities. Radio PHY remains frozen; physical performance requires real measurement.
+
+## Additions 2026-10-15 and 2026-10-16 — field deployment, interoperability, education
+
+| ID | Use case | Purpose |
+|---|---|---|
+| [UC-206](uc-206-student-relay-commissioning-reference-passport.md) | Student Relay Readiness Passport | verify board condition before field comparisons |
+| [UC-207](uc-207-metered-opportunistic-internet-egress-quota.md) | Metered Internet Egress | control scarce gateway upload budgets |
+| [UC-208](uc-208-accessible-footpath-barrier-evidence-ferry.md) | Accessible Footpath Evidence | carry reviewed accessibility observations |
+| [UC-209](uc-209-distributed-human-annotation-disagreement-courier.md) | Distributed Annotation Disagreement | preserve conflicting human labels |
+| [UC-210](uc-210-cross-site-held-out-edge-model-generalization.md) | Cross-Site Model Evaluation | test edge model generalization across sites |
+| [UC-211](uc-211-backpack-mounting-antenna-field-trial.md) | Antenna Mounting Trial | control placement variability in RF evidence |
+| [UC-212](uc-212-rich-bearer-contact-flapping-hysteresis.md) | Handoff Anti-Flapping | reduce unnecessary repeated rich-bearer setup |
+| [UC-213](uc-213-nfc-ndef-tap-to-carry-bearer.md) | NFC Tap-to-Carry Bearer | physically move tiny signed objects via NFC |
+| [UC-214](uc-214-coastal-relay-enclosure-humidity-health.md) | Coastal Enclosure Humidity Health | monitor moisture inside unattended relay enclosures |
+| [UC-215](uc-215-romeo-robot-dock-verified-data-mule.md) | Romeo Verified Data-Mule Handoff | prove verified receipt rather than robot arrival |
+
+These are documented proposals, not implemented or physically measured results. See INDEX-2026-10-15.md and INDEX-2026-10-16.md. Frozen LoRa PHY/MAC unchanged.
