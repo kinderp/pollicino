@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-16** (UC-001–UC-215 contiguous; proposals UC-206–215 added).
+Last synchronized: **2026-10-18** (UC-001–UC-225 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -273,3 +273,26 @@ See [2026-10-09 index](INDEX-2026-10-09.md) for software and physical test prior
 | [UC-215](uc-215-romeo-robot-dock-verified-data-mule.md) | Romeo Verified Data-Mule Handoff | prove verified receipt rather than robot arrival |
 
 These are documented proposals, not implemented or physically measured results. See INDEX-2026-10-15.md and INDEX-2026-10-16.md. Frozen LoRa PHY/MAC unchanged.
+
+
+## Additions 2026-10-17 — governed student testbed, AI and alternate transport
+
+| ID | Use case | Purpose |
+|---|---|---|
+| [UC-216](uc-216-privacy-reviewed-synthetic-contact-trace-release.md) | Synthetic Trace Benchmark Ferry | release reviewed artificial traces, not participant routes |
+| [UC-217](uc-217-consent-scoped-student-field-trial-governance.md) | Offline Participation Stop | honor voluntary experiment stop while disconnected |
+| [UC-218](uc-218-edge-ai-sustained-thermal-power-feasibility-passport.md) | Edge Thermal/Power Passport | measure sustained edge inference viability |
+| [UC-219](uc-219-opportunistic-compute-independent-result-crosscheck.md) | Independent Compute Cross-Check | audit delayed computations with separate workers |
+| [UC-220](uc-220-audible-optical-free-tiny-capsule-bearer.md) | Audible Tiny-Capsule Bearer | move signed small messages with supervised audio |
+
+## Additions 2026-10-18 — verified application outcomes, classroom field science and AI trust
+
+| ID | Use case | Purpose |
+|---|---|---|
+| [UC-221](uc-221-application-acceptance-semantic-receipt-courier.md) | Application Acceptance Receipt | separate transport delivery from destination application acceptance |
+| [UC-222](uc-222-disconnected-public-kiosk-explicit-staleness-gate.md) | Public Display Staleness Gate (Drill) | make outdated exercise signage visibly unavailable |
+| [UC-223](uc-223-cross-school-shade-heat-paired-observation-ferry.md) | Paired Courtyard Shade/Sun Experiment | reconcile scientifically comparable fixed-site observations |
+| [UC-224](uc-224-contact-prediction-calibration-uncertainty-courier.md) | Contact Forecast Calibration | score probability forecast calibration on privacy-bounded contacts |
+| [UC-225](uc-225-offline-ai-data-poisoning-canary-quarantine-courier.md) | AI Dataset Poisoning Canary | quarantine suspicious imported toy training data before use |
+
+See [2026-10-18 index](INDEX-2026-10-18.md) for scope, novelty comparison and experiment order. Prior UC-216–220 are indexed here retroactively; their original dated addendum remains preserved. No changes to frozen LoRa PHY/MAC or claims of measured performance.
