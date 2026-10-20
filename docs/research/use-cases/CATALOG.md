@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-18** (UC-001–UC-225 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-20** (UC-001–UC-235 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -296,3 +296,20 @@ These are documented proposals, not implemented or physically measured results. 
 | [UC-225](uc-225-offline-ai-data-poisoning-canary-quarantine-courier.md) | AI Dataset Poisoning Canary | quarantine suspicious imported toy training data before use |
 
 See [2026-10-18 index](INDEX-2026-10-18.md) for scope, novelty comparison and experiment order. Prior UC-216–220 are indexed here retroactively; their original dated addendum remains preserved. No changes to frozen LoRa PHY/MAC or claims of measured performance.
+
+## Additions 2026-10-19–20 — testbed operativo e dimostrazioni scolastiche
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-226](uc-226-cross-school-airtime-coexistence-ledger.md) | Coesistenza delle campagne LoRa | coordinare calendari di trasmissioni fra più gruppi scolastici |
+| [UC-227](uc-227-offline-equipment-recall-safety-quarantine.md) | Richiamo offline delle schede | diffondere avvisi sui lotti e registrare conferme di quarantena |
+| [UC-228](uc-228-connectivity-induced-sampling-bias-audit.md) | Bias dei dati causato dalla connettività | distinguere misure prodotte e misure effettivamente ricevute |
+| [UC-229](uc-229-minimum-viable-offline-lesson-pack-readiness.md) | Lezione offline eseguibile | verificare dipendenze e prerequisiti prima di dichiarare pronta una lezione |
+| [UC-230](uc-230-cross-bearer-envelope-conformance-campaign.md) | Conformità delle capsule tra bearer | verificare identità e integrità tra adapter differenti |
+| [UC-231](uc-231-node-side-airtime-evidence-and-budget-guard.md) | Registro locale del budget radio | separare richieste, misure e incertezza sull'uso della radio |
+| [UC-232](uc-232-paired-bidirectional-link-asymmetry-trial.md) | Test di asimmetria dei collegamenti | misurare separatamente A→B e B→A in coppie di prove |
+| [UC-233](uc-233-blackout-rejoin-queue-surge-recovery-drill.md) | Recupero simultaneo post-disconnessione | gestire il rientro congiunto di molti relay e le loro code |
+| [UC-234](uc-234-peloritani-school-garden-pollinator-visit-ferry.md) | Osservazioni negli orti scolastici | portare conteggi incerti con finestre valide di osservazione |
+| [UC-235](uc-235-inter-school-asynchronous-puzzle-quest.md) | Enigmi cooperativi offline | giocare e verificare progressi fra scuole disconnesse |
+
+See [2026-10-20 index](INDEX-2026-10-20.md). UC-226–230 were initially linked from the October 19 addendum and are now included in this primary catalog. All are documentation proposals; no PHY edits or physical-result claims.
