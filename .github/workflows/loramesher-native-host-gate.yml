@@ -1,0 +1,44 @@
+name: LoRaMesher native host gate
+
+on:
+  push:
+    branches:
+      - agent/rf-replay-roadmap-sync
+
+jobs:
+  validate-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Pollicino and PlatformIO
+        run: |
+          python -m pip install -e .
+          python -m pip install platformio
+      - name: Clone pinned LoRaMesher
+        run: |
+          git clone https://github.com/LoRaMesher/LoRaMesher.git /tmp/LoRaMesher
+          git -C /tmp/LoRaMesher checkout 1abec4a850389afcfdcae0e41c965b58bbeb701f
+          test "$(git -C /tmp/LoRaMesher rev-parse HEAD)" = "1abec4a850389afcfdcae0e41c965b58bbeb701f"
+      - name: List pinned native tests
+        working-directory: /tmp/LoRaMesher
+        run: |
+          pio test -e test_native --list-tests | tee /tmp/loramesher-tests.txt
+          grep -q "test_loramesher" /tmp/loramesher-tests.txt
+          grep -q "test_routing" /tmp/loramesher-tests.txt
+      - name: Run LoRaMesher lifecycle/API native tests
+        working-directory: /tmp/LoRaMesher
+        run: pio test -e test_native -v -f test_loramesher
+      - name: Generate real Pollicino PNF1 fixture
+        run: |
+          python scripts/emit_loramesher_pnf1_fixture.py \
+            /tmp/LoRaMesher/test/protocols/lora_mesh/services/test_routing/pollicino_pnf1_fixture.hpp
+          cp experiments/loramesher/pollicino_pnf1_multihop_test.cpp \
+            /tmp/LoRaMesher/test/protocols/lora_mesh/services/test_routing/pollicino_pnf1_multihop_test.cpp
+          grep -q "kPollicinoPnf1Payload" \
+            /tmp/LoRaMesher/test/protocols/lora_mesh/services/test_routing/pollicino_pnf1_fixture.hpp
+      - name: Run LoRaMesher routing tests with injected Pollicino PNF1 payload
+        working-directory: /tmp/LoRaMesher
+        run: pio test -e test_native -v -f test_routing
