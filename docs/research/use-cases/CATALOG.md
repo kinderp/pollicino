@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-20** (UC-001–UC-235 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-21** (UC-001–UC-239 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -313,3 +313,14 @@ See [2026-10-18 index](INDEX-2026-10-18.md) for scope, novelty comparison and ex
 | [UC-235](uc-235-inter-school-asynchronous-puzzle-quest.md) | Enigmi cooperativi offline | giocare e verificare progressi fra scuole disconnesse |
 
 See [2026-10-20 index](INDEX-2026-10-20.md). UC-226–230 were initially linked from the October 19 addendum and are now included in this primary catalog. All are documentation proposals; no PHY edits or physical-result claims.
+
+## Additions 2026-10-21 — stanze, FSL, accessibilità e governance dei contenuti
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-236](uc-236-geotopic-coarse-zone-room-courier.md) | Stanze tematiche territoriali | filtrare argomento, zona pubblica e validità senza GPS |
+| [UC-237](uc-237-offline-spec-driven-acceptance-evidence-round.md) | Accettazione SDD fra scuole | collegare requisiti, test, commit e approvazione umana |
+| [UC-238](uc-238-accessible-offline-symbol-message-board.md) | Bacheca multimodale accessibile | inviare piccoli intenti non urgenti con testo, simboli e TTS locale |
+| [UC-239](uc-239-offline-topic-moderation-verdict-courier.md) | Moderazione offline dei topic | pubblicare solo dopo decisione autorizzata e gestire ritiri tardivi |
+
+See [2026-10-21 index](INDEX-2026-10-21.md). Documentation proposals only; no implementation, field measurements or PHY/MAC/driver changes.
