@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-21** (UC-001–UC-239 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-22** (UC-001–UC-243 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -324,3 +324,14 @@ See [2026-10-20 index](INDEX-2026-10-20.md). UC-226–230 were initially linked 
 | [UC-239](uc-239-offline-topic-moderation-verdict-courier.md) | Moderazione offline dei topic | pubblicare solo dopo decisione autorizzata e gestire ritiri tardivi |
 
 See [2026-10-21 index](INDEX-2026-10-21.md). Documentation proposals only; no implementation, field measurements or PHY/MAC/driver changes.
+
+## Additions 2026-10-22 — robustezza dei relay, didattica privata, sensori e robotica
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-240](uc-240-multi-relay-loop-echo-storm-drill.md) | Multi-Relay Loop/Echo Storm Drill | verificare che cicli, riavvii e riconnessioni non provochino proliferazione incontrollata dei messaggi |
+| [UC-241](uc-241-private-offline-spaced-learning-deck-ferry.md) | Private Offline Spaced-Learning Deck Ferry | aggiornare mazzi didattici offline senza diffondere la cronologia personale di studio |
+| [UC-242](uc-242-fixed-station-noise-summary-citizen-science.md) | Fixed-Station Environmental Noise Summary Courier | confrontare rumore ambientale indicativo tra postazioni fisse senza registrare voci o persone |
+| [UC-243](uc-243-offline-robotics-challenge-evidence-adjudication.md) | Offline Robotics Challenge Evidence and Adjudication | riconciliare punteggi provvisori e prove fisiche delle sfide Romeo tra laboratori disconnessi |
+
+See [2026-10-22 index](INDEX-2026-10-22.md) for anti-duplication rationale, software/hardware separation, privacy and Messina testbed design. **Documentation only: no code changes, no frozen PHY/MAC/driver edits, and no physical performance claims.**
