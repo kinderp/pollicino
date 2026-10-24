@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-22** (UC-001–UC-243 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-24** (UC-001–UC-249 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -335,3 +335,16 @@ See [2026-10-21 index](INDEX-2026-10-21.md). Documentation proposals only; no im
 | [UC-243](uc-243-offline-robotics-challenge-evidence-adjudication.md) | Offline Robotics Challenge Evidence and Adjudication | riconciliare punteggi provvisori e prove fisiche delle sfide Romeo tra laboratori disconnessi |
 
 See [2026-10-22 index](INDEX-2026-10-22.md) for anti-duplication rationale, software/hardware separation, privacy and Messina testbed design. **Documentation only: no code changes, no frozen PHY/MAC/driver edits, and no physical performance claims.**
+
+## Additions 2026-10-23–24 — DNA, Raiatea, room contestuali e micro-dati
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-244](uc-244-dna-rdf-explainable-opportunity-derivation-courier.md) | Inferenza DNA/RDF spiegabile | derivare nuove opportunità con provenance e revoca |
+| [UC-245](uc-245-seeded-synthetic-dataset-reconstruction-courier.md) | Dataset sintetici ricostruibili | ricostruire esattamente dataset da ricetta con fallback |
+| [UC-246](uc-246-raiatea-untrusted-rag-document-injection-review.md) | Confine di fiducia Raiatea/RAG | non eseguire istruzioni incorporate nei documenti |
+| [UC-247](uc-247-ephemeral-ble-place-room-lifecycle.md) | Micro-room BLE temporanee | creare, scadere e riconciliare room di prossimità senza tracking |
+| [UC-248](uc-248-private-context-relevance-policy-on-device.md) | Rilevanza contestuale privata | filtrare annunci GeoTopic localmente senza esporre profili |
+| [UC-249](uc-249-schema-bound-compact-sensor-facts.md) | Micro-fatti IoT compatti | valutare codifica tipizzata e rifiuto sicuro di schemi sconosciuti |
+
+UC-244 è stato pubblicato il 23 ottobre; UC-245 e UC-246 erano draft del 23 ottobre **integrati il 24 ottobre**. UC-247–249 sono nuove proposte del 24 ottobre. Vedi [indice 23 ottobre](INDEX-2026-10-23.md) e [indice 24 ottobre](INDEX-2026-10-24.md). Documentazione soltanto: nessun firmware, PHY, MAC, driver o risultato fisico modificato/dichiarato.
