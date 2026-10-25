@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-24** (UC-001–UC-249 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-25** (UC-001–UC-252 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -348,3 +348,13 @@ See [2026-10-22 index](INDEX-2026-10-22.md) for anti-duplication rationale, soft
 | [UC-249](uc-249-schema-bound-compact-sensor-facts.md) | Micro-fatti IoT compatti | valutare codifica tipizzata e rifiuto sicuro di schemi sconosciuti |
 
 UC-244 è stato pubblicato il 23 ottobre; UC-245 e UC-246 erano draft del 23 ottobre **integrati il 24 ottobre**. UC-247–249 sono nuove proposte del 24 ottobre. Vedi [indice 23 ottobre](INDEX-2026-10-23.md) e [indice 24 ottobre](INDEX-2026-10-24.md). Documentazione soltanto: nessun firmware, PHY, MAC, driver o risultato fisico modificato/dichiarato.
+
+## Additions 2026-10-25 — governance GeoTopic, domanda DNA e sperimentazione del relay
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-250](uc-250-governed-geotopic-namespace-offline-alias-resolution.md) | Namespace GeoTopic governato e alias offline | assegnare/rifiutare nomi e alias canonici durante partizioni senza promozione abusiva dei topic |
+| [UC-251](uc-251-question-only-dna-need-graph-no-fact-invention.md) | Bisogni DNA estratti da domande | riconoscere richieste e interessi senza trasformarli in falsi fatti |
+| [UC-252](uc-252-voluntary-student-relay-service-day-energy-viability.md) | Autonomia della giornata di servizio relay | misurare energia consumata per consegna applicativa utile rispettando lo stop locale |
+
+Vedi [indice 25 ottobre](INDEX-2026-10-25.md) per scenario, differenze rispetto ai casi già presenti, test software, prove fisiche e privacy. Soltanto documentazione: nessun cambiamento al PHY LoRa congelato, MAC, driver, firmware o risultato fisico dichiarato.
