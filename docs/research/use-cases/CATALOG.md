@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-25** (UC-001–UC-252 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-26** (UC-001–UC-255 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -358,3 +358,13 @@ UC-244 è stato pubblicato il 23 ottobre; UC-245 e UC-246 erano draft del 23 ott
 | [UC-252](uc-252-voluntary-student-relay-service-day-energy-viability.md) | Autonomia della giornata di servizio relay | misurare energia consumata per consegna applicativa utile rispettando lo stop locale |
 
 Vedi [indice 25 ottobre](INDEX-2026-10-25.md) per scenario, differenze rispetto ai casi già presenti, test software, prove fisiche e privacy. Soltanto documentazione: nessun cambiamento al PHY LoRa congelato, MAC, driver, firmware o risultato fisico dichiarato.
+
+## Additions 2026-10-26 — custodia dopo riavvio, ambiente scolastico, scoperta GeoTopic
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-253](uc-253-power-cut-durable-custody-flash-write-budget.md) | Custodia durevole e budget flash | recuperare dopo spegnimento ciò che si è davvero promesso di custodire, limitando le scritture |
+| [UC-254](uc-254-offline-classroom-co2-ventilation-evidence-ferry.md) | Esperimento CO₂ e ventilazione offline | confrontare finestre di osservazione valide tra scuole senza dati personali né conclusioni sanitarie |
+| [UC-255](uc-255-authenticated-venue-beacon-geotopic-offline-discovery.md) | Beacon GeoTopic autenticato | verificare annunci di luogo anche offline senza confonderli con una prova di presenza |
+
+Vedi [indice del 26 ottobre](INDEX-2026-10-26.md) per problemi, attori, bearer, prove software, prove fisiche e privacy. Sono proposte documentali senza implementazioni o misure fisiche; il PHY LoRa congelato e i livelli radio rimangono invariati.
