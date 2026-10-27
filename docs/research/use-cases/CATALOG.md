@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-26** (UC-001–UC-255 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-27** (UC-001–UC-258 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -368,3 +368,14 @@ Vedi [indice 25 ottobre](INDEX-2026-10-25.md) per scenario, differenze rispetto 
 | [UC-255](uc-255-authenticated-venue-beacon-geotopic-offline-discovery.md) | Beacon GeoTopic autenticato | verificare annunci di luogo anche offline senza confonderli con una prova di presenza |
 
 Vedi [indice del 26 ottobre](INDEX-2026-10-26.md) per problemi, attori, bearer, prove software, prove fisiche e privacy. Sono proposte documentali senza implementazioni o misure fisiche; il PHY LoRa congelato e i livelli radio rimangono invariati.
+
+
+## Additions 2026-10-27 — isolamento delle campagne, risposte GeoTopic e provenienza Raiatea
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-256](uc-256-experiment-epoch-isolation-carryover-contamination-audit.md) | Isolamento delle campagne e delle code residue | impedire che backlog, ricevute e vecchi comandi di un run siano interpretati come risultati o configurazioni del run successivo |
+| [UC-257](uc-257-geotopic-private-one-time-reply-capability.md) | Risposta privata a un annuncio GeoTopic | rispondere con capability limitata a un post pubblico senza diffondere recapiti personali, e dichiarando i limiti dell'uso singolo durante partizioni |
+| [UC-258](uc-258-raiatea-generative-answer-laundering-loop-guard.md) | Controllo della falsa corroborazione Raiatea | distinguere le fonti originali da risposte generate, rilevare cicli e impedire che derivati della stessa fonte appaiano indipendenti |
+
+Vedi [indice del 27 ottobre](INDEX-2026-10-27.md) e i documenti dei singoli casi per novità rispetto agli UC precedenti, prove software, misure fisiche, privacy e difficoltà. **Solo documentazione**: non sono stati eseguiti test e non si dichiarano nuove misure radio. PHY LoRa congelato, MAC, driver e firmware non sono modificati.
