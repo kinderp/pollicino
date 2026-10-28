@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-27** (UC-001–UC-258 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-28** (UC-001–UC-261 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -379,3 +379,13 @@ Vedi [indice del 26 ottobre](INDEX-2026-10-26.md) per problemi, attori, bearer, 
 | [UC-258](uc-258-raiatea-generative-answer-laundering-loop-guard.md) | Controllo della falsa corroborazione Raiatea | distinguere le fonti originali da risposte generate, rilevare cicli e impedire che derivati della stessa fonte appaiano indipendenti |
 
 Vedi [indice del 27 ottobre](INDEX-2026-10-27.md) e i documenti dei singoli casi per novità rispetto agli UC precedenti, prove software, misure fisiche, privacy e difficoltà. **Solo documentazione**: non sono stati eseguiti test e non si dichiarano nuove misure radio. PHY LoRa congelato, MAC, driver e firmware non sono modificati.
+
+## Additions 2026-10-28 — propagazione misurabile, DNA mirato, robotica AI controllata
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-259](uc-259-peloritani-terrain-radio-prediction-blind-validation.md) | Previsioni radio sui Peloritani contro misure holdout | validare un modello orografico su checkpoint fissi e separare PDR reale da previsioni |
+| [UC-260](uc-260-dna-goal-directed-missing-evidence-query-courier.md) | DNA interroga soltanto le premesse mancanti | acquisizione mirata e autorizzata di evidenze per opportunità dedotte, senza inventare fatti |
+| [UC-261](uc-261-human-gated-ai-to-romeo-offline-mission-courier.md) | Missioni Romeo proposte dall'AI e approvate da umani | separare piano generato, validazione, autorizzazione ed esecuzione robotica differita |
+
+Vedi [indice del 28 ottobre](INDEX-2026-10-28.md) per confronto con il catalogo esistente, attori, bearer, test software, prove hardware e privacy. **Solo documentazione**: nessun test eseguito, nessuna misura fisica o modifica a PHY/MAC/driver/firmware.
