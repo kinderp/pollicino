@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-28** (UC-001–UC-261 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-29** (UC-001–UC-264 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -389,3 +389,14 @@ Vedi [indice del 27 ottobre](INDEX-2026-10-27.md) e i documenti dei singoli casi
 | [UC-261](uc-261-human-gated-ai-to-romeo-offline-mission-courier.md) | Missioni Romeo proposte dall'AI e approvate da umani | separare piano generato, validazione, autorizzazione ed esecuzione robotica differita |
 
 Vedi [indice del 28 ottobre](INDEX-2026-10-28.md) per confronto con il catalogo esistente, attori, bearer, test software, prove hardware e privacy. **Solo documentazione**: nessun test eseguito, nessuna misura fisica o modifica a PHY/MAC/driver/firmware.
+
+
+## Additions 2026-10-29 — piccole capsule LoRa, radio dopo pioggia e osservatorio brezza
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-262](uc-262-lora-only-bounded-microcapsule-reassembly-trial.md) | Ricomposizione di microcapsule LoRa entro budget | confrontare l'esatta ricomposizione di un piccolo oggetto su microframmenti applicativi con fallback BLE/Wi-Fi, senza assumere una capability radio non verificata |
+| [UC-263](uc-263-wet-dry-paired-fixed-lora-link-repeatability.md) | Ripetibilità di un collegamento LoRa dopo pioggia | confrontare lo stesso link in sessioni asciutte/dopo pioggia con RX indipendenti, log completi e controllo dei confondenti |
+| [UC-264](uc-264-delayed-sea-breeze-onset-observatory.md) | Osservatorio scolastico della brezza marina | raccogliere e verificare possibili transizioni meteorologiche su stazioni costiere fisse distinguendo tempo di osservazione e consegna |
+
+Vedi [indice del 29 ottobre](INDEX-2026-10-29.md) per novità, attori, bearer, prove software, necessità hardware, privacy e criteri di verifica. **Solo documentazione**: nessun test eseguito, nessuna misura fisica o modifica a PHY LoRa congelato, MAC, driver o firmware.
