@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-29** (UC-001–UC-264 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-30** (UC-001–UC-267 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -400,3 +400,13 @@ Vedi [indice del 28 ottobre](INDEX-2026-10-28.md) per confronto con il catalogo 
 | [UC-264](uc-264-delayed-sea-breeze-onset-observatory.md) | Osservatorio scolastico della brezza marina | raccogliere e verificare possibili transizioni meteorologiche su stazioni costiere fisse distinguendo tempo di osservazione e consegna |
 
 Vedi [indice del 29 ottobre](INDEX-2026-10-29.md) per novità, attori, bearer, prove software, necessità hardware, privacy e criteri di verifica. **Solo documentazione**: nessun test eseguito, nessuna misura fisica o modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-10-30 — test concorrenza LoRa, equità didattica e cura degli alberi
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-265](uc-265-controlled-overlap-hidden-sender-lora-trial.md) | Concorrenza controllata di trasmettitori LoRa | confrontare TX singoli/concorrenti con RX indipendenti senza confondere sovrapposizione e causa di perdita |
+| [UC-266](uc-266-offline-lesson-access-equity-checkpoint-audit.md) | Equità dell'accesso ai kit didattici offline | verificare READY entro scadenza in più checkpoint senza misurare comportamenti individuali |
+| [UC-267](uc-267-school-tree-stewardship-longitudinal-evidence-ferry.md) | Diario distribuito di cura degli alberi scolastici | distinguere interventi pianificati, eseguiti, saltati e osservazioni incerte nel lungo periodo |
+
+Vedi [indice 30 ottobre](INDEX-2026-10-30.md) per confronto anti-duplicati, test software, hardware e privacy. **Solo documentazione**: nessuna misura fisica, test eseguito o modifica a PHY LoRa congelato, MAC, driver e firmware.
