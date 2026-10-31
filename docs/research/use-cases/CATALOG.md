@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-30** (UC-001–UC-267 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-10-31** (UC-001–UC-270 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -410,3 +410,14 @@ Vedi [indice del 29 ottobre](INDEX-2026-10-29.md) per novità, attori, bearer, p
 | [UC-267](uc-267-school-tree-stewardship-longitudinal-evidence-ferry.md) | Diario distribuito di cura degli alberi scolastici | distinguere interventi pianificati, eseguiti, saltati e osservazioni incerte nel lungo periodo |
 
 Vedi [indice 30 ottobre](INDEX-2026-10-30.md) per confronto anti-duplicati, test software, hardware e privacy. **Solo documentazione**: nessuna misura fisica, test eseguito o modifica a PHY LoRa congelato, MAC, driver e firmware.
+
+
+## Additions 2026-10-31 — discovery intermittente, scienza del suolo e spiegazioni DNA
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-268](uc-268-sleep-window-opportunistic-lora-rendezvous-audit.md) | Discovery LoRa mancato per finestre RX/TX | distinguere contatto fisicamente plausibile e incontro non scoperto, evitando diagnosi senza log |
+| [UC-269](uc-269-coastal-school-soil-conductivity-context-evidence-ferry.md) | Misure contestuali EC del suolo negli orti scolastici | confrontare osservazioni con umidità, temperatura e metodo, senza diagnosticare salinità da una misura isolata |
+| [UC-270](uc-270-dna-why-not-opportunity-proof-and-policy-explanation.md) | DNA: spiegazioni «perché questa opportunità non compare?» | distinguere premesse false/sconosciute/scadute/non visibili, rispettando policy e derivazioni alternative |
+
+Vedi [indice 31 ottobre](INDEX-2026-10-31.md) per novità, attori, bearer, prove software e hardware, privacy e criteri PASS. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura di copertura/PDR/autonomia e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
