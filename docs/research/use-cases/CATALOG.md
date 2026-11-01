@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-10-31** (UC-001–UC-270 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-01** (UC-001–UC-273 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -421,3 +421,14 @@ Vedi [indice 30 ottobre](INDEX-2026-10-30.md) per confronto anti-duplicati, test
 | [UC-270](uc-270-dna-why-not-opportunity-proof-and-policy-explanation.md) | DNA: spiegazioni «perché questa opportunità non compare?» | distinguere premesse false/sconosciute/scadute/non visibili, rispettando policy e derivazioni alternative |
 
 Vedi [indice 31 ottobre](INDEX-2026-10-31.md) per novità, attori, bearer, prove software e hardware, privacy e criteri PASS. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura di copertura/PDR/autonomia e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-01 — alimentazione radio, validità temporale DNA e osservatorio bioacustico
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-271](uc-271-usb-powerbank-rf-self-noise-paired-trial.md) | Test appaiato alimentazione USB/powerbank e ricezione LoRa | isolare l'effetto osservabile della sorgente elettrica senza attribuire automaticamente disturbi RF |
+| [UC-272](uc-272-dna-bitemporal-opportunity-consistency-courier.md) | DNA: opportunità coerenti nel tempo | evitare inferenze su fatti veri in finestre temporali disgiunte, distinguendo validità, arrivo e incertezza degli orologi |
+| [UC-273](uc-273-privacy-first-edge-bioacoustic-event-ferry.md) | Bioacustica didattica edge-AI senza audio | distribuire eventi naturalistici candidati, validità del campionamento e revisioni senza sorveglianza acustica |
+
+Vedi [indice 1 novembre](INDEX-2026-11-01.md) per confronto con i casi precedenti, scenari messinesi, bearer, test software, prove fisiche, privacy e difficoltà. **Solo documentazione**: nessun test o rilievo fisico eseguito, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
