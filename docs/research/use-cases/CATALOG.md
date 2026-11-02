@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-01** (UC-001–UC-273 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-02** (UC-001–UC-276 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -432,3 +432,14 @@ Vedi [indice 31 ottobre](INDEX-2026-10-31.md) per novità, attori, bearer, prove
 | [UC-273](uc-273-privacy-first-edge-bioacoustic-event-ferry.md) | Bioacustica didattica edge-AI senza audio | distribuire eventi naturalistici candidati, validità del campionamento e revisioni senza sorveglianza acustica |
 
 Vedi [indice 1 novembre](INDEX-2026-11-01.md) per confronto con i casi precedenti, scenari messinesi, bearer, test software, prove fisiche, privacy e difficoltà. **Solo documentazione**: nessun test o rilievo fisico eseguito, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-02 — short DISCOVERY collisions, LoRa value control and DNA mosaic privacy
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-274](uc-274-short-discovery-hint-collision-exact-resolution.md) | Collisioni di hint DISCOVERY | riconoscere ambiguità di identificatori compatti e risolvere SOLO dopo controllo EXACT integrale e autorizzato |
+| [UC-275](uc-275-lora-marginal-value-no-lora-control-trial.md) | Valore marginale LoRa con controllo senza LoRa | misurare differenze di disponibilità entro scadenza rispetto a BLE/Wi-Fi/USB senza attribuire benefici non dimostrati |
+| [UC-276](uc-276-dna-mosaic-inference-privacy-gate.md) | Privacy delle inferenze a mosaico DNA | non pubblicare una deduzione sensibile solo perché i singoli input erano divulgabili |
+
+Vedi [indice 2 novembre](INDEX-2026-11-02.md) per confronto con 273 casi precedenti, metriche, test software, gate fisici e limiti di sicurezza. **Solo documentazione: nessun test software/fisico eseguito, nessun risultato di campo e nessuna modifica PHY/MAC/firmware.**
