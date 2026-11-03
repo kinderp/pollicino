@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-02** (UC-001–UC-276 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-03** (UC-001–UC-279 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -443,3 +443,13 @@ Vedi [indice 1 novembre](INDEX-2026-11-01.md) per confronto con i casi precedent
 | [UC-276](uc-276-dna-mosaic-inference-privacy-gate.md) | Privacy delle inferenze a mosaico DNA | non pubblicare una deduzione sensibile solo perché i singoli input erano divulgabili |
 
 Vedi [indice 2 novembre](INDEX-2026-11-02.md) per confronto con 273 casi precedenti, metriche, test software, gate fisici e limiti di sicurezza. **Solo documentazione: nessun test software/fisico eseguito, nessun risultato di campo e nessuna modifica PHY/MAC/firmware.**
+
+## Additions 2026-11-03 — osservabilità RX, privacy dei digest e import sicuro dei modelli AI
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-277](uc-277-radio-to-application-loss-localization-trial.md) | Diagnosi delle perdite tra ricezione radio e applicazione | distinguere perdite RF osservabili da overflow/parse/accettazione host senza inventare contatori o modificare il PHY |
+| [UC-278](uc-278-low-entropy-digest-membership-leak-audit.md) | Privacy dei digest di contenuti a bassa entropia | impedire che un hash pubblico corretto riveli un piccolo segreto attraverso tentativi di dizionario |
+| [UC-279](uc-279-offline-ai-model-import-quarantine-gate.md) | Quarantena prima dell'import di modelli AI offline | separare trasporto/verifica di pesi ML dal caricamento sicuro e dal rischio di deserializzazione/esecuzione |
+
+Vedi [indice del 3 novembre](INDEX-2026-11-03.md) per comparazione con il catalogo, scenari messinesi, bearer, simulazioni, prove fisiche, privacy e difficoltà. **Solo documentazione:** nessun test eseguito, nessuna misura fisica o modifica a PHY/MAC/driver/firmware.
