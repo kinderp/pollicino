@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-03** (UC-001–UC-279 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-04** (UC-001–UC-282 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -453,3 +453,14 @@ Vedi [indice 2 novembre](INDEX-2026-11-02.md) per confronto con 273 casi precede
 | [UC-279](uc-279-offline-ai-model-import-quarantine-gate.md) | Quarantena prima dell'import di modelli AI offline | separare trasporto/verifica di pesi ML dal caricamento sicuro e dal rischio di deserializzazione/esecuzione |
 
 Vedi [indice del 3 novembre](INDEX-2026-11-03.md) per comparazione con il catalogo, scenari messinesi, bearer, simulazioni, prove fisiche, privacy e difficoltà. **Solo documentazione:** nessun test eseguito, nessuna misura fisica o modifica a PHY/MAC/driver/firmware.
+
+
+## Additions 2026-11-04 — veicoli data mule, ripristino P2P e confrontabilità edge AI
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-280](uc-280-parked-vehicle-lora-cabin-contact-gate-trial.md) | Data mule veicolare e contatto LoRa in cabina | confrontare collegamento dentro/fuori veicolo parcheggiato con scelta del bearer allo stop |
+| [UC-281](uc-281-offline-backup-service-recovery-rto-rpo-drill.md) | Ripristino servizio P2P con RTO/RPO | misurare tempo alla ripartenza applicativa e punto dati consistente dopo guasto simulato |
+| [UC-282](uc-282-edge-ai-model-epoch-longitudinal-trend-guard.md) | Serie edge AI confrontabili fra epoche di modello | impedire falsi trend ambientali quando modelli aggiornati raggiungono le scuole in differita |
+
+Vedi [indice del 4 novembre](INDEX-2026-11-04.md) per anti-duplicazione, esperimenti software, prove hardware, privacy e difficoltà. **Solo documentazione**, senza test software/fisici, risultati radio o modifiche a PHY congelato, MAC, driver e firmware.
