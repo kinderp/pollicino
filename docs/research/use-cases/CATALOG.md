@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-04** (UC-001–UC-282 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-05** (UC-001–UC-285 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -464,3 +464,14 @@ Vedi [indice del 3 novembre](INDEX-2026-11-03.md) per comparazione con il catalo
 | [UC-282](uc-282-edge-ai-model-epoch-longitudinal-trend-guard.md) | Serie edge AI confrontabili fra epoche di modello | impedire falsi trend ambientali quando modelli aggiornati raggiungono le scuole in differita |
 
 Vedi [indice del 4 novembre](INDEX-2026-11-04.md) per anti-duplicazione, esperimenti software, prove hardware, privacy e difficoltà. **Solo documentazione**, senza test software/fisici, risultati radio o modifiche a PHY congelato, MAC, driver e firmware.
+
+
+## Additions 2026-11-05 — checkpoint scolastici, permute circolari e rilievi costieri
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-283](uc-283-school-building-envelope-lora-checkpoint-gate.md) | Checkpoint LoRa: dentro l'aula, alla finestra o all'esterno? | misurare in modo controllato la fattibilità del relay dentro l'edificio, vicino alla finestra o all'esterno senza presupporre copertura |
+| [UC-284](uc-284-three-party-offline-reuse-swap-cycle.md) | Scambio circolare fra tre scuole senza pagamenti | scoprire e autorizzare scambi circolari a più parti senza attribuire atomicità al passaggio fisico |
+| [UC-285](uc-285-messina-coastal-litter-effort-aware-survey-ferry.md) | Monitoraggio rifiuti spiaggiati con sforzo e prove incomplete | trasportare campionamenti costieri completi o parziali senza scambiare rilievi assenti per zeri |
+
+Vedi [indice del 5 novembre](INDEX-2026-11-05.md) per confronti anti-duplicazione, scenari messinesi, prove software, hardware, privacy e difficoltà. **Solo documentazione; nessun test software/fisico eseguito, nessuna misura di campo e nessuna modifica a PHY/MAC/driver/firmware.**
