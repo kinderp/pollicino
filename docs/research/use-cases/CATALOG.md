@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-05** (UC-001–UC-285 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-06** (UC-001–UC-288 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -475,3 +475,14 @@ Vedi [indice del 4 novembre](INDEX-2026-11-04.md) per anti-duplicazione, esperim
 | [UC-285](uc-285-messina-coastal-litter-effort-aware-survey-ferry.md) | Monitoraggio rifiuti spiaggiati con sforzo e prove incomplete | trasportare campionamenti costieri completi o parziali senza scambiare rilievi assenti per zeri |
 
 Vedi [indice del 5 novembre](INDEX-2026-11-05.md) per confronti anti-duplicazione, scenari messinesi, prove software, hardware, privacy e difficoltà. **Solo documentazione; nessun test software/fisico eseguito, nessuna misura di campo e nessuna modifica a PHY/MAC/driver/firmware.**
+
+
+## Additions 2026-11-06 — cold start checkpoint, lotti per orti e Raiatea bilingue
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-286](uc-286-school-checkpoint-cold-start-service-readiness.md) | Cold start: checkpoint nuovamente operativo | misurare il tempo dalla riaccensione alla prima capsula accettata dall'app, non soltanto al boot |
+| [UC-287](uc-287-school-seed-lot-germination-evidence-ferry.md) | Biblioteca dei semi: lotti e germinazione verificabili | collegare scambio didattico, lotto, semina, denominatore valido e risultati revisionati anche in differita |
+| [UC-288](uc-288-raiatea-bilingual-stem-pack-semantic-parity-review.md) | Raiatea: parity di lezioni STEM bilingui | verificare codice/formule/riferimenti e review umana prima della distribuzione di varianti tradotte |
+
+Vedi [indice del 6 novembre](INDEX-2026-11-06.md) per contesto anti-duplicazione, software, prove fisiche e privacy. **Solo documentazione; nessun test software/fisico eseguito, nessuna misura di campo e nessuna modifica a PHY/MAC/driver/firmware.**
