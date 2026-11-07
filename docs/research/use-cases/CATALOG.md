@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-06** (UC-001–UC-288 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-07** (UC-001–UC-291 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -486,3 +486,13 @@ Vedi [indice del 5 novembre](INDEX-2026-11-05.md) per confronti anti-duplicazion
 | [UC-288](uc-288-raiatea-bilingual-stem-pack-semantic-parity-review.md) | Raiatea: parity di lezioni STEM bilingui | verificare codice/formule/riferimenti e review umana prima della distribuzione di varianti tradotte |
 
 Vedi [indice del 6 novembre](INDEX-2026-11-06.md) per contesto anti-duplicazione, software, prove fisiche e privacy. **Solo documentazione; nessun test software/fisico eseguito, nessuna misura di campo e nessuna modifica a PHY/MAC/driver/firmware.**
+
+## Additions 2026-11-07 — powerbank idle, osservatorio cielo e kit primo soccorso (drill)
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-289](uc-289-low-load-powerbank-autoshutdown-relay-trial.md) | Powerbank: spegnimento a basso carico durante idle | distinguere misura USB indipendente, scomparsa del nodo e consegna applicativa senza supporre cause |
+| [UC-290](uc-290-fixed-site-night-sky-brightness-evidence-ferry.md) | Luminosità del cielo: osservatorio scolastico costa/Peloritani | scambiare osservazioni fisse e confrontabili con sensori, Luna, nubi, unità e revisioni espliciti |
+| [UC-291](uc-291-first-aid-kit-inspection-freshness-drill-courier.md) | Verifiche kit di primo soccorso in esercitazione | evitare che stati vecchi, difetti o controlli scaduti diventino una falsa attestazione di disponibilità |
+
+Vedi [indice del 7 novembre](INDEX-2026-11-07.md) per confronti anti-duplicati, scenari messinesi, prove software/hardware e limiti di privacy. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura di campo e nessuna modifica a PHY/MAC/driver/firmware.
