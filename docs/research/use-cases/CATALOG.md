@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-07** (UC-001–UC-291 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-08** (UC-001–UC-294 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -496,3 +496,14 @@ Vedi [indice del 6 novembre](INDEX-2026-11-06.md) per contesto anti-duplicazione
 | [UC-291](uc-291-first-aid-kit-inspection-freshness-drill-courier.md) | Verifiche kit di primo soccorso in esercitazione | evitare che stati vecchi, difetti o controlli scaduti diventino una falsa attestazione di disponibilità |
 
 Vedi [indice del 7 novembre](INDEX-2026-11-07.md) per confronti anti-duplicati, scenari messinesi, prove software/hardware e limiti di privacy. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura di campo e nessuna modifica a PHY/MAC/driver/firmware.
+
+
+## Additions 2026-11-08 — solar checkpoint, Romeo maker fit e intake USB/SSD
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-292](uc-292-autonomous-solar-checkpoint-winter-energy-feasibility-gate.md) | Checkpoint solare: sufficienza energetica da validare | stimare e poi misurare se un relay fisso resta disponibile anche con produzione bassa, senza certificare autonomia da dati simulati |
+| [UC-293](uc-293-dna-romeo-maker-spare-part-fit-safety-gate.md) | DNA/Romeo: compatibilità ricambi con gate umano | distinguere suggerimento di un pezzo da verifica di tensione, connettori, dimensioni e autorizzazione al montaggio |
+| [UC-294](uc-294-offline-removable-media-untrusted-intake-gate.md) | USB/SSD come bearer: ingresso del supporto in isolamento | separare verifica del bundle da rischio del dispositivo USB e rilasciare solo file autorizzati |
+
+Vedi [indice 8 novembre](INDEX-2026-11-08.md) per anti-duplicati, prove software, scenario messinese, misure fisiche necessarie, privacy e limiti. **Solo documentazione:** nessun test effettuato, nessuna misura di campo, nessuna modifica PHY LoRa congelato, MAC, driver o firmware.
