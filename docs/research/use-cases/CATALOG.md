@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-08** (UC-001–UC-294 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-09** (UC-001–UC-297 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -507,3 +507,14 @@ Vedi [indice del 7 novembre](INDEX-2026-11-07.md) per confronti anti-duplicati, 
 | [UC-294](uc-294-offline-removable-media-untrusted-intake-gate.md) | USB/SSD come bearer: ingresso del supporto in isolamento | separare verifica del bundle da rischio del dispositivo USB e rilasciare solo file autorizzati |
 
 Vedi [indice 8 novembre](INDEX-2026-11-08.md) per anti-duplicati, prove software, scenario messinese, misure fisiche necessarie, privacy e limiti. **Solo documentazione:** nessun test effettuato, nessuna misura di campo, nessuna modifica PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-09 — guest GeoTopic, citazioni Raiatea e companion smartphone
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-295](uc-295-geotopic-nearby-rooms-guest-post-fanout.md) | GeoTopic: guest post alle room vicine senza membership | selezionare room e pubblicare una sola intenzione in modo autorizzato, senza fan-out silenzioso o iscrizione implicita |
+| [UC-296](uc-296-raiatea-versioned-source-anchor-citation-drift-audit.md) | Raiatea: citazioni stabili per versione PDF | mantenere una prova di fonte ancorata all'esatto PDF e richiedere revisione quando cambiano pagine o contenuti |
+| [UC-297](uc-297-phone-companion-background-contact-operability-trial.md) | Smartphone BLE companion in background | distinguere i contatti della scheda da consegne realmente possibili quando telefono, permessi e app cambiano stato |
+
+Vedi [indice del 9 novembre](INDEX-2026-11-09.md) per novità, confronto anti-duplicazione, software, hardware, privacy e difficoltà. **Solo documentazione: nessun test eseguito, nessuna misura fisica e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.**
