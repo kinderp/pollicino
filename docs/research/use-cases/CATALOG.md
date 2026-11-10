@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-09** (UC-001–UC-297 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-10** (UC-001–UC-300 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -518,3 +518,14 @@ Vedi [indice 8 novembre](INDEX-2026-11-08.md) per anti-duplicati, prove software
 | [UC-297](uc-297-phone-companion-background-contact-operability-trial.md) | Smartphone BLE companion in background | distinguere i contatti della scheda da consegne realmente possibili quando telefono, permessi e app cambiano stato |
 
 Vedi [indice del 9 novembre](INDEX-2026-11-09.md) per novità, confronto anti-duplicazione, software, hardware, privacy e difficoltà. **Solo documentazione: nessun test eseguito, nessuna misura fisica e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.**
+
+
+## Additions 2026-11-10 — ambiguità delle room, Wi-Fi ospiti e resilienza dei relay ponte
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-298](uc-298-multifloor-geotopic-room-ambiguity-safe-discovery.md) | GeoTopic: room di aule e piani sovrapposti | suggerire più candidati senza attribuire automaticamente un'aula dal segnale BLE e senza inviare messaggi alla room sbagliata |
+| [UC-299](uc-299-school-guest-wifi-isolation-rich-bearer-fallback-gate.md) | Wi-Fi ospiti isolato: fallback applicativo sicuro | distinguere collegamento SSID, contatto peer, permesso e consegna EXACT, senza aggirare le regole di rete |
+| [UC-300](uc-300-bridge-relay-removal-controlled-resilience-trial.md) | Rimozione controllata di un relay ponte | confrontare consegne end-to-end con e senza un ponte in sessioni appaiate, senza inventare copertura o affidabilità |
+
+Vedi [l'indice del 10 novembre](INDEX-2026-11-10.md) per le differenze dagli UC precedenti, i dettagli dei bearer, i test software e le prove fisiche. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura radio o modifica a PHY LoRa congelato, MAC, driver o firmware.
