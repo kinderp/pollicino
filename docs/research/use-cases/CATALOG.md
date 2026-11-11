@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-10** (UC-001–UC-300 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-11** (UC-001–UC-303 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -529,3 +529,14 @@ Vedi [indice del 9 novembre](INDEX-2026-11-09.md) per novità, confronto anti-du
 | [UC-300](uc-300-bridge-relay-removal-controlled-resilience-trial.md) | Rimozione controllata di un relay ponte | confrontare consegne end-to-end con e senza un ponte in sessioni appaiate, senza inventare copertura o affidabilità |
 
 Vedi [l'indice del 10 novembre](INDEX-2026-11-10.md) per le differenze dagli UC precedenti, i dettagli dei bearer, i test software e le prove fisiche. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura radio o modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-11 — continuità nei giorni senza contatti, sensori pluviometrici e frammenti orfani
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-301](uc-301-school-closure-contact-drought-service-readiness.md) | Continuità della rete scolastica durante chiusure e assenza di relay | confrontare scadenze e capacità cache durante finestre senza contatti, con prefetch prima della chiusura, senza tracciamento studenti |
+| [UC-302](uc-302-rain-gauge-reboot-counter-epoch-evidence-ferry.md) | Pluviometri: contatori coerenti dopo reboot e consegne tardive | impedire falsi totali da reset/overflow/duplicati, distinguere misure verificabili e intervalli ignoti |
+| [UC-303](uc-303-orphan-fragment-admission-cache-exhaustion-drill.md) | Cache relay: difesa da accumulo di frammenti incompleti | limitare quota e lifetime di ricomposizioni mai completate, senza dichiarare ricezione EXACT o generare carico radio aggressivo |
+
+Vedi [indice dell'11 novembre](INDEX-2026-11-11.md) per confronto anti-duplicati, esperimenti software, prove fisiche, privacy e criteri di accettazione. **Solo documentazione:** nessun simulatore/test fisico eseguito, nessuna misura di copertura/PDR/autonomia, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
