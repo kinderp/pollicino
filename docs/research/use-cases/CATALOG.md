@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-11** (UC-001–UC-303 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-12** (UC-001–UC-306 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -540,3 +540,13 @@ Vedi [l'indice del 10 novembre](INDEX-2026-11-10.md) per le differenze dagli UC 
 | [UC-303](uc-303-orphan-fragment-admission-cache-exhaustion-drill.md) | Cache relay: difesa da accumulo di frammenti incompleti | limitare quota e lifetime di ricomposizioni mai completate, senza dichiarare ricezione EXACT o generare carico radio aggressivo |
 
 Vedi [indice dell'11 novembre](INDEX-2026-11-11.md) per confronto anti-duplicati, esperimenti software, prove fisiche, privacy e criteri di accettazione. **Solo documentazione:** nessun simulatore/test fisico eseguito, nessuna misura di copertura/PDR/autonomia, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-12 — contatti brevi, Raiatea query/indice, punti d'acqua pubblici
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-304](uc-304-school-exit-crowded-short-contact-rendezvous.md) | Checkpoint affollato: contatti simultanei brevissimi | confrontare le ricevute applicative completate durante finestre brevi con politiche di servizio bounded, senza tracciare persone |
+| [UC-305](uc-305-raiatea-query-embedding-index-profile-gate.md) | Raiatea: compatibilità tra query e indice embedding | bloccare confronti semanticamente invalidi fra profili diversi e offrire fallback lessicale verificabile |
+| [UC-306](uc-306-messina-public-fountain-observation-not-potability.md) | Fontanelle pubbliche: osservazioni senza attestare potabilità | raccogliere e revisionare stati osservati, mancati rilievi e informazioni scadute senza dedurre sicurezza sanitaria |
+
+Vedi [indice del 12 novembre](INDEX-2026-11-12.md) per prove, anti-duplicazioni, privacy e condizioni di validazione. **Solo documentazione:** nessun test eseguito, nessun risultato fisico e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
