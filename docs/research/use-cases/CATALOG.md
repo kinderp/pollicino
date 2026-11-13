@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-12** (UC-001–UC-306 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-13** (UC-001–UC-309 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -550,3 +550,14 @@ Vedi [indice dell'11 novembre](INDEX-2026-11-11.md) per confronto anti-duplicati
 | [UC-306](uc-306-messina-public-fountain-observation-not-potability.md) | Fontanelle pubbliche: osservazioni senza attestare potabilità | raccogliere e revisionare stati osservati, mancati rilievi e informazioni scadute senza dedurre sicurezza sanitaria |
 
 Vedi [indice del 12 novembre](INDEX-2026-11-12.md) per prove, anti-duplicazioni, privacy e condizioni di validazione. **Solo documentazione:** nessun test eseguito, nessun risultato fisico e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-13 — perdita di relay, foto costiere confrontabili, sensori PM/umidità
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-307](uc-307-loss-of-student-relay-privacy-and-queue-containment.md) | Relay smarrito: custodia e privacy dopo perdita improvvisa | distinguere code irrisolte, copie superstiti e rischio metadati dopo la sparizione di un relay; nessuna cancellazione remota garantita |
+| [UC-308](uc-308-coastal-repeat-photo-comparability-evidence-courier.md) | Foto ripetute della costa: confrontabilità prima delle conclusioni | distribuire foto e metadati revisionati senza scambiare zoom, onde o marea per una misura dimostrata di erosione |
+| [UC-309](uc-309-humidity-context-low-cost-pm-sensor-courier.md) | Sensori ottici PM e contesto di umidità | non confrontare misure low-cost quando RH, completezza e calibrazione mancano o differiscono |
+
+Vedi [l'indice del 13 novembre](INDEX-2026-11-13.md) per prova software, protocollo di campo, anti-duplicati, bearer, difficoltà e privacy. **Solo documentazione:** nessun esperimento eseguito, nessuna prestazione radio o validazione scientifica misurata, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
