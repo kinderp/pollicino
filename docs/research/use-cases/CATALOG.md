@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-13** (UC-001–UC-309 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-14** (UC-001–UC-312 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -561,3 +561,14 @@ Vedi [indice del 12 novembre](INDEX-2026-11-12.md) per prove, anti-duplicazioni,
 | [UC-309](uc-309-humidity-context-low-cost-pm-sensor-courier.md) | Sensori ottici PM e contesto di umidità | non confrontare misure low-cost quando RH, completezza e calibrazione mancano o differiscono |
 
 Vedi [l'indice del 13 novembre](INDEX-2026-11-13.md) per prova software, protocollo di campo, anti-duplicati, bearer, difficoltà e privacy. **Solo documentazione:** nessun esperimento eseguito, nessuna prestazione radio o validazione scientifica misurata, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-14 — zaino/corpo, osservazioni di ristagno, memoria orale Raiatea
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-310](uc-310-student-carried-lora-body-backpack-shadowing-paired-trial.md) | Relay portatile: zaino, orientamento e schermatura corporea | confrontare condizioni statiche appaiate di trasporto reale con ricevute app, senza tracciare studenti o attribuire perdite senza log |
+| [UC-311](uc-311-rain-pooling-drainage-visual-effort-safe-ferry.md) | Ristagni dopo pioggia: diario visuale scolastico non operativo | distinguere osservazioni valide, parziali, mancanti e scadute senza generare allerte né affermare la sicurezza dei luoghi |
+| [UC-312](uc-312-raiatea-consent-bound-oral-history-transcript-evidence-ferry.md) | Raiatea: memoria orale, trascrizioni AI e consenso | rendere ricercabili solo segmenti autorizzati, distinguendo draft AI, parole revisionate e fatti storicamente riscontrati |
+
+Vedi [l'indice del 14 novembre](INDEX-2026-11-14.md) per confronto anti-duplicati, bearer, test software, prove fisiche, privacy e difficoltà. **Solo documentazione:** nessun test eseguito, nessun risultato radio/ambientale o pubblicazione di testimonianze, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
