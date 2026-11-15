@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-14** (UC-001–UC-312 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-15** (UC-001–UC-315 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -572,3 +572,13 @@ Vedi [l'indice del 13 novembre](INDEX-2026-11-13.md) per prova software, protoco
 | [UC-312](uc-312-raiatea-consent-bound-oral-history-transcript-evidence-ferry.md) | Raiatea: memoria orale, trascrizioni AI e consenso | rendere ricercabili solo segmenti autorizzati, distinguendo draft AI, parole revisionate e fatti storicamente riscontrati |
 
 Vedi [l'indice del 14 novembre](INDEX-2026-11-14.md) per confronto anti-duplicati, bearer, test software, prove fisiche, privacy e difficoltà. **Solo documentazione:** nessun test eseguito, nessun risultato radio/ambientale o pubblicazione di testimonianze, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-15 — multi-radio relay, photo-quadrat costieri, strumenti DNA
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-313](uc-313-dual-radio-wifi-ble-lora-application-coexistence-paired-trial.md) | Relay LoRa con attività companion Wi-Fi/BLE: prova appaiata | confrontare app-acceptance e log radio/host quando la board usa bearer ricchi, senza attribuire automaticamente interferenza sub-GHz |
+| [UC-314](uc-314-coastal-photoquadrat-biodiversity-effort-reviewed-ferry.md) | Biodiversità costiera: foto-quadrat con sforzo e revisioni | distribuire rilievi biologici comparabili e fotografie esatte senza proclamare identificazioni AI o trend non validati |
+| [UC-315](uc-315-dna-shared-lab-instrument-measurement-qualification-courier.md) | DNA: prestito strumenti con gate di idoneità metrologica | distinguere disponibilità di uno strumento e requisiti di range/prova/calibrazione per una misura, con approvazione umana |
+
+Vedi [indice del 15 novembre](INDEX-2026-11-15.md) per confronto anti-duplicati, schema bearer, scenari messinesi, test software e prove reali. **Solo documentazione:** nessun test eseguito, nessuna misura fisica, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
