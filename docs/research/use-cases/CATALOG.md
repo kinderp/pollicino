@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-15** (UC-001–UC-315 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-17** (UC-001–UC-318 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -582,3 +582,13 @@ Vedi [l'indice del 14 novembre](INDEX-2026-11-14.md) per confronto anti-duplicat
 | [UC-315](uc-315-dna-shared-lab-instrument-measurement-qualification-courier.md) | DNA: prestito strumenti con gate di idoneità metrologica | distinguere disponibilità di uno strumento e requisiti di range/prova/calibrazione per una misura, con approvazione umana |
 
 Vedi [indice del 15 novembre](INDEX-2026-11-15.md) per confronto anti-duplicati, schema bearer, scenari messinesi, test software e prove reali. **Solo documentazione:** nessun test eseguito, nessuna misura fisica, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-17 — museo diffuso offline, lettiera dei Peloritani e comprensione dei drill
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-316](uc-316-offline-heritage-walk-source-rights-accessibility-ferry.md) | Museo diffuso offline: contenuti culturali verificati e accessibili | distribuire guide di tappa con licenze, fonti versionate, accessibilità e revoca, senza identificare i visitatori |
+| [UC-317](uc-317-peloritani-dead-litter-moisture-sample-quality-ferry.md) | Peloritani: umidità delle lettiere con campioni e qualità documentati | riconciliare pesate/metodi/campioni in ritardo, senza trasformarli in indice incendio o confronti scientificamente indebiti |
+| [UC-318](uc-318-drill-message-comprehension-not-delivery-receipt.md) | Esercitazioni: comprensione distinta dalla consegna tecnica | verificare con risposte artificiali/versioni se il messaggio di esercitazione è comprensibile, senza allerta reale o dati individuali |
+
+Vedi [indice del 17 novembre](INDEX-2026-11-17.md) per confronto anti-duplicati, prove software, hardware reale, privacy, licenze e regole di validazione. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura radio, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
