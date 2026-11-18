@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-17** (UC-001–UC-318 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-18** (UC-001–UC-321 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -592,3 +592,14 @@ Vedi [indice del 15 novembre](INDEX-2026-11-15.md) per confronto anti-duplicati,
 | [UC-318](uc-318-drill-message-comprehension-not-delivery-receipt.md) | Esercitazioni: comprensione distinta dalla consegna tecnica | verificare con risposte artificiali/versioni se il messaggio di esercitazione è comprensibile, senza allerta reale o dati individuali |
 
 Vedi [indice del 17 novembre](INDEX-2026-11-17.md) per confronto anti-duplicati, prove software, hardware reale, privacy, licenze e regole di validazione. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura radio, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-18 — diagnostica costiera, richiesta paper-first e due hop senza percorso simultaneo
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-319](uc-319-coastal-salt-connector-inspection-and-relay-evidence.md) | Checkpoint costieri: connettori e ispezioni indipendenti | distinguere guasti verificati, diagnostiche mancanti e ipotesi di deposito salino senza attribuire automaticamente perdite radio |
+| [UC-320](uc-320-paper-assisted-offline-public-knowledge-request-pickup.md) | Richiesta cartacea e ritiro assistito di conoscenza pubblica | permettere a chi non ha smartphone di richiedere e ritirare contenuti pubblici versionati con scadenza, accessibilità e protezione della privacy |
+| [UC-321](uc-321-nonoverlapping-two-hop-store-forward-acceptance-trial.md) | Prova A→B→C su due finestre disgiunte | dimostrare consegna store-and-forward applicativa senza contatto simultaneo o via alternativa nascosta, con esito inconcludente se mancano prove |
+
+Vedi [indice del 18 novembre](INDEX-2026-11-18.md) per anti-duplicazione, software, hardware, bearer, sicurezza, difficoltà e testbed messinese. **Solo documentazione:** nessun test software o fisico eseguito; nessun risultato radio o di degrado misurato; nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
