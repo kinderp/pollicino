@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-18** (UC-001–UC-321 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-19** (UC-001–UC-324 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -603,3 +603,13 @@ Vedi [indice del 17 novembre](INDEX-2026-11-17.md) per confronto anti-duplicati,
 | [UC-321](uc-321-nonoverlapping-two-hop-store-forward-acceptance-trial.md) | Prova A→B→C su due finestre disgiunte | dimostrare consegna store-and-forward applicativa senza contatto simultaneo o via alternativa nascosta, con esito inconcludente se mancano prove |
 
 Vedi [indice del 18 novembre](INDEX-2026-11-18.md) per anti-duplicazione, software, hardware, bearer, sicurezza, difficoltà e testbed messinese. **Solo documentazione:** nessun test software o fisico eseguito; nessun risultato radio o di degrado misurato; nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-19 — cambio custode relay, sensore livello e riconoscimento HTR Raiatea
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-322](uc-322-student-relay-ownership-handoff-privacy-gate.md) | Scheda relay riassegnata: privacy, chiavi e code irrisolte | impedire che il nuovo custode erediti dati e permessi precedenti o che la coda scompaia senza rendicontazione |
+| [UC-323](uc-323-school-tank-ultrasonic-level-echo-quality-ferry.md) | Cisterne didattiche: livello verificabile con eco incerto | conservare geometria, qualità dell'eco e prove di riferimento anche quando le osservazioni arrivano in differita |
+| [UC-324](uc-324-raiatea-htr-handwritten-region-human-review-ferry.md) | Raiatea: manoscritti storici con revisioni per regione | distribuire bozze HTR e conferme umane legate ai pixel originali senza inventare letture o accessi autorizzati |
+
+Vedi [indice del 19 novembre](INDEX-2026-11-19.md) per anti-duplicazione, bearer, simulazioni, hardware reale, privacy, criteri PASS e testbed messinese. **Solo documentazione:** nessun test implementato o eseguito, nessuna prestazione radio misurata e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
