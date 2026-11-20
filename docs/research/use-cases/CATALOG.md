@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-19** (UC-001–UC-324 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-20** (UC-001–UC-327 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -613,3 +613,14 @@ Vedi [indice del 18 novembre](INDEX-2026-11-18.md) per anti-duplicazione, softwa
 | [UC-324](uc-324-raiatea-htr-handwritten-region-human-review-ferry.md) | Raiatea: manoscritti storici con revisioni per regione | distribuire bozze HTR e conferme umane legate ai pixel originali senza inventare letture o accessi autorizzati |
 
 Vedi [indice del 19 novembre](INDEX-2026-11-19.md) per anti-duplicazione, bearer, simulazioni, hardware reale, privacy, criteri PASS e testbed messinese. **Solo documentazione:** nessun test implementato o eseguito, nessuna prestazione radio misurata e nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+
+## Additions 2026-11-20 — conflitto di identità relay, membership di gruppi offline, mappe tattili Raiatea
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-325](uc-325-cloned-student-relay-identity-conflict-quarantine.md) | Schede con identità apparentemente duplicate dopo ripristino | impedire la fusione di code e autorizzazioni di due dispositivi, segnalando sospetti senza attribuzione personale o falsa certezza di clone |
+| [UC-326](uc-326-offline-class-group-rekey-membership-change.md) | Gruppi cifrati offline: uscita membro e cambio epoca | impedire nuove pubblicazioni con chiavi di membership stale, dichiarando i limiti della revoca tardiva |
+| [UC-327](uc-327-raiatea-tactile-map-offline-fabrication-review.md) | Raiatea: mappa tattile didattica da sorgente a revisione fisica | trasportare manifest e artefatti autorizzati, separando geometria/versione, stampa e valutazione umana di leggibilità |
+
+Vedi [indice del 20 novembre](INDEX-2026-11-20.md) per anti-duplicazione, bearer, software, hardware, privacy, criteri e scenari messinesi. **Solo documentazione:** nessun test software o fisico eseguito; nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
