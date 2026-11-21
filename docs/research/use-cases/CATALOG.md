@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-20** (UC-001–UC-327 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-21** (UC-001–UC-330 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -624,3 +624,13 @@ Vedi [indice del 19 novembre](INDEX-2026-11-19.md) per anti-duplicazione, bearer
 | [UC-327](uc-327-raiatea-tactile-map-offline-fabrication-review.md) | Raiatea: mappa tattile didattica da sorgente a revisione fisica | trasportare manifest e artefatti autorizzati, separando geometria/versione, stampa e valutazione umana di leggibilità |
 
 Vedi [indice del 20 novembre](INDEX-2026-11-20.md) per anti-duplicazione, bearer, software, hardware, privacy, criteri e scenari messinesi. **Solo documentazione:** nessun test software o fisico eseguito; nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-21 — apiario edge-AI, cartografia storica Raiatea e compostiere IoT scolastiche
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-328](uc-328-beehive-entrance-count-quality-edge-courier.md) | Apiario: conteggi di passaggio con qualità esplicita | conservare conteggi direzionali stimati, errori e validazione indipendente senza confondere ricevute con verità biologica |
+| [UC-329](uc-329-raiatea-historical-map-georeference-uncertainty-ferry.md) | Raiatea: mappe storiche con georeferenziazione incerta | distribuire raster, GCP, trasformazioni e controlli indipendenti senza inventare precisione cartografica |
+| [UC-330](uc-330-school-compost-temperature-event-provenance-ferry.md) | Compostiere scolastiche: sonda e rimescolamenti | separare variazioni biologiche da spostamenti della sonda ed eventi di manutenzione anche con dati ritardati |
+
+Vedi [indice del 21 novembre](INDEX-2026-11-21.md) per confronto anti-duplicati, schema dei record, bearer, criteri software, necessità di hardware, privacy e piano messinese. **Solo documentazione:** nessun nuovo test software o fisico eseguito, nessuna prestazione radio misurata, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
