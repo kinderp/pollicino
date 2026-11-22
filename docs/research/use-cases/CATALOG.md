@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-21** (UC-001–UC-330 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-22** (UC-001–UC-333 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -634,3 +634,13 @@ Vedi [indice del 20 novembre](INDEX-2026-11-20.md) per anti-duplicazione, bearer
 | [UC-330](uc-330-school-compost-temperature-event-provenance-ferry.md) | Compostiere scolastiche: sonda e rimescolamenti | separare variazioni biologiche da spostamenti della sonda ed eventi di manutenzione anche con dati ritardati |
 
 Vedi [indice del 21 novembre](INDEX-2026-11-21.md) per confronto anti-duplicati, schema dei record, bearer, criteri software, necessità di hardware, privacy e piano messinese. **Solo documentazione:** nessun nuovo test software o fisico eseguito, nessuna prestazione radio misurata, nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-22 — pressione e quota, microscopia Raiatea, verifica fisica di pezzi DNA/Romeo
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-331](uc-331-school-barometric-pressure-altitude-context-ferry.md) | Barometri scolastici costa/Peloritani: pressione di stazione e quota | impedire confronti meteo errati fra osservazioni grezze e valori derivati a livello del mare senza metodo, quota e incertezza |
+| [UC-332](uc-332-raiatea-microscopy-scale-focus-quality-ferry.md) | Raiatea: microfotografie con scala, fuoco e revisioni AI | conservare pixel-size, configurazione ottica e trasformazioni crop/resize, bloccando misure e classificazioni non verificate |
+| [UC-333](uc-333-dna-romeo-3d-print-fit-physical-acceptance-ferry.md) | DNA/Romeo: clip didattica stampata con misure e fit test | distinguere stampa completata, dimensioni misurate e accettazione fisica supervisionata di un pezzo non critico |
+
+Vedi [indice del 22 novembre](INDEX-2026-11-22.md) per anti-duplicati, bearer, prove software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito; nessun risultato LoRa, metrologico o AI dichiarato; nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
