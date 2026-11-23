@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-22** (UC-001–UC-333 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-23** (UC-001–UC-336 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -644,3 +644,13 @@ Vedi [indice del 21 novembre](INDEX-2026-11-21.md) per confronto anti-duplicati,
 | [UC-333](uc-333-dna-romeo-3d-print-fit-physical-acceptance-ferry.md) | DNA/Romeo: clip didattica stampata con misure e fit test | distinguere stampa completata, dimensioni misurate e accettazione fisica supervisionata di un pezzo non critico |
 
 Vedi [indice del 22 novembre](INDEX-2026-11-22.md) per anti-duplicati, bearer, prove software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito; nessun risultato LoRa, metrologico o AI dichiarato; nessuna modifica a PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-23 — prova termica del checkpoint, infiltrazione scolastica, revisione degli schemi Romeo/Raiatea
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-334](uc-334-student-lora-checkpoint-thermal-readiness-paired-trial.md) | Checkpoint LoRa: prontezza applicativa in condizioni ambientali ordinarie | distinguere ricevute e confondenti di prove sole/ombra senza affermare automaticamente un guasto termico o oltrepassare i limiti hardware |
+| [UC-335](uc-335-school-soil-infiltration-method-provenance-courier.md) | Infiltrazione del suolo scolastico: comparabilità con metodo esplicito | non aggregare prove di vaschetta e di campo o campioni con stato idrico iniziale ignoto, anche se arrivano tramite relay in differita |
+| [UC-336](uc-336-raiatea-romeo-schematic-netlist-review-ferry.md) | Raiatea / Romeo: disegno elettrico e netlist verificata | impedire che AI o ERC promuovano automaticamente uno schema ambiguo senza file nativo, connettività, hash, versione e approvazione docente |
+
+Vedi [indice del 23 novembre](INDEX-2026-11-23.md) per anti-duplicazione, attori, bearer, test software pianificati, hardware reale, sicurezza e scenario messinese. **Solo documentazione:** nessun simulatore eseguito, nessun risultato fisico/termico/idrologico/elettrico dichiarato, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
