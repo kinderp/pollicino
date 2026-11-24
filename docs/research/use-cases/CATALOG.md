@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-23** (UC-001–UC-336 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-24** (UC-001–UC-339 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -654,3 +654,13 @@ Vedi [indice del 22 novembre](INDEX-2026-11-22.md) per anti-duplicati, bearer, p
 | [UC-336](uc-336-raiatea-romeo-schematic-netlist-review-ferry.md) | Raiatea / Romeo: disegno elettrico e netlist verificata | impedire che AI o ERC promuovano automaticamente uno schema ambiguo senza file nativo, connettività, hash, versione e approvazione docente |
 
 Vedi [indice del 23 novembre](INDEX-2026-11-23.md) per anti-duplicazione, attori, bearer, test software pianificati, hardware reale, sicurezza e scenario messinese. **Solo documentazione:** nessun simulatore eseguito, nessun risultato fisico/termico/idrologico/elettrico dichiarato, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-24 — relay in movimento, kit di libri DNA, vibrazioni di condotte didattiche
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-337](uc-337-pedestrian-pass-by-versus-stop-lora-service-trial.md) | Relay mobile: passaggio senza fermarsi o breve sosta al checkpoint | confrontare consegne entro la finestra e coda residua con prova fisica controllata, senza tracciamento |
+| [UC-338](uc-338-dna-offline-school-book-kit-completion-ferry.md) | DNA: composizione di kit scolastici multi-volume fra biblioteche offline | verificare completezza, alternative approvate e assegnazione univoca di ogni copia senza promettere disponibilità globale |
+| [UC-339](uc-339-school-water-loop-contact-vibration-edge-leak-candidate-ferry.md) | IoT/edge AI: vibrazioni di condotta didattica e perdite candidate | separare segnali candidati, disturbi e riferimento indipendente con sintesi LoRa e dataset su bearer ricchi |
+
+Vedi [indice del 24 novembre](INDEX-2026-11-24.md) per anti-duplicazione, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura radio o accuratezza AI dichiarata, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
