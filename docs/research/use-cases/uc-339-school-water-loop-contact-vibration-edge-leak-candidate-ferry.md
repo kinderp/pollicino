@@ -1,0 +1,25 @@
+# UC-339 — IoT/edge AI: vibrazioni di una piccola condotta didattica e perdite candidate
+
+**Stato (24 novembre 2026):** proposta documentale, nessun modello addestrato o validato, nessun dato di campo e nessun test eseguito. Difficoltà medio-alta/alta. PHY LoRa congelato, MAC, driver e firmware invariati.
+
+## Problema, nodi e scenario
+Una perdita può generare vibrazioni, ma anche apertura di una valvola, movimento del supporto o flusso regolare possono produrre segnali simili. Vogliamo capire se un sensore di contatto su un circuito dimostrativo riconosce una condizione candidata a perdita, conservando il riferimento indipendente anche se i dati arrivano in differita. Docente, due postazioni di acquisizione, accelerometro/piezo di contatto, logger/PC edge, revisore, relay studenteschi volontari, cache dataset e collector.
+Due banchi scolastici autorizzati a Milazzo e Venetico potrebbero replicare un protocollo innocuo. Un relay trasporta risultati mentre le serie originali restano locali finché non arriva un bearer capiente. Nessuna diagnosi di acquedotto, intervento sulla rete pubblica o allerta reale.
+
+## Perché PollicinoNet; bearer
+Il classificatore locale può produrre poche feature e uno stato candidato, che si distribuiscono anche in assenza di Internet. In seguito il revisore ottiene i dati esatti e il riferimento di prova. DISCOVERY annuncia finestre o richieste; EXACT vincola digest, versione del modello, configurazione del sensore, qualità, run e riferimento; SEMANTIC espone CANDIDATE/UNCERTAIN, non una diagnosi.
+- LoRa: sintesi compatte, ID/manifest e richieste, secondo payload e budget effettivi.
+- BLE: diagnostica locale opzionale.
+- Wi-Fi/LAN/Internet: serie numeriche di accelerazione, dataset, modello autorizzato e report di revisione.
+- USB/SD o trasporto fisico: raccolta dei log, senza confonderla con consegna radio.
+
+## Contratto e test software
+`VibrationWindow={run_id,rig_id,window_id,sensor_mount,material,fs,coverage,feature_profile,feature_values,model_hash,score,quality_flags,raw_hash}`; `Reference={run_id,window_id,operator_state,observed_diverted_volume?,reference_method,review_state}`. Stati NO_CANDIDATE, CANDIDATE, UNCERTAIN, REFERENCE_PENDING, REVIEWED_AGREES, REVIEWED_DISAGREES. Assenza di candidato non dimostra assenza di perdita. Nessuna etichetta di verità derivata dal modello stesso.
+Simulare 6 sessioni, 120 finestre totali con segnali artificiali: flusso normale, deviazione nota verso recipiente, movimento del sensore, disturbo meccanico, campioni mancanti. Confrontare soglia RMS e classificatore semplice su sessioni separate, evitando che finestre sovrapposte dello stesso run finiscano in train e test. Iniettare duplicati, arrivi fuori ordine, riferimento tardivo, cambio sensore e modello. Misure: matrice di confusione su sessioni artificiali, tasso di incerti, falsi candidati, falsi negativi, finestre mancanti e byte scambiati; non trasferire risultati sintetici al mondo reale. Gate: una finestra senza riferimento non diventa verificata, una firma non attesta correttezza fisica, cambi di configurazione richiedono nuova validazione.
+
+## Hardware e verifica reale
+3–4 schede LoRa, due PC, accelerometro di contatto compatibile, contenitore e tubo dimostrativo a gravità (senza pressione artificiale), recipiente di raccolta e misura di volume indipendente. Nessun impianto reale, alimentazione a bassissima tensione supervisionata, elettronica asciutta separata dall'acqua, niente pompe di rete, nessuna modifica a condotte. Confrontare sessioni di normale flusso, deviazione controllata tramite raccordo dimostrativo e disturbo meccanico innocuo, alternare ordine e conservare riferimento. Se l'hardware non rileva segnali distinguibili, registrare esito negativo/inconcludente, non aumentare pressione o inventare prestazioni. Verificare separatamente trasporto A→relay→B e accuratezza del modello; provare prima in laboratorio e poi replicare con secondo banco autorizzato.
+
+## Privacy, sicurezza, originalità
+Sensore di contatto, niente microfoni ambientali, nessuna registrazione vocale; elaborazione locale e rilascio solo di dataset sintetici o verificati non personali. Limitare accessi, conservazione, log e coordinate; nessuna raccolta presso infrastrutture reali o sensibili. Firme, versioni, revisione umana. UC-191 riconcilia bilanci volumetrici, UC-242 rumore ambientale, UC-273 bioacustica, UC-027 vibrazioni strutturali post-evento. Qui il nuovo esperimento è **classificare vibrazioni di contatto di una condotta dimostrativa contro condizioni e riferimenti indipendenti, distinguendo disturbi da candidati**. Riutilizza UC-127 per provenance e UC-210 per generalizzazione fra banchi.
+Riferimenti: https://doi.org/10.3390/vibration5020021 (sensori vibro-acustici e validazione indipendente); https://doi.org/10.3390/s26144325 (8 luglio 2026, variabilità delle firme in condotte in pressione). Sono precedenti scientifici, non istruzioni per replicare impianti in pressione né risultati del banco scolastico.
