@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-24** (UC-001–UC-339 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-25** (UC-001–UC-342 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -664,3 +664,13 @@ Vedi [indice del 23 novembre](INDEX-2026-11-23.md) per anti-duplicazione, attori
 | [UC-339](uc-339-school-water-loop-contact-vibration-edge-leak-candidate-ferry.md) | IoT/edge AI: vibrazioni di condotta didattica e perdite candidate | separare segnali candidati, disturbi e riferimento indipendente con sintesi LoRa e dataset su bearer ricchi |
 
 Vedi [indice del 24 novembre](INDEX-2026-11-24.md) per anti-duplicazione, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito, nessuna misura radio o accuratezza AI dichiarata, nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-25 — buoni monouso offline, durata binaria IoT, significato delle formule Raiatea
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-340](uc-340-offline-single-use-school-voucher-redemption.md) | Buoni didattici monouso presso due sportelli offline | distinguere verifica della firma da unicità del riscatto sotto partizione, confrontando autorità preassegnata e decisione online |
+| [UC-341](uc-341-rural-demo-pump-runtime-bounded-state-evidence.md) | Durata ON/OFF di una pompa dimostrativa con eventi mancanti | calcolare limiti della durata nota e sconosciuta dopo transizioni perse, rimbalzi e riavvii senza inventare portata |
+| [UC-342](uc-342-raiatea-accessible-math-notation-intent-review.md) | Raiatea: notazione matematica e significato nella lettura assistiva | verificare struttura, contesto e profilo di lettura, impedendo approvazioni di varianti ambigue o obsolete |
+
+Vedi [indice del 25 novembre](INDEX-2026-11-25.md) per confronto anti-duplicati, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito, nessuna prestazione radio o assistiva dichiarata; nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
