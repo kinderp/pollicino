@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-25** (UC-001–UC-342 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-26** (UC-001–UC-345 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -674,3 +674,13 @@ Vedi [indice del 24 novembre](INDEX-2026-11-24.md) per anti-duplicazione, attori
 | [UC-342](uc-342-raiatea-accessible-math-notation-intent-review.md) | Raiatea: notazione matematica e significato nella lettura assistiva | verificare struttura, contesto e profilo di lettura, impedendo approvazioni di varianti ambigue o obsolete |
 
 Vedi [indice del 25 novembre](INDEX-2026-11-25.md) per confronto anti-duplicati, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito, nessuna prestazione radio o assistiva dichiarata; nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-26 — coda eleggibile per contatto, recupero parti DNA, energia IoT
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-343](uc-343-contact-eligible-queue-head-of-line-blocking-trial.md) | Relay: blocco della testa della coda per destinazione non eleggibile | utilizzare contatti autorizzati senza perdere la custodia degli oggetti destinati a peer assenti, preservando dipendenze, budget ed equità |
+| [UC-344](uc-344-dna-repair-cafe-donor-part-exclusivity-ferry.md) | DNA: riuso integrale o recupero di parti da un donatore | evitare promesse incompatibili e aggiornare l'inventario solo dopo autorizzazione, evento fisico e verifica |
+| [UC-345](uc-345-school-dc-energy-counter-vs-sampled-power-ferry.md) | IoT: energia cumulata e potenza campionata con lacune | recuperare il totale quando il contatore è continuo, senza inventare la curva o sommare due rappresentazioni della stessa energia |
+
+Vedi [indice del 26 novembre](INDEX-2026-11-26.md) per confronto anti-duplicati, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito, nessuna prestazione radio o energetica dichiarata; nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
