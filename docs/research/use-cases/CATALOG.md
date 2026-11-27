@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-26** (UC-001–UC-345 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-27** (UC-001–UC-348 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -684,3 +684,13 @@ Vedi [indice del 25 novembre](INDEX-2026-11-25.md) per confronto anti-duplicati,
 | [UC-345](uc-345-school-dc-energy-counter-vs-sampled-power-ferry.md) | IoT: energia cumulata e potenza campionata con lacune | recuperare il totale quando il contatore è continuo, senza inventare la curva o sommare due rappresentazioni della stessa energia |
 
 Vedi [indice del 26 novembre](INDEX-2026-11-26.md) per confronto anti-duplicati, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software/fisico eseguito, nessuna prestazione radio o energetica dichiarata; nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-27 — identità delle osservazioni, fenologia e sottotitoli Raiatea
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-346](uc-346-observation-occurrence-vs-content-deduplication-trial.md) | Relay/IoT: contenuto identico e occorrenze distinte | riusare byte identici senza perdere eventi indipendenti né contare repliche di trasporto come nuove osservazioni |
+| [UC-347](uc-347-school-phenology-onset-interval-courier.md) | Fenologia scolastica: intervalli di inizio fioritura | aggiornare intervalli e incertezza con visite in differita, senza confondere non osservato e assente |
+| [UC-348](uc-348-raiatea-edited-video-caption-timeline-review-ferry.md) | Raiatea: sottotitoli e timeline di video didattici revisionati | evitare riuso fuori sincrono e legare cue, media, montaggio e approvazione alla versione esatta |
+
+Vedi [indice del 27 novembre](INDEX-2026-11-27.md) per confronto anti-duplicati, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software o fisico eseguito, nessuna prestazione radio, biologica o assistiva dichiarata; nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
