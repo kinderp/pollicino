@@ -11,7 +11,7 @@ Core rules remain unchanged:
 - treat emergency/safety scenarios as controlled experiments until independently validated;
 - protect identity, location, content metadata and authorization at the application layer.
 
-Last synchronized: **2026-11-27** (UC-001–UC-348 contiguous on this research branch; documentation proposals, not implemented claims).
+Last synchronized: **2026-11-28** (UC-001–UC-351 contiguous on this research branch; documentation proposals, not implemented claims).
 
 | ID | Use case | Short purpose |
 |---|---|---|
@@ -694,3 +694,13 @@ Vedi [indice del 26 novembre](INDEX-2026-11-26.md) per confronto anti-duplicati,
 | [UC-348](uc-348-raiatea-edited-video-caption-timeline-review-ferry.md) | Raiatea: sottotitoli e timeline di video didattici revisionati | evitare riuso fuori sincrono e legare cue, media, montaggio e approvazione alla versione esatta |
 
 Vedi [indice del 27 novembre](INDEX-2026-11-27.md) per confronto anti-duplicati, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software o fisico eseguito, nessuna prestazione radio, biologica o assistiva dichiarata; nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
+
+## Additions 2026-11-28 — fetch condiviso, medie circolari IoT e tassonomia AI
+
+| ID | Use case | Short purpose |
+|---|---|---|
+| [UC-349](uc-349-persistent-content-need-coalescing-per-requester-fanout.md) | Richieste EXACT aggregate con consegna individuale | condividere fetch compatibili senza perdere scadenze, annullamenti e ricevute dei singoli richiedenti |
+| [UC-350](uc-350-school-wind-direction-circular-summary-merge-ferry.md) | Vento scolastico: riepiloghi circolari ricomponibili | fondere segmenti angolari disgiunti e comparabili senza media ingenua, doppio conteggio o falsa direzione certa |
+| [UC-351](uc-351-offline-ai-label-taxonomy-split-reannotation-ferry.md) | Dataset AI: divisione di classi e riannotazione selettiva | preservare label storiche e richiedere evidenze per classi figlie, senza fabbricare ground truth o metriche comparabili |
+
+Vedi [indice del 28 novembre](INDEX-2026-11-28.md) per confronto anti-duplicati, attori, bearer, software, hardware, privacy e scenario messinese. **Solo documentazione:** nessun test software o fisico eseguito, nessuna prestazione radio, meteorologica o AI dichiarata; nessuna modifica al PHY LoRa congelato, MAC, driver o firmware.
